@@ -22,7 +22,7 @@ class Test
       println("o gain 1 bullet");
       player.gainBullets(1);
     }
-     if (keysPressed['i'])
+    if (keysPressed['i'])
     {
       println("i slow");
       player.modifyPower(PowerUps.SLOW);

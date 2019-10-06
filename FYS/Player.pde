@@ -205,8 +205,14 @@ class PC
       slowTimer=SLOWSTARTINGTIMER;
       break;
     case PowerUps.SPLIT:
+      if (!split)
+      {
+        if (x>width/2)
+        {
+          x=width-x-w;
+        }
+      }
       split=true;
-      x=width/2;
       splitTimer=SPLITSTARTINGTIMER;
       break;
     default:
