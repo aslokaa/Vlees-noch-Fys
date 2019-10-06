@@ -92,6 +92,7 @@ class PC
   //draws the standard player.
   void display()
   {
+    noStroke();
     fill(getColor());
     rect(x, y, w, h);
   }
@@ -115,6 +116,7 @@ class PC
   //draws the splitted player.
   void displaySplit()
   {
+    noStroke();
     fill(getColor());
     rect(x, y, w/2, h);
     rect(width-x-w/2, y, w/2, h);
