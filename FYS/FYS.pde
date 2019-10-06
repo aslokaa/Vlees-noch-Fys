@@ -1,3 +1,7 @@
+//Galaxy Defence Force
+//IG101-2, Vlees noch FYS
+//Niklas Leeuwin, Brent Sijm, Olger Klok ,Tim Brouwenstijn, Mika Spoelstra, Eele Roet, 
+
 PC player;
 Test test;
 // Arrays of booleans for Keyboard handling. One boolean for each keyCode from FYS
@@ -29,7 +33,7 @@ void updateGame()
   }
 
   player.update();
-  test.damage();
+  test.test();
 }
 
 void drawGame()
@@ -41,7 +45,7 @@ void drawGame()
     enemies.get(iEnemies).display();
   }
 
-  player.display();
+  player.checkDisplay();
 }
 
 // Keyboard handling...
