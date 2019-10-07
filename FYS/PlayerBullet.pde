@@ -4,12 +4,12 @@ Create bullet methode,
  
  */
 
-class PlayerBullets 
+class PlayerBullet 
 {
   float bulletX, bulletY, bulletSpeed, bulletDiameter;
 
 
-  PlayerBullets (float Xpos, float Ypos)
+  PlayerBullet (float Xpos, float Ypos)
   {
     bulletX = Xpos;
     bulletY = Ypos;
@@ -24,11 +24,19 @@ class PlayerBullets
     ellipse(bulletX, bulletY, bulletDiameter, bulletDiameter);
   }
   
-  boolean collidesWithEnemy(float enemyX, float enemyY, float enemyRadius){
+  void createBullet(){
     
     
-    
+  }
+  
+  
+  
+  boolean collidesWithEnemy(Enemy enemy){
+    if( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy. + (bulletDiameter/2))    
     return true;
+  } else {
+    return false;
+  }
     
     
   }

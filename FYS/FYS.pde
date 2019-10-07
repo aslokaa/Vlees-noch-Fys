@@ -13,6 +13,8 @@ final float DAVE_HITBOX_RADIUS = 40;
 final float DAVE_HITBOX_DIAMETER = DAVE_HITBOX_RADIUS * 2;
 final color DAVE_COLOR = color(255, 20, 20);
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+PlayerBullet[] playerBullets = new PlayerBullet[50];
+
 
 void setup()
 {
