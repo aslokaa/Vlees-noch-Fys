@@ -2,7 +2,7 @@
 //Adding readablity to the powerUps.
 interface PowerUps 
 { 
-  int
+  final int
     INVERTED     = 0, 
     INVISIBLE    = 1, 
     SLOW         = 2,
@@ -12,7 +12,7 @@ interface PowerUps
 //adding readability to the colors
 interface Colors
 {
-  color
+  final color
     PINK       = #FF00FF, 
     GREEN      = #00FF00, 
     WHITE      = #FFFFFF, 
