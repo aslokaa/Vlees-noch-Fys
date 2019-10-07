@@ -18,9 +18,9 @@ class EnemyDave extends Enemy
   int currentRow;
   int rowToMoveTo;
 
-  EnemyDave(float x, float y)
+  EnemyDave(float x, float y, float hitboxRadius)
   {
-    super(x, y);
+    super(x, y, hitboxRadius);
     moveSpeedLeft = -5;
     moveSpeedRight = 5;
     moveSpeedDown = 5;
@@ -67,14 +67,14 @@ class EnemyDave extends Enemy
 
   void checkWallCollision()
   {
-    if ( x - DAVE_HITBOX_RADIUS < 0 )
+    if ( x - hitboxRadius < 0 )
     {
       rowToMoveTo++;
-      x = DAVE_HITBOX_RADIUS;
-    } else if ( x + DAVE_HITBOX_RADIUS > width )
+      x = hitboxRadius;
+    } else if ( x + hitboxRadius > width )
     {
       rowToMoveTo++;
-      x = width - DAVE_HITBOX_RADIUS;
+      x = width - hitboxRadius;
     }
   }
 
@@ -112,6 +112,6 @@ class EnemyDave extends Enemy
   {
     noStroke();
     fill(DAVE_COLOR);
-    ellipse(x, y, DAVE_HITBOX_DIAMETER, DAVE_HITBOX_DIAMETER);
+    ellipse(x, y, hitboxDiameter, hitboxDiameter);
   }
 }
