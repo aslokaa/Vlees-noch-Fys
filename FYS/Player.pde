@@ -122,8 +122,8 @@ class PlayerControlled
   {
     noStroke();
     fill(getColor());
-    rect( x , y , playerWidth / 2, playerHeigth );
-    rect( width - x - playerWidth / 2, y, playerWidth / 2 , playerHeigth );
+    rect( x, y, playerWidth / 2, playerHeigth );
+    rect( width - x - playerWidth / 2, y, playerWidth / 2, playerHeigth );
   }
   //detects user inputs.
   void detectInput()
@@ -166,6 +166,8 @@ class PlayerControlled
       move();
     }
   }
+
+  //makes
   void checkVelocityMax()
   {
     if (velocityX > PLAYER_VELOCITY_X_MAX)
@@ -177,7 +179,6 @@ class PlayerControlled
       velocityY = PLAYER_VELOCITY_Y_MAX;
     }
   }
-
   // modifies the X and Y positions
   void move()
   {
@@ -368,7 +369,6 @@ class PlayerControlled
   //creates a bullet
   void shoot()
   {
-    println(bullets);
     if ( bullets<1 )
     {
       return;
@@ -382,7 +382,19 @@ class PlayerControlled
   {
     bullets += ammo;
   }
+
+  rectangles getHitboxes()
 }
+
+class rectangles
+{
+  rectangles()
+  {
+    rectangle rectangle0 = new rectangle();
+    rectangle rectangle1 = new rectangle();
+  }
+}
+
 
 class rectangle
 {
