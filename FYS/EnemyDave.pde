@@ -3,7 +3,7 @@ deze class bevat dave.
 dave word boven y = 100 gespawned, dus alle y < 100.
 dave beweegt tot de eerste row op y is 100, dave gaat dan alleen in de x bewegen
 totdat hij een muur raakt dan gaat hij een row naar beneden, dus y 200 en gaat in de andere richting 
-in x bewegen.
+in x bewegen. etc.
 Eele Roet 500795948
 */
 
