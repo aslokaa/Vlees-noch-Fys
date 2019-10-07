@@ -4,31 +4,31 @@
 
 
 //This is the class that handles the object the player controlls. 
-class PC
+class PlayerControlled
 {
-  final float PLAYERSTARTWIDTH=width*0.13, 
-    PLAYERSTARTHEIGHT=height*0.045, 
-    PLAYERSTARTX=width/2-PLAYERSTARTWIDTH/2, 
-    PLAYERSTARTY=height-PLAYERSTARTHEIGHT, 
-    PLAYERSTARTACCELERATIONX=width*0.001, 
-    PLAYERVELOCITYXMAX=width*0.015, 
-    PLAYERSTARTDECELERATEX=0.96, 
-    PLAYERSTARTACCELERATIONY=height*0.0008, 
-    PLAYERVELOCITYYMAX=height*0.01, 
-    PLAYERSTARTDECELERATEY=0.96, 
-    PLAYERMINWIDTH=PLAYERSTARTWIDTH*0.1, 
-    PLAYERMAXWIDTH=width, 
-    SLOWMODIFIER=0.9, 
+  final float PLAYER_START_WIDTH=width*0.13, 
+    PLAYER_START_HEIGHT=height*0.045, 
+    PLAYER_START_X=width/2-PLAYER_START_WIDTH/2, 
+    PLAYER_START_Y=height-PLAYER_START_HEIGHT, 
+    PLAYER_START_ACCELERATION_X=width*0.001, 
+    PLAYER_VELOCITY_X_MAX=width*0.015, 
+    PLAYER_START_DECELERATE_X=0.98, 
+    PLAYER_START_ACCELERATION_Y=height*0.001, 
+    PLAYER_VELOCITY_Y_MAX=height*0.01, 
+    PLAYER_START_DECELERATE_Y=0.9, 
+    PLAYER_MIN_WIDTH=PLAYER_START_WIDTH*0.1, 
+    PLAYER_MAX_WIDTH=width, 
+    SLOW_MODIFIER=0.9, 
     SECOND=60, //one second
-    INVERTEDSTARTINGTIMER=SECOND*5, 
-    INVISIBLESTARTINGTIMER=SECOND*1, 
-    SLOWSTARTINGTIMER=SECOND*4, 
-    SHAKEMODIFIERMIN=-width*0.003, 
-    SHAKEMODIFIERMAX=width*0.0003, 
-    SHAKESTARTINGTIMER=SECOND*0.5, 
-    SPLITSTARTINGTIMER=SECOND*10;
+    INVERTED_STARTING_TIMER=SECOND*5, 
+    INVISIBLE_STARTING_TIMER=SECOND*1, 
+    SLOW_STARTING_TIMER=SECOND*4, 
+    SHAKE_MODIFIER_MIN=-width*0.003, 
+    SHAKE_MODIFIER_MAX=width*0.0003, 
+    SHAKE_STARTING_TIMER=SECOND*0.5, 
+    SPLIT_STARTING_TIMER=SECOND*10;
 
-  float x, y, w, h, accelerationX, accelerationY, velocityX, velocityY, //X value, Y value, width, height, acceleration on X axis, acceleration on Y axis,acceleration modifiers and velocity on the X axis
+  float x, y, playerWidth, playerHeigth, accelerationX, accelerationY, velocityX, velocityY, //X value, Y value, width, height, acceleration on X axis, acceleration on Y axis,acceleration modifiers and velocity on the X axis
     decelerateX, decelerateY; //deceleration
   boolean inverted, //The direction the paddle moves in.
     invisible, // invisibles the paddle into 2.
@@ -39,18 +39,18 @@ class PC
   int bullets, shakeCounter;//amount of bullets and the counter for shaking.
 
 
-  PC() //Constructor
+  PlayerControlled() //Constructor
   {
-    x=PLAYERSTARTX;
-    y=PLAYERSTARTY;
-    w=PLAYERSTARTWIDTH;
-    h=PLAYERSTARTHEIGHT;
-    accelerationX=PLAYERSTARTACCELERATIONX;
-    accelerationY=PLAYERSTARTACCELERATIONY;
+    x=PLAYER_START_X;
+    y=PLAYER_START_Y;
+    playerWidth=PLAYER_START_WIDTH;
+    h=PLAYER_START_HEIGHT;
+    accelerationX=PLAYER_START_ACCELERATION_X;
+    accelerationY=PLAYER_START_ACCELERATION_Y;
     velocityX=0;
     velocityY=0;
-    decelerateX=PLAYERSTARTDECELERATEX;
-    decelerateY=PLAYERSTARTDECELERATEY;
+    decelerateX=PLAYER_START_DECELERATE_X;
+    decelerateY=PLAYER_START_DECELERATE_Y;
     inverted=false;
     invertedTimer=0;
     invisible =false;
@@ -94,13 +94,13 @@ class PC
   {
     noStroke();
     fill(getColor());
-    rect(x, y, w, h);
+    rect(x, y, playerWidth, h);
   }
   //shakes the player
   void shake()
   {
-    float xModifier=random(SHAKEMODIFIERMIN, SHAKEMODIFIERMAX);
-    float yModifier=random(SHAKEMODIFIERMIN, SHAKEMODIFIERMAX);
+    float xModifier=random(SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX);
+    float yModifier=random(SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX);
     x+=xModifier;
     y+=yModifier;
     if (split)
@@ -118,8 +118,8 @@ class PC
   {
     noStroke();
     fill(getColor());
-    rect(x, y, w/2, h);
-    rect(width-x-w/2, y, w/2, h);
+    rect(x, y, playerWidth/2, h);
+    rect(width-x-playerWidth/2, y, playerWidth/2, h);
   }
   //detects user inputs.
   void detectInput()
@@ -151,8 +151,8 @@ class PC
     checkVelocityMax();
     if (slow) // slows the player
     {
-      velocityX*=SLOWMODIFIER;
-      velocityY*=SLOWMODIFIER;
+      velocityX*=SLOW_MODIFIER;
+      velocityY*=SLOW_MODIFIER;
     }
     if (inverted) // inverts the player
     {
@@ -164,13 +164,13 @@ class PC
   }
   void checkVelocityMax()
   {
-    if (velocityX>PLAYERVELOCITYXMAX)
+    if (velocityX>PLAYER_VELOCITY_X_MAX)
     {
-      velocityX=PLAYERVELOCITYXMAX;
+      velocityX=PLAYER_VELOCITY_X_MAX;
     }
-    if (velocityY>PLAYERVELOCITYYMAX)
+    if (velocityY>PLAYER_VELOCITY_Y_MAX)
     {
-      velocityY=PLAYERVELOCITYYMAX;
+      velocityY=PLAYER_VELOCITY_Y_MAX;
     }
   }
 
@@ -194,26 +194,26 @@ class PC
     {
     case PowerUps.INVERTED:
       inverted=true;
-      invertedTimer=INVERTEDSTARTINGTIMER;
+      invertedTimer=INVERTED_STARTING_TIMER;
       break;
     case PowerUps.INVISIBLE:
       invisible=true;
-      invisibleTimer=INVISIBLESTARTINGTIMER;
+      invisibleTimer=INVISIBLE_STARTING_TIMER;
       break;
     case PowerUps.SLOW:
       slow=true;
-      slowTimer=SLOWSTARTINGTIMER;
+      slowTimer=SLOW_STARTING_TIMER;
       break;
     case PowerUps.SPLIT:
       if (!split)
       {
         if (x>width/2)
         {
-          x=width-x-w;
+          x=width-x-playerWidth;
         }
       }
       split=true;
-      splitTimer=SPLITSTARTINGTIMER;
+      splitTimer=SPLIT_STARTING_TIMER;
       break;
     default:
       println("modifyPower default");
@@ -230,9 +230,9 @@ class PC
         x=0;
         velocityX=0;
       }
-      if (x+w>width)
+      if (x+playerWidth>width)
       {
-        x=width-w;
+        x=width-playerWidth;
         velocityX=0;
       }
       if (y<0)
@@ -252,9 +252,9 @@ class PC
         x=0;
         velocityX=0;
       }
-      if (x+w/2>width/2)
+      if (x+playerWidth/2>width/2)
       {
-        x=width/2-w/2;
+        x=width/2-playerWidth/2;
         velocityX=0;
       }
       if (y<0)
@@ -279,10 +279,10 @@ class PC
   //shrinks the paddle
   void dealDamage(float damage)
   {
-    w-=damage;
+    playerWidth-=damage;
     shake=true;
-    shakeTimer=SHAKESTARTINGTIMER;
-    if (w<PLAYERMINWIDTH)
+    shakeTimer=SHAKE_STARTING_TIMER;
+    if (playerWidth<PLAYER_MIN_WIDTH)
     {
       println("Lost");
     }
@@ -290,9 +290,9 @@ class PC
   //grows the paddle
   void restoreHealth(float healing)
   {
-    if (w<PLAYERMAXWIDTH)
+    if (playerWidth<PLAYER_MAX_WIDTH)
     {
-      w+=healing;
+      playerWidth+=healing;
     }
   }
   //Keeps track of which powers are active and deactivates them.
