@@ -16,20 +16,18 @@ ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 void setup()
 {
-  size(1280, 720, P3D); //16:9
+  size(1280, 720, P2D); //16:9
   smooth(0);
   player = new PlayerControlled();
   test = new Test();
-  enemies.add(new EnemyDave(100, 0));
-  enemies.add(new EnemyDave(100, -150));
-  enemies.add(new EnemyDave(100, -300));
+  enemies.add(new EnemyDave(100, 0)); 
 }
 
 void updateGame()
 {
-  for ( int iEnemies = 0; iEnemies < enemies.size(); iEnemies++)
+  for ( Enemy enemy : enemies)
   {
-    enemies.get(iEnemies).executeBehavior();
+    enemy.executeBehavior();//handles movement paterns
   }
 
   player.update();
@@ -40,9 +38,9 @@ void drawGame()
 {
   background(0);
 
-  for ( int iEnemies = 0; iEnemies < enemies.size(); iEnemies++)
+ for ( Enemy enemy : enemies)
   {
-    enemies.get(iEnemies).display();
+    enemy.display();//shows enemies on screen
   }
   player.checkDisplay();
 }
