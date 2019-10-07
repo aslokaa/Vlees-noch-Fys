@@ -4,6 +4,7 @@
 
 
 //This is the class that handles the object the player controlls. 
+
 class PlayerControlled
 {
   final float PLAYER_START_WIDTH=width*0.13, 
@@ -25,7 +26,8 @@ class PlayerControlled
     SLOW_STARTING_TIMER=SECOND*4, 
     SHAKE_MODIFIER_MIN=-width*0.003, 
     SHAKE_MODIFIER_MAX=width*0.0003, 
-    SHAKE_STARTING_TIMER=SECOND*0.5, 
+    SHAKE_STARTING_TIMER=SECOND*0.5,
+    SHOOT_STARTING_TIMER=SECOND*0.1,
     SPLIT_STARTING_TIMER=SECOND*10;
 
   float x, y, playerWidth, playerHeigth, accelerationX, accelerationY, velocityX, velocityY, //X value, Y value, width, height, acceleration on X axis, acceleration on Y axis,acceleration modifiers and velocity on the X axis
@@ -35,7 +37,7 @@ class PlayerControlled
     slow, //slows the paddle
     shake, //shakes the paddle
     split; //splits the paddle
-  float invertedTimer, invisibleTimer, slowTimer, shakeTimer, splitTimer; //Duration of inverted, invisible, slow.
+  float invertedTimer, invisibleTimer, slowTimer, shakeTimer, splitTimer, shootTimer; //Duration of effects.
   int bullets, shakeCounter;//amount of bullets and the counter for shaking.
 
 
@@ -44,7 +46,7 @@ class PlayerControlled
     x=PLAYER_START_X;
     y=PLAYER_START_Y;
     playerWidth=PLAYER_START_WIDTH;
-    h=PLAYER_START_HEIGHT;
+    playerHeigth=PLAYER_START_HEIGHT;
     accelerationX=PLAYER_START_ACCELERATION_X;
     accelerationY=PLAYER_START_ACCELERATION_Y;
     velocityX=0;
@@ -61,6 +63,7 @@ class PlayerControlled
     shakeTimer=0;
     split = false;
     splitTimer=0;
+    shootTimer=0;
   }
 
   //updates the player
@@ -94,7 +97,7 @@ class PlayerControlled
   {
     noStroke();
     fill(getColor());
-    rect(x, y, playerWidth, h);
+    rect(x, y, playerWidth, playerHeigth);
   }
   //shakes the player
   void shake()
@@ -118,8 +121,8 @@ class PlayerControlled
   {
     noStroke();
     fill(getColor());
-    rect(x, y, playerWidth/2, h);
-    rect(width-x-playerWidth/2, y, playerWidth/2, h);
+    rect(x, y, playerWidth/2, playerHeigth);
+    rect(width-x-playerWidth/2, y, playerWidth/2, playerHeigth);
   }
   //detects user inputs.
   void detectInput()
@@ -140,7 +143,7 @@ class PlayerControlled
     {
       velocityY += accelerationY; //Accelerates to downwards.
     }
-    if (keysPressed['x'])
+    if (keysPressed['x'] && shootTimer<=0)
     {
       shoot();
     }
@@ -240,9 +243,9 @@ class PlayerControlled
         y=0;
         velocityY=0;
       }
-      if (y+h>height)
+      if (y+playerHeigth>height)
       {
-        y=height-h;
+        y=height-playerHeigth;
         velocityY=0;
       }
     } else if (split)
@@ -262,9 +265,9 @@ class PlayerControlled
         y=0;
         velocityY=0;
       }
-      if (y+h>height)
+      if (y+playerHeigth>height)
       {
-        y=height-h;
+        y=height-playerHeigth;
         velocityY=0;
       }
     }
@@ -373,6 +376,7 @@ class PlayerControlled
     println("pew");
   }
   //adds aditional bullets.
+  
   void gainBullets(int ammo)
   {
     bullets+=ammo;
