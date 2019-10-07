@@ -6,7 +6,7 @@
 //This is the class that handles the object the player controlls. 
 class PC
 {
-  final float PLAYER_START_WIDTH = width*0.13, 
+  final float PLAYERSTARTWIDTH = width*0.13, 
     PLAYERSTARTHEIGHT=height*0.045, 
     PLAYERSTARTX=width/2-PLAYERSTARTWIDTH/2, 
     PLAYERSTARTY=height-PLAYERSTARTHEIGHT, 
