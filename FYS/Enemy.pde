@@ -8,15 +8,19 @@ Eele Roet 500795948
 */
 class Enemy
 {
+  float hitboxRadius;
+  float hitboxDiameter;
   float x;
   float y;
   float speedX;
   float speedY;
 
-  Enemy(float x, float y)
+  Enemy(float x, float y, float hitboxRadius)
   {
     this.x = x;
     this.y = y;
+    this.hitboxRadius = hitboxRadius;
+    this.hitboxDiameter = hitboxRadius * 2;
   }
 
   void executeBehavior()
