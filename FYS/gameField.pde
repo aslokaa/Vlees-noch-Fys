@@ -11,10 +11,12 @@ class Playfield
   {
     
   }
+  
   void display()
   {
-    
+    displayScore();
   }
+  
   void displayScore()
   {
     
