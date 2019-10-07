@@ -22,7 +22,10 @@ class EnemyChad extends Enemy
     moveToPlayer();//sets
   }
 
-
+  void moveToPlayer()
+  {
+    
+  };
 
   void move()
   {
