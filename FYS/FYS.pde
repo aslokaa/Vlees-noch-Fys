@@ -1,8 +1,8 @@
-//Galaxy Defence Force
+ //Galaxy Defence Force
 //IG101-2, Vlees noch FYS
 //Niklas Leeuwin, Brent Sijm, Olger Klok ,Tim Brouwenstijn, Mika Spoelstra, Eele Roet, 
 
-PC player;
+PlayerControlled player;
 Test test;
 // Arrays of booleans for Keyboard handling. One boolean for each keyCode from FYS
 final int KEY_LIMIT = 1024;
@@ -19,7 +19,7 @@ void setup()
 {
   size( 1280, 720, P2D ); //16:9
   smooth(0);
-  player = new PC();
+  player = new PlayerControlled();
   test = new Test();
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
 }
@@ -43,7 +43,6 @@ void drawGame()
   {
     enemy.display();//shows enemies on screen
   }
-
   player.checkDisplay();
 }
 
@@ -65,7 +64,6 @@ void keyReleased() {
 
 void draw()
 {
-
   updateGame();
   drawGame();
 }

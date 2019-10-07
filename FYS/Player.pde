@@ -4,63 +4,67 @@
 
 
 //This is the class that handles the object the player controlls. 
-class PC
-{
-  final float PLAYERSTARTWIDTH = width*0.13, 
-    PLAYERSTARTHEIGHT=height*0.045, 
-    PLAYERSTARTX=width/2-PLAYERSTARTWIDTH/2, 
-    PLAYERSTARTY=height-PLAYERSTARTHEIGHT, 
-    PLAYERSTARTACCELERATIONX=width*0.001, 
-    PLAYERVELOCITYXMAX=width*0.015, 
-    PLAYERSTARTDECELERATEX=0.96, 
-    PLAYERSTARTACCELERATIONY=height*0.0008, 
-    PLAYERVELOCITYYMAX=height*0.01, 
-    PLAYERSTARTDECELERATEY=0.96, 
-    PLAYERMINWIDTH=PLAYERSTARTWIDTH*0.1, 
-    PLAYERMAXWIDTH=width, 
-    SLOWMODIFIER=0.9, 
-    SECOND=60, //one second
-    INVERTEDSTARTINGTIMER=SECOND*5, 
-    INVISIBLESTARTINGTIMER=SECOND*1, 
-    SLOWSTARTINGTIMER=SECOND*4, 
-    SHAKEMODIFIERMIN=-width*0.003, 
-    SHAKEMODIFIERMAX=width*0.0003, 
-    SHAKESTARTINGTIMER=SECOND*0.5, 
-    SPLITSTARTINGTIMER=SECOND*10;
 
-  float x, y, w, h, accelerationX, accelerationY, velocityX, velocityY, //X value, Y value, width, height, acceleration on X axis, acceleration on Y axis,acceleration modifiers and velocity on the X axis
+class PlayerControlled
+{
+  final float PLAYER_START_WIDTH    = width*0.13, 
+    PLAYER_START_HEIGHT             = height*0.045, 
+    PLAYER_START_X                  = width/2-PLAYER_START_WIDTH/2, 
+    PLAYER_START_Y                  =height-PLAYER_START_HEIGHT, 
+    PLAYER_START_ACCELERATION_X     =width*0.001, 
+    PLAYER_VELOCITY_X_MAX           =width*0.015, 
+    PLAYER_START_DECELERATE_X       =0.98, 
+    PLAYER_START_ACCELERATION_Y     =height*0.001, 
+    PLAYER_VELOCITY_Y_MAX           =height*0.01, 
+    PLAYER_START_DECELERATE_Y       =0.9, 
+    PLAYER_MIN_WIDTH                =PLAYER_START_WIDTH*0.1, 
+    PLAYER_MAX_WIDTH                =width, 
+    SLOW_MODIFIER                   =0.9, 
+    SECOND                          =60, //one second
+    INVERTED_STARTING_TIMER         =SECOND*5, 
+    INVISIBLE_STARTING_TIMER        =SECOND*1, 
+    SLOW_STARTING_TIMER             =SECOND*4, 
+    SHAKE_MODIFIER_MIN              =-width*0.003, 
+    SHAKE_MODIFIER_MAX              =width*0.0003, 
+    SHAKE_STARTING_TIMER            =SECOND*0.5, 
+    SHOOT_STARTING_TIMER            =SECOND*0.1, 
+    SPLIT_STARTING_TIMER            =SECOND*10;
+
+  float x, y, playerWidth, playerHeigth, accelerationX, accelerationY, 
+    velocityX, velocityY, //velocity on the X and Y axis
     decelerateX, decelerateY; //deceleration
   boolean inverted, //The direction the paddle moves in.
     invisible, // invisibles the paddle into 2.
     slow, //slows the paddle
     shake, //shakes the paddle
     split; //splits the paddle
-  float invertedTimer, invisibleTimer, slowTimer, shakeTimer, splitTimer; //Duration of inverted, invisible, slow.
+  float invertedTimer, invisibleTimer, slowTimer, shakeTimer, splitTimer, shootTimer; //Duration of effects.
   int bullets, shakeCounter;//amount of bullets and the counter for shaking.
 
 
-  PC() //Constructor
+  PlayerControlled() //Constructor
   {
-    x=PLAYERSTARTX;
-    y=PLAYERSTARTY;
-    w=PLAYERSTARTWIDTH;
-    h=PLAYERSTARTHEIGHT;
-    accelerationX=PLAYERSTARTACCELERATIONX;
-    accelerationY=PLAYERSTARTACCELERATIONY;
-    velocityX=0;
-    velocityY=0;
-    decelerateX=PLAYERSTARTDECELERATEX;
-    decelerateY=PLAYERSTARTDECELERATEY;
-    inverted=false;
-    invertedTimer=0;
-    invisible =false;
-    invisibleTimer=0;
-    slow =false;
-    slowTimer=0;
+    x = PLAYER_START_X;
+    y = PLAYER_START_Y;
+    playerWidth = PLAYER_START_WIDTH;
+    playerHeigth = PLAYER_START_HEIGHT;
+    accelerationX = PLAYER_START_ACCELERATION_X;
+    accelerationY = PLAYER_START_ACCELERATION_Y;
+    velocityX = 0;
+    velocityY = 0;
+    decelerateX = PLAYER_START_DECELERATE_X;
+    decelerateY = PLAYER_START_DECELERATE_Y;
+    inverted = false;
+    invertedTimer = 0;
+    invisible = false;
+    invisibleTimer = 0;
+    slow = false;
+    slowTimer = 0;
     shake = false;
-    shakeTimer=0;
+    shakeTimer = 0;
     split = false;
-    splitTimer=0;
+    splitTimer = 0;
+    shootTimer = 0;
   }
 
   //updates the player
@@ -94,15 +98,15 @@ class PC
   {
     noStroke();
     fill(getColor());
-    rect(x, y, w, h);
+    rect( x, y, playerWidth, playerHeigth );
   }
   //shakes the player
   void shake()
   {
-    float xModifier=random(SHAKEMODIFIERMIN, SHAKEMODIFIERMAX);
-    float yModifier=random(SHAKEMODIFIERMIN, SHAKEMODIFIERMAX);
-    x+=xModifier;
-    y+=yModifier;
+    float xModifier = random( SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX );
+    float yModifier = random( SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX );
+    x += xModifier;
+    y += yModifier;
     if (split)
     {
       displaySplit();
@@ -110,37 +114,37 @@ class PC
     {
       display();
     }
-    x-=xModifier;
-    y-=yModifier;
+    x -=xModifier;
+    y -=yModifier;
   }
   //draws the splitted player.
   void displaySplit()
   {
     noStroke();
     fill(getColor());
-    rect(x, y, w/2, h);
-    rect(width-x-w/2, y, w/2, h);
+    rect( x , y , playerWidth / 2, playerHeigth );
+    rect( width - x - playerWidth / 2, y, playerWidth / 2 , playerHeigth );
   }
   //detects user inputs.
   void detectInput()
   {
-    if (keyCodesPressed[LEFT]) 
+    if ( keyCodesPressed[LEFT] ) 
     {
       velocityX -= accelerationX ; //Accelerates to the left.
     }
-    if (keyCodesPressed[RIGHT]) 
+    if ( keyCodesPressed[RIGHT] ) 
     {
       velocityX += accelerationX; //Accelerates to the right.
     }
-    if (keyCodesPressed[UP])
+    if ( keyCodesPressed[UP] )
     {
       velocityY -= accelerationY; //Accelerates to upwards.
     }
-    if (keyCodesPressed[DOWN])
+    if ( keyCodesPressed[DOWN] )
     {
       velocityY += accelerationY; //Accelerates to downwards.
     }
-    if (keysPressed['x'])
+    if ( keysPressed['x'] && shootTimer <= 0 )
     {
       shoot();
     }
@@ -151,8 +155,8 @@ class PC
     checkVelocityMax();
     if (slow) // slows the player
     {
-      velocityX*=SLOWMODIFIER;
-      velocityY*=SLOWMODIFIER;
+      velocityX *= SLOW_MODIFIER;
+      velocityY *= SLOW_MODIFIER;
     }
     if (inverted) // inverts the player
     {
@@ -164,56 +168,56 @@ class PC
   }
   void checkVelocityMax()
   {
-    if (velocityX>PLAYERVELOCITYXMAX)
+    if (velocityX > PLAYER_VELOCITY_X_MAX)
     {
-      velocityX=PLAYERVELOCITYXMAX;
+      velocityX = PLAYER_VELOCITY_X_MAX;
     }
-    if (velocityY>PLAYERVELOCITYYMAX)
+    if (velocityY > PLAYER_VELOCITY_Y_MAX)
     {
-      velocityY=PLAYERVELOCITYYMAX;
+      velocityY = PLAYER_VELOCITY_Y_MAX;
     }
   }
 
   // modifies the X and Y positions
   void move()
   {
-    x+=velocityX;
-    y+=velocityY;
+    x += velocityX;
+    y += velocityY;
   }
   //modifies the X and Y posistions but inverted.
   void moveInverted()
   {
-    x-=velocityX;
-    y-=velocityY;
+    x -= velocityX;
+    y -= velocityY;
   }
 
   //Gives the player a powerup or down.
-  void modifyPower(int type)
+  void modifyPower( int type )
   {
     switch(type)
     {
     case PowerUps.INVERTED:
-      inverted=true;
-      invertedTimer=INVERTEDSTARTINGTIMER;
+      inverted = true;
+      invertedTimer = INVERTED_STARTING_TIMER;
       break;
     case PowerUps.INVISIBLE:
-      invisible=true;
-      invisibleTimer=INVISIBLESTARTINGTIMER;
+      invisible = true;
+      invisibleTimer = INVISIBLE_STARTING_TIMER;
       break;
     case PowerUps.SLOW:
-      slow=true;
-      slowTimer=SLOWSTARTINGTIMER;
+      slow = true;
+      slowTimer = SLOW_STARTING_TIMER;
       break;
     case PowerUps.SPLIT:
       if (!split)
       {
-        if (x>width/2)
+        if ( x > width / 2 )
         {
-          x=width-x-w;
+          x = width - x - playerWidth;
         }
       }
-      split=true;
-      splitTimer=SPLITSTARTINGTIMER;
+      split = true;
+      splitTimer=SPLIT_STARTING_TIMER;
       break;
     default:
       println("modifyPower default");
@@ -225,47 +229,47 @@ class PC
   {
     if (!split)
     {
-      if (x<0)
+      if ( x < 0 )
       {
-        x=0;
-        velocityX=0;
+        x = 0;
+        velocityX = 0;
       }
-      if (x+w>width)
+      if ( x + playerWidth > width )
       {
-        x=width-w;
-        velocityX=0;
+        x = width - playerWidth;
+        velocityX = 0;
       }
-      if (y<0)
+      if ( y < 0 )
       {
-        y=0;
-        velocityY=0;
+        y = 0;
+        velocityY = 0;
       }
-      if (y+h>height)
+      if ( y + playerHeigth > height )
       {
-        y=height-h;
-        velocityY=0;
+        y = height - playerHeigth;
+        velocityY = 0;
       }
     } else if (split)
     {
-      if (x<0)
+      if ( x < 0 )
       {
-        x=0;
-        velocityX=0;
+        x = 0;
+        velocityX = 0;
       }
-      if (x+w/2>width/2)
+      if ( x + playerWidth / 2 > width / 2 )
       {
-        x=width/2-w/2;
-        velocityX=0;
+        x = width / 2 - playerWidth / 2;
+        velocityX = 0;
       }
-      if (y<0)
+      if (y < 0)
       {
-        y=0;
-        velocityY=0;
+        y = 0;
+        velocityY = 0;
       }
-      if (y+h>height)
+      if ( y + playerHeigth > height)
       {
-        y=height-h;
-        velocityY=0;
+        y = height - playerHeigth;
+        velocityY = 0;
       }
     }
   }
@@ -273,26 +277,26 @@ class PC
   //decelerates the player
   void decelerate()
   {
-    velocityX*=decelerateX;
-    velocityY*=decelerateY;
+    velocityX *= decelerateX;
+    velocityY *= decelerateY;
   }
   //shrinks the paddle
-  void dealDamage(float damage)
+  void dealDamage( float damage )
   {
-    w-=damage;
-    shake=true;
-    shakeTimer=SHAKESTARTINGTIMER;
-    if (w<PLAYERMINWIDTH)
+    playerWidth -= damage;
+    shake = true;
+    shakeTimer = SHAKE_STARTING_TIMER;
+    if ( playerWidth < PLAYER_MIN_WIDTH )
     {
       println("Lost");
     }
   }
   //grows the paddle
-  void restoreHealth(float healing)
+  void restoreHealth( float healing )
   {
-    if (w<PLAYERMAXWIDTH)
+    if ( playerWidth < PLAYER_MAX_WIDTH )
     {
-      w+=healing;
+      playerWidth += healing;
     }
   }
   //Keeps track of which powers are active and deactivates them.
@@ -301,7 +305,7 @@ class PC
     if (inverted)
     {
       invertedTimer--;
-      if (invertedTimer<=0)
+      if ( invertedTimer <= 0 )
       {
         inverted=false;
       }
@@ -309,7 +313,7 @@ class PC
     if (invisible)
     {
       invisibleTimer--;
-      if (invisibleTimer<=0)
+      if ( invisibleTimer <= 0 )
       {
         invisible=false;
       }
@@ -317,7 +321,7 @@ class PC
     if (slow)
     {
       slowTimer--;
-      if (slowTimer<=0)
+      if ( slowTimer <= 0 )
       {
         slow=false;
       }
@@ -325,7 +329,7 @@ class PC
     if (shake)
     {
       shakeTimer--;
-      if (shakeTimer<=0)
+      if ( shakeTimer <=0 )
       {
         shake=false;
       }
@@ -333,7 +337,7 @@ class PC
     if (split)
     {
       splitTimer--;
-      if (splitTimer<=0)
+      if ( splitTimer <= 0 )
       {
         split=false;
       }
@@ -347,7 +351,7 @@ class PC
     {
       return Colors.RED;
     }
-    if (inverted)
+    if ( inverted )
     {
       return Colors.GREEN;
     } else if (invisible)
@@ -365,7 +369,7 @@ class PC
   void shoot()
   {
     println(bullets);
-    if (bullets<1)
+    if ( bullets<1 )
     {
       return;
     } 
@@ -373,8 +377,22 @@ class PC
     println("pew");
   }
   //adds aditional bullets.
-  void gainBullets(int ammo)
+
+  void gainBullets( int ammo )
   {
-    bullets+=ammo;
+    bullets += ammo;
+  }
+}
+
+class rectangle
+{
+  float x, y, rectangleWidth, rectangleHeight;
+
+  rectangle( float xT, float yT, float widthT, float heightT )
+  {
+    x = xT;
+    y = yT;
+    rectangleWidth = widthT;
+    rectangleHeight = heightT;
   }
 }
