@@ -350,7 +350,7 @@ class PlayerControlled
     {
       return Colors.RED;
     }
-    if (inverted)
+    if ( inverted )
     {
       return Colors.GREEN;
     } else if (invisible)
@@ -368,7 +368,7 @@ class PlayerControlled
   void shoot()
   {
     println(bullets);
-    if (bullets<1)
+    if ( bullets<1 )
     {
       return;
     } 
@@ -377,8 +377,21 @@ class PlayerControlled
   }
   //adds aditional bullets.
   
-  void gainBullets(int ammo)
+  void gainBullets( int ammo )
   {
-    bullets+=ammo;
+    bullets += ammo;
   }
+}
+
+class rectangle
+{
+ float x, y, rectangleWidth,rectangleHeight;
+ 
+ rectangle( float xT,float yT,float widthT,float heightT )
+ {
+  x = xT;
+  y = yT;
+  rectangleWidth = widthT;
+  rectangleHeight = heightT;
+ }
 }
