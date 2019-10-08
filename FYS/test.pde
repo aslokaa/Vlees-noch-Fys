@@ -20,7 +20,7 @@ class Test
     if (keysPressed['o'])
     {
       println("o gain 1 bullet");
-      player.gainBullets(1);
+      player.gainAmmo(1);
     }
     if (keysPressed['i'])
     {
