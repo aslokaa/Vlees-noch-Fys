@@ -18,21 +18,26 @@ class PlayerBullet
   }
 
   void update() {
-    bulletY += bulletSpeed;
+    move();
   }
   void display() {
     ellipse(bulletX, bulletY, bulletDiameter, bulletDiameter);
   }
   
-  void createBullet(){
+  void createBullet(float playerX, float playerY){
+     playerBullets.add(new PlayerBullet(playerX,  playerY + (bulletDiameter/2)));
     
+  }
+  
+  void move(){
+    bulletY += bulletSpeed; 
     
   }
   
   
   
   boolean collidesWithEnemy(Enemy enemy){
-    if( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy. + (bulletDiameter/2))    
+    if( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxDiameter + (bulletDiameter/2))){    
     return true;
   } else {
     return false;

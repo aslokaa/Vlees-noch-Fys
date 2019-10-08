@@ -14,7 +14,7 @@ final color DAVE_COLOR = color(255, 20, 20);
 final float CHAD_HITBOX_RADIUS = 40;
 final color CHAD_COLOR = color(255, 20, 20);
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-PlayerBullet[] playerBullets = new PlayerBullet[50];
+ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 
 
 void setup()
