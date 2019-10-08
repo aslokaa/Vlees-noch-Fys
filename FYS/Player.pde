@@ -5,7 +5,7 @@
 
 //This is the class that handles the object the player controlls. 
 
-class PlayerControlled
+class Player
 {
   final float PLAYER_START_WIDTH    = width*0.13, 
     PLAYER_START_HEIGHT             = height*0.045, 
@@ -62,7 +62,7 @@ class PlayerControlled
     shakeCounter; 
 
 
-  PlayerControlled() //Constructor
+  Player() //Constructor
   {
     x = PLAYER_START_X;
     y = PLAYER_START_Y;
@@ -190,7 +190,7 @@ class PlayerControlled
     }
   }
 
-  //makes
+  //makes sure the player doesn't go to fast
   void checkVelocityMax()
   {
     if (velocityX > PLAYER_VELOCITY_X_MAX)
@@ -433,7 +433,12 @@ class PlayerControlled
   {
     ammo += newAmmo;
   }
-  //Rectangles getHitboxes()
+  
+  //returns the hitboxes
+  Rectangles getHitboxes()
+  {
+   return new Rectangles( x, xSplit, y , playerWidth , widthSplit0, widthSplit1, playerHeigth, split );
+  }
 
   //activates a bullet.
   void activatesBullet(float xT)
@@ -448,14 +453,23 @@ class PlayerControlled
   }
 }
 
+
+//stores hitbox information
 class Rectangles
 {
   Rectangle rectangle0;
   Rectangle rectangle1;
-  Rectangles( float xT0, float xT1, float yT, float widthT, float heightT, boolean existsT )
+  Rectangles( float xT0, float xT1, float yT, float widthT,float w0T, float w1T, float heightT, boolean existsT )
   {
-    rectangle0 = new Rectangle( xT0, yT, widthT, heightT, true );
-    rectangle1 = new Rectangle( xT1, yT, widthT, heightT, existsT );
+     float w0=widthT;
+     float w1=widthT;
+    if (existsT)
+    {
+     w0=w0T;
+     w1=w1T;
+    } else
+    rectangle0 = new Rectangle( xT0, yT, w0, heightT, true );
+    rectangle1 = new Rectangle( xT1, yT, w1, heightT, existsT );
   }
 }
 
