@@ -404,10 +404,10 @@ class PlayerControlled
 
 class Rectangles
 {
-  rectangles()
+  Rectangles()
   {
-    Rectangle rectangle0 = new Rectangle();
-    Rectangle rectangle1 = new Rectangle();
+    //Rectangle rectangle0 = new Rectangle();
+    //Rectangle rectangle1 = new Rectangle();
   }
 }
 
@@ -416,7 +416,7 @@ class Rectangle
 {
   float x, y, rectangleWidth, rectangleHeight;
   boolean exists;
-  rectangle( float xT, float yT, float widthT, float heightT, boolean existsT)
+  Rectangle( float xT, float yT, float widthT, float heightT, boolean existsT)
   {
     x = xT;
     y = yT;
