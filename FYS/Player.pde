@@ -32,6 +32,7 @@ class PlayerControlled
 
   float 
     x, 
+    xSplit, 
     y, 
     playerWidth, 
     playerHeigth, 
@@ -40,23 +41,25 @@ class PlayerControlled
     velocityX, 
     velocityY, 
     decelerateX, 
-    decelerateY; 
+    decelerateY, 
+    widthSplit0, 
+    widthSplit1;
   boolean 
-    inverted,    //The direction the paddle moves in.
-    invisible,   // invisibles the paddle into 2.
-    slow,        //slows the paddle
-    shake,       //shakes the paddle
+    inverted, //The direction the paddle moves in.
+    invisible, // invisibles the paddle into 2.
+    slow, //slows the paddle
+    shake, //shakes the paddle
     split;       //splits the paddle
-  float 
-  invertedTimer, 
-  invisibleTimer, 
-  slowTimer, 
-  shakeTimer, 
-  splitTimer, 
-  shootTimer; //Duration of effects.
+  float //Duration of effects.
+    invertedTimer, 
+    invisibleTimer, 
+    slowTimer, 
+    shakeTimer, 
+    splitTimer, 
+    shootTimer; 
   int 
-  ammo, //amount of ammo
-  shakeCounter; 
+    ammo, //amount of ammo
+    shakeCounter; 
 
 
   PlayerControlled() //Constructor
@@ -82,6 +85,9 @@ class PlayerControlled
     split = false;
     splitTimer = 0;
     shootTimer = 0;
+    xSplit = 0;
+    widthSplit0=0;
+    widthSplit1=0;
   }
 
   //updates the player
@@ -139,8 +145,8 @@ class PlayerControlled
   {
     noStroke();
     fill(getColor());
-    rect( x, y, playerWidth / 2, playerHeigth );
-    rect( width - x - playerWidth / 2, y, playerWidth / 2, playerHeigth );
+    rect( x, y, widthSplit0, playerHeigth );
+    rect(xSplit, y, widthSplit1, playerHeigth );
   }
   //detects user inputs.
   void detectInput()
@@ -234,6 +240,8 @@ class PlayerControlled
           x = width - x - playerWidth;
         }
       }
+      widthSplit0 = playerWidth / 2;
+      widthSplit1 = playerWidth / 2;
       split = true;
       splitTimer=SPLIT_STARTING_TIMER;
       break;
@@ -274,9 +282,9 @@ class PlayerControlled
         x = 0;
         velocityX = 0;
       }
-      if ( x + playerWidth / 2 > width / 2 )
+      if ( x + widthSplit0 > width / 2 )
       {
-        x = width / 2 - playerWidth / 2;
+        x = width / 2 - widthSplit0;
         velocityX = 0;
       }
       if (y < 0)
@@ -299,9 +307,19 @@ class PlayerControlled
     velocityY *= decelerateY;
   }
   //shrinks the paddle
-  void dealDamage( float damage )
+  void dealDamage( float damage, boolean isSplit)
   {
     playerWidth -= damage;
+    if (split)
+    {
+      if (isSplit)
+      {
+        widthSplit1 -= damage;
+      } else
+      {
+        widthSplit0 -= damage;
+      }
+    }
     shake = true;
     shakeTimer = SHAKE_STARTING_TIMER;
     if ( playerWidth < PLAYER_MIN_WIDTH )
@@ -310,9 +328,21 @@ class PlayerControlled
     }
   }
   //grows the paddle
-  void restoreHealth( float healing )
+  void restoreHealth( float healing , boolean isSplit )
   {
-    if ( playerWidth < PLAYER_MAX_WIDTH )
+    if (split)
+    {
+      if (isSplit)
+      {
+        if ( widthSplit1 < PLAYER_MAX_WIDTH / 2 )
+        widthSplit1 += healing;
+      } else
+      {
+        if ( widthSplit0 < PLAYER_MAX_WIDTH / 2 )
+        widthSplit0 += healing;
+      }
+    }
+    else if ( playerWidth < PLAYER_MAX_WIDTH )
     {
       playerWidth += healing;
     }
@@ -355,6 +385,7 @@ class PlayerControlled
     if (split)
     {
       splitTimer--;
+      xSplit = width - x - playerWidth / 2;
       if ( splitTimer <= 0 )
       {
         split=false;
@@ -383,7 +414,7 @@ class PlayerControlled
       return Colors.PINK;
     }
   }
-  //creates a bullet
+  //checks if you can shoot a bullet.
   void shoot()
   {
     if ( ammo<1 )
@@ -391,23 +422,40 @@ class PlayerControlled
       return;
     } 
     ammo--;
-    println("pew");     
+    activatesBullet(x);
+    if (split)
+    {
+      activatesBullet(x);
+    }
   }
   //adds aditional ammo.
   void gainAmmo( int newAmmo )
   {
     ammo += newAmmo;
   }
-
   //Rectangles getHitboxes()
+
+  //activates a bullet.
+  void activatesBullet(float xT)
+  {
+    for ( PlayerBullet playerBullet : playerBullets)
+    {
+      if (!playerBullet.shootBullet)
+      {
+        playerBullet.createBullet(xT, y);
+      }
+    }
+  }
 }
 
 class Rectangles
 {
-  Rectangles()
+  Rectangle rectangle0;
+  Rectangle rectangle1;
+  Rectangles( float xT0, float xT1, float yT, float widthT, float heightT, boolean existsT )
   {
-    //Rectangle rectangle0 = new Rectangle();
-    //Rectangle rectangle1 = new Rectangle();
+    rectangle0 = new Rectangle( xT0, yT, widthT, heightT, true );
+    rectangle1 = new Rectangle( xT1, yT, widthT, heightT, existsT );
   }
 }
 
@@ -416,12 +464,12 @@ class Rectangle
 {
   float x, y, rectangleWidth, rectangleHeight;
   boolean exists;
-  Rectangle( float xT, float yT, float widthT, float heightT, boolean existsT)
+  Rectangle( float xT, float yT, float widthT, float heightT, boolean existsT )
   {
     x = xT;
     y = yT;
     rectangleWidth = widthT;
     rectangleHeight = heightT;
-    exists=existsT;
+    exists = existsT;
   }
 }
