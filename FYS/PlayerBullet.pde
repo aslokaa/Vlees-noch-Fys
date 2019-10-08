@@ -18,11 +18,16 @@ class PlayerBullet
   }
 
   void update() {
+<<<<<<< Updated upstream
     bulletY += bulletSpeed;
+=======
+    move();
+>>>>>>> Stashed changes
   }
   void display() {
     ellipse(bulletX, bulletY, bulletDiameter, bulletDiameter);
   }
+<<<<<<< Updated upstream
   
   void createBullet(){
     
@@ -41,4 +46,21 @@ class PlayerBullet
     
   }
 
+=======
+
+  void createBullet() {
+  }
+
+  void move() {
+    bulletY += bulletSpeed;
+  }
+
+  boolean collidesWithEnemy(Enemy enemy) {
+    if ( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxRadius + (bulletDiameter/2)) {    
+      return true;
+    } else {
+      return false;
+    }
+  }
+>>>>>>> Stashed changes
 }
