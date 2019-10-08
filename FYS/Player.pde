@@ -30,16 +30,33 @@ class PlayerControlled
     SHOOT_STARTING_TIMER            =SECOND*0.1, 
     SPLIT_STARTING_TIMER            =SECOND*10;
 
-  float x, y, playerWidth, playerHeigth, accelerationX, accelerationY, 
-    velocityX, velocityY, //velocity on the X and Y axis
-    decelerateX, decelerateY; //deceleration
-  boolean inverted, //The direction the paddle moves in.
-    invisible, // invisibles the paddle into 2.
-    slow, //slows the paddle
-    shake, //shakes the paddle
-    split; //splits the paddle
-  float invertedTimer, invisibleTimer, slowTimer, shakeTimer, splitTimer, shootTimer; //Duration of effects.
-  int bullets, shakeCounter;//amount of bullets and the counter for shaking.
+  float 
+    x, 
+    y, 
+    playerWidth, 
+    playerHeigth, 
+    accelerationX, 
+    accelerationY, 
+    velocityX, 
+    velocityY, 
+    decelerateX, 
+    decelerateY; 
+  boolean 
+    inverted,    //The direction the paddle moves in.
+    invisible,   // invisibles the paddle into 2.
+    slow,        //slows the paddle
+    shake,       //shakes the paddle
+    split;       //splits the paddle
+  float 
+  invertedTimer, 
+  invisibleTimer, 
+  slowTimer, 
+  shakeTimer, 
+  splitTimer, 
+  shootTimer; //Duration of effects.
+  int 
+  ammo, //amount of ammo
+  shakeCounter; 
 
 
   PlayerControlled() //Constructor
@@ -369,18 +386,17 @@ class PlayerControlled
   //creates a bullet
   void shoot()
   {
-    if ( bullets<1 )
+    if ( ammo<1 )
     {
       return;
     } 
-    bullets--;
+    ammo--;
     println("pew");
   }
-  //adds aditional bullets.
-
-  void gainBullets( int ammo )
+  //adds aditional ammo.
+  void gainAmmo( int newAmmo )
   {
-    bullets += ammo;
+    ammo += newAmmo;
   }
 
   //Rectangles getHitboxes()
@@ -388,10 +404,10 @@ class PlayerControlled
 
 class Rectangles
 {
-  rectangles()
+  Rectangles()
   {
-    Rectangle rectangle0 = new Rectangle();
-    Rectangle rectangle1 = new Rectangle();
+    //Rectangle rectangle0 = new Rectangle();
+    //Rectangle rectangle1 = new Rectangle();
   }
 }
 
@@ -399,12 +415,13 @@ class Rectangles
 class Rectangle
 {
   float x, y, rectangleWidth, rectangleHeight;
-
-  rectangle( float xT, float yT, float widthT, float heightT )
+  boolean exists;
+  Rectangle( float xT, float yT, float widthT, float heightT, boolean existsT)
   {
     x = xT;
     y = yT;
     rectangleWidth = widthT;
     rectangleHeight = heightT;
+    exists=existsT;
   }
 }
