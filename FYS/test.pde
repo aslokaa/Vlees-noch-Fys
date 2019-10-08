@@ -5,12 +5,12 @@ class Test
     if (keysPressed['j']) 
     {
       println("j deal damge");
-      player.dealDamage(10);
+      player.dealDamage(10, true);
     }
     if (keysPressed['k'])
     {
       println("k restore health" );
-      player.restoreHealth(10);
+      player.restoreHealth(10, true);
     }
     if (keysPressed['l'])
     {
