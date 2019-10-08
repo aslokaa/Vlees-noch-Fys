@@ -19,11 +19,13 @@ class EnemyChad extends Enemy
   @Override void executeBehavior()
   {
     checkWallCollision();//als chad een muur raakt stopt hij met bewegen in die richting.
-    
-    move();//kijkt naar move booleans, zet snelheden, telt snelheid op bij positie.
+    moveToPlayer();//sets
   }
 
-
+  void moveToPlayer()
+  {
+    
+  };
 
   void move()
   {
