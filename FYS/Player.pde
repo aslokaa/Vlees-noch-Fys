@@ -383,20 +383,20 @@ class PlayerControlled
     bullets += ammo;
   }
 
-  rectangles getHitboxes()
+  //Rectangles getHitboxes()
 }
 
-class rectangles
+class Rectangles
 {
   rectangles()
   {
-    rectangle rectangle0 = new rectangle();
-    rectangle rectangle1 = new rectangle();
+    Rectangle rectangle0 = new Rectangle();
+    Rectangle rectangle1 = new Rectangle();
   }
 }
 
 
-class rectangle
+class Rectangle
 {
   float x, y, rectangleWidth, rectangleHeight;
 
