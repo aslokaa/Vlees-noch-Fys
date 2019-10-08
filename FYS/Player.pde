@@ -391,7 +391,7 @@ class PlayerControlled
       return;
     } 
     ammo--;
-    println("pew");
+    println("pew");     
   }
   //adds aditional ammo.
   void gainAmmo( int newAmmo )

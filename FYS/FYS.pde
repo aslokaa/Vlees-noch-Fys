@@ -35,6 +35,10 @@ void updateGame()
 
   player.update();
   test.test();
+  for ( PlayerBullet playerBullet : playerBullets)
+  {
+   playerBullet.update(); 
+  }
 }
 
 void drawGame()
@@ -46,6 +50,10 @@ void drawGame()
     enemy.display();//shows enemies on screen
   }
   player.checkDisplay();
+  for ( PlayerBullet playerBullet : playerBullets )
+  {
+  playerBullet.display();
+  }
 }
 
 // Keyboard handling...
@@ -68,4 +76,5 @@ void draw()
 {
   updateGame();
   drawGame();
+  
 }
