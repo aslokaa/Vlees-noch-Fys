@@ -13,7 +13,7 @@ class PlayerBullet
   boolean 
         shootBullet;
 
-  PlayerBullet (float Xpos, float Ypos)
+  PlayerBullet (float Xpos, float Ypos) //constructor
   {
     bulletX = Xpos;
     bulletY = Ypos;
@@ -22,13 +22,13 @@ class PlayerBullet
     shootBullet = false;
   }
 
-  void update() {
+  void update() { //Updates the location of the bullet if the bullet is shot
     if (shootBullet)
     {
       move();
     }
   }
-  void display() {
+  void display() { //Draws the bullet if it is shot
     if (shootBullet)
     {
       ellipse(bulletX, bulletY, bulletDiameter, bulletDiameter);
