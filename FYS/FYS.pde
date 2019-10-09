@@ -2,7 +2,7 @@
 //IG101-2, Vlees noch FYS
 //Niklas Leeuwin, Brent Sijm, Olger Klok ,Tim Brouwenstijn, Mika Spoelstra, Eele Roet, 
 
-import processing.sound.*;
+//import processing.sound.*;
 
 
 Player player;
