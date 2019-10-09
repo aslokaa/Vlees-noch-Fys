@@ -2,7 +2,7 @@
 //IG101-2, Vlees noch FYS
 //Niklas Leeuwin, Brent Sijm, Olger Klok ,Tim Brouwenstijn, Mika Spoelstra, Eele Roet, 
 
-import processing.sound.*;
+//import processing.sound.*;
 
 
 Player player;
@@ -27,6 +27,7 @@ void setup()
   player = new Player();
   test = new Test();
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
+  enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
 }
 
 void updateGame()

@@ -1,4 +1,4 @@
-/*  Olger Klok, 50082502
+ /*  Olger Klok, 50082502
  Create bullet methode,
  Collision bullets met enemy
  
@@ -34,7 +34,7 @@ class PlayerBullet
     shootBullet = true;
     playerBullets.add(new PlayerBullet(playerX, playerY + (bulletDiameter/2)));
   }
-
+  
   void move() {
     bulletY += bulletSpeed;
   }
