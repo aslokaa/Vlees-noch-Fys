@@ -6,26 +6,25 @@ Eele Roet 500795948
 
 class EnemyChad extends Enemy
 {
-  float moveSpeedX;
-  float moveSpeedY;
+  float SpeedX;
+  float SpeedY;
 
   EnemyChad(float x, float y, float hitboxRadius)
   {
     super(x, y, hitboxRadius);
-    moveSpeedY = 0;
-    moveSpeedX = 0;
+    SpeedY = 0;
+    SpeedX = 0;
   }
 
   @Override void executeBehavior()
   {
     checkWallCollision();//als chad een muur raakt stopt hij met bewegen in die richting.
-    moveToPlayer();//sets
+    moveToPlayer();//sets speeds so that chad accelerates towards the player.
   }
 
   void moveToPlayer()
   {
-    
-  };
+  }
 
   void move()
   {
@@ -48,7 +47,7 @@ class EnemyChad extends Enemy
   @Override void display()
   {
     noStroke();
-    fill(DAVE_COLOR);
+    fill(CHAD_COLOR);
     ellipse(x, y, hitboxDiameter, hitboxDiameter);
   }
 }

@@ -24,6 +24,7 @@ void setup()
   player = new PlayerControlled();
   test = new Test();
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
+  enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
 }
 
 void updateGame()

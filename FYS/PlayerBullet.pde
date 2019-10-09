@@ -32,7 +32,9 @@ class PlayerBullet
   
   
   boolean collidesWithEnemy(Enemy enemy){
-    if( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy. + (bulletDiameter/2))    
+    if( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxRadius + (bulletDiameter/2))) 
+    {
+      
     return true;
   } else {
     return false;
