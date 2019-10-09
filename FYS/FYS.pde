@@ -2,7 +2,10 @@
 //IG101-2, Vlees noch FYS
 //Niklas Leeuwin, Brent Sijm, Olger Klok ,Tim Brouwenstijn, Mika Spoelstra, Eele Roet, 
 
-PlayerControlled player;
+import processing.sound.*;
+
+
+Player player;
 Test test;
 // Arrays of booleans for Keyboard handling. One boolean for each keyCode from FYS
 final int KEY_LIMIT = 1024;
@@ -14,14 +17,14 @@ final color DAVE_COLOR = color(255, 20, 20);
 final float CHAD_HITBOX_RADIUS = 40;
 final color CHAD_COLOR = color(255, 20, 20);
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-PlayerBullet[] playerBullets = new PlayerBullet[50];
+ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 
 
 void setup()
 {
   size( 1280, 720, P2D ); //16:9
   smooth(0);
-  player = new PlayerControlled();
+  player = new Player();
   test = new Test();
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
   enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
@@ -36,6 +39,10 @@ void updateGame()
 
   player.update();
   test.test();
+  for ( PlayerBullet playerBullet : playerBullets)
+  {
+   playerBullet.update(); 
+  }
 }
 
 void drawGame()
@@ -47,6 +54,10 @@ void drawGame()
     enemy.display();//shows enemies on screen
   }
   player.checkDisplay();
+  for ( PlayerBullet playerBullet : playerBullets )
+  {
+  playerBullet.display();
+  }
 }
 
 // Keyboard handling...
@@ -69,4 +80,5 @@ void draw()
 {
   updateGame();
   drawGame();
+  
 }

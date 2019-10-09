@@ -1,5 +1,5 @@
-/*
-Create bullet methode,
+ /*  Olger Klok, 50082502
+ Create bullet methode,
  Collision bullets met enemy
  
  */
@@ -7,7 +7,7 @@ Create bullet methode,
 class PlayerBullet 
 {
   float bulletX, bulletY, bulletSpeed, bulletDiameter;
-
+  boolean shootBullet;
 
   PlayerBullet (float Xpos, float Ypos)
   {
@@ -15,32 +15,43 @@ class PlayerBullet
     bulletY = Ypos;
     bulletSpeed = 5;
     bulletDiameter = 10;
+    shootBullet = false;
   }
 
   void update() {
-    bulletY += bulletSpeed;
+    if (shootBullet)
+    {
+      move();
+    }
   }
   void display() {
-    ellipse(bulletX, bulletY, bulletDiameter, bulletDiameter);
-  }
-  
-  void createBullet(){
-    
-    
-  }
-  
-  
-  
-  boolean collidesWithEnemy(Enemy enemy){
-    if( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxRadius + (bulletDiameter/2))) 
+    if (shootBullet)
     {
-      
-    return true;
-  } else {
-    return false;
+      ellipse(bulletX, bulletY, bulletDiameter, bulletDiameter);
+    }
   }
-    
-    
+  void createBullet(float playerX, float playerY) {
+    shootBullet = true;
+    playerBullets.add(new PlayerBullet(playerX, playerY + (bulletDiameter/2)));
+  }
+  
+  void move() {
+    bulletY += bulletSpeed;
   }
 
+  boolean checkEnemyCollision() {
+    for ( Enemy enemy : enemies ) {
+      if ( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxDiameter + (bulletDiameter/2))) {    
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void bulletEnemyCollision() {
+    if (checkEnemyCollision())
+    {
+      shootBullet = false;
+    }
+  }
 }
