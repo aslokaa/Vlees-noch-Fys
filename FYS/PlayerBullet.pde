@@ -1,13 +1,17 @@
  /*  Olger Klok, 50082502
  Create bullet methode,
  Collision bullets met enemy
- 
  */
 
 class PlayerBullet 
 {
-  float bulletX, bulletY, bulletSpeed, bulletDiameter;
-  boolean shootBullet;
+  float 
+        bulletX,
+        bulletY,
+        bulletSpeed,
+        bulletDiameter;
+  boolean 
+        shootBullet;
 
   PlayerBullet (float Xpos, float Ypos)
   {
