@@ -4,7 +4,7 @@ class Test
   {
     if (keysPressed['j']) 
     {
-      println("j deal damge");
+      println("j deal damage");
       player.dealDamage(10, true);
     }
     if (keysPressed['k'])
@@ -37,5 +37,6 @@ class Test
       println("y split");
       player.modifyPower(PowerUps.SPLIT);
     }
+    //println(frameRate);
   }
 }
