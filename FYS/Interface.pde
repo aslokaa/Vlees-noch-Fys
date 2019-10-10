@@ -5,7 +5,7 @@ interface PowerUps
   final int
     INVERTED     = 0, 
     INVISIBLE    = 1, 
-    SLOW         = 2,
+    SLOW         = 2, 
     SPLIT        = 3;
 }  
 
@@ -17,6 +17,12 @@ interface Colors
     GREEN      = #00FF00, 
     WHITE      = #FFFFFF, 
     BLUE       = #0000FF, 
-    YELLOW     = #FFFF00,
+    YELLOW     = #FFFF00, 
     RED        = #FF0000;
+}
+
+interface Arrays
+{
+  final int
+    STAR_COUNT  = 300;
 }
