@@ -1,6 +1,7 @@
- //Galaxy Defence Force
+//Galaxy Defence Force
 //IG101-2, Vlees noch FYS
 //Niklas Leeuwin, Brent Sijm, Olger Klok ,Tim Brouwenstijn, Mika Spoelstra, Eele Roet, 
+// x is bottom keys
 
 //import processing.sound.*;
 
@@ -18,8 +19,8 @@ final float CHAD_HITBOX_RADIUS = 40;
 final color CHAD_COLOR = color(255, 20, 20);
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
-
-
+Space[] space = new Space[Arrays.STAR_COUNT];
+boolean state0=true,state1;
 void setup()
 {
   size( 1280, 720, P2D ); //16:9
@@ -28,6 +29,7 @@ void setup()
   test = new Test();
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
   enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
+  intializeBackgroundStars(); 
 }
 
 void updateGame()
@@ -41,23 +43,26 @@ void updateGame()
   test.test();
   for ( PlayerBullet playerBullet : playerBullets)
   {
-   playerBullet.update(); 
+    playerBullet.update();
   }
 }
 
 void drawGame()
 {
   background(0);
-
+  for ( int i = 0; i < space.length; i++ )
+  {
+   space[i].display(); 
+  }
   for ( Enemy enemy : enemies )
   {
     enemy.display();//shows enemies on screen
   }
-  player.checkDisplay();
   for ( PlayerBullet playerBullet : playerBullets )
   {
-  playerBullet.display();
+    playerBullet.display();
   }
+  player.checkDisplay();
 }
 
 // Keyboard handling...
@@ -80,5 +85,4 @@ void draw()
 {
   updateGame();
   drawGame();
-  
 }
