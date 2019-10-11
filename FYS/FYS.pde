@@ -20,7 +20,8 @@ final color CHAD_COLOR = color(255, 20, 20);
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 Space[] space = new Space[Arrays.STAR_COUNT];
-boolean state0=true,state1;
+boolean state0=true,state1=false;
+
 void setup()
 {
   size( 1280, 720, P2D ); //16:9
@@ -49,6 +50,7 @@ void updateGame()
 
 void drawGame()
 {
+  if (state0)
   background(0);
   for ( int i = 0; i < space.length; i++ )
   {
