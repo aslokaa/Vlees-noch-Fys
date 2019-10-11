@@ -12,6 +12,7 @@ class Startscreen
   
   void displayBackground()
   {
+    background(Colors.WHITE);
     for ( int i = 0; i < space.length; i++ )
     {
       space[i].display();
