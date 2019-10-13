@@ -7,10 +7,32 @@ class Endscreen
 {
   void display()
   {
-    
+    background(Colors.BLACK);
   }
   void update()
   {
-    
+    restart();
+  }
+
+  //restarts the game
+  void restart()
+  {
+    if (checkInput())
+    {
+      player = new Player();
+      stateEnd=false;
+      stateStart=true;
+    }
+  }
+
+  //checks wether z is pressed
+  boolean checkInput()
+  {
+    if (keysPressed['z'])
+    {
+      keysPressed['z']=false;
+      return true;
+    }
+    return false;
   }
 }
