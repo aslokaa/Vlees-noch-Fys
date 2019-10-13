@@ -31,7 +31,7 @@ SoundFile introMusic;
 
 void setup()
 {
-  size( 1280, 720, P2D ); //16:9
+  size( 1600, 900, P2D ); //16:9
   smooth(0);
   introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   player = new Player();
