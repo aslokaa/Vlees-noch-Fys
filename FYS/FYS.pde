@@ -1,6 +1,6 @@
 //Galaxy Defence Force
 //IG101-2, Vlees noch FYS
-//Niklas Leeuwin, Brent Sijm, Olger Klok ,Tim Brouwenstijn, Mika Spoelstra, Eele Roet, 
+//Niklas Leeuwin, Brent Sijm, Olger Klok , Mika Spoelstra, Eele Roet, 
 // x is bottom keys
 
 //import processing.sound.*;
@@ -20,7 +20,12 @@ final color CHAD_COLOR = color(255, 20, 20);
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 Space[] space = new Space[Arrays.STAR_COUNT];
-boolean state0=true,state1;
+boolean state0=true, state1=false, statePaused=false;
+Startscreen startscreen;
+Pausescreen pausescreen;
+PFont font;
+
+
 void setup()
 {
   size( 1280, 720, P2D ); //16:9
@@ -29,40 +34,63 @@ void setup()
   test = new Test();
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
   enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
-  intializeBackgroundStars(); 
+  intializeBackgroundStars();
+  startscreen = new Startscreen();
+  pausescreen = new Pausescreen();
+  font = loadFont("ComicSansMS-BoldItalic-40.vlw");
 }
 
 void updateGame()
 {
-  for ( Enemy enemy : enemies )
+  if (state0)
   {
-    enemy.executeBehavior();//handles movement paterns
-  }
+    startscreen.update();
+  } else if (state1)
+  {
+    pausescreen.update();
+    if (!statePaused)
+    {
+      for ( Enemy enemy : enemies )
+      {
+        enemy.executeBehavior();//handles movement paterns
+      }
 
-  player.update();
-  test.test();
-  for ( PlayerBullet playerBullet : playerBullets)
-  {
-    playerBullet.update();
+      player.update();
+      test.test();
+      for ( PlayerBullet playerBullet : playerBullets)
+      {
+        playerBullet.update();
+      }
+    }
   }
 }
 
 void drawGame()
 {
-  background(0);
-  for ( int i = 0; i < space.length; i++ )
+  if (state0)
   {
-   space[i].display(); 
-  }
-  for ( Enemy enemy : enemies )
+    startscreen.display();
+  } else if (state1)
   {
-    enemy.display();//shows enemies on screen
+    background(0);
+    for ( int i = 0; i < space.length; i++ )
+    {
+      space[i].display();
+    }
+    for ( Enemy enemy : enemies )
+    {
+      enemy.display();//shows enemies on screen
+    }
+    for ( PlayerBullet playerBullet : playerBullets )
+    {
+      playerBullet.display();
+    }
+    player.checkDisplay();
+    if (statePaused)
+    {
+      pausescreen.display();
+    }
   }
-  for ( PlayerBullet playerBullet : playerBullets )
-  {
-    playerBullet.display();
-  }
-  player.checkDisplay();
 }
 
 // Keyboard handling...
@@ -71,6 +99,14 @@ void keyPressed() {
   keyCodesPressed[keyCode] = true; // set its boolean to true
   if (key>=KEY_LIMIT) return;
   keysPressed[key] = true;
+  if ( keyCode == ESC ) 
+  {
+    if (state1)
+    {
+      pausescreen.escapePressed=true; //changes pause state
+    }
+    key=0; //now the game doesn't exit after escape is pressed.
+  }
 }
 
 //..and with each key Released vice versa from FYS
