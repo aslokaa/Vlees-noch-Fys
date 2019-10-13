@@ -25,6 +25,13 @@ class Pausescreen
   {
     if (escapePressed)
     {
+      if (statePaused)
+      {
+       menuSounds.play(Sounds.UNPAUSE); 
+      } else
+      {
+       menuSounds.play(Sounds.PAUSE); 
+      }
       statePaused=!statePaused;
       escapePressed=false;
     }
