@@ -6,9 +6,9 @@
 class Pausescreen
 {
   final float
-    titleSize      = width * 0.09, 
-    titleX         = width * 0.5, 
-    titleY         = height * 0.5;
+    TITLE_SIZE      = width * 0.09, 
+    TITLE_X         = width * 0.5, 
+    TITLE_Y         = height * 0.5;
   boolean escapePressed=false;
 
   void display()
@@ -33,8 +33,8 @@ class Pausescreen
   //displays text
   void displayText()
   {
-    textFont(font, titleSize);
+    textFont(font, TITLE_SIZE);
     fill(Colors.RED);
-    text("PAUSED", titleX, titleY);
+    text("PAUSED", TITLE_X, TITLE_Y);
   }
 }
