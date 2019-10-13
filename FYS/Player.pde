@@ -39,6 +39,7 @@ class Player
     accelerationX, 
     accelerationY, 
     velocityX, 
+    velocityXSplit, 
     velocityY, 
     decelerateX, 
     decelerateY, 
@@ -64,30 +65,31 @@ class Player
 
   Player() //Constructor
   {
-    x = PLAYER_START_X;
-    y = PLAYER_START_Y;
-    playerWidth = PLAYER_START_WIDTH;
-    playerHeigth = PLAYER_START_HEIGHT;
-    accelerationX = PLAYER_START_ACCELERATION_X;
-    accelerationY = PLAYER_START_ACCELERATION_Y;
-    velocityX = 0;
-    velocityY = 0;
-    decelerateX = PLAYER_START_DECELERATE_X;
-    decelerateY = PLAYER_START_DECELERATE_Y;
-    inverted = false;
-    invertedTimer = 0;
-    invisible = false;
-    invisibleTimer = 0;
-    slow = false;
-    slowTimer = 0;
-    shake = false;
-    shakeTimer = 0;
-    split = false;
-    splitTimer = 0;
-    shootTimer = 0;
-    xSplit = 0;
-    widthSplit0=0;
-    widthSplit1=0;
+    x                 = PLAYER_START_X;
+    y                 = PLAYER_START_Y;
+    playerWidth       = PLAYER_START_WIDTH;
+    playerHeigth      = PLAYER_START_HEIGHT;
+    accelerationX     = PLAYER_START_ACCELERATION_X;
+    accelerationY     = PLAYER_START_ACCELERATION_Y;
+    velocityX         = 0;
+    velocityXSplit    = 0;
+    velocityY         = 0;
+    decelerateX       = PLAYER_START_DECELERATE_X;
+    decelerateY       = PLAYER_START_DECELERATE_Y;
+    inverted          = false;
+    invertedTimer     = 0;
+    invisible         = false;
+    invisibleTimer    = 0;
+    slow              = false;
+    slowTimer         = 0;
+    shake             = false;
+    shakeTimer        = 0;
+    split             = false;
+    splitTimer        = 0;
+    shootTimer        = 0;
+    xSplit            = 0;
+    widthSplit0       = 0;
+    widthSplit1       = 0;
   }
 
   //updates the player
@@ -154,10 +156,18 @@ class Player
     if ( keyCodesPressed[LEFT] ) 
     {
       velocityX -= accelerationX ; //Accelerates to the left.
+      if (split)
+      {
+        velocityXSplit += accelerationX;
+      }
     }
     if ( keyCodesPressed[RIGHT] ) 
     {
       velocityX += accelerationX; //Accelerates to the right.
+      if (split)
+      {
+        velocityXSplit -= accelerationX;
+      }
     }
     if ( keyCodesPressed[UP] )
     {
@@ -197,6 +207,10 @@ class Player
     {
       velocityX = PLAYER_VELOCITY_X_MAX;
     }
+    if (split && velocityXSplit > PLAYER_VELOCITY_X_MAX)
+    {
+      velocityXSplit = PLAYER_VELOCITY_X_MAX;
+    }
     if (velocityY > PLAYER_VELOCITY_Y_MAX)
     {
       velocityY = PLAYER_VELOCITY_Y_MAX;
@@ -207,12 +221,20 @@ class Player
   {
     x += velocityX;
     y += velocityY;
+    if (split)
+    {
+      xSplit+=velocityXSplit;
+    }
   }
   //modifies the X and Y posistions but inverted.
   void moveInverted()
   {
     x -= velocityX;
     y -= velocityY;
+    if (split)
+    {
+      xSplit-=velocityXSplit;
+    }
   }
 
   //Gives the player a powerup or down.
@@ -221,22 +243,22 @@ class Player
     switch(type)
     {
     case PowerUps.INVERTED:
-    playerSounds.play(Sounds.INVERTED);
+      playerSounds.play(Sounds.INVERTED);
       inverted = true;
       invertedTimer = INVERTED_STARTING_TIMER;
       break;
     case PowerUps.INVISIBLE:
-    playerSounds.play(Sounds.INVISIBLE);
+      playerSounds.play(Sounds.INVISIBLE);
       invisible = true;
       invisibleTimer = INVISIBLE_STARTING_TIMER;
       break;
     case PowerUps.SLOW:
-    playerSounds.play(Sounds.SLOW);
+      playerSounds.play(Sounds.SLOW);
       slow = true;
       slowTimer = SLOW_STARTING_TIMER;
       break;
     case PowerUps.SPLIT:
-    playerSounds.play(Sounds.SPLIT);
+      playerSounds.play(Sounds.SPLIT);
       if (!split)
       {
         if ( x > width / 2 )
@@ -246,6 +268,7 @@ class Player
       }
       widthSplit0 = playerWidth / 2;
       widthSplit1 = playerWidth / 2;
+      xSplit = width - x - widthSplit1;
       split = true;
       splitTimer=SPLIT_STARTING_TIMER;
       break;
@@ -257,6 +280,18 @@ class Player
   //Prevents the player from going out of bounds
   void detectCollisionEdge() 
   {
+    //Y
+    if ( y < 0 )
+    {
+      y = 0;
+      velocityY = 0;
+    }
+    if ( y + playerHeigth > height )
+    {
+      y = height - playerHeigth;
+      velocityY = 0;
+    }
+    //Unsplit X
     if (!split)
     {
       if ( x < 0 )
@@ -269,16 +304,7 @@ class Player
         x = width - playerWidth;
         velocityX = 0;
       }
-      if ( y < 0 )
-      {
-        y = 0;
-        velocityY = 0;
-      }
-      if ( y + playerHeigth > height )
-      {
-        y = height - playerHeigth;
-        velocityY = 0;
-      }
+      //Split X
     } else if (split)
     {
       if ( x < 0 )
@@ -291,15 +317,15 @@ class Player
         x = width / 2 - widthSplit0;
         velocityX = 0;
       }
-      if (y < 0)
+      if ( xSplit < width / 2 )
       {
-        y = 0;
-        velocityY = 0;
+        xSplit = width / 2;
+        velocityXSplit = 0;
       }
-      if ( y + playerHeigth > height)
+      if ( xSplit + widthSplit1 > width )
       {
-        y = height - playerHeigth;
-        velocityY = 0;
+        xSplit = width - widthSplit1;
+        velocityXSplit = 0;
       }
     }
   }
@@ -308,13 +334,18 @@ class Player
   void decelerate()
   {
     velocityX *= decelerateX;
+    if (split)
+    {
+      velocityXSplit *= decelerateX;
+    }
     velocityY *= decelerateY;
   }
   //shrinks the paddle
   void dealDamage( float damage, boolean isSplit)
   {
     playerSounds.play(Sounds.RECIEVE_DAMAGE);
-    playerWidth -= damage;
+    shake = true;
+    shakeTimer = SHAKE_STARTING_TIMER;
     if (split)
     {
       if (isSplit)
@@ -324,20 +355,24 @@ class Player
       {
         widthSplit0 -= damage;
       }
-    }
-    shake = true;
-    shakeTimer = SHAKE_STARTING_TIMER;
-    if ( playerWidth < PLAYER_MIN_WIDTH )
+      if (widthSplit0<PLAYER_MIN_WIDTH || widthSplit1 <PLAYER_MIN_WIDTH)
+      {
+        endSplit();
+      }
+    } else if (!split)
     {
-      statePlaying=false;
-      stateEnd=true;
+      playerWidth -= damage;
+      if ( playerWidth < PLAYER_MIN_WIDTH )
+      {
+        endscreen.loseGame();
+      }
     }
   }
-  
-  
-  
+
+
+
   //grows the paddle
-  void restoreHealth( float healing , boolean isSplit )
+  void restoreHealth( float healing, boolean isSplit )
   {
     playerSounds.play(Sounds.RESTORE_HEALTH);
     if (split)
@@ -345,14 +380,13 @@ class Player
       if (isSplit)
       {
         if ( widthSplit1 < PLAYER_MAX_WIDTH / 2 )
-        widthSplit1 += healing;
+          widthSplit1 += healing;
       } else
       {
         if ( widthSplit0 < PLAYER_MAX_WIDTH / 2 )
-        widthSplit0 += healing;
+          widthSplit0 += healing;
       }
-    }
-    else if ( playerWidth < PLAYER_MAX_WIDTH )
+    } else if ( playerWidth < PLAYER_MAX_WIDTH )
     {
       playerWidth += healing;
     }
@@ -395,10 +429,9 @@ class Player
     if (split)
     {
       splitTimer--;
-      xSplit = width - x - playerWidth / 2;
       if ( splitTimer <= 0 )
       {
-        split=false;
+        endSplit();
       }
     }
   }
@@ -444,11 +477,11 @@ class Player
   {
     ammo += newAmmo;
   }
-  
+
   //returns the hitboxes
   Rectangles getHitboxes()
   {
-   return new Rectangles( x, xSplit, y , playerWidth , widthSplit0, widthSplit1, playerHeigth, split );
+    return new Rectangles( x, xSplit, y, playerWidth, widthSplit0, widthSplit1, playerHeigth, split );
   }
 
   //activates a bullet.
@@ -462,6 +495,20 @@ class Player
       }
     }
   }
+  //unsplits the player
+  void endSplit()
+  {
+    split=false;
+    playerWidth=widthSplit0+widthSplit1;
+    splitTimer=0;
+    if (widthSplit0>=widthSplit1)
+    {
+      return;
+    } else
+    {
+      x=xSplit;
+    }
+  }
 }
 
 
@@ -470,16 +517,16 @@ class Rectangles
 {
   Rectangle rectangle0;
   Rectangle rectangle1;
-  Rectangles( float xT0, float xT1, float yT, float widthT,float w0T, float w1T, float heightT, boolean existsT )
+  Rectangles( float xT0, float xT1, float yT, float widthT, float w0T, float w1T, float heightT, boolean existsT )
   {
-     float w0=widthT;
-     float w1=widthT;
+    float w0=widthT;
+    float w1=widthT;
     if (existsT)
     {
-     w0=w0T;
-     w1=w1T;
+      w0=w0T;
+      w1=w1T;
     } else
-    rectangle0 = new Rectangle( xT0, yT, w0, heightT, true );
+      rectangle0 = new Rectangle( xT0, yT, w0, heightT, true );
     rectangle1 = new Rectangle( xT1, yT, w1, heightT, existsT );
   }
 }
