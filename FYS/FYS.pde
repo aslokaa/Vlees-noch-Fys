@@ -25,13 +25,16 @@ Startscreen startscreen;
 Pausescreen pausescreen;
 Endscreen endscreen;
 PlayerSounds playerSounds;
+MenuSounds menuSounds;
 PFont font;
+SoundFile introMusic;
 
 
 void setup()
 {
   size( 1280, 720, P2D ); //16:9
   smooth(0);
+  introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   player = new Player();
   test = new Test();
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
@@ -40,7 +43,6 @@ void setup()
   startscreen   = new Startscreen();
   pausescreen   = new Pausescreen();
   endscreen     = new Endscreen();
-  playerSounds  = new PlayerSounds();
   font = loadFont("ComicSansMS-BoldItalic-40.vlw");
 }
 
