@@ -22,7 +22,7 @@ interface Colors
     BLUE       = #0000FF, 
     YELLOW     = #FFFF00, 
     RED        = #FF0000,
-    BLACK      = #FFFFFF;
+    BLACK      = #000000;
 }
 
 //stores array amounts.
