@@ -7,7 +7,7 @@ class Endscreen
 {
   void display()
   {
-    background(Colors.BLACK);
+    background(Colors.WHITE);
     menuSounds.play(Sounds.END_MUSIC);
   }
   void update()
