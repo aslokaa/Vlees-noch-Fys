@@ -23,6 +23,7 @@ Space[] space = new Space[Arrays.STAR_COUNT];
 boolean stateStart=true, statePlaying=false, statePaused=false,stateEnd=false;
 Startscreen startscreen;
 Pausescreen pausescreen;
+Endscreen endscreen;
 PFont font;
 
 
@@ -37,6 +38,7 @@ void setup()
   intializeBackgroundStars();
   startscreen = new Startscreen();
   pausescreen = new Pausescreen();
+  endscreen   = new Endscreen();
   font = loadFont("ComicSansMS-BoldItalic-40.vlw");
 }
 
@@ -62,7 +64,7 @@ void updateGame()
         playerBullet.update();
       }
     }
-  } else if (state2)
+  } else if (stateEnd)
   {
     
   }
@@ -93,6 +95,9 @@ void drawGame()
     {
       pausescreen.display();
     }
+  } else if (stateEnd)
+  {
+    
   }
 }
 
