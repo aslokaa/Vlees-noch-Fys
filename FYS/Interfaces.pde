@@ -29,7 +29,8 @@ interface Colors
 interface Arrays
 {
   final int
-    STAR_COUNT  = 300;
+    STAR_COUNT    = 300,
+    OPTION_COUNT  = 3;
 }
 
 //adding readability
