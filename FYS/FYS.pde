@@ -20,7 +20,7 @@ final color CHAD_COLOR = color(255, 20, 20);
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 Space[] space = new Space[Arrays.STAR_COUNT];
-boolean state0=true, state1=false, statePaused=false;
+boolean stateStart=true, statePlaying=false, statePaused=false,stateEnd=false;
 Startscreen startscreen;
 Pausescreen pausescreen;
 PFont font;
@@ -42,10 +42,10 @@ void setup()
 
 void updateGame()
 {
-  if (state0)
+  if (stateStart)
   {
     startscreen.update();
-  } else if (state1)
+  } else if (statePlaying)
   {
     pausescreen.update();
     if (!statePaused)
@@ -62,15 +62,18 @@ void updateGame()
         playerBullet.update();
       }
     }
+  } else if (state2)
+  {
+    
   }
 }
 
 void drawGame()
 {
-  if (state0)
+  if (stateStart)
   {
     startscreen.display();
-  } else if (state1)
+  } else if (statePlaying)
   {
     background(0);
     for ( int i = 0; i < space.length; i++ )
@@ -101,7 +104,7 @@ void keyPressed() {
   keysPressed[key] = true;
   if ( keyCode == ESC ) 
   {
-    if (state1)
+    if (statePlaying)
     {
       pausescreen.escapePressed=true; //changes pause state
     }
