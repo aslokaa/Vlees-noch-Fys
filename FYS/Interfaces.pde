@@ -2,7 +2,7 @@
 //500784205
 //
 
-//Adding readablity to the powerUps.
+//Adding readability to the powerUps.
 interface PowerUps 
 { 
   final int
@@ -30,4 +30,17 @@ interface Arrays
 {
   final int
     STAR_COUNT  = 300;
+}
+
+//adding readability
+interface Sounds
+{
+  final int
+    RECIEVE_DAMAGE    = 0,
+    RESTORE_HEALTH    = 1,  
+    SHOOT             = 2,
+    SPLIT             = 3,
+    SLOW              = 4,
+    INVERTED          = 5,
+    INVISIBLE         = 6;
 }
