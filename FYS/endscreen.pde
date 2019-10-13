@@ -5,5 +5,12 @@
 //this class handles the endscreen.
 class Endscreen
 {
-  
+  void display()
+  {
+    
+  }
+  void update()
+  {
+    
+  }
 }
