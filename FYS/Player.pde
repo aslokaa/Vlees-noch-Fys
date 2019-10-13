@@ -221,18 +221,22 @@ class Player
     switch(type)
     {
     case PowerUps.INVERTED:
+    playerSounds.play(Sounds.INVERTED);
       inverted = true;
       invertedTimer = INVERTED_STARTING_TIMER;
       break;
     case PowerUps.INVISIBLE:
+    playerSounds.play(Sounds.INVISIBLE);
       invisible = true;
       invisibleTimer = INVISIBLE_STARTING_TIMER;
       break;
     case PowerUps.SLOW:
+    playerSounds.play(Sounds.SLOW);
       slow = true;
       slowTimer = SLOW_STARTING_TIMER;
       break;
     case PowerUps.SPLIT:
+    playerSounds.play(Sounds.SPLIT);
       if (!split)
       {
         if ( x > width / 2 )
@@ -309,6 +313,7 @@ class Player
   //shrinks the paddle
   void dealDamage( float damage, boolean isSplit)
   {
+    playerSounds.play(Sounds.RECIEVE_DAMAGE);
     playerWidth -= damage;
     if (split)
     {
@@ -328,9 +333,13 @@ class Player
       stateEnd=true;
     }
   }
+  
+  
+  
   //grows the paddle
   void restoreHealth( float healing , boolean isSplit )
   {
+    playerSounds.play(Sounds.RESTORE_HEALTH);
     if (split)
     {
       if (isSplit)
@@ -422,6 +431,7 @@ class Player
     {
       return;
     } 
+    playerSounds.play(Sounds.SHOOT);
     ammo--;
     activatesBullet(x);
     if (split)
