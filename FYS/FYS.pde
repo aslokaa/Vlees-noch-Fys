@@ -3,7 +3,7 @@
 //Niklas Leeuwin, Brent Sijm, Olger Klok , Mika Spoelstra, Eele Roet, 
 // x is bottom keys
 
-//import processing.sound.*;
+import processing.sound.*;
 
 
 Player player;
@@ -24,6 +24,7 @@ boolean stateStart=true, statePlaying=false, statePaused=false,stateEnd=false;
 Startscreen startscreen;
 Pausescreen pausescreen;
 Endscreen endscreen;
+PlayerSounds playerSounds;
 PFont font;
 
 
@@ -34,11 +35,12 @@ void setup()
   player = new Player();
   test = new Test();
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
-  enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
+  //enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
   intializeBackgroundStars();
-  startscreen = new Startscreen();
-  pausescreen = new Pausescreen();
-  endscreen   = new Endscreen();
+  startscreen   = new Startscreen();
+  pausescreen   = new Pausescreen();
+  endscreen     = new Endscreen();
+  playerSounds  = new PlayerSounds();
   font = loadFont("ComicSansMS-BoldItalic-40.vlw");
 }
 
