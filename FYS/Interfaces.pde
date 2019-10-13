@@ -42,5 +42,12 @@ interface Sounds
     SPLIT             = 3,
     SLOW              = 4,
     INVERTED          = 5,
-    INVISIBLE         = 6;
+    START_GAME        = 7,
+    GAME_MUSIC0       = 8,
+    GAME_MUSIC1       = 9,
+    GAME_MUSIC2       = 10,
+    END_MUSIC         = 11,
+    PAUSE             = 12,
+    UNPAUSE           = 13,
+    INVISIBLE         = 1000;
 }
