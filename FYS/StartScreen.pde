@@ -2,16 +2,16 @@
 //500784205
 //
 
-//this class handles the start screen.
+//this class handles the startscreen.
 class Startscreen
 {
   final float
-    titleSize      = width * 0.09, 
-    subTitleSize   = width * 0.04, 
-    titleX         = width * 0.5, 
-    titleY         = height * 0.2, 
-    subTitleX      = width * 0.5, 
-    subTitleY      = height * 0.4;
+    TITLE_SIZE      = width * 0.09, 
+    SUBTITLE_SIZE   = width * 0.04, 
+    TITLE_X         = width * 0.5, 
+    TITLE_Y         = height * 0.2, 
+    SUBTITLE_X      = width * 0.5, 
+    SUBTITLE_Y      = height * 0.4;
 
 
   void update()
@@ -35,21 +35,21 @@ class Startscreen
   //draws the text.
   void displayText()
   {
-    textFont(font, titleSize);
+    textFont(font, TITLE_SIZE);
     textAlign(CENTER);
     fill(Colors.WHITE);
-    text("Galaxy Defence Force", titleX, titleY);
-    textFont(font, subTitleSize);
+    text("Galaxy Defence Force", TITLE_X, TITLE_Y);
+    textFont(font, SUBTITLE_SIZE);
     fill(Colors.YELLOW);
-    text("Press Any Key To Continue.", subTitleX, subTitleY);
+    text("Press Any Key To Continue.", SUBTITLE_X, SUBTITLE_Y);
   }
   //changes the gameState
   void updateGameStates()
   {
     if (checkInput())
     {
-      state0=false;
-      state1=true;
+      stateStart=false;
+      statePlaying=true;
     }
   }
 //checks if the user enters any key.
