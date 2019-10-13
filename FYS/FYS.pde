@@ -66,7 +66,7 @@ void updateGame()
     }
   } else if (stateEnd)
   {
-    
+    endscreen.update();
   }
 }
 
@@ -97,7 +97,7 @@ void drawGame()
     }
   } else if (stateEnd)
   {
-    
+    endscreen.display();
   }
 }
 
