@@ -51,7 +51,7 @@ class Startscreen
   //draws the background
   void displayBackground()
   {
-    background(Colors.WHITE);
+    background(Colors.BLACK);
     for ( int i = 0; i < space.length; i++ )
     {
       space[i].display();
