@@ -324,7 +324,8 @@ class Player
     shakeTimer = SHAKE_STARTING_TIMER;
     if ( playerWidth < PLAYER_MIN_WIDTH )
     {
-      println("Lost");
+      statePlaying=false;
+      stateEnd=true;
     }
   }
   //grows the paddle
