@@ -28,6 +28,7 @@ PlayerSounds playerSounds;
 MenuSounds menuSounds;
 PFont font;
 SoundFile introMusic;
+final int MAX_BULLETS = 30;
 
 void setup()
 {
@@ -38,6 +39,9 @@ void setup()
   test = new Test();
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
   //enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
+  for (int i = 0; i < MAX_BULLETS; i++){
+   playerBullets.add( new PlayerBullet(0,0));
+  }
   intializeBackgroundStars();
   startscreen   = new Startscreen();
   pausescreen   = new Pausescreen();
