@@ -17,7 +17,7 @@ class PlayerBullet
   {
     bulletX = Xpos;
     bulletY = Ypos;
-    bulletSpeed = 5;
+    bulletSpeed = -5;
     bulletDiameter = 10;
     shootBullet = false;
   }
@@ -31,12 +31,15 @@ class PlayerBullet
   void display() { //Draws the bullet if it is shot
     if (shootBullet)
     {
+      fill(Colors.YELLOW);
       ellipse(bulletX, bulletY, bulletDiameter, bulletDiameter);
     }
   }
   void createBullet(float playerX, float playerY) {
     shootBullet = true;
-    playerBullets.add(new PlayerBullet(playerX, playerY + (bulletDiameter/2)));
+    bulletX = playerX;
+    bulletY = playerY;
+    println(1);
   }
   
   void move() {

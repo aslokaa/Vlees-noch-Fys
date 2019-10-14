@@ -492,6 +492,7 @@ class Player
       if (!playerBullet.shootBullet)
       {
         playerBullet.createBullet(xT, y);
+        return;
       }
     }
   }

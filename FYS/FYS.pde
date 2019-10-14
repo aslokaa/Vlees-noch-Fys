@@ -29,6 +29,7 @@ MenuSounds menuSounds;
 PFont font;
 SoundFile introMusic;
 
+
 void setup()
 {
   size( 1600, 900, P2D ); //16:9
@@ -38,6 +39,9 @@ void setup()
   test = new Test();
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
   //enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
+  for (int i = 0; i < Arrays.BULLET_COUNT; i++){
+   playerBullets.add( new PlayerBullet(0,0));
+  }
   intializeBackgroundStars();
   startscreen   = new Startscreen();
   pausescreen   = new Pausescreen();

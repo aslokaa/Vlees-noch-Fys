@@ -30,6 +30,7 @@ interface Arrays
 {
   final int
     STAR_COUNT    = 300,
+    BULLET_COUNT  = 30,
     OPTION_COUNT  = 3;
 }
 
