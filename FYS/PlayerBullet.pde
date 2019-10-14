@@ -17,7 +17,7 @@ class PlayerBullet
   {
     bulletX = Xpos;
     bulletY = Ypos;
-    bulletSpeed = -5;
+    bulletSpeed = -height/100;
     bulletDiameter = 10;
     shootBullet = false;
   }
@@ -26,7 +26,9 @@ class PlayerBullet
     if (shootBullet)
     {
       move();
-    }
+      checkOffScreenBullet();    
+  }
+    
   }
   void display() { //Draws the bullet if it is shot
     if (shootBullet)
@@ -37,13 +39,18 @@ class PlayerBullet
   }
   void createBullet(float playerX, float playerY) {
     shootBullet = true;
-    bulletX = playerX;
+    bulletX = playerX + (player.playerWidth/2);
     bulletY = playerY;
-    println(1);
   }
   
   void move() {
     bulletY += bulletSpeed;
+  }
+  
+  void checkOffScreenBullet(){
+   if (bulletY < 0){
+    shootBullet = false; 
+   }
   }
 
   boolean checkEnemyCollision() {
