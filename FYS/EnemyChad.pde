@@ -6,28 +6,64 @@ Eele Roet 500795948
 
 class EnemyChad extends Enemy
 {
-  float SpeedX;
-  float SpeedY;
-
+  float speedX;
+  float speedY;
+  float accelX;
+  float accelY;
+ 
   EnemyChad(float x, float y, float hitboxRadius)
   {
     super(x, y, hitboxRadius);
-    SpeedY = 0;
-    SpeedX = 0;
+    speedY = 0;
+    speedX = 0;
   }
 
   @Override void executeBehavior()
   {
     checkWallCollision();//als chad een muur raakt stopt hij met bewegen in die richting.
-    moveToPlayer();//sets speeds so that chad accelerates towards the player.
+    setAccelTowardsPlayer();//sets speeds so that chad accelerates towards the player.
+    move();
   }
 
-  void moveToPlayer()
+  void setAccelTowardsPlayer()
   {
+    accelX = dist( x, y, player.x, y ) / (dist( x, y, player.x, y ) + dist( x, y, x, player.y )) ;
+    accelY = 1 - accelX;
+    
+    if ( x > player.x )
+    {
+     accelX *= -1; 
+    }
+    if ( y > player.y ) 
+    {
+     accelY *= -1; 
+    }
+    println(accelX, accelY);
+    //get angle to player
+    //translate angle to x and y acceleration.
   }
 
   void move()
   {
+    speedX += accelX / 10;
+    speedY += accelY / 10;
+    if( speedX > 4 )
+    {
+       speedX = 4;
+    }
+    else if( speedX < -4)
+    {
+      speedX = -4;
+    }
+    
+    if( speedY > 4 )
+    {
+       speedY = 4;
+    }
+    else if( speedY < -4)
+    {
+      speedY = -4;
+    }
     x += speedX;
     y += speedY;
   }

@@ -27,18 +27,18 @@ Endscreen endscreen;
 PlayerSounds playerSounds;
 MenuSounds menuSounds;
 PFont font;
-SoundFile introMusic;
+//SoundFile introMusic;
 
 
 void setup()
 {
   size( 1600, 900, P2D ); //16:9
   smooth(0);
-  introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
+ // introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   player = new Player();
   test = new Test();
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
-  //enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
+  enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
   for (int i = 0; i < Arrays.BULLET_COUNT; i++){
    playerBullets.add( new PlayerBullet(0,0));
   }
