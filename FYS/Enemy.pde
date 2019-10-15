@@ -8,6 +8,7 @@ Eele Roet 500795948
 */
 class Enemy
 {
+  boolean active;
   float hitboxRadius;
   float hitboxDiameter;
   float x;
@@ -26,6 +27,11 @@ class Enemy
   void executeBehavior()
   {
     println("define the method before using it");
+  }
+  
+  void destroy()
+  {
+    
   }
   
   void display()

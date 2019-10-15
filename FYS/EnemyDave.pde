@@ -1,14 +1,15 @@
 /*
 deze class bevat dave.
-dave word boven y = 100 gespawned, dus alle y < 100.
-dave beweegt tot de eerste row op y is 100, dave gaat dan alleen in de x bewegen
-totdat hij een muur raakt dan gaat hij een row naar beneden, dus y 200 en gaat in de andere richting 
-in x bewegen. etc.
-Eele Roet 500795948
-*/
+ dave word boven y = 100 gespawned, dus alle y < 100.
+ dave beweegt tot de eerste row op y is 100, dave gaat dan alleen in de x bewegen
+ totdat hij een muur raakt dan gaat hij een row naar beneden, dus y 200 en gaat in de andere richting 
+ in x bewegen. etc.
+ Eele Roet 500795948
+ */
 
 class EnemyDave extends Enemy
 {
+  boolean active = true;
   float moveSpeedLeft;
   float moveSpeedRight;
   float moveSpeedDown;
@@ -33,9 +34,12 @@ class EnemyDave extends Enemy
 
   @Override void executeBehavior()
   {
-    checkWallCollision();//als dave een muur raakt beweegt hij een row naar beneden
-    checkRow();//als dave bij de volgende row komt gaat hij op de x bewegen.
-    move();//kijkt naar move booleans, zet snelheden, telt snelheid op bij positie.
+    if ( active )
+    {
+      move();//kijkt naar move booleans, zet snelheden, telt snelheid op bij positie.
+      checkWallCollision();//als dave een muur raakt beweegt hij een row naar beneden
+      checkRow();//als dave bij de volgende row komt gaat hij op de x bewegen.
+    }
   }
 
 
@@ -97,6 +101,10 @@ class EnemyDave extends Enemy
     }
   }
 
+  @Override void destroy()
+  {
+    active = false;
+  }
   void setXSpeed()
   {
     if ( x >= width / 2 )
@@ -110,8 +118,11 @@ class EnemyDave extends Enemy
 
   @Override void display()
   {
-    noStroke();
-    fill(DAVE_COLOR);
-    ellipse(x, y, hitboxDiameter, hitboxDiameter);
+    if ( active )
+    {
+      noStroke();
+      fill(DAVE_COLOR);
+      ellipse(x, y, hitboxDiameter, hitboxDiameter);
+    }
   }
 }

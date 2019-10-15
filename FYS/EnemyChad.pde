@@ -46,23 +46,25 @@ class EnemyChad extends Enemy
   void move()
   {
     speedX += accelX / 10;
+    
     speedY += accelY / 10;
-    if( speedX > 4 )
+    
+    if( speedX > 3 )
     {
-       speedX = 4;
+       speedX = 3;
     }
-    else if( speedX < -4)
+    else if( speedX < -3)
     {
-      speedX = -4;
+      speedX = -3;
     }
     
-    if( speedY > 4 )
+    if( speedY > 3 )
     {
-       speedY = 4;
+       speedY = 3;
     }
-    else if( speedY < -4)
+    else if( speedY < -3)
     {
-      speedY = -4;
+      speedY = -3;
     }
     x += speedX;
     y += speedY;

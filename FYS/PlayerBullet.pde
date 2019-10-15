@@ -26,7 +26,8 @@ class PlayerBullet
     if (shootBullet)
     {
       move();
-      checkOffScreenBullet();    
+      checkOffScreenBullet(); 
+      bulletEnemyCollision(); 
   }
     
   }
@@ -53,19 +54,22 @@ class PlayerBullet
    }
   }
 
-  boolean checkEnemyCollision() {
+/*  boolean checkEnemyCollision() {
     for ( Enemy enemy : enemies ) {
-      if ( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxDiameter + (bulletDiameter/2))) {    
+      if ( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxRadius + (bulletDiameter/2))) {    
         return true;
       }
     }
     return false;
-  }
+  }*/
 
   void bulletEnemyCollision() {
-    if (checkEnemyCollision())
-    {
-      shootBullet = false;
+    
+      for ( Enemy enemy : enemies ) {
+      if ( enemy.active && dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxRadius + (bulletDiameter/2))) {    
+        shootBullet = false;
+        enemy.destroy();
+      }
     }
   }
 }
