@@ -9,7 +9,6 @@ deze class bevat dave.
 
 class EnemyDave extends Enemy
 {
-  boolean active = true;
   float moveSpeedLeft;
   float moveSpeedRight;
   float moveSpeedDown;
@@ -21,7 +20,7 @@ class EnemyDave extends Enemy
 
   EnemyDave(float x, float y, float hitboxRadius)
   {
-    super(x, y, hitboxRadius);
+    super(true, x, y, hitboxRadius);
     moveSpeedLeft = -5;
     moveSpeedRight = 5;
     moveSpeedDown = 5;
@@ -105,6 +104,7 @@ class EnemyDave extends Enemy
   {
     active = false;
   }
+  
   void setXSpeed()
   {
     if ( x >= width / 2 )

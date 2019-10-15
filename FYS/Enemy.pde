@@ -16,8 +16,9 @@ class Enemy
   float speedX;
   float speedY;
 
-  Enemy(float x, float y, float hitboxRadius)
+  Enemy(boolean active, float x, float y, float hitboxRadius)
   {
+    this.active = active;
     this.x = x;
     this.y = y;
     this.hitboxRadius = hitboxRadius;
@@ -26,15 +27,22 @@ class Enemy
 
   void executeBehavior()
   {
-    println("define the method before using it");
+    println("define the behavior method before using it");
   }
   
   void destroy()
   {
-    
+    println("define the destroy method before using it");
+    explode();
+  }
+  
+  void explode()
+  {
+     println("define the explode method before using it");
   }
   
   void display()
   {
+    println("define the display method before using it");
   }
 }
