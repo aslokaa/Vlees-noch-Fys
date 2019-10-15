@@ -1,4 +1,4 @@
- /*  Olger Klok, 50082502
+/*  Olger Klok, 50082502
  Create bullet methode,
  Collision bullets met enemy
  */
@@ -6,12 +6,12 @@
 class PlayerBullet 
 {
   float 
-        bulletX,
-        bulletY,
-        bulletSpeed,
-        bulletDiameter;
+    bulletX, 
+    bulletY, 
+    bulletSpeed, 
+    bulletDiameter;
   boolean 
-        shootBullet;
+    shootBullet;
 
   PlayerBullet (float Xpos, float Ypos) //constructor
   {
@@ -27,9 +27,8 @@ class PlayerBullet
     {
       move();
       checkOffScreenBullet(); 
-      bulletEnemyCollision(); 
-  }
-    
+      bulletEnemyCollision();
+    }
   }
   void display() { //Draws the bullet if it is shot
     if (shootBullet)
@@ -43,32 +42,33 @@ class PlayerBullet
     bulletX = playerX + (player.playerWidth/2);
     bulletY = playerY;
   }
-  
+
   void move() {
     bulletY += bulletSpeed;
   }
-  
-  void checkOffScreenBullet(){
-   if (bulletY < 0){
-    shootBullet = false; 
-   }
+
+  void checkOffScreenBullet() {
+    if (bulletY < 0) {
+      shootBullet = false;
+    }
   }
 
-/*  boolean checkEnemyCollision() {
-    for ( Enemy enemy : enemies ) {
-      if ( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxRadius + (bulletDiameter/2))) {    
-        return true;
-      }
-    }
-    return false;
-  }*/
+  /*  boolean checkEnemyCollision() {
+   for ( Enemy enemy : enemies ) {
+   if ( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxRadius + (bulletDiameter/2))) {    
+   return true;
+   }
+   }
+   return false;
+   }*/
 
   void bulletEnemyCollision() {
-    
-      for ( Enemy enemy : enemies ) {
+
+    for ( Enemy enemy : enemies ) {
       if ( enemy.active && dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxRadius + (bulletDiameter/2))) {    
         shootBullet = false;
         enemy.destroy();
+        println("cunt");
       }
     }
   }
