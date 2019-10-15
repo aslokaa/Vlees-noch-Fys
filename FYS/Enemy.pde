@@ -16,8 +16,9 @@ class Enemy
   float speedX;
   float speedY;
 
-  Enemy(float x, float y, float hitboxRadius)
+  Enemy(boolean active, float x, float y, float hitboxRadius)
   {
+    this.active = active;
     this.x = x;
     this.y = y;
     this.hitboxRadius = hitboxRadius;
