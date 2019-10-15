@@ -20,7 +20,7 @@ final color CHAD_COLOR = color(255, 20, 20);
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 Space[] space = new Space[Arrays.STAR_COUNT];
-boolean stateStart=true, statePlaying=false, statePaused=false,stateEnd=false;
+boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false;
 Startscreen startscreen;
 Pausescreen pausescreen;
 Endscreen endscreen;
@@ -34,13 +34,13 @@ void setup()
 {
   size( 1600, 900, P2D ); //16:9
   smooth(0);
- // introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
+  // introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   player = new Player();
   test = new Test();
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
   enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
-  for (int i = 0; i < Arrays.BULLET_COUNT; i++){
-   playerBullets.add( new PlayerBullet(0,0));
+  for (int i = 0; i < Arrays.BULLET_COUNT; i++) {
+    playerBullets.add( new PlayerBullet(0, 0));
   }
   intializeBackgroundStars();
   startscreen   = new Startscreen();
@@ -74,6 +74,10 @@ void updateGame()
   } else if (stateEnd)
   {
     endscreen.update();
+  }
+  for ( int i = 0; i < space.length; i++ )
+  {
+    space[i].update();
   }
 }
 
