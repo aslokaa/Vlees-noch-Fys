@@ -1,6 +1,11 @@
+/*brent sijm 500829125
+script van de bal.
+bal kan bewegen, en interacteren met enemies en de player.
+
+*/
 class Ball {
   float x, y, speedX, speedY;
-  float radius;
+  float radius, diameter;
   int colorBall;
   boolean active;
 
@@ -9,9 +14,10 @@ class Ball {
     y = height/2;
     speedX = 5;
     speedY = 5;
-    radius = 10;
+    radius = 25;
     colorBall = Colors.BLUE;
     active = true;
+    diameter = radius*2;
   }
 
   void updateBall() {
@@ -27,7 +33,7 @@ class Ball {
   void drawBall() {
     if (active) {
       fill(colorBall);
-      ellipse(x, y, radius*2, radius*2);
+      ellipse(x, y, diameter, diameter);
     }
   }
   void moveBall() {
@@ -35,18 +41,18 @@ class Ball {
     y = y + speedY;
   }
   void bounceWall() {
-    if (x > width) {
+    if (x > width - radius) {
       speedX = -speedX;
     }
-    if (x < 0) {
+    if (x < radius) {
       speedX = speedX +2;
     }
-    if (y > height) {
+    if (y > height ) {
 
       x= width/2;
       y = height /2;
     }
-    if (y < 0) {
+    if (y < radius) {
       speedY = speedY +2;
     }
   }
