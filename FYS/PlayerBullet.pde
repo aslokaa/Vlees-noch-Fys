@@ -17,7 +17,7 @@ class PlayerBullet
   {
     bulletX = Xpos;
     bulletY = Ypos;
-    bulletSpeed = -height/100;
+    bulletSpeed = -height*0.01;
     bulletDiameter = 10;
     shootBullet = false;
   }
