@@ -105,6 +105,7 @@ class EnemyDave extends Enemy
   {
     active = false;
   }
+  
   void setXSpeed()
   {
     if ( x >= width / 2 )
