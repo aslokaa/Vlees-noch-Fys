@@ -177,7 +177,7 @@ class Player
     {
       velocityY += accelerationY; //Accelerates to downwards.
     }
-    if ( keysPressed['x'] && shootTimer <= 0 )
+    if ( keysPressed['x'] && shootTimer < 1 )
     {
       shoot();
     }
@@ -434,6 +434,10 @@ class Player
         endSplit();
       }
     }
+    if (shootTimer>1)
+    {
+     shootTimer--;
+    }
   }
 
   //Retrieves the color the player should have.
@@ -464,12 +468,13 @@ class Player
     {
       return;
     } 
+    shootTimer=SHOOT_STARTING_TIMER;
     playerSounds.play(Sounds.SHOOT);
     ammo--;
     activatesBullet(x);
     if (split)
     {
-      activatesBullet(x);
+      activatesBullet(xSplit);
     }
   }
   //adds aditional ammo.
