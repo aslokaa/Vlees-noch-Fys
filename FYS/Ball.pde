@@ -2,6 +2,7 @@ class Ball {
   float x, y, speedX, speedY;
   float radius;
   int colorBall;
+  boolean active;
 
   Ball() {
     x= width/2;
@@ -10,14 +11,24 @@ class Ball {
     speedY = 5;
     radius = 10;
     colorBall = Colors.BLUE;
+    active = true;
   }
 
   void updateBall() {
+    if (active) {
+      drawBall();
+      moveBall();
+      interactPlayer();
+      interactEnemy();
+      bounceWall();
+    }
   }
 
   void drawBall() {
-    fill(colorBall);
-    ellipse(x, y, radius*2, radius*2);
+    if (active) {
+      fill(colorBall);
+      ellipse(x, y, radius*2, radius*2);
+    }
   }
   void moveBall() {
     x = x + speedX;
@@ -39,21 +50,26 @@ class Ball {
       speedY = speedY +2;
     }
   }
+
+
   void interactPlayer() {
     Rectangles hitboxes = player.getHitboxes();
     if (hitboxes.rectangle0.exists)
     {
-      if(( x + radius > hitboxes.rectangle0.x)&&(x -radius < hitboxes.rectangle0.x)&&
-      (y + radius > hitboxes.rectangle0.y)){
-         speedY *= -1;
+      println(1);
+      if (( x + radius > hitboxes.rectangle0.x)&&(x -radius < hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth)&&
+        (y + radius > hitboxes.rectangle0.y)&&(y - radius < hitboxes.rectangle0.y + hitboxes.rectangle0.rectangleHeight)) {
+          println(2);
+        speedY *= -1;
+        y = hitboxes.rectangle0.y - 1 - radius;
       }
     }
   }
   void interactEnemy() {
-    for(Enemy enemy: enemies){
-    if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius){
-      //enemy.destroy;
-    }
+    for (Enemy enemy : enemies) {
+      if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius) {
+        enemy.destroy();
+      }
     }
   }
 }

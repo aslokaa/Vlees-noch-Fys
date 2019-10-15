@@ -19,6 +19,7 @@ final float CHAD_HITBOX_RADIUS = 40;
 final color CHAD_COLOR = color(255, 20, 20);
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
+ArrayList<Ball> balls = new ArrayList<Ball>();
 Space[] space = new Space[Arrays.STAR_COUNT];
 boolean stateStart=true, statePlaying=false, statePaused=false,stateEnd=false;
 Startscreen startscreen;
@@ -37,6 +38,7 @@ void setup()
  // introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   player = new Player();
   test = new Test();
+  balls.add(new Ball());
   enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
   enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
   for (int i = 0; i < Arrays.BULLET_COUNT; i++){
@@ -66,10 +68,14 @@ void updateGame()
 
       player.update();
       test.test();
+      
       for ( PlayerBullet playerBullet : playerBullets)
       {
         playerBullet.update();
       }
+      for (Ball ball : balls){
+      ball.updateBall();
+    }
     }
   } else if (stateEnd)
   {
@@ -96,6 +102,9 @@ void drawGame()
     for ( PlayerBullet playerBullet : playerBullets )
     {
       playerBullet.display();
+    }
+    for (Ball ball : balls){
+      ball.drawBall();
     }
     player.checkDisplay();
     if (statePaused)
