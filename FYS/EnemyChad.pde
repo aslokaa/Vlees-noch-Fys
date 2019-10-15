@@ -38,7 +38,7 @@ class EnemyChad extends Enemy
     {
      accelY *= -1; 
     }
-    println(accelX, accelY);
+    //println(accelX, accelY);
     //get angle to player
     //translate angle to x and y acceleration.
   }
