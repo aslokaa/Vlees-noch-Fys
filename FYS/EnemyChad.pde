@@ -81,6 +81,16 @@ class EnemyChad extends Enemy
       x = width - hitboxRadius;
     }
   }
+  
+  @Override void destroy()
+  {
+   active = false; 
+  }
+  
+  @Override void explode()
+  {
+    
+  }
 
   @Override void display()
   {
