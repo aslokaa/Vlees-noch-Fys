@@ -37,17 +37,17 @@ class PlayerBullet
       ellipse(bulletX, bulletY, bulletDiameter, bulletDiameter);
     }
   }
-  void createBullet(float playerX, float playerY) {
+  void createBullet(float playerX, float playerY) { // Creates the bullet at the players location 
     shootBullet = true;
     bulletX = playerX + (player.playerWidth/2);
     bulletY = playerY;
   }
 
   void move() {
-    bulletY += bulletSpeed;
+    bulletY += bulletSpeed; //Moves the ball
   }
 
-  void checkOffScreenBullet() {
+  void checkOffScreenBullet() { //Stop drawing the bullet if its off screen
     if (bulletY < 0) {
       shootBullet = false;
     }
@@ -62,13 +62,12 @@ class PlayerBullet
    return false;
    }*/
 
-  void bulletEnemyCollision() {
+  void bulletEnemyCollision() { //Checks colision tussesn enemy en bullet
 
     for ( Enemy enemy : enemies ) {
       if ( enemy.active && dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxRadius + (bulletDiameter/2))) {    
         shootBullet = false;
         enemy.destroy();
-        println("cunt");
       }
     }
   }
