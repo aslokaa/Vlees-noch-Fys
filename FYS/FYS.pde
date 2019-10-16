@@ -28,7 +28,7 @@ Endscreen endscreen;
 PlayerSounds playerSounds;
 MenuSounds menuSounds;
 PFont font;
-//SoundFile introMusic;
+SoundFile introMusic;
 
 
 void setup()
