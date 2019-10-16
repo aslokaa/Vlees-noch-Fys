@@ -38,5 +38,11 @@ class Test
       player.modifyPower(PowerUps.SPLIT);
     }
     //println(frameRate);
+    if (keysPressed['e'])
+    {
+     Rectangles hitboxes = player.getHitboxes();
+     println(hitboxes.rectangle0.x,hitboxes.rectangle0.y,hitboxes.rectangle0.rectangleWidth,hitboxes.rectangle0.rectangleHeight,hitboxes.rectangle1.exists);
+     println(hitboxes.rectangle1.x,hitboxes.rectangle1.y,hitboxes.rectangle1.rectangleWidth,hitboxes.rectangle1.rectangleHeight,hitboxes.rectangle1.exists);
+    }
   }
 }
