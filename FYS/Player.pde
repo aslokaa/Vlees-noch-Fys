@@ -13,7 +13,7 @@ class Player
     PLAYER_START_Y                  =height-PLAYER_START_HEIGHT, 
     PLAYER_START_ACCELERATION_X     =width*0.001, 
     PLAYER_VELOCITY_X_MAX           =width*0.01, 
-    PLAYER_START_DECELERATE_X       =0.985, 
+    PLAYER_START_DECELERATE_X       =0.975, 
     PLAYER_START_ACCELERATION_Y     =height*0.001, 
     PLAYER_VELOCITY_Y_MAX           =height*0.01, 
     PLAYER_START_DECELERATE_Y       =0.9, 
