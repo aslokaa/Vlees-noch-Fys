@@ -1,8 +1,8 @@
 /*brent sijm 500829125
-script van de bal.
-bal kan bewegen, en interacteren met enemies en de player.
-
-*/
+ script van de bal.
+ bal kan bewegen, en interacteren met enemies en de player.
+ 
+ */
 class Ball {
   float x, y, speedX, speedY;
   float radius, diameter;
@@ -12,8 +12,8 @@ class Ball {
   Ball() {
     x= width/2;
     y = height/2;
-    speedX = 5;
-    speedY = 5;
+    speedX = 6;
+    speedY = 6;
     radius = 25;
     colorBall = Colors.BLUE;
     active = true;
@@ -45,7 +45,7 @@ class Ball {
       speedX = -speedX;
     }
     if (x < radius) {
-      speedX = speedX +2;
+      speedX *= -1;
     }
     if (y > height ) {
 
@@ -53,7 +53,7 @@ class Ball {
       y = height /2;
     }
     if (y < radius) {
-      speedY = speedY +2;
+      speedY *= -1;
     }
   }
 
@@ -62,12 +62,24 @@ class Ball {
     Rectangles hitboxes = player.getHitboxes();
     if (hitboxes.rectangle0.exists)
     {
-      println(1);
+      
       if (( x + radius > hitboxes.rectangle0.x)&&(x -radius < hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth)&&
         (y + radius > hitboxes.rectangle0.y)&&(y - radius < hitboxes.rectangle0.y + hitboxes.rectangle0.rectangleHeight)) {
-          println(2);
+
         speedY *= -1;
         y = hitboxes.rectangle0.y - 1 - radius;
+        speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 15;
+        
+      }
+    }
+    if (hitboxes.rectangle1.exists)
+    {
+
+      if (( x + radius > hitboxes.rectangle1.x)&&(x -radius < hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth)&&
+        (y + radius > hitboxes.rectangle1.y)&&(y - radius < hitboxes.rectangle1.y + hitboxes.rectangle1.rectangleHeight)) {
+
+        speedY *= -1;
+        y = hitboxes.rectangle1.y - 1 - radius;
       }
     }
   }
