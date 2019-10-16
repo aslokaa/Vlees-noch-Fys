@@ -11,9 +11,9 @@ class Player
     PLAYER_START_HEIGHT             = height*0.045, 
     PLAYER_START_X                  = width/2-PLAYER_START_WIDTH/2, 
     PLAYER_START_Y                  =height-PLAYER_START_HEIGHT, 
-    PLAYER_START_ACCELERATION_X     =width*0.0005, 
+    PLAYER_START_ACCELERATION_X     =width*0.001, 
     PLAYER_VELOCITY_X_MAX           =width*0.01, 
-    PLAYER_START_DECELERATE_X       =0.98, 
+    PLAYER_START_DECELERATE_X       =0.985, 
     PLAYER_START_ACCELERATION_Y     =height*0.001, 
     PLAYER_VELOCITY_Y_MAX           =height*0.01, 
     PLAYER_START_DECELERATE_Y       =0.9, 
@@ -206,6 +206,10 @@ class Player
     if (velocityX > PLAYER_VELOCITY_X_MAX)
     {
       velocityX = PLAYER_VELOCITY_X_MAX;
+    }
+    if (velocityX < -PLAYER_VELOCITY_X_MAX)
+    {
+      velocityX = -PLAYER_VELOCITY_X_MAX;
     }
     if (split && velocityXSplit > PLAYER_VELOCITY_X_MAX)
     {
