@@ -43,7 +43,8 @@ void setup()
   {
     enemies.add(new EnemyDave( 100, -daves * 200, DAVE_HITBOX_RADIUS ));
   }
-  // enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
+  
+  enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
   for (int i = 0; i < Arrays.BULLET_COUNT; i++) {
     playerBullets.add( new PlayerBullet(0, 0));
   }

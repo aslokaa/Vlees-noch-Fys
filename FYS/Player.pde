@@ -490,7 +490,6 @@ class Player
   //returns the hitboxes
   Rectangles getHitboxes()
   {
-    println(x);
     return new Rectangles( x, xSplit, y, playerWidth, widthSplit0, widthSplit1, playerHeigth, split );
   }
 
@@ -530,7 +529,6 @@ class Rectangles
   Rectangle rectangle1;
   Rectangles( float xT0, float xT1, float yT, float widthT, float w0T, float w1T, float heightT, boolean existsT )
   {
-    println(xT1);
     float w0=widthT;
     float w1=widthT;
     if (existsT)
