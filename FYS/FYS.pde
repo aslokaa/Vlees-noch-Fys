@@ -35,7 +35,7 @@ void setup()
 {
   size( 1600, 900, P2D ); //16:9
   smooth(0);
-  // introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
+  introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   player = new Player();
   test = new Test();
   balls.add(new Ball());
