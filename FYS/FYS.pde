@@ -28,7 +28,7 @@ Endscreen endscreen;
 PlayerSounds playerSounds;
 MenuSounds menuSounds;
 PFont font;
-//SoundFile introMusic;
+SoundFile introMusic;
 
 
 void setup()
@@ -39,8 +39,11 @@ void setup()
   player = new Player();
   test = new Test();
   balls.add(new Ball());
-  enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
-  enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
+  for ( int daves = 0; daves < 10; daves++ )
+  {
+    enemies.add(new EnemyDave( 100, -daves * 200, DAVE_HITBOX_RADIUS ));
+  }
+  // enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
   for (int i = 0; i < Arrays.BULLET_COUNT; i++) {
     playerBullets.add( new PlayerBullet(0, 0));
   }
@@ -68,14 +71,14 @@ void updateGame()
 
       player.update();
       test.test();
-      
+
       for ( PlayerBullet playerBullet : playerBullets)
       {
         playerBullet.update();
       }
-      for (Ball ball : balls){
-      ball.updateBall();
-    }
+      for (Ball ball : balls) {
+        ball.updateBall();
+      }
     }
   } else if (stateEnd)
   {
@@ -107,7 +110,7 @@ void drawGame()
     {
       playerBullet.display();
     }
-    for (Ball ball : balls){
+    for (Ball ball : balls) {
       ball.drawBall();
     }
     player.checkDisplay();
