@@ -64,21 +64,13 @@ class Ball {
     Rectangles hitboxes = player.getHitboxes();
     if (hitboxes.rectangle0.exists)
     {
-      
+
       if (( x + radius > hitboxes.rectangle0.x)&&(x -radius < hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth)&&
         (y + radius > hitboxes.rectangle0.y)&&(y - radius < hitboxes.rectangle0.y + hitboxes.rectangle0.rectangleHeight)) {
 
         speedY *= -1;
         y = hitboxes.rectangle0.y - 1 - radius;
         speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 15;
-        if(speedX > maxSpeedX){
-          speedX = maxSpeedX;
-        }
-        else if(speedX < -maxSpeedX){
-          speedX = -maxSpeedX;
-        }
-        
-        
       }
     }
     if (hitboxes.rectangle1.exists)
@@ -91,6 +83,11 @@ class Ball {
         y = hitboxes.rectangle1.y - 1 - radius;
         speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 15;
       }
+    }
+    if (speedX > maxSpeedX) {
+      speedX = maxSpeedX;
+    } else if (speedX < -maxSpeedX) {
+      speedX = -maxSpeedX;
     }
   }
   void interactEnemy() {
