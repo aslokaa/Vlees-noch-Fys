@@ -11,11 +11,11 @@ class Player
     PLAYER_START_HEIGHT             = height*0.045, 
     PLAYER_START_X                  = width/2-PLAYER_START_WIDTH/2, 
     PLAYER_START_Y                  =height-PLAYER_START_HEIGHT, 
-    PLAYER_START_ACCELERATION_X     =width*0.001, 
+    PLAYER_START_ACCELERATION_X     =width*0.0015, 
     PLAYER_VELOCITY_X_MAX           =width*0.01, 
-    PLAYER_START_DECELERATE_X       =0.985, 
-    PLAYER_START_ACCELERATION_Y     =height*0.001, 
-    PLAYER_VELOCITY_Y_MAX           =height*0.01, 
+    PLAYER_START_DECELERATE_X       =0.9, 
+    PLAYER_START_ACCELERATION_Y     =height*0.0015, 
+    PLAYER_VELOCITY_Y_MAX           =height*0.015, 
     PLAYER_START_DECELERATE_Y       =0.9, 
     PLAYER_MIN_WIDTH                =PLAYER_START_WIDTH*0.1, 
     PLAYER_MAX_WIDTH                =width, 
@@ -475,11 +475,16 @@ class Player
     shootTimer=SHOOT_STARTING_TIMER;
     playerSounds.play(Sounds.SHOOT);
     ammo--;
-    activatesBullet(x);
-    if (split)
+     if (split)
     {
-      activatesBullet(xSplit);
+      activatesBullet(x+widthSplit0/2);
+      activatesBullet(xSplit+widthSplit1/2);
+    } else
+    {
+     activatesBullet(x+playerWidth/2); 
     }
+    
+   
   }
   //adds aditional ammo.
   void gainAmmo( int newAmmo )
