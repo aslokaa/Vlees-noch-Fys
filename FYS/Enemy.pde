@@ -33,13 +33,19 @@ class Enemy
 
   void handlePlayerCollision(Rectangles rectangles)
   {
+    if ( checkPlayerCollision(rectangles.rectangle0) )
+    {
+    }
+    if ( checkPlayerCollision(rectangles.rectangle1) )
+    {
+    }
     println("define the playerCollision method before using it");
   }
 
-  boolean checkPlayerCollision()
+  boolean checkPlayerCollision(Rectangle rectangle)
   {
-    if ( x >= player.x && x <= player.x + player.playerWidth &&
-      y + hitboxRadius > player.y + ( player.playerHeigth / 2) && y - hitboxRadius < player.y + ( player.playerHeigth / 2))
+    if ( x >= rectangle.x && x <= rectangle.x + rectangle.rectangleWidth &&
+      y + hitboxRadius > rectangle.y + ( rectangle.rectangleHeight / 2) && y - hitboxRadius < rectangle.y + ( rectangle.rectangleHeight / 2))
     {
       return true;
     }

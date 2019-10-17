@@ -12,11 +12,6 @@ Test test;
 final int KEY_LIMIT = 1024;
 boolean[] keyCodesPressed = new boolean[KEY_LIMIT];
 boolean[] keysPressed = new boolean[KEY_LIMIT];
-final float DAVE_GRID_HEIGHT = 100;
-final float DAVE_HITBOX_RADIUS = 40;
-final color DAVE_COLOR = color(255, 20, 20);
-final float CHAD_HITBOX_RADIUS = 40;
-final color CHAD_COLOR = color(255, 20, 20);
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
@@ -41,10 +36,10 @@ void setup()
   balls.add(new Ball());
   for ( int daves = 0; daves < 10; daves++ )
   {
-    enemies.add(new EnemyDave( 100, -daves * 200, DAVE_HITBOX_RADIUS ));
+    enemies.add(new EnemyDave( 100, -daves * 200, EnemyFinals.DAVE_HITBOX_RADIUS ));
   }
   
-  enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
+  enemies.add(new EnemyChad( 600, 200, EnemyFinals.CHAD_HITBOX_RADIUS));
   for (int i = 0; i < Arrays.BULLET_COUNT; i++) {
     playerBullets.add( new PlayerBullet(0, 0));
   }

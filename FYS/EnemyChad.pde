@@ -69,9 +69,13 @@ class EnemyChad extends Enemy
 
   @Override void handlePlayerCollision(Rectangles rectangles)
   {
-    if ( checkPlayerCollision() ) 
+    if ( checkPlayerCollision(rectangles.rectangle0) ) 
     {
-      player.dealDamage(damageToDeal, player.split);
+      player.dealDamage(damageToDeal, false);
+    }
+    if ( checkPlayerCollision(rectangles.rectangle1) ) 
+    {
+      player.dealDamage(damageToDeal, true);
     }
   }
 
@@ -107,7 +111,7 @@ class EnemyChad extends Enemy
     if ( active )
     {
       noStroke();
-      fill(CHAD_COLOR);
+      fill(EnemyFinals.CHAD_COLOR);
       ellipse(x, y, hitboxDiameter, hitboxDiameter);
     }
   }
