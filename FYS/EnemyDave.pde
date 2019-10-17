@@ -40,6 +40,14 @@ class EnemyDave extends Enemy
       checkRow();//als dave bij de volgende row komt gaat hij op de x bewegen.
     }
   }
+  
+  @Override void handlePlayerCollision(Rectangles rectangles)
+  {
+    if ( checkPlayerCollision() ) 
+    {
+      
+    }
+  }
 
 
 
