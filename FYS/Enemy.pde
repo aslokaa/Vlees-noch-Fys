@@ -8,10 +8,10 @@ deze class is een base-class voor alle enemies, alle methodes en
  */
 class Enemy
 {
-  boolean active;
+  boolean active;//checks if enemy should be updated and drawn.
   float hitboxRadius;
   float hitboxDiameter;
-  float damageToDeal;
+  float damageToDeal;//amount of damage enemy does to the player.
   float x;
   float y;
   float speedX;
@@ -26,6 +26,7 @@ class Enemy
     this.hitboxDiameter = hitboxRadius * 2;
   }
 
+    //gets called in the updateGame methode in the main.
   void executeBehavior()
   {
     println("define the behavior method before using it");
@@ -41,7 +42,8 @@ class Enemy
     }
     println("define the playerCollision method before using it");
   }
-
+  
+    //does a circle-line collisioncheck with the enemy hitbox and the horizontal line in the middle of player.
   boolean checkPlayerCollision(Rectangle rectangle)
   {
     if ( x >= rectangle.x && x <= rectangle.x + rectangle.rectangleWidth &&
@@ -52,17 +54,21 @@ class Enemy
     return false;
   }
 
+    //gets called when enemy needs to be destroyed.
   void destroy()
   {
     println("define the destroy method before using it");
     explode();
   }
 
+
+    //handles dying animation.
   void explode()
   {
     println("define the explode method before using it");
   }
 
+    //gets called in the drawGame method in the main.
   void display()
   {
     println("define the display method before using it");

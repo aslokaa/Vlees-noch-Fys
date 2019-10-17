@@ -1,5 +1,6 @@
 /*
-deze class bevat dave.
+ deze class bevat dave.
+ comments over de @Override methodes staan in Enemy base-class.
  dave word boven y = 100 gespawned, dus alle y < 100.
  dave beweegt tot de eerste row op y is 100, dave gaat dan alleen in de x bewegen
  totdat hij een muur raakt dan gaat hij een row naar beneden, dus y 200 en gaat in de andere richting 
