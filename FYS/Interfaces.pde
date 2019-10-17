@@ -21,6 +21,12 @@ interface EnemyFinals
   final float CHAD_HITBOX_RADIUS = 40;
   final color CHAD_COLOR = #ff0000;
 }
+//finals for powerups
+interface PowerFinals
+{
+  final float HITBOX_DIAMETER = 20;
+  final float VELOCITY_Y = 5;
+}
 //adding readability to the colors
 interface Colors
 {
