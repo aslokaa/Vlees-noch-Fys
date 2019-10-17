@@ -83,9 +83,13 @@ class EnemyDave extends Enemy
 
   @Override void handlePlayerCollision(Rectangles rectangles)
   {
-    if ( checkPlayerCollision() ) 
+    if ( checkPlayerCollision(rectangles.rectangle0) ) 
     {
-      player.dealDamage(damageToDeal, player.split);
+      player.dealDamage(damageToDeal, true);
+    }
+    if ( checkPlayerCollision(rectangles.rectangle1) ) 
+    {
+      player.dealDamage(damageToDeal, false);
     }
   }
 
@@ -93,10 +97,10 @@ class EnemyDave extends Enemy
   {
     if ( currentRow < rowToMoveTo )
     {
-      if ( y >= DAVE_GRID_HEIGHT * rowToMoveTo )
+      if ( y >= EnemyFinals.DAVE_GRID_HEIGHT * rowToMoveTo )
       {
         currentRow++;
-        y = DAVE_GRID_HEIGHT * rowToMoveTo;
+        y = EnemyFinals.DAVE_GRID_HEIGHT * rowToMoveTo;
         setXSpeed();//als dave aan de linker kant van het veld staat gaat hij naar rechts bewegen en andersom
         moveDown = false;
       } else
@@ -129,7 +133,7 @@ class EnemyDave extends Enemy
     if ( active )
     {
       noStroke();
-      fill(DAVE_COLOR);
+      fill(EnemyFinals.DAVE_COLOR);
       ellipse(x, y, hitboxDiameter, hitboxDiameter);
     }
   }

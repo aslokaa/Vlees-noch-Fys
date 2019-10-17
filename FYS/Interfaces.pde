@@ -12,6 +12,15 @@ interface PowerUps
     SPLIT        = 3;
 }  
 
+//finals for all enemies.
+interface EnemyFinals
+{
+  final float DAVE_GRID_HEIGHT = 100;
+  final float DAVE_HITBOX_RADIUS = 40;
+  final color DAVE_COLOR = #ff0000;
+  final float CHAD_HITBOX_RADIUS = 40;
+  final color CHAD_COLOR = #ff0000;
+}
 //adding readability to the colors
 interface Colors
 {
@@ -21,7 +30,7 @@ interface Colors
     WHITE      = #FFFFFF, 
     BLUE       = #0000FF, 
     YELLOW     = #FFFF00, 
-    RED        = #FF0000,
+    RED        = #FF0000, 
     BLACK      = #000000;
 }
 
@@ -29,8 +38,8 @@ interface Colors
 interface Arrays
 {
   final int
-    STAR_COUNT    = 300,
-    BULLET_COUNT  = 30,
+    STAR_COUNT    = 300, 
+    BULLET_COUNT  = 30, 
     OPTION_COUNT  = 3;
 }
 
@@ -38,18 +47,18 @@ interface Arrays
 interface Sounds
 {
   final int
-    RECIEVE_DAMAGE    = 0,
-    RESTORE_HEALTH    = 1,  
-    SHOOT             = 2,
-    SPLIT             = 3,
-    SLOW              = 4,
-    INVERTED          = 5,
-    START_GAME        = 7,
-    GAME_MUSIC0       = 8,
-    GAME_MUSIC1       = 9,
-    GAME_MUSIC2       = 10,
-    END_MUSIC         = 11,
-    PAUSE             = 12,
-    UNPAUSE           = 13,
+    RECIEVE_DAMAGE    = 0, 
+    RESTORE_HEALTH    = 1, 
+    SHOOT             = 2, 
+    SPLIT             = 3, 
+    SLOW              = 4, 
+    INVERTED          = 5, 
+    START_GAME        = 7, 
+    GAME_MUSIC0       = 8, 
+    GAME_MUSIC1       = 9, 
+    GAME_MUSIC2       = 10, 
+    END_MUSIC         = 11, 
+    PAUSE             = 12, 
+    UNPAUSE           = 13, 
     INVISIBLE         = 1000;
 }

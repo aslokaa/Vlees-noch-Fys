@@ -39,7 +39,7 @@ class PlayerBullet
   }
   void createBullet(float playerX, float playerY) { // Creates the bullet at the players location 
     shootBullet = true;
-    bulletX = playerX + (player.playerWidth/2);
+    bulletX = playerX;
     bulletY = playerY;
   }
 
@@ -53,14 +53,6 @@ class PlayerBullet
     }
   }
 
-  /*  boolean checkEnemyCollision() {
-   for ( Enemy enemy : enemies ) {
-   if ( dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxRadius + (bulletDiameter/2))) {    
-   return true;
-   }
-   }
-   return false;
-   }*/
 
   void bulletEnemyCollision() { //Checks colision tussesn enemy en bullet
 
