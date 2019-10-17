@@ -3,7 +3,7 @@
 //
 
 //Adding readability to the powerUps.
-interface PowerUps 
+interface PowerUpTypes 
 { 
   final int
     INVERTED     = 0, 
