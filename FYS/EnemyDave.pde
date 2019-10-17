@@ -21,6 +21,7 @@ class EnemyDave extends Enemy
   EnemyDave(float x, float y, float hitboxRadius)
   {
     super(true, x, y, hitboxRadius);
+    damageToDeal = 50;
     moveSpeedLeft = -5;
     moveSpeedRight = 5;
     moveSpeedDown = 5;
@@ -37,19 +38,10 @@ class EnemyDave extends Enemy
     {
       move();//kijkt naar move booleans, zet snelheden, telt snelheid op bij positie.
       checkWallCollision();//als dave een muur raakt beweegt hij een row naar beneden
+      handlePlayerCollision( player.getHitboxes() );
       checkRow();//als dave bij de volgende row komt gaat hij op de x bewegen.
     }
   }
-  
-  @Override void handlePlayerCollision(Rectangles rectangles)
-  {
-    if ( checkPlayerCollision() ) 
-    {
-      
-    }
-  }
-
-
 
   void move()
   {
@@ -89,6 +81,14 @@ class EnemyDave extends Enemy
     }
   }
 
+  @Override void handlePlayerCollision(Rectangles rectangles)
+  {
+    if ( checkPlayerCollision() ) 
+    {
+      player.dealDamage(damageToDeal, player.split);
+    }
+  }
+
   void checkRow()
   {
     if ( currentRow < rowToMoveTo )
@@ -112,7 +112,7 @@ class EnemyDave extends Enemy
   {
     active = false;
   }
-  
+
   void setXSpeed()
   {
     if ( x >= width / 2 )

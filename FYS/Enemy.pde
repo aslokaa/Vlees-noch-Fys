@@ -11,6 +11,7 @@ class Enemy
   boolean active;
   float hitboxRadius;
   float hitboxDiameter;
+  float damageToDeal;
   float x;
   float y;
   float speedX;

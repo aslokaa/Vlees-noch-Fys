@@ -345,12 +345,12 @@ class Player
     velocityY *= decelerateY;
   }
   //shrinks the paddle
-  void dealDamage( float damage, boolean isSplit)
+  void dealDamage( float damage, boolean isSplit)//<- is split is een local var, kan gecheckt worden in dealdmg methode.
   {
     playerSounds.play(Sounds.RECIEVE_DAMAGE);
     shake = true;
     shakeTimer = SHAKE_STARTING_TIMER;
-    if (split)
+    if (split)//<- als ie shaked moet ie geen dmg nemen, handig voor balancing en betere feel.
     {
       if (isSplit)
       {
