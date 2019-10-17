@@ -1,5 +1,7 @@
 /*
 deze class bevat chad.
+comments over de @Override methodes staan in Enemy base-class.
+chad accelerates towards the player 
  
  Eele Roet 500795948
  */
