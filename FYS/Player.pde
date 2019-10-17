@@ -105,10 +105,6 @@ class Player
   //checks how to player should be drawn.
   void checkDisplay()
   {
-    if (invisible)
-    {
-      return;
-    } 
     if (shake)
     {
       shake();
@@ -352,6 +348,10 @@ class Player
   //shrinks the paddle
   void dealDamage( float damage, boolean isRight)
   {
+    if (shake || invisible)
+    {
+     return; 
+    } 
     playerSounds.play(Sounds.RECIEVE_DAMAGE);
     shake = true;
     shakeTimer = SHAKE_STARTING_TIMER;
