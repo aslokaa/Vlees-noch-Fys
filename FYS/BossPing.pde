@@ -25,10 +25,13 @@ class BossPing
     BOSS_START_Y                  = 0+BOSS_START_HEIGHT, 
     BOSS_START_ACCELERATION_X     = player.PLAYER_START_ACCELERATION_X, 
     BOSS_VELOCITY_X_MAX           = player.PLAYER_VELOCITY_X_MAX, 
-    BOSS_START_DECELERATE_X       = player.PLAYER_START_DECELERATE_X, 
     BOSS_START_ACCELERATION_Y     = player.PLAYER_START_ACCELERATION_Y, 
     BOSS_VELOCITY_Y_MAX           = player.PLAYER_VELOCITY_Y_MAX, 
-    BOSS_START_DECELERATE_Y       = player.PLAYER_START_DECELERATE_Y;
+    MAX_BOSS_HEIGHT               = height / 2, 
+    BALL_IS_CLOSE                 = BOSS_START_WIDTH*0.3, 
+    BACKGROUND_LINE_SIZE          = width*0.01,
+    BOSS_START_DECELERATE_X       = 0.8, 
+    BOSS_START_DECELERATE_Y       = 0.8;
 
   BossPing()
   {
@@ -53,49 +56,77 @@ class BossPing
     decelerate();
     checkVelocityMax();
     move();
+    detectCollisionEdge();
   }
 
   //locates the nearest ball.
   void detectNearestBall()
   {
-    float closestBallXT = -10000;
-    float closestBallYT = -10000;
+    float closestBallXT = width/2;
+    float closestBallYT = height*height;
     for (Ball ball : balls) 
     {
       float xT = ball.x;
       float yT = ball.y;
-      if (dist(x, y, xT, yT)<dist(x, y, closestBallXT, closestBallYT))
+      if (ball.speedY<0)
       {
-        closestBallXT = xT;
-        closestBallYT = yT;
+        if (dist(x + bossWidth/2, y + bossHeight/2, xT, yT)<dist(x + bossWidth/2, y + bossHeight/2, closestBallXT, closestBallYT))
+        {
+          closestBallXT = xT;
+          closestBallYT = yT;
+        }
       }
     }
-    closestBallX = closestBallXT;
-    closestBallY = closestBallYT;
+    if (closestBallXT==closestBallX && closestBallYT == closestBallY)
+    {
+      for (Ball ball : balls) 
+      {
+        
+        float xT = ball.x;
+        float yT = ball.y;
+        if (dist(x + bossWidth/2, y + bossHeight/2, xT, yT)<dist(x + bossWidth/2, y + bossHeight/2, closestBallXT, closestBallYT))
+        {
+          closestBallXT = xT;
+          closestBallYT = yT;
+        }
+      }
+    } 
+    {
+      closestBallX = closestBallXT;
+      closestBallY = closestBallYT;
+    }
   }
 
   //checks if the ball is to the right of the boss.
   boolean isBallRight()
   {
-    return closestBallX>x;
+    return closestBallX>x + bossWidth/2;
   }
 
   //checks if the ball is below the boss.
   boolean isBallDown()
   {
-    return closestBallY>y;
+    return closestBallY>y + bossHeight;
+  }
+
+  boolean isBallCloseX()
+  {
+    return closestBallX+BALL_IS_CLOSE>x+bossWidth/2 && closestBallX-BALL_IS_CLOSE<x+bossWidth/2;
   }
 
   //accelerates the boss.
   void accelerate()
   {
     //X
-    if (isBallRight())
+    if (!isBallCloseX())
     {
-      velocityX+= accelerationX;
-    } else
-    {
-      velocityX-= accelerationX;
+      if (isBallRight())
+      {
+        velocityX+= accelerationX;
+      } else
+      {
+        velocityX-= accelerationX;
+      }
     }
     //Y
     if (isBallDown())
@@ -110,6 +141,24 @@ class BossPing
   //decelerates the boss.
   void decelerate()
   {
+    //stops
+    if (velocityX<accelerationX && velocityX>0)
+    {
+      velocityX=0;
+    }
+    if (velocityX>-accelerationX && velocityX<0)
+    {
+      velocityX=0;
+    }
+    //stops
+    if (velocityY<accelerationY && velocityY>0)
+    {
+      velocityY=0;
+    }
+    if (velocityY>-accelerationY && velocityY<0)
+    {
+      velocityY=0;
+    }
     velocityX *= decelerateX;
     velocityY *= decelerateY;
   }
@@ -138,5 +187,53 @@ class BossPing
   {
     x += velocityX;
     y += velocityY;
+  }
+  //Prevents the boss from going out of bounds
+  void detectCollisionEdge() 
+  {
+    //Y
+    if ( y < 0 )
+    {
+      y = 0;
+      velocityY *= -1;
+    }
+    if ( y + bossHeight > MAX_BOSS_HEIGHT )
+    {
+      y = MAX_BOSS_HEIGHT - bossHeight;
+      velocityY *= -1;
+    }
+    if ( x < 0 )
+    {
+      x = 0;
+      velocityX = 0;
+    }
+    if ( x + bossWidth > width )
+    {
+      x = width - bossWidth;
+      velocityX = 0;
+    }
+  }
+
+  void display()
+  {
+    displayBackground();
+    displayPing();
+  }
+  
+  //draws the background of the boss fight
+  void displayBackground()
+  {
+   fill (Colors.DARK_GREEN);
+   for ( int i =0; i < width / BACKGROUND_LINE_SIZE ; i++ )
+   {
+     rect(BACKGROUND_LINE_SIZE * i * 2 , height/2 - BACKGROUND_LINE_SIZE/2 , BACKGROUND_LINE_SIZE, BACKGROUND_LINE_SIZE);
+   }
+  }
+  
+  //draws the Boss
+  void displayPing()
+  {
+    fill(Colors.WHITE);
+    rect(x, y, bossWidth, bossHeight);
   }
 }

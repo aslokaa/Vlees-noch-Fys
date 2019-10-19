@@ -11,8 +11,8 @@ class Ball {
   float maxSpeedX;
 
   Ball() {
-    x= width/2;
-    y = height/2;
+    x= random(width*0.3,width*0.6);
+    y = random(height*0.3,height*0.6);
     speedX = 0;
     speedY = 6;
     radius = 25;

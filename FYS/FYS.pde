@@ -16,6 +16,7 @@ ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
 Space[] space = new Space[Arrays.STAR_COUNT];
+BossPing ping;
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false;
 Startscreen startscreen;
 Pausescreen pausescreen;
@@ -34,16 +35,18 @@ void setup()
   player = new Player();
   test = new Test();
   balls.add(new Ball());
+  balls.add(new Ball());
   for ( int daves = 0; daves < 10; daves++ )
   {
-    enemies.add(new EnemyDave( 100, -daves * 200, EnemyFinals.DAVE_HITBOX_RADIUS ));
+    //enemies.add(new EnemyDave( 100, -daves * 200, EnemyFinals.DAVE_HITBOX_RADIUS ));
   }
-  
-  enemies.add(new EnemyChad( 600, 200, EnemyFinals.CHAD_HITBOX_RADIUS));
+
+  //enemies.add(new EnemyChad( 600, 200, EnemyFinals.CHAD_HITBOX_RADIUS));
   for (int i = 0; i < Arrays.BULLET_COUNT; i++) {
     playerBullets.add( new PlayerBullet(0, 0));
   }
   intializeBackgroundStars();
+  ping = new BossPing();
   startscreen   = new Startscreen();
   pausescreen   = new Pausescreen();
   endscreen     = new Endscreen();
@@ -64,10 +67,10 @@ void updateGame()
       {
         enemy.executeBehavior();//handles movement paterns
       }
+      ping.update();
 
       player.update();
       test.test();
-
       for ( PlayerBullet playerBullet : playerBullets)
       {
         playerBullet.update();
@@ -82,7 +85,7 @@ void updateGame()
   }
   for ( int i = 0; i < space.length; i++ )
   {
-   // space[i].update();
+    // space[i].update();
   }
 }
 
@@ -94,9 +97,10 @@ void drawGame()
   } else if (statePlaying)
   {
     background(0);
+    ping.display();
     for ( int i = 0; i < space.length; i++ )
     {
-//      space[i].display();
+      //      space[i].display();
     }
     for ( Enemy enemy : enemies )
     {

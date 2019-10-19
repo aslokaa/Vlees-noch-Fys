@@ -5,7 +5,7 @@ class Test
     if (keysPressed['j']) 
     {
       println("j deal damage");
-      player.dealDamage(10, true);
+      player.dealDamage(60, true);
     }
     if (keysPressed['k'])
     {
