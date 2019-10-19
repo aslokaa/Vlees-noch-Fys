@@ -51,6 +51,8 @@ class BossPing
     detectNearestBall();
     accelerate();
     decelerate();
+    checkVelocityMax();
+    move();
   }
 
   //locates the nearest ball.
