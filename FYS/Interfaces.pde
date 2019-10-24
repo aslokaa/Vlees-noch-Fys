@@ -3,7 +3,7 @@
 //
 
 //Adding readability to the powerUps.
-interface PowerUps 
+interface PowerUpTypes 
 { 
   final int
     INVERTED     = 0, 
@@ -23,6 +23,12 @@ interface EnemyFinals
   final float ENEMY_GRAVEYARD_X = -500;
   final float ENEMY_GRAVEYARD_Y = -500;
 }
+//finals for powerups
+interface PowerFinals
+{
+  final float HITBOX_DIAMETER = 20;
+  final float VELOCITY_Y = 5;
+}
 //adding readability to the colors
 interface Colors
 {
@@ -33,7 +39,8 @@ interface Colors
     BLUE       = #0000FF, 
     YELLOW     = #FFFF00, 
     RED        = #FF0000, 
-    BLACK      = #000000;
+    BLACK      = #000000,
+    DARK_GREEN = #008F11;
 }
 
 //stores array amounts.

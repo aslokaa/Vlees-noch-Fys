@@ -5,7 +5,7 @@ class Test
     if (keysPressed['j']) 
     {
       println("j deal damage");
-      player.dealDamage(10, true);
+      player.dealDamage(60, true);
     }
     if (keysPressed['k'])
     {
@@ -15,7 +15,7 @@ class Test
     if (keysPressed['l'])
     {
       println("l inverted");
-      player.modifyPower(PowerUps.INVERTED);
+      player.modifyPower(PowerUpTypes.INVERTED);
     }
     if (keysPressed['o'])
     {
@@ -25,24 +25,24 @@ class Test
     if (keysPressed['i'])
     {
       println("i slow");
-      player.modifyPower(PowerUps.SLOW);
+      player.modifyPower(PowerUpTypes.SLOW);
     }
     if (keysPressed['u'])
     {
       println("u invisible");
-      player.modifyPower(PowerUps.INVISIBLE);
+      player.modifyPower(PowerUpTypes.INVISIBLE);
     }
     if (keysPressed['y'])
     {
       println("y split");
-      player.modifyPower(PowerUps.SPLIT);
+      player.modifyPower(PowerUpTypes.SPLIT);
     }
-    //println(frameRate);
     if (keysPressed['e'])
     {
-     Rectangles hitboxes = player.getHitboxes();
-     println(hitboxes.rectangle0.x,hitboxes.rectangle0.y,hitboxes.rectangle0.rectangleWidth,hitboxes.rectangle0.rectangleHeight,hitboxes.rectangle1.exists);
-     println(hitboxes.rectangle1.x,hitboxes.rectangle1.y,hitboxes.rectangle1.rectangleWidth,hitboxes.rectangle1.rectangleHeight,hitboxes.rectangle1.exists);
+      println("e frameRate",frameRate);
+      fill(Colors.WHITE);
+      textSize(height*0.1);
+      text(frameRate,width*0.95,height*0.1);
     }
   }
 }

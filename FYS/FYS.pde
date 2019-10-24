@@ -82,7 +82,7 @@ void updateGame()
   }
   for ( int i = 0; i < space.length; i++ )
   {
-    space[i].update();
+   // space[i].update();
   }
 }
 
@@ -96,7 +96,7 @@ void drawGame()
     background(0);
     for ( int i = 0; i < space.length; i++ )
     {
-      space[i].display();
+//      space[i].display();
     }
     for ( Enemy enemy : enemies )
     {

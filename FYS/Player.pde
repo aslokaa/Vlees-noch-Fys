@@ -7,28 +7,29 @@
 
 class Player
 {
-  final float PLAYER_START_WIDTH    = width*0.13, 
+  final float
+    PLAYER_START_WIDTH              = width*0.13, 
     PLAYER_START_HEIGHT             = height*0.045, 
     PLAYER_START_X                  = width/2-PLAYER_START_WIDTH/2, 
-    PLAYER_START_Y                  =height-PLAYER_START_HEIGHT, 
-    PLAYER_START_ACCELERATION_X     =width*0.0015, 
-    PLAYER_VELOCITY_X_MAX           =width*0.01, 
-    PLAYER_START_DECELERATE_X       =0.9, 
-    PLAYER_START_ACCELERATION_Y     =height*0.0015, 
-    PLAYER_VELOCITY_Y_MAX           =height*0.015, 
-    PLAYER_START_DECELERATE_Y       =0.9, 
-    PLAYER_MIN_WIDTH                =PLAYER_START_WIDTH*0.1, 
-    PLAYER_MAX_WIDTH                =width, 
-    SLOW_MODIFIER                   =0.9, 
-    SECOND                          =60, //one second
-    INVERTED_STARTING_TIMER         =SECOND*5, 
-    INVISIBLE_STARTING_TIMER        =SECOND*1, 
-    SLOW_STARTING_TIMER             =SECOND*4, 
-    SHAKE_MODIFIER_MIN              =-width*0.003, 
-    SHAKE_MODIFIER_MAX              =width*0.0003, 
-    SHAKE_STARTING_TIMER            =SECOND*0.5, 
-    SHOOT_STARTING_TIMER            =SECOND*1, 
-    SPLIT_STARTING_TIMER            =SECOND*10;
+    PLAYER_START_Y                  = height-PLAYER_START_HEIGHT, 
+    PLAYER_START_ACCELERATION_X     = width*0.0015, 
+    PLAYER_VELOCITY_X_MAX           = width*0.01, 
+    PLAYER_START_DECELERATE_X       = 0.9, 
+    PLAYER_START_ACCELERATION_Y     = height*0.0015, 
+    PLAYER_VELOCITY_Y_MAX           = height*0.015, 
+    PLAYER_START_DECELERATE_Y       = 0.9, 
+    PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.1, 
+    PLAYER_MAX_WIDTH                = width, 
+    SLOW_MODIFIER                   = 0.9, 
+    SECOND                          = 60, //one second
+    INVERTED_STARTING_TIMER         = SECOND*5, 
+    INVISIBLE_STARTING_TIMER        = SECOND*1, 
+    SLOW_STARTING_TIMER             = SECOND*4, 
+    SHAKE_MODIFIER_MIN              = -width*0.003, 
+    SHAKE_MODIFIER_MAX              = width*0.0003, 
+    SHAKE_STARTING_TIMER            = SECOND*0.5, 
+    SHOOT_STARTING_TIMER            = SECOND*1, 
+    SPLIT_STARTING_TIMER            = SECOND*10;
 
   float 
     x, 
@@ -104,10 +105,6 @@ class Player
   //checks how to player should be drawn.
   void checkDisplay()
   {
-    if (invisible)
-    {
-      return;
-    } 
     if (shake)
     {
       shake();
@@ -219,6 +216,10 @@ class Player
     {
       velocityY = PLAYER_VELOCITY_Y_MAX;
     }
+    if (velocityY < -PLAYER_VELOCITY_Y_MAX)
+    {
+      velocityY = -PLAYER_VELOCITY_Y_MAX;
+    }
   }
   // modifies the X and Y positions
   void move()
@@ -246,22 +247,22 @@ class Player
   {
     switch(type)
     {
-    case PowerUps.INVERTED:
+    case PowerUpTypes.INVERTED:
       playerSounds.play(Sounds.INVERTED);
       inverted = true;
       invertedTimer = INVERTED_STARTING_TIMER;
       break;
-    case PowerUps.INVISIBLE:
+    case PowerUpTypes.INVISIBLE:
       playerSounds.play(Sounds.INVISIBLE);
       invisible = true;
       invisibleTimer = INVISIBLE_STARTING_TIMER;
       break;
-    case PowerUps.SLOW:
+    case PowerUpTypes.SLOW:
       playerSounds.play(Sounds.SLOW);
       slow = true;
       slowTimer = SLOW_STARTING_TIMER;
       break;
-    case PowerUps.SPLIT:
+    case PowerUpTypes.SPLIT:
       playerSounds.play(Sounds.SPLIT);
       if (!split)
       {
@@ -345,14 +346,18 @@ class Player
     velocityY *= decelerateY;
   }
   //shrinks the paddle
-  void dealDamage( float damage, boolean isSplit)//<- is split is een local var, kan gecheckt worden in dealdmg methode.
+  void dealDamage( float damage, boolean isRight)
   {
+    if (shake || invisible)
+    {
+     return; 
+    } 
     playerSounds.play(Sounds.RECIEVE_DAMAGE);
     shake = true;
     shakeTimer = SHAKE_STARTING_TIMER;
     if (split)//<- als ie shaked moet ie geen dmg nemen, handig voor balancing en betere feel.
     {
-      if (isSplit)
+      if (isRight)
       {
         widthSplit1 -= damage;
       } else
@@ -440,7 +445,7 @@ class Player
     }
     if (shootTimer>0)
     {
-     shootTimer--;
+      shootTimer--;
     }
   }
 
@@ -475,16 +480,14 @@ class Player
     shootTimer=SHOOT_STARTING_TIMER;
     playerSounds.play(Sounds.SHOOT);
     ammo--;
-     if (split)
+    if (split)
     {
       activatesBullet(x+widthSplit0/2);
       activatesBullet(xSplit+widthSplit1/2);
     } else
     {
-     activatesBullet(x+playerWidth/2); 
+      activatesBullet(x+playerWidth/2);
     }
-    
-   
   }
   //adds aditional ammo.
   void gainAmmo( int newAmmo )
