@@ -82,18 +82,6 @@ class EnemyDave extends Enemy
     }
   }
 
-  @Override void handlePlayerCollision(Rectangles rectangles)
-  {
-    if ( checkPlayerCollision(rectangles.rectangle0) ) 
-    {
-      player.dealDamage(damageToDeal, true);
-    }
-    if ( checkPlayerCollision(rectangles.rectangle1) ) 
-    {
-      player.dealDamage(damageToDeal, false);
-    }
-  }
-
   void checkRow()
   {
     if ( currentRow < rowToMoveTo )

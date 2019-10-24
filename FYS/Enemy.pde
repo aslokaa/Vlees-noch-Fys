@@ -34,13 +34,14 @@ class Enemy
 
   void handlePlayerCollision(Rectangles rectangles)
   {
-    if ( checkPlayerCollision(rectangles.rectangle0) )
+     if ( checkPlayerCollision(rectangles.rectangle0) ) 
     {
+      player.dealDamage(damageToDeal, false);
     }
-    if ( checkPlayerCollision(rectangles.rectangle1) )
+    if ( checkPlayerCollision(rectangles.rectangle1) ) 
     {
+      player.dealDamage(damageToDeal, true);
     }
-    println("define the playerCollision method before using it");
   }
   
     //does a circle-line collisioncheck with the enemy hitbox and the horizontal line in the middle of player.

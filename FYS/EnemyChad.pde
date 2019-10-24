@@ -1,7 +1,7 @@
 /*
 deze class bevat chad.
-comments over de @Override methodes staan in Enemy base-class.
-chad accelerates towards the player 
+ comments over de @Override methodes staan in Enemy base-class.
+ chad accelerates towards the player 
  
  Eele Roet 500795948
  */
@@ -16,8 +16,8 @@ class EnemyChad extends Enemy
   EnemyChad(float x, float y, float hitboxRadius)
   {
     super(true, x, y, hitboxRadius);
-    speedY = 0;
-    speedX = 0;
+    speedY = 1;
+    speedX = 1;
     damageToDeal = 50;
   }
 
@@ -31,13 +31,12 @@ class EnemyChad extends Enemy
       setAccelTowardsPlayer();//sets speeds so that chad accelerates towards the player.
     }
   }
-  
-   void move()
+
+  void move()
   {
-    speedX += accelX / 10;
-
-    speedY += accelY / 10;
-
+    speedX += accelX / 2;
+    speedY += accelY / 2;
+   
     if ( speedX > 3 )
     {
       speedX = 3;
@@ -56,7 +55,7 @@ class EnemyChad extends Enemy
     x += speedX;
     y += speedY;
   }
-  
+
   void checkWallCollision()
   {
     if ( x - hitboxRadius < 0 )
@@ -69,36 +68,39 @@ class EnemyChad extends Enemy
     }
   }
 
-  @Override void handlePlayerCollision(Rectangles rectangles)
-  {
-    if ( checkPlayerCollision(rectangles.rectangle0) ) 
-    {
-      player.dealDamage(damageToDeal, false);
-    }
-    if ( checkPlayerCollision(rectangles.rectangle1) ) 
-    {
-      player.dealDamage(damageToDeal, true);
-    }
-  }
-
   void setAccelTowardsPlayer()
   {
-    accelX = dist( x, y, player.x, y ) / (dist( x, y, player.x, y ) + dist( x, y, x, player.y )) ;
-    accelY = 1 - accelX;
+    Rectangles hitboxesToCheck = player.getHitboxes();
+    Rectangle hitboxToFollow;
+    if ( hitboxesToCheck.rectangle1.exists )
+    {
+      if ( dist( x, y, hitboxesToCheck.rectangle0.x, hitboxesToCheck.rectangle0.y) < dist( x, y, hitboxesToCheck.rectangle1.x, hitboxesToCheck.rectangle1.y) )
+      {
+        hitboxToFollow = hitboxesToCheck.rectangle0;
+      } else
+      {
+        hitboxToFollow = hitboxesToCheck.rectangle1;
+      }
+    } else
+    {
+      hitboxToFollow = hitboxesToCheck.rectangle0;
+    }
 
-    if ( x > player.x )
+    accelX = dist( x, y, hitboxToFollow.x + ( hitboxToFollow.rectangleWidth / 2 ), y ) / 
+            (dist( x, y, hitboxToFollow.x + ( hitboxToFollow.rectangleWidth / 2 ), y ) + dist( x, y, x, hitboxToFollow.y )) ;
+    accelY = 1 - accelX;
+    
+    if ( x > hitboxToFollow.x + ( hitboxToFollow.rectangleWidth / 2 ) )
     {
       accelX *= -1;
     }
-    if ( y > player.y ) 
+    if ( y > hitboxToFollow.y ) 
     {
       accelY *= -1;
     }
-    //get angle to player
-    //translate angle to x and y acceleration.
   }
 
- 
+
   @Override void destroy()
   {
     active = false;
