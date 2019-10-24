@@ -4,7 +4,7 @@
  */
 
 class PlayerBullet 
-{
+{  
   float 
     bulletX, 
     bulletY, 

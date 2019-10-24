@@ -102,6 +102,8 @@ class EnemyChad extends Enemy
   @Override void destroy()
   {
     active = false;
+    x = EnemyFinals.ENEMY_GRAVEYARD_X;
+    y = EnemyFinals.ENEMY_GRAVEYARD_Y;
   }
 
   @Override void explode()
