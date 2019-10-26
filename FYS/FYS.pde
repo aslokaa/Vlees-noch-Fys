@@ -16,7 +16,7 @@ ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
 Space[] space = new Space[Arrays.STAR_COUNT];
-boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false;
+boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false;
 Startscreen startscreen;
 Pausescreen pausescreen;
 Endscreen endscreen;
@@ -24,6 +24,7 @@ PlayerSounds playerSounds;
 MenuSounds menuSounds;
 PFont font;
 SoundFile introMusic;
+BossPing ping;
 
 
 void setup()
@@ -32,6 +33,7 @@ void setup()
   smooth(0);
   introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   player = new Player();
+  ping = new BossPing();
   test = new Test();
   balls.add(new Ball());
   for ( int daves = 0; daves < 10; daves++ )
@@ -47,7 +49,7 @@ void setup()
   startscreen   = new Startscreen();
   pausescreen   = new Pausescreen();
   endscreen     = new Endscreen();
-  font = loadFont("ComicSansMS-BoldItalic-40.vlw");
+  font          = loadFont("ComicSansMS-BoldItalic-40.vlw");
 }
 
 void updateGame()
@@ -60,6 +62,10 @@ void updateGame()
     pausescreen.update();
     if (!statePaused)
     {
+      if (stateBossPing)
+      {
+        ping.update();
+      }
       for ( Enemy enemy : enemies )
       {
         enemy.executeBehavior();//handles movement paterns
@@ -98,6 +104,11 @@ void drawGame()
     {
 //      space[i].display();
     }
+    
+      if (stateBossPing)
+      {
+        ping.display();
+      }
     for ( Enemy enemy : enemies )
     {
       enemy.display();//shows enemies on screen

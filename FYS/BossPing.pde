@@ -27,7 +27,7 @@ class BossPing
     BOSS_VELOCITY_X_MAX           = player.PLAYER_VELOCITY_X_MAX, 
     BOSS_START_ACCELERATION_Y     = player.PLAYER_START_ACCELERATION_Y, 
     BOSS_VELOCITY_Y_MAX           = player.PLAYER_VELOCITY_Y_MAX, 
-    MAX_BOSS_HEIGHT               = height / 2, 
+    BOSS_MAX_Y               = height / 2, 
     BALL_IS_CLOSE                 = BOSS_START_WIDTH*0.3, 
     BACKGROUND_LINE_SIZE          = width*0.01,
     BOSS_START_DECELERATE_X       = 0.8, 
@@ -197,9 +197,9 @@ class BossPing
       y = 0;
       velocityY *= -1;
     }
-    if ( y + bossHeight > MAX_BOSS_HEIGHT )
+    if ( y + bossHeight > BOSS_MAX_Y )
     {
-      y = MAX_BOSS_HEIGHT - bossHeight;
+      y = BOSS_MAX_Y - bossHeight;
       velocityY *= -1;
     }
     if ( x < 0 )
@@ -233,7 +233,7 @@ class BossPing
   //draws the Boss
   void displayPing()
   {
-    fill(Colors.WHITE);
+    fill(Colors.DARK_GREEN);
     rect(x, y, bossWidth, bossHeight);
   }
 }

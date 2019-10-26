@@ -7,7 +7,7 @@ interface PowerUpTypes
 { 
   final int
     INVERTED     = 0, 
-    INVISIBLE    = 1, 
+    IMMUNE    = 1, 
     SLOW         = 2, 
     SPLIT        = 3;
 }  
@@ -45,7 +45,7 @@ interface Colors
 interface Arrays
 {
   final int
-    STAR_COUNT    = 300, 
+    STAR_COUNT    = 1, //changed from 300 to optimize.
     BULLET_COUNT  = 30, 
     OPTION_COUNT  = 3;
 }
@@ -67,5 +67,7 @@ interface Sounds
     END_MUSIC         = 11, 
     PAUSE             = 12, 
     UNPAUSE           = 13, 
-    INVISIBLE         = 1000;
+    PING_SHOOT        = 14,
+    NO_AMMO           = 15,
+    IMMUNE            = 1000;
 }

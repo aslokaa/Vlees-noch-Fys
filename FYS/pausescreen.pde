@@ -9,14 +9,16 @@ class Pausescreen
     TITLE_SIZE                    = width * 0.09, 
     SUBTITLE_SIZE                 = width * 0.04, 
     TEXT_CENTER_X                 = width * 0.5, 
-    OPTION_SPACING_Y              = height * 0.1,
-    OPTION_Y                      = height * 0.6,
+    OPTION_SPACING_Y              = height * 0.1, 
+    OPTION_Y                      = height * 0.6, 
     TITLE_Y                       = height * 0.5;
-  final String[] OPTIONS_STRINGS  = new String[]{
-  /*   0    */                    "Press escape to unpause", 
-  /*   1    */                    "Press A to increase the volume", 
-  /*   2    */                    "Press S to decrease the volume",       
-  /*   3    */                    "press Z to mute"
+
+  final String[] OPTIONS_STRINGS  = new String[]
+    {
+  /*   0    */    "Press escape to unpause", 
+  /*   1    */    "Press A to increase the volume", 
+  /*   2    */    "Press S to decrease the volume", 
+  /*   3    */    "press Z to mute"
   };
   boolean 
     escapePressed         =false;
@@ -31,7 +33,7 @@ class Pausescreen
   {
     changePausedState();
   }
-  
+
   // pauses or unpauses the game.
   void changePausedState()
   {
@@ -49,6 +51,14 @@ class Pausescreen
     }
   }
 
+  //detects player input
+  void detectInput()
+  {
+    if (keysPressed['a'])
+    {
+    }
+  }
+
   //displays text
   void displayText()
   {
@@ -61,6 +71,8 @@ class Pausescreen
       text(OPTIONS_STRINGS[i], TEXT_CENTER_X, OPTION_Y+OPTION_SPACING_Y*i);
     }
   }
+
+
   class Text
   {
     float   x, y;

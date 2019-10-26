@@ -21,6 +21,7 @@ class Test
     {
       println("o gain 1 bullet");
       player.gainAmmo(1);
+      keysPressed['o']=false;
     }
     if (keysPressed['i'])
     {
@@ -29,8 +30,8 @@ class Test
     }
     if (keysPressed['u'])
     {
-      println("u invisible");
-      player.modifyPower(PowerUpTypes.INVISIBLE);
+      println("u immune");
+      player.modifyPower(PowerUpTypes.IMMUNE);
     }
     if (keysPressed['y'])
     {
@@ -43,6 +44,19 @@ class Test
       fill(Colors.WHITE);
       textSize(height*0.1);
       text(frameRate,width*0.95,height*0.1);
+    }
+    if (keysPressed['m'])
+    {
+      if(stateBossPing)
+      {
+        println("m Boss Ping leaving the game");
+     stateBossPing=false; 
+      } else
+      {
+     println("m Boss Ping Entering the game");
+     stateBossPing=true; 
+      }
+      keysPressed['m']=false;
     }
   }
 }

@@ -20,15 +20,17 @@ class Player
     PLAYER_START_DECELERATE_Y       = 0.9, 
     PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.1, 
     PLAYER_MAX_WIDTH                = width, 
-    SLOW_MODIFIER                   = 0.9, 
+    PLAYER_MIN_Y                    = height/2, 
+    SLOW_MODIFIER                   = 0.9,
+    BOUNCE_MODIFIER                 = -0.8,
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*5, 
-    INVISIBLE_STARTING_TIMER        = SECOND*1, 
+    IMMUNE_STARTING_TIMER        = SECOND*1, 
     SLOW_STARTING_TIMER             = SECOND*4, 
     SHAKE_MODIFIER_MIN              = -width*0.003, 
     SHAKE_MODIFIER_MAX              = width*0.0003, 
     SHAKE_STARTING_TIMER            = SECOND*0.5, 
-    SHOOT_STARTING_TIMER            = SECOND*1, 
+    SHOOT_STARTING_TIMER            = SECOND*0.75,
     SPLIT_STARTING_TIMER            = SECOND*10;
 
   float 
@@ -48,13 +50,13 @@ class Player
     widthSplit1;
   boolean 
     inverted, //The direction the paddle moves in.
-    invisible, // invisibles the paddle into 2.
+    immune, // immunes the paddle into 2.
     slow, //slows the paddle
     shake, //shakes the paddle
     split;       //splits the paddle
   float //Duration of effects.
     invertedTimer, 
-    invisibleTimer, 
+    immuneTimer, 
     slowTimer, 
     shakeTimer, 
     splitTimer, 
@@ -79,8 +81,8 @@ class Player
     decelerateY       = PLAYER_START_DECELERATE_Y;
     inverted          = false;
     invertedTimer     = 0;
-    invisible         = false;
-    invisibleTimer    = 0;
+    immune         = false;
+    immuneTimer    = 0;
     slow              = false;
     slowTimer         = 0;
     shake             = false;
@@ -252,10 +254,10 @@ class Player
       inverted = true;
       invertedTimer = INVERTED_STARTING_TIMER;
       break;
-    case PowerUpTypes.INVISIBLE:
-      playerSounds.play(Sounds.INVISIBLE);
-      invisible = true;
-      invisibleTimer = INVISIBLE_STARTING_TIMER;
+    case PowerUpTypes.IMMUNE:
+      playerSounds.play(Sounds.IMMUNE);
+      immune = true;
+      immuneTimer = IMMUNE_STARTING_TIMER;
       break;
     case PowerUpTypes.SLOW:
       playerSounds.play(Sounds.SLOW);
@@ -286,15 +288,15 @@ class Player
   void detectCollisionEdge() 
   {
     //Y
-    if ( y < 0 )
+    if ( y < PLAYER_MIN_Y )
     {
-      y = 0;
-      velocityY = 0;
+      y = PLAYER_MIN_Y;
+      velocityY *= BOUNCE_MODIFIER;
     }
-    if ( y + playerHeigth > height )
+    if ( y + playerHeigth > height  )
     {
       y = height - playerHeigth;
-      velocityY = 0;
+      velocityY *= BOUNCE_MODIFIER;
     }
     //Unsplit X
     if (!split)
@@ -302,12 +304,12 @@ class Player
       if ( x < 0 )
       {
         x = 0;
-        velocityX = 0;
+        velocityX *= BOUNCE_MODIFIER;
       }
       if ( x + playerWidth > width )
       {
         x = width - playerWidth;
-        velocityX = 0;
+        velocityX *= BOUNCE_MODIFIER;
       }
       //Split X
     } else if (split)
@@ -315,22 +317,22 @@ class Player
       if ( x < 0 )
       {
         x = 0;
-        velocityX = 0;
+        velocityX *= BOUNCE_MODIFIER;
       }
       if ( x + widthSplit0 > width / 2 )
       {
         x = width / 2 - widthSplit0;
-        velocityX = 0;
+        velocityX *= BOUNCE_MODIFIER;
       }
       if ( xSplit < width / 2 )
       {
         xSplit = width / 2;
-        velocityXSplit = 0;
+        velocityXSplit *= BOUNCE_MODIFIER;
       }
       if ( xSplit + widthSplit1 > width )
       {
         xSplit = width - widthSplit1;
-        velocityXSplit = 0;
+        velocityXSplit *= BOUNCE_MODIFIER;
       }
     }
   }
@@ -348,9 +350,9 @@ class Player
   //shrinks the paddle
   void dealDamage( float damage, boolean isRight)
   {
-    if (shake || invisible)
+    if (shake || immune)
     {
-     return; 
+      return;
     } 
     playerSounds.play(Sounds.RECIEVE_DAMAGE);
     shake = true;
@@ -411,12 +413,12 @@ class Player
         inverted=false;
       }
     }
-    if (invisible)
+    if (immune)
     {
-      invisibleTimer--;
-      if ( invisibleTimer <= 0 )
+      immuneTimer--;
+      if ( immuneTimer <= 0 )
       {
-        invisible=false;
+        immune=false;
       }
     }
     if (slow)
@@ -459,7 +461,7 @@ class Player
     if ( inverted )
     {
       return Colors.GREEN;
-    } else if (invisible)
+    } else if (immune)
     {
       return Colors.WHITE;
     } else if (slow)
@@ -475,8 +477,14 @@ class Player
   {
     if ( ammo<1 )
     {
+      playerSounds.play(Sounds.NO_AMMO);
       return;
     } 
+    if (stateBossPing)
+    {
+     playerSounds.play(Sounds.PING_SHOOT);
+     return;
+    }
     shootTimer=SHOOT_STARTING_TIMER;
     playerSounds.play(Sounds.SHOOT);
     ammo--;

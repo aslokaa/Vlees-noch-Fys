@@ -54,7 +54,7 @@ class Startscreen
     background(Colors.BLACK);
     for ( int i = 0; i < space.length; i++ )
     {
-      space[i].display();
+      //space[i].display();
     }
   }
   //draws the text.
