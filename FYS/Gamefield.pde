@@ -1,5 +1,6 @@
 /*
-this class keeps track of where elements are spawned and the boundries they are allowed to be in.
+  //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves?
+ this class keeps track of where elements are spawned and the boundries they are allowed to be in.
  contains list of finals for outlining:
  where the player is allowed to move to,
  where the enemies are allowed to move to,
@@ -15,34 +16,51 @@ this class keeps track of where elements are spawned and the boundries they are 
 class Gamefield
 {
   final float 
-    GAMEFIELD_WIDTH                 = width * 0.87,
-    PLAYER_MIN_Y                    = height / 2,
-    ENEMY_MAX_Y                     = height,
-    ENEMY_START_Y                   = height * 0.18,
-    ENEMY_START_X_LEFT              = GAMEFIELD_WIDTH * 0.05,
+    GAMEFIELD_WIDTH                 = width * 0.87, 
+    PLAYER_MIN_Y                    = height / 2, 
+    ENEMY_MAX_Y                     = height, 
+    ENEMY_START_Y                   = height * -0.18, 
+    ENEMY_START_X_LEFT              = GAMEFIELD_WIDTH * 0.05, 
     ENEMY_START_X_RIGHT             = GAMEFIELD_WIDTH * 0.95;  
+  final int 
+    CHAD_COUNTER_START              = 0, 
+    DAVE_COUNTER_START              = 5;
 
+  int 
+    daveCounter, 
+    chadCounter;
 
-  //finals listed above
-  //nieuwe class area aanmaken of rectangle gebruiken als area?
-  //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves?
-  //afstanden baseren op pixels of relatieve afstanden?
   Gamefield()
   {
+    daveCounter=DAVE_COUNTER_START;
+    chadCounter=CHAD_COUNTER_START;
   }
 
   void setupField()
   {
     //sets enemies to not active, sets player position to start position, sets up/resets space and score.
   }
-//checks what wave is active and spawns in enemies accordingly.
+  //spawns in enemies.
   void spawnWave()
   {
-    for (int i = 0 ; i < 10;)
+  }
+  void spawnDaves()
+  {
+    for (int i = 0; i < daveCounter; )
     {
-      for (Enemy enemy:enemies)
+      for (Enemy enemy : enemies)
       {
-       //if (enemy.getClass()==) ; 
+        if (enemy instanceof EnemyDave)
+        {
+          float xT=ENEMY_START_X_LEFT;
+          if (random(1)>0.5)
+          {
+            xT=ENEMY_START_X_RIGHT;
+          }
+          enemy.activate(xT, ENEMY_START_Y*i);
+          i++;
+          break;
+        }
       }
     }
   }
