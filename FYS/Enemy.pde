@@ -62,6 +62,12 @@ class Enemy
     explode();
   }
 
+  void activate(float posX, float posY)
+  {
+     this.x = posX;
+     this.y = posY;
+     this.active = true;
+  }
 
     //handles dying animation.
   void explode()

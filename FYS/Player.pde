@@ -8,27 +8,26 @@
 class Player
 {
   final float
-    PLAYER_START_WIDTH              = width*0.13, 
-    PLAYER_START_HEIGHT             = height*0.045, 
-    PLAYER_START_X                  = width/2-PLAYER_START_WIDTH/2, 
-    PLAYER_START_Y                  = height-PLAYER_START_HEIGHT, 
-    PLAYER_START_ACCELERATION_X     = width*0.0015, 
-    PLAYER_VELOCITY_X_MAX           = width*0.01, 
+    PLAYER_START_WIDTH              = gamefield.GAMEFIELD_WIDTH * 0.13, 
+    PLAYER_START_HEIGHT             = height * 0.045, 
+    PLAYER_START_X                  = gamefield.GAMEFIELD_WIDTH / 2-PLAYER_START_WIDTH/2, 
+    PLAYER_START_Y                  = height - PLAYER_START_HEIGHT, 
+    PLAYER_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.0015, 
+    PLAYER_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.01, 
     PLAYER_START_DECELERATE_X       = 0.9, 
-    PLAYER_START_ACCELERATION_Y     = height*0.0015, 
-    PLAYER_VELOCITY_Y_MAX           = height*0.015, 
+    PLAYER_START_ACCELERATION_Y     = height * 0.0015, 
+    PLAYER_VELOCITY_Y_MAX           = height * 0.015, 
     PLAYER_START_DECELERATE_Y       = 0.9, 
     PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.1, 
-    PLAYER_MAX_WIDTH                = width, 
-    PLAYER_MIN_Y                    = height/2, 
+    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH , 
     SLOW_MODIFIER                   = 0.9,
     BOUNCE_MODIFIER                 = -0.8,
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*5, 
-    IMMUNE_STARTING_TIMER        = SECOND*1, 
+    IMMUNE_STARTING_TIMER           = SECOND*1, 
     SLOW_STARTING_TIMER             = SECOND*4, 
-    SHAKE_MODIFIER_MIN              = -width*0.003, 
-    SHAKE_MODIFIER_MAX              = width*0.0003, 
+    SHAKE_MODIFIER_MIN              = -gamefield.GAMEFIELD_WIDTH *0.003, 
+    SHAKE_MODIFIER_MAX              = gamefield.GAMEFIELD_WIDTH *0.0003, 
     SHAKE_STARTING_TIMER            = SECOND*0.5, 
     SHOOT_STARTING_TIMER            = SECOND*0.75,
     SPLIT_STARTING_TIMER            = SECOND*10;
@@ -268,14 +267,14 @@ class Player
       playerSounds.play(Sounds.SPLIT);
       if (!split)
       {
-        if ( x > width / 2 )
+        if ( x > gamefield.GAMEFIELD_WIDTH / 2 )
         {
-          x = width - x - playerWidth;
+          x = gamefield.GAMEFIELD_WIDTH - x - playerWidth;
         }
       }
       widthSplit0 = playerWidth / 2;
       widthSplit1 = playerWidth / 2;
-      xSplit = width - x - widthSplit1;
+      xSplit = gamefield.GAMEFIELD_WIDTH - x - widthSplit1;
       split = true;
       splitTimer=SPLIT_STARTING_TIMER;
       break;
@@ -288,9 +287,9 @@ class Player
   void detectCollisionEdge() 
   {
     //Y
-    if ( y < PLAYER_MIN_Y )
+    if ( y < gamefield.PLAYER_MIN_Y )
     {
-      y = PLAYER_MIN_Y;
+      y = gamefield.PLAYER_MIN_Y;
       velocityY *= BOUNCE_MODIFIER;
     }
     if ( y + playerHeigth > height  )
@@ -306,9 +305,9 @@ class Player
         x = 0;
         velocityX *= BOUNCE_MODIFIER;
       }
-      if ( x + playerWidth > width )
+      if ( x + playerWidth > gamefield.GAMEFIELD_WIDTH )
       {
-        x = width - playerWidth;
+        x = gamefield.GAMEFIELD_WIDTH - playerWidth;
         velocityX *= BOUNCE_MODIFIER;
       }
       //Split X
@@ -319,19 +318,19 @@ class Player
         x = 0;
         velocityX *= BOUNCE_MODIFIER;
       }
-      if ( x + widthSplit0 > width / 2 )
+      if ( x + widthSplit0 > gamefield.GAMEFIELD_WIDTH / 2 )
       {
-        x = width / 2 - widthSplit0;
+        x = gamefield.GAMEFIELD_WIDTH / 2 - widthSplit0;
         velocityX *= BOUNCE_MODIFIER;
       }
-      if ( xSplit < width / 2 )
+      if ( xSplit < gamefield.GAMEFIELD_WIDTH / 2 )
       {
-        xSplit = width / 2;
+        xSplit = gamefield.GAMEFIELD_WIDTH / 2;
         velocityXSplit *= BOUNCE_MODIFIER;
       }
-      if ( xSplit + widthSplit1 > width )
+      if ( xSplit + widthSplit1 > gamefield.GAMEFIELD_WIDTH )
       {
-        xSplit = width - widthSplit1;
+        xSplit = gamefield.GAMEFIELD_WIDTH - widthSplit1;
         velocityXSplit *= BOUNCE_MODIFIER;
       }
     }

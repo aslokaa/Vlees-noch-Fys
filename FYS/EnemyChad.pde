@@ -62,9 +62,13 @@ class EnemyChad extends Enemy
     {
 
       x = hitboxRadius;
-    } else if ( x + hitboxRadius > width )
+    } else if ( x + hitboxRadius > gamefield.GAMEFIELD_WIDTH )
     {
-      x = width - hitboxRadius;
+      x = gamefield.GAMEFIELD_WIDTH - hitboxRadius;
+    }
+    if ( y > height ) 
+    {
+     y = height; 
     }
   }
 

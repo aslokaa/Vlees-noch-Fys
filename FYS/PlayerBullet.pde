@@ -22,29 +22,29 @@ class PlayerBullet
     shootBullet = false;
   }
 
-  void update() { //Updates the location of the bullet if the bullet is shot
+  void update() { 
     if (shootBullet)
     {
-      move();
-      checkOffScreenBullet(); 
-      bulletEnemyCollision();
+      move();  //Updates the location of the bullet if the bullet is shot
+      checkOffScreenBullet();   //Checks each frame if the bullet is off screen
+      bulletEnemyCollision();  //Checks each frame if the bullet colliddes with the enemy
     }
   }
   void display() { //Draws the bullet if it is shot
     if (shootBullet)
     {
-      fill(Colors.YELLOW);
+      fill(Colors.YELLOW);  
       ellipse(bulletX, bulletY, bulletDiameter, bulletDiameter);
     }
   }
-  void createBullet(float playerX, float playerY) { // Creates the bullet at the players location 
+  void createBullet(float playerX, float playerY) { // Moves the bullet to the players location 
     shootBullet = true;
     bulletX = playerX;
     bulletY = playerY;
   }
 
   void move() {
-    bulletY += bulletSpeed; //Moves the ball
+    bulletY += bulletSpeed; //Moves the bullet
   }
 
   void checkOffScreenBullet() { //Stop drawing the bullet if its off screen
