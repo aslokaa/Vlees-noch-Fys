@@ -29,11 +29,18 @@ class Gamefield
   int 
     daveCounter, 
     chadCounter;
-
+  boolean
+    spawnWave;
   Gamefield()
   {
     daveCounter=DAVE_COUNTER_START;
     chadCounter=CHAD_COUNTER_START;
+    spawnWave=true;
+  }
+
+  void update()
+  {
+    spawnWave();
   }
 
   void setupField()
@@ -43,25 +50,31 @@ class Gamefield
   //spawns in enemies.
   void spawnWave()
   {
+    spawnDaves();
   }
   void spawnDaves()
   {
-    for (int i = 0; i < daveCounter; )
+    int index=0;
+    if (spawnWave)
     {
       for (Enemy enemy : enemies)
       {
         if (enemy instanceof EnemyDave)
         {
+          if (enemy.active)
+          {
+            break;
+          }
           float xT=ENEMY_START_X_LEFT;
           if (random(1)>0.5)
           {
             xT=ENEMY_START_X_RIGHT;
           }
-          enemy.activate(xT, ENEMY_START_Y*i);
-          i++;
+          enemy.activate(xT, ENEMY_START_Y);
           break;
         }
       }
+      spawnWave=false;
     }
   }
 }
