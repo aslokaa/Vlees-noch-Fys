@@ -14,9 +14,12 @@ this class keeps track of where elements are spawned and the boundries they are 
 class Gamefield
 {
   final float 
+    GAMEFIELD_WIDTH                 = width * 0.87,
     PLAYER_MIN_Y                    = height / 2,
     ENEMY_MAX_Y                     = height,
-    GAMEFIELD_WIDTH                 = width * 0.87;  
+    ENEMY_START_Y                   = height * 0.9,
+    ENEMY_START_X_LEFT              = GAMEFIELD_WIDTH * 0.05,
+    ENEMY_START_X_RIGHT             = GAMEFIELD_WIDTH * 0.95;  
 
 
   //finals listed above
