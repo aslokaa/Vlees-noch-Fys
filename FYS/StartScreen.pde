@@ -52,9 +52,9 @@ class Startscreen
   void displayBackground()
   {
     background(Colors.BLACK);
-    for ( int i = 0; i < space.length; i++ )
+    for ( int i = 0; i < Arrays.STAR_COUNT-1; i++ )
     {
-      //space[i].display();
+      space.display();
     }
   }
   //draws the text.

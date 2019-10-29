@@ -47,7 +47,7 @@ interface Colors
 interface Arrays
 {
   final int
-    STAR_COUNT    = 1, //changed from 300 to optimize.
+    STAR_COUNT    = 300, 
     BULLET_COUNT  = 30, 
     OPTION_COUNT  = 3;
 }
