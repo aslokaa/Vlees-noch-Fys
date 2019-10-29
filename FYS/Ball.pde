@@ -75,11 +75,11 @@ class Ball {
   }
   //timer for respawn ball
   void countdownBallRespawn() {
-    
+
     if (ballRespawn)
     {
       ballRespawnTimer--;
-      
+
       if ( ballRespawnTimer <= 0 )
       {
         ballRespawn=false;
@@ -90,19 +90,19 @@ class Ball {
 
   void interactPlayer() {
     Rectangles hitboxes = player.getHitboxes();
-    
+
     if (hitboxes.rectangle0.exists)  //check if player exist.
     {
-      
+
       if (( x + radius > hitboxes.rectangle0.x)&&(x -radius < hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth)&&  //collision with player check.
         (y + radius > hitboxes.rectangle0.y)&&(y - radius < hitboxes.rectangle0.y + hitboxes.rectangle0.rectangleHeight)) {
-        
+
         speedY *= -1;
         y = hitboxes.rectangle0.y - 1 - radius;
         speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 15;  //ball bounce with player.
       }
     }
-    
+
     if (hitboxes.rectangle1.exists)  // check if player 2(if player is split) exist.
     {
 
@@ -131,28 +131,31 @@ class Ball {
       }
     }
   }
-  
+
   void interactBossLester()
   {
-    if( lester.active )
+    if ( stateBossLester )
     {
-       if (lester.hitboxLeft.active && dist(x, y, lester.hitboxLeftPos.x, lester.hitboxLeftPos.y)< radius + lester.hitboxLeft.HITBOX_RADIUS) {  //collision with enemie check.
+      if ( lester.active )
+      {
+        if (lester.hitboxLeft.active && dist(x, y, lester.hitboxLeftPos.x, lester.hitboxLeftPos.y)< radius + lester.hitboxLeft.HITBOX_RADIUS) {  //collision with enemie check.
 
-        lester.hitboxLeft.HP--;  //enemie destroyd 
-        speedY *= -1;  // enemie bounce off
-        y += 100;
-      }
-      if (lester.hitboxBottom.active && dist(x, y, lester.hitboxBottomPos.x, lester.hitboxBottomPos.y)< radius + lester.hitboxBottom.HITBOX_RADIUS) {  //collision with enemie check.
+          lester.hitboxLeft.HP--;  //enemie destroyd 
+          speedY *= -1;  // enemie bounce off
+          y += 100;
+        }
+        if (lester.hitboxBottom.active && dist(x, y, lester.hitboxBottomPos.x, lester.hitboxBottomPos.y)< radius + lester.hitboxBottom.HITBOX_RADIUS) {  //collision with enemie check.
 
-        lester.hitboxBottom.HP--;  //enemie destroyd 
-        speedY *= -1;  // enemie bounce off
-        y += 100;
-      }
-      if (lester.hitboxRight.active && dist(x, y, lester.hitboxRightPos.x, lester.hitboxRightPos.y)< radius + lester.hitboxRight.HITBOX_RADIUS) {  //collision with enemie check.
+          lester.hitboxBottom.HP--;  //enemie destroyd 
+          speedY *= -1;  // enemie bounce off
+          y += 100;
+        }
+        if (lester.hitboxRight.active && dist(x, y, lester.hitboxRightPos.x, lester.hitboxRightPos.y)< radius + lester.hitboxRight.HITBOX_RADIUS) {  //collision with enemie check.
 
-        lester.hitboxRight.HP--;  //enemie destroyd 
-        speedY *= -1;  // enemie bounce off
-        y += 100;
+          lester.hitboxRight.HP--;  //enemie destroyd 
+          speedY *= -1;  // enemie bounce off
+          y += 100;
+        }
       }
     }
   }
