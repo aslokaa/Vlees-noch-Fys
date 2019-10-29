@@ -8,27 +8,26 @@
 class Player
 {
   final float
-    PLAYER_START_WIDTH              = width*0.13, 
-    PLAYER_START_HEIGHT             = height*0.045, 
-    PLAYER_START_X                  = width/2-PLAYER_START_WIDTH/2, 
-    PLAYER_START_Y                  = height-PLAYER_START_HEIGHT, 
-    PLAYER_START_ACCELERATION_X     = width*0.0015, 
-    PLAYER_VELOCITY_X_MAX           = width*0.01, 
+    PLAYER_START_WIDTH              = gamefield.GAMEFIELD_WIDTH * 0.13, 
+    PLAYER_START_HEIGHT             = height * 0.045, 
+    PLAYER_START_X                  = width / 2-PLAYER_START_WIDTH/2, 
+    PLAYER_START_Y                  = height - PLAYER_START_HEIGHT, 
+    PLAYER_START_ACCELERATION_X     = width * 0.0015, 
+    PLAYER_VELOCITY_X_MAX           = width * 0.01, 
     PLAYER_START_DECELERATE_X       = 0.9, 
-    PLAYER_START_ACCELERATION_Y     = height*0.0015, 
-    PLAYER_VELOCITY_Y_MAX           = height*0.015, 
+    PLAYER_START_ACCELERATION_Y     = height * 0.0015, 
+    PLAYER_VELOCITY_Y_MAX           = height * 0.015, 
     PLAYER_START_DECELERATE_Y       = 0.9, 
     PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.1, 
-    PLAYER_MAX_WIDTH                = width, 
-    PLAYER_MIN_Y                    = height/2,
+    PLAYER_MAX_WIDTH                = width , 
     SLOW_MODIFIER                   = 0.9,
     BOUNCE_MODIFIER                 = -0.8,
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*5, 
     IMMUNE_STARTING_TIMER           = SECOND*1, 
     SLOW_STARTING_TIMER             = SECOND*4, 
-    SHAKE_MODIFIER_MIN              = -width*0.003, 
-    SHAKE_MODIFIER_MAX              = width*0.0003, 
+    SHAKE_MODIFIER_MIN              = -width *0.003, 
+    SHAKE_MODIFIER_MAX              = width *0.0003, 
     SHAKE_STARTING_TIMER            = SECOND*0.5, 
     SHOOT_STARTING_TIMER            = SECOND*0.75,
     SPLIT_STARTING_TIMER            = SECOND*10;
@@ -288,9 +287,9 @@ class Player
   void detectCollisionEdge() 
   {
     //Y
-    if ( y < PLAYER_MIN_Y )
+    if ( y < gamefield.PLAYER_MIN_Y )
     {
-      y = PLAYER_MIN_Y;
+      y = gamefield.PLAYER_MIN_Y;
       velocityY *= BOUNCE_MODIFIER;
     }
     if ( y + playerHeigth > height  )

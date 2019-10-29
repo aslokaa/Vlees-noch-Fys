@@ -16,7 +16,6 @@ class Gamefield
   final float 
     PLAYER_MIN_Y                    = height / 2,
     ENEMY_MAX_Y                     = height,
-    
     GAMEFIELD_WIDTH                 = width * 0.87;  
 
 

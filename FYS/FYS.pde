@@ -17,6 +17,7 @@ ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
 Space[] space = new Space[Arrays.STAR_COUNT];
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false;
+Gamefield gamefield;
 Startscreen startscreen;
 Pausescreen pausescreen;
 Endscreen endscreen;
@@ -32,6 +33,7 @@ void setup()
   size( 1600, 900, P2D ); //16:9
   smooth(0);
   introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
+  gamefield = new Gamefield();
   player = new Player();
   ping = new BossPing();
   test = new Test();
@@ -45,7 +47,7 @@ void setup()
   for (int i = 0; i < Arrays.BULLET_COUNT; i++) {
     playerBullets.add( new PlayerBullet(0, 0));
   }
-  intializeBackgroundStars();
+  //intializeBackgroundStars();
   startscreen   = new Startscreen();
   pausescreen   = new Pausescreen();
   endscreen     = new Endscreen();
