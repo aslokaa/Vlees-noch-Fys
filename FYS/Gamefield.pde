@@ -18,8 +18,8 @@ class Gamefield
     GAMEFIELD_WIDTH                 = width * 0.87,
     PLAYER_MIN_Y                    = height / 2,
     ENEMY_MAX_Y                     = height,
-    ENEMY_START_Y                   = height * 0.04,
-    ENEMY_START_X_LEFT              = GAMEFIELD_WIDTH * 0.08,
+    ENEMY_START_Y                   = height * 0.18,
+    ENEMY_START_X_LEFT              = GAMEFIELD_WIDTH * 0.05,
     ENEMY_START_X_RIGHT             = GAMEFIELD_WIDTH * 0.95;  
 
 
