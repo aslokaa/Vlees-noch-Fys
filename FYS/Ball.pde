@@ -11,7 +11,7 @@ class Ball {
   float maxSpeedX;
 
   Ball() {
-    x= width/2;
+    x= gamefield.GAMEFIELD_WIDTH/2;
     y = height/2;
     speedX = 0;
     speedY = 10;
@@ -43,7 +43,7 @@ class Ball {
     y = y + speedY;
   }
   void bounceWall() {
-    if (x > width - radius) {
+    if (x > gamefield.GAMEFIELD_WIDTH - radius) {
       speedX = -speedX;
     }
     if (x < radius) {
@@ -51,7 +51,7 @@ class Ball {
     }
     if (y > height ) {
 
-      x= width/2;
+      x= gamefield.GAMEFIELD_WIDTH/2;
       y = height /2;
     }
     if (y < radius) {
