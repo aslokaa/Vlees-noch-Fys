@@ -14,7 +14,7 @@ class Ball {
     x= width/2;
     y = height/2;
     speedX = 0;
-    speedY = 6;
+    speedY = 10;
     radius = 25;
     colorBall = Colors.BLUE;
     active = true;
@@ -81,7 +81,7 @@ class Ball {
 
         speedY *= -1;
         y = hitboxes.rectangle1.y - 1 - radius;
-        speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 15;
+        speedX += (x - (hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth / 2)) / 15;
       }
     }
     if (speedX > maxSpeedX) {
@@ -94,6 +94,8 @@ class Ball {
     for (Enemy enemy : enemies) {
       if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius) {
         enemy.destroy();
+        speedY *= -1;
+        //speedX += ( x - (enemy.x + enemy.hitboxDiameter / 2)) / 15;
       }
     }
   }
