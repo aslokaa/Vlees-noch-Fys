@@ -10,7 +10,7 @@ class Ball {
   boolean active;
   boolean ballRespawn;
   float maxSpeedX;
-  float ballRespawnTimer;
+  float ballRespawnTimer, timerCount;
 
   Ball() {
     x= gamefield.GAMEFIELD_WIDTH/2;
@@ -24,6 +24,7 @@ class Ball {
     diameter = radius*2;
     maxSpeedX = 10;
     ballRespawnTimer = 0;
+    timerCount = 2;
   }
 
   void updateBall() {
@@ -50,7 +51,7 @@ class Ball {
     x = x + speedX;
     y = y + speedY;
   }
-  //bounce on walls end respawned if its lost.
+  //bounce on walls 
   void bounceWall() {
     if (x > gamefield.GAMEFIELD_WIDTH - radius) {
       speedX = -speedX;
@@ -58,10 +59,10 @@ class Ball {
     if (x < radius) {
       speedX *= -1;
     }
-    if (y > height && !ballRespawn) {
+    if (y > height && !ballRespawn) { // damage to player end start respawn
 
       ballRespawn = true ;
-      ballRespawnTimer = 120;
+      ballRespawnTimer = timerCount;
       player.dealDamage(20, true);
       player.dealDamage(20, false);
       x= gamefield.GAMEFIELD_WIDTH/2;
@@ -71,12 +72,13 @@ class Ball {
       speedY *= -1;
     }
   }
+  //timer for respawn ball
   void countdownBallRespawn() {
-    println(ballRespawn);
+    
     if (ballRespawn)
     {
       ballRespawnTimer--;
-      println(ballRespawnTimer);
+      
       if ( ballRespawnTimer <= 0 )
       {
         ballRespawn=false;
@@ -87,28 +89,28 @@ class Ball {
 
   void interactPlayer() {
     Rectangles hitboxes = player.getHitboxes();
-    //check if player exist.
-    if (hitboxes.rectangle0.exists)
+    
+    if (hitboxes.rectangle0.exists)  //check if player exist.
     {
-      //collision with player check.
-      if (( x + radius > hitboxes.rectangle0.x)&&(x -radius < hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth)&&
+      
+      if (( x + radius > hitboxes.rectangle0.x)&&(x -radius < hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth)&&  //collision with player check.
         (y + radius > hitboxes.rectangle0.y)&&(y - radius < hitboxes.rectangle0.y + hitboxes.rectangle0.rectangleHeight)) {
-        //ball bounce with player.
+        
         speedY *= -1;
         y = hitboxes.rectangle0.y - 1 - radius;
-        speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 15;
+        speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 15;  //ball bounce with player.
       }
     }
-    // check if player 2(if player is split) exist.
-    if (hitboxes.rectangle1.exists)
+    
+    if (hitboxes.rectangle1.exists)  // check if player 2(if player is split) exist.
     {
-      //collision with player 2 check.
-      if (( x + radius > hitboxes.rectangle1.x)&&(x -radius < hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth)&&
+
+      if (( x + radius > hitboxes.rectangle1.x)&&(x -radius < hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth)&&  //collision with player 2 check.
         (y + radius > hitboxes.rectangle1.y)&&(y - radius < hitboxes.rectangle1.y + hitboxes.rectangle1.rectangleHeight)) {
-        //ball bounce with player 2.
+
         speedY *= -1;
         y = hitboxes.rectangle1.y - 1 - radius;
-        speedX += (x - (hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth / 2)) / 15;
+        speedX += (x - (hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth / 2)) / 15;  //ball bounce with player 2.
       }
     }
     //fixes max speed of the ball
@@ -120,11 +122,11 @@ class Ball {
   }
   void interactEnemy() {
     for (Enemy enemy : enemies) {
-      //collision with enemie check.
-      if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius) {
-        //enemie destroyd end ball bounces off
-        enemy.destroy();
-        speedY *= -1;
+
+      if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius) {  //collision with enemie check.
+
+        enemy.destroy();  //enemie destroyd 
+        speedY *= -1;  // enemie bounce off
       }
     }
   }
