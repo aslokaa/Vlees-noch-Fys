@@ -10,6 +10,7 @@ this class keeps track of where elements are spawned and the boundries they are 
  where the player starts.
  
  Eele Roet 500795948
+ Niklas Leeuwin  500784205
  */
 class Gamefield
 {
@@ -34,9 +35,9 @@ class Gamefield
   {
     //sets enemies to not active, sets player position to start position, sets up/resets space and score.
   }
-
+//checks what wave is active and spawns in enemies accordingly.
   void spawnWave()
   {
-    //checks what wave is active and spawns in enemies accordingly.
+    
   }
 }
