@@ -7,7 +7,7 @@ interface PowerUpTypes
 { 
   final int
     INVERTED     = 0, 
-    IMMUNE    = 1, 
+    IMMUNE       = 1, 
     SLOW         = 2, 
     SPLIT        = 3;
 }  
