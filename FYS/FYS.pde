@@ -15,7 +15,7 @@ boolean[] keysPressed = new boolean[KEY_LIMIT];
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
-ArrayList<Power> powers = new ArrayList<Power>();
+Power[] powers = new Power[12];
 Space[] space = new Space[Arrays.STAR_COUNT];
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false;
 Gamefield gamefield;
@@ -39,6 +39,7 @@ void setup()
   ping = new BossPing();
   test = new Test();
   balls.add(new Ball());
+  
   for ( int daves = 0; daves < 10; daves++ )
   {
     enemies.add(new EnemyDave( 100, -daves * gamefield.ENEMY_START_Y , EnemyFinals.DAVE_HITBOX_RADIUS ));
