@@ -44,7 +44,7 @@ void setup()
   
   for ( int daves = 0; daves < 10; daves++ )
   {
-    enemies.add(new EnemyDave( 100, -daves * gamefield.ENEMY_START_Y , EnemyFinals.DAVE_HITBOX_RADIUS ));
+    enemies.add(new EnemyDave( EnemyFinals.ENEMY_GRAVEYARD_X, EnemyFinals.ENEMY_GRAVEYARD_Y, EnemyFinals.DAVE_HITBOX_RADIUS ));
   }
   enemies.add(new EnemyChad( 600, 200, EnemyFinals.CHAD_HITBOX_RADIUS));
   for (int i = 0; i < Arrays.BULLET_COUNT; i++) {
