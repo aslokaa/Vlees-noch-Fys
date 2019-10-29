@@ -22,6 +22,7 @@ interface EnemyFinals
   final color CHAD_COLOR = #ff0000;
   final float ENEMY_GRAVEYARD_X = -500;
   final float ENEMY_GRAVEYARD_Y = -500;
+  
 }
 //finals for powerups
 interface PowerFinals

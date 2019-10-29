@@ -21,7 +21,7 @@ class EnemyDave extends Enemy
 
   EnemyDave(float x, float y, float hitboxRadius)
   {
-    super(true, x, y, hitboxRadius);
+    super(false, x, y, hitboxRadius);
     damageToDeal = 50;
     moveSpeedLeft = -5;
     moveSpeedRight = 5;

@@ -34,6 +34,7 @@ class Ball {
         moveBall();
         interactPlayer();
         interactEnemy();
+        interactBossLester();
         bounceWall();
       }
       countdownBallRespawn();
@@ -125,8 +126,33 @@ class Ball {
 
       if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius) {  //collision with enemie check.
 
-        enemy.destroy();  //enemie destroyd 
+        enemy.destroy();  //enemie destroyd
         speedY *= -1;  // enemie bounce off
+      }
+    }
+  }
+  
+  void interactBossLester()
+  {
+    if( lester.active )
+    {
+       if (lester.hitboxLeft.active && dist(x, y, lester.hitboxLeftPos.x, lester.hitboxLeftPos.y)< radius + lester.hitboxLeft.HITBOX_RADIUS) {  //collision with enemie check.
+
+        lester.hitboxLeft.HP--;  //enemie destroyd 
+        speedY *= -1;  // enemie bounce off
+        y += 100;
+      }
+      if (lester.hitboxBottom.active && dist(x, y, lester.hitboxBottomPos.x, lester.hitboxBottomPos.y)< radius + lester.hitboxBottom.HITBOX_RADIUS) {  //collision with enemie check.
+
+        lester.hitboxBottom.HP--;  //enemie destroyd 
+        speedY *= -1;  // enemie bounce off
+        y += 100;
+      }
+      if (lester.hitboxRight.active && dist(x, y, lester.hitboxRightPos.x, lester.hitboxRightPos.y)< radius + lester.hitboxRight.HITBOX_RADIUS) {  //collision with enemie check.
+
+        lester.hitboxRight.HP--;  //enemie destroyd 
+        speedY *= -1;  // enemie bounce off
+        y += 100;
       }
     }
   }

@@ -27,6 +27,7 @@ MenuSounds menuSounds;
 PFont font;
 SoundFile introMusic;
 BossPing ping;
+BossLester lester;
 
 
 void setup()
@@ -37,6 +38,7 @@ void setup()
   gamefield = new Gamefield();
   player = new Player();
   ping = new BossPing();
+  lester = new BossLester(width / 2, 100);
   test = new Test();
   balls.add(new Ball());
   
@@ -74,6 +76,7 @@ void updateGame()
       }
 
       player.update();
+      lester.update();
       test.test();
 
       for ( PlayerBullet playerBullet : playerBullets)
@@ -125,6 +128,7 @@ void drawGame()
       ball.drawBall();
     }
     player.checkDisplay();
+    lester.display();
     if (statePaused)
     {
       pausescreen.display();

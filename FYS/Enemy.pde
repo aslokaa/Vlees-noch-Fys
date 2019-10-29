@@ -59,6 +59,7 @@ class Enemy
   void destroy()
   {
     println("define the destroy method before using it");
+    spawnPowerup();
     explode();
   }
 
@@ -69,6 +70,10 @@ class Enemy
      this.active = true;
   }
 
+  void spawnPowerup()
+  {
+    println("define the spawnPowerup method before using it");
+  }
     //handles dying animation.
   void explode()
   {
