@@ -8,7 +8,9 @@ class Ball {
   float radius, diameter;
   int colorBall;
   boolean active;
+  boolean ballRespawn;
   float maxSpeedX;
+  float ballRespawnTimer;
 
   Ball() {
     x= gamefield.GAMEFIELD_WIDTH/2;
@@ -18,17 +20,22 @@ class Ball {
     radius = 25;
     colorBall = Colors.BLUE;
     active = true;
+    ballRespawn=false;
     diameter = radius*2;
     maxSpeedX = 10;
+    ballRespawnTimer = 0;
   }
 
   void updateBall() {
     if (active) {
-      drawBall();
-      moveBall();
-      interactPlayer();
-      interactEnemy();
-      bounceWall();
+      //drawBall();
+      if (!ballRespawn) {
+        moveBall();
+        interactPlayer();
+        interactEnemy();
+        bounceWall();
+      }
+      countdownBallRespawn();
     }
   }
 
@@ -51,15 +58,29 @@ class Ball {
     if (x < radius) {
       speedX *= -1;
     }
-    if (y > height ) {
+    if (y > height && !ballRespawn) {
 
+      ballRespawn = true ;
+      ballRespawnTimer = 120;
+      player.dealDamage(20, true);
+      player.dealDamage(20, false);
       x= gamefield.GAMEFIELD_WIDTH/2;
       y = height /2;
-      player.dealDamage(20,true);
-      player.dealDamage(20,false);
     }
     if (y < radius) {
       speedY *= -1;
+    }
+  }
+  void countdownBallRespawn() {
+    println(ballRespawn);
+    if (ballRespawn)
+    {
+      ballRespawnTimer--;
+      println(ballRespawnTimer);
+      if ( ballRespawnTimer <= 0 )
+      {
+        ballRespawn=false;
+      }
     }
   }
 
@@ -104,7 +125,6 @@ class Ball {
         //enemie destroyd end ball bounces off
         enemy.destroy();
         speedY *= -1;
-       
       }
     }
   }
