@@ -15,8 +15,9 @@ boolean[] keysPressed = new boolean[KEY_LIMIT];
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
-Space space = new Space();
+Space[] space = new Space[Arrays.STAR_COUNT];
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false;
+Gamefield gamefield;
 Startscreen startscreen;
 Pausescreen pausescreen;
 Endscreen endscreen;
@@ -32,20 +33,19 @@ void setup()
   size( 1600, 900, P2D ); //16:9
   smooth(0);
   introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
+  gamefield = new Gamefield();
   player = new Player();
   ping = new BossPing();
   test = new Test();
   balls.add(new Ball());
   for ( int daves = 0; daves < 10; daves++ )
   {
-    enemies.add(new EnemyDave( 100, -daves * 200, EnemyFinals.DAVE_HITBOX_RADIUS ));
+    enemies.add(new EnemyDave( 100, -daves * gamefield.ENEMY_START_Y , EnemyFinals.DAVE_HITBOX_RADIUS ));
   }
-
   enemies.add(new EnemyChad( 600, 200, EnemyFinals.CHAD_HITBOX_RADIUS));
   for (int i = 0; i < Arrays.BULLET_COUNT; i++) {
     playerBullets.add( new PlayerBullet(0, 0));
   }
-
   startscreen   = new Startscreen();
   pausescreen   = new Pausescreen();
   endscreen     = new Endscreen();
@@ -86,8 +86,10 @@ void updateGame()
   {
     endscreen.update();
   }
-
-  space.update();
+  for ( int i = 0; i < space.length; i++ )
+  {
+   // space[i].update();
+  }
 }
 
 void drawGame()
@@ -98,14 +100,17 @@ void drawGame()
   } else if (statePlaying)
   {
     background(0);
-
-    space.display();
-
-
-    if (stateBossPing)
+    fill(Colors.RED);
+    rect(gamefield.GAMEFIELD_WIDTH,0,width,height);
+    for ( int i = 0; i < space.length; i++ )
     {
-      ping.display();
+//      space[i].display();
     }
+    
+      if (stateBossPing)
+      {
+        ping.display();
+      }
     for ( Enemy enemy : enemies )
     {
       enemy.display();//shows enemies on screen
