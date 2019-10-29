@@ -15,6 +15,7 @@ boolean[] keysPressed = new boolean[KEY_LIMIT];
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
+ArrayList<Power> powers = new ArrayList<Power>();
 Space[] space = new Space[Arrays.STAR_COUNT];
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false;
 Gamefield gamefield;
