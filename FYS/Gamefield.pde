@@ -10,13 +10,17 @@ this class keeps track of where elements are spawned and the boundries they are 
  where the player starts.
  
  Eele Roet 500795948
+ Niklas Leeuwin  500784205
  */
 class Gamefield
 {
   final float 
+    GAMEFIELD_WIDTH                 = width * 0.87,
     PLAYER_MIN_Y                    = height / 2,
     ENEMY_MAX_Y                     = height,
-    GAMEFIELD_WIDTH                 = width * 0.87;  
+    ENEMY_START_Y                   = height * 0.18,
+    ENEMY_START_X_LEFT              = GAMEFIELD_WIDTH * 0.05,
+    ENEMY_START_X_RIGHT             = GAMEFIELD_WIDTH * 0.95;  
 
 
   //finals listed above
@@ -31,9 +35,15 @@ class Gamefield
   {
     //sets enemies to not active, sets player position to start position, sets up/resets space and score.
   }
-
+//checks what wave is active and spawns in enemies accordingly.
   void spawnWave()
   {
-    //checks what wave is active and spawns in enemies accordingly.
+    for (int i = 0 ; i < 10;)
+    {
+      for (Enemy enemy:enemies)
+      {
+       //if (enemy.getClass()==) ; 
+      }
+    }
   }
 }

@@ -52,10 +52,6 @@ class Startscreen
   void displayBackground()
   {
     background(Colors.BLACK);
-    for ( int i = 0; i < space.length; i++ )
-    {
-      //space[i].display();
-    }
   }
   //draws the text.
   void displayText()
