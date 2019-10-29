@@ -101,6 +101,8 @@ void drawGame()
   } else if (statePlaying)
   {
     background(0);
+    fill(Colors.RED);
+    rect(gamefield.GAMEFIELD_WIDTH,0,width,height);
     for ( int i = 0; i < space.length; i++ )
     {
 //      space[i].display();
