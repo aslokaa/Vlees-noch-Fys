@@ -15,13 +15,13 @@ interface PowerUpTypes
 //finals for all enemies.
 interface EnemyFinals
 {
-  final float DAVE_GRID_HEIGHT = 100;
-  final float DAVE_HITBOX_RADIUS = 40;
-  final color DAVE_COLOR = #ff0000;
-  final float CHAD_HITBOX_RADIUS = 40;
-  final color CHAD_COLOR = #ff0000;
-  final float ENEMY_GRAVEYARD_X = -500;
-  final float ENEMY_GRAVEYARD_Y = -500;
+  final float DAVE_GRID_HEIGHT       = 100;
+  final float DAVE_HITBOX_RADIUS     = 40;
+  final color DAVE_COLOR             = #ff0000;
+  final float CHAD_HITBOX_RADIUS     = 40;
+  final color CHAD_COLOR             = #ff0000;
+  final float ENEMY_GRAVEYARD_X      = -500;
+  final float ENEMY_GRAVEYARD_Y      = -500;
 }
 //finals for powerups
 interface PowerFinals
@@ -49,7 +49,8 @@ interface Arrays
   final int
     STAR_COUNT    = 300, 
     BULLET_COUNT  = 30, 
-    OPTION_COUNT  = 3;
+    OPTION_COUNT  = 3,
+    DAVE_COUNT    = 10;
 }
 
 //adding readability

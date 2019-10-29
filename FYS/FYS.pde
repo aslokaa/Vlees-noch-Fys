@@ -17,7 +17,7 @@ ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
 Power[] powers = new Power[12];
 Space[] space = new Space[Arrays.STAR_COUNT];
-boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false;
+boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
 Gamefield gamefield;
 Startscreen startscreen;
 Pausescreen pausescreen;
@@ -64,6 +64,7 @@ void updateGame()
     pausescreen.update();
     if (!statePaused)
     {
+      gamefield.update();
       if (stateBossPing)
       {
         ping.update();
