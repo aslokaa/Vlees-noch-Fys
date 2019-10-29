@@ -18,8 +18,8 @@ class Gamefield
     GAMEFIELD_WIDTH                 = width * 0.87,
     PLAYER_MIN_Y                    = height / 2,
     ENEMY_MAX_Y                     = height,
-    ENEMY_START_Y                   = height * 0.9,
-    ENEMY_START_X_LEFT              = GAMEFIELD_WIDTH * 0.05,
+    ENEMY_START_Y                   = height * 0.04,
+    ENEMY_START_X_LEFT              = GAMEFIELD_WIDTH * 0.08,
     ENEMY_START_X_RIGHT             = GAMEFIELD_WIDTH * 0.95;  
 
 
@@ -38,6 +38,12 @@ class Gamefield
 //checks what wave is active and spawns in enemies accordingly.
   void spawnWave()
   {
-    
+    for (int i = 0 ; i < 10;)
+    {
+      for (Enemy enemy:enemies)
+      {
+       //if (enemy.getClass()==) ; 
+      }
+    }
   }
 }
