@@ -71,13 +71,16 @@ void updateGame()
       {
         ping.update();
       }
+      if (stateBossLester)
+      {
+       lester.update(); 
+      }
       for ( Enemy enemy : enemies )
       {
         enemy.executeBehavior();//handles movement paterns
       }
 
       player.update();
-      lester.update();
       test.test();
 
       for ( PlayerBullet playerBullet : playerBullets)
@@ -117,6 +120,10 @@ void drawGame()
       {
         ping.display();
       }
+      if (stateBossLester)
+      {
+        lester.display(); 
+      }
     for ( Enemy enemy : enemies )
     {
       enemy.display();//shows enemies on screen
@@ -129,7 +136,6 @@ void drawGame()
       ball.drawBall();
     }
     player.checkDisplay();
-    lester.display();
     if (statePaused)
     {
       pausescreen.display();
