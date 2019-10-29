@@ -8,6 +8,8 @@ class Endscreen
   void display()
   {
     background(Colors.WHITE);
+    fill(Colors.BLACK);
+    text("Press Z to restart", width/2, height/2);
     menuSounds.play(Sounds.END_MUSIC);
   }
   void update()

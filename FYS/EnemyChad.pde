@@ -1,5 +1,7 @@
 /*
 deze class bevat chad.
+ comments over de @Override methodes staan in Enemy base-class.
+ chad accelerates towards the player 
  
  Eele Roet 500795948
  */
@@ -14,44 +16,27 @@ class EnemyChad extends Enemy
   EnemyChad(float x, float y, float hitboxRadius)
   {
     super(true, x, y, hitboxRadius);
-    speedY = 0;
-    speedX = 0;
+    speedY = 1;
+    speedX = 1;
+    damageToDeal = 50;
   }
 
   @Override void executeBehavior()
   {
     if ( active )
     {
-      checkWallCollision();//als chad een muur raakt stopt hij met bewegen in die richting.
-      setAccelTowardsPlayer();//sets speeds so that chad accelerates towards the player.
       move();
+      checkWallCollision();//als chad een muur raakt stopt hij met bewegen in die richting.
+      handlePlayerCollision(player.getHitboxes());
+      setAccelTowardsPlayer();//sets speeds so that chad accelerates towards the player.
     }
-  }
-
-  void setAccelTowardsPlayer()
-  {
-    accelX = dist( x, y, player.x, y ) / (dist( x, y, player.x, y ) + dist( x, y, x, player.y )) ;
-    accelY = 1 - accelX;
-
-    if ( x > player.x )
-    {
-      accelX *= -1;
-    }
-    if ( y > player.y ) 
-    {
-      accelY *= -1;
-    }
-    //get angle to player
-    //translate angle to x and y acceleration.
-
   }
 
   void move()
   {
-    speedX += accelX / 10;
-
-    speedY += accelY / 10;
-
+    speedX += accelX / 2;
+    speedY += accelY / 2;
+   
     if ( speedX > 3 )
     {
       speedX = 3;
@@ -83,9 +68,44 @@ class EnemyChad extends Enemy
     }
   }
 
+  void setAccelTowardsPlayer()
+  {
+    Rectangles hitboxesToCheck = player.getHitboxes();
+    Rectangle hitboxToFollow;
+    if ( hitboxesToCheck.rectangle1.exists )
+    {
+      if ( dist( x, y, hitboxesToCheck.rectangle0.x, hitboxesToCheck.rectangle0.y) < dist( x, y, hitboxesToCheck.rectangle1.x, hitboxesToCheck.rectangle1.y) )
+      {
+        hitboxToFollow = hitboxesToCheck.rectangle0;
+      } else
+      {
+        hitboxToFollow = hitboxesToCheck.rectangle1;
+      }
+    } else
+    {
+      hitboxToFollow = hitboxesToCheck.rectangle0;
+    }
+
+    accelX = dist( x, y, hitboxToFollow.x + ( hitboxToFollow.rectangleWidth / 2 ), y ) / 
+            (dist( x, y, hitboxToFollow.x + ( hitboxToFollow.rectangleWidth / 2 ), y ) + dist( x, y, x, hitboxToFollow.y )) ;
+    accelY = 1 - accelX;
+    
+    if ( x > hitboxToFollow.x + ( hitboxToFollow.rectangleWidth / 2 ) )
+    {
+      accelX *= -1;
+    }
+    if ( y > hitboxToFollow.y ) 
+    {
+      accelY *= -1;
+    }
+  }
+
+
   @Override void destroy()
   {
     active = false;
+    x = EnemyFinals.ENEMY_GRAVEYARD_X;
+    y = EnemyFinals.ENEMY_GRAVEYARD_Y;
   }
 
   @Override void explode()
@@ -97,7 +117,7 @@ class EnemyChad extends Enemy
     if ( active )
     {
       noStroke();
-      fill(CHAD_COLOR);
+      fill(EnemyFinals.CHAD_COLOR);
       ellipse(x, y, hitboxDiameter, hitboxDiameter);
     }
   }

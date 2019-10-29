@@ -13,8 +13,10 @@ class PlayerSounds
     SHOOT             = new SoundFile(FYS.this, FOLDER_NAME + '/' + "shoot.wav"), 
     SPLIT             = new SoundFile(FYS.this, FOLDER_NAME + '/' + "split.wav"), 
     SLOW              = new SoundFile(FYS.this, FOLDER_NAME + '/' + "slow.wav"), 
-    INVERTED          = new SoundFile(FYS.this, FOLDER_NAME + '/' + "inverted.wav"), 
-    INVISIBLE         = new SoundFile(FYS.this, FOLDER_NAME + '/' + "invisible.wav");
+    INVERTED          = new SoundFile(FYS.this, FOLDER_NAME + '/' + "inverted.wav"),
+    NO_AMMO           = new SoundFile(FYS.this, FOLDER_NAME + '/' + "noAmmo.wav"),
+    PING_SHOOT        = new SoundFile(FYS.this, FOLDER_NAME + '/' + "pingShoot.wav"),
+    IMMUNE            = new SoundFile(FYS.this, FOLDER_NAME + '/' + "immune.wav");
 
   void play(int type)
   {
@@ -56,10 +58,22 @@ class PlayerSounds
         INVERTED.play();
       }
       break;
-    case Sounds.INVISIBLE:
-      if (!INVISIBLE.isPlaying())
+    case Sounds.IMMUNE:
+      if (!IMMUNE.isPlaying())
       {      
-        INVISIBLE.play();
+        IMMUNE.play();
+      }
+      break;
+       case Sounds.NO_AMMO:
+      if (!NO_AMMO.isPlaying())
+      {      
+        NO_AMMO.play();
+      }
+      break;
+       case Sounds.PING_SHOOT:
+      if (!PING_SHOOT.isPlaying())
+      {      
+        PING_SHOOT.play();
       }
       break;
     }

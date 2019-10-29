@@ -32,10 +32,10 @@ class Startscreen
   {
     displayBackground();
     displayText();
-   /* if (!introMusic.isPlaying())
+   if (!introMusic.isPlaying())
     {      
       introMusic.play();
-    }*/
+    }
     drawn=true;
   }
   //loads game
@@ -54,7 +54,7 @@ class Startscreen
     background(Colors.BLACK);
     for ( int i = 0; i < space.length; i++ )
     {
-      space[i].display();
+      //space[i].display();
     }
   }
   //draws the text.
@@ -79,7 +79,7 @@ class Startscreen
   {
     if (checkInput())
     {
-     // introMusic.stop();
+      introMusic.stop();
       menuSounds.play(Sounds.START_GAME);
       stateStart=false;
       statePlaying=true;

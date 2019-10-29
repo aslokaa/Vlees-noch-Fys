@@ -1,5 +1,6 @@
 /*
-deze class bevat dave.
+ deze class bevat dave.
+ comments over de @Override methodes staan in Enemy base-class.
  dave word boven y = 100 gespawned, dus alle y < 100.
  dave beweegt tot de eerste row op y is 100, dave gaat dan alleen in de x bewegen
  totdat hij een muur raakt dan gaat hij een row naar beneden, dus y 200 en gaat in de andere richting 
@@ -21,6 +22,7 @@ class EnemyDave extends Enemy
   EnemyDave(float x, float y, float hitboxRadius)
   {
     super(true, x, y, hitboxRadius);
+    damageToDeal = 50;
     moveSpeedLeft = -5;
     moveSpeedRight = 5;
     moveSpeedDown = 5;
@@ -37,11 +39,10 @@ class EnemyDave extends Enemy
     {
       move();//kijkt naar move booleans, zet snelheden, telt snelheid op bij positie.
       checkWallCollision();//als dave een muur raakt beweegt hij een row naar beneden
+      handlePlayerCollision( player.getHitboxes() );
       checkRow();//als dave bij de volgende row komt gaat hij op de x bewegen.
     }
   }
-
-
 
   void move()
   {
@@ -85,10 +86,10 @@ class EnemyDave extends Enemy
   {
     if ( currentRow < rowToMoveTo )
     {
-      if ( y >= DAVE_GRID_HEIGHT * rowToMoveTo )
+      if ( y >= EnemyFinals.DAVE_GRID_HEIGHT * rowToMoveTo )
       {
         currentRow++;
-        y = DAVE_GRID_HEIGHT * rowToMoveTo;
+        y = EnemyFinals.DAVE_GRID_HEIGHT * rowToMoveTo;
         setXSpeed();//als dave aan de linker kant van het veld staat gaat hij naar rechts bewegen en andersom
         moveDown = false;
       } else
@@ -103,8 +104,10 @@ class EnemyDave extends Enemy
   @Override void destroy()
   {
     active = false;
+    x = EnemyFinals.ENEMY_GRAVEYARD_X;
+    y = EnemyFinals.ENEMY_GRAVEYARD_Y;
   }
-  
+
   void setXSpeed()
   {
     if ( x >= width / 2 )
@@ -121,7 +124,7 @@ class EnemyDave extends Enemy
     if ( active )
     {
       noStroke();
-      fill(DAVE_COLOR);
+      fill(EnemyFinals.DAVE_COLOR);
       ellipse(x, y, hitboxDiameter, hitboxDiameter);
     }
   }

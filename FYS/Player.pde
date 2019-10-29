@@ -7,28 +7,31 @@
 
 class Player
 {
-  final float PLAYER_START_WIDTH    = width*0.13, 
+  final float
+    PLAYER_START_WIDTH              = width*0.13, 
     PLAYER_START_HEIGHT             = height*0.045, 
     PLAYER_START_X                  = width/2-PLAYER_START_WIDTH/2, 
-    PLAYER_START_Y                  =height-PLAYER_START_HEIGHT, 
-    PLAYER_START_ACCELERATION_X     =width*0.0005, 
-    PLAYER_VELOCITY_X_MAX           =width*0.01, 
-    PLAYER_START_DECELERATE_X       =0.98, 
-    PLAYER_START_ACCELERATION_Y     =height*0.001, 
-    PLAYER_VELOCITY_Y_MAX           =height*0.01, 
-    PLAYER_START_DECELERATE_Y       =0.9, 
-    PLAYER_MIN_WIDTH                =PLAYER_START_WIDTH*0.1, 
-    PLAYER_MAX_WIDTH                =width, 
-    SLOW_MODIFIER                   =0.9, 
-    SECOND                          =60, //one second
-    INVERTED_STARTING_TIMER         =SECOND*5, 
-    INVISIBLE_STARTING_TIMER        =SECOND*1, 
-    SLOW_STARTING_TIMER             =SECOND*4, 
-    SHAKE_MODIFIER_MIN              =-width*0.003, 
-    SHAKE_MODIFIER_MAX              =width*0.0003, 
-    SHAKE_STARTING_TIMER            =SECOND*0.5, 
-    SHOOT_STARTING_TIMER            =SECOND*1, 
-    SPLIT_STARTING_TIMER            =SECOND*10;
+    PLAYER_START_Y                  = height-PLAYER_START_HEIGHT, 
+    PLAYER_START_ACCELERATION_X     = width*0.0015, 
+    PLAYER_VELOCITY_X_MAX           = width*0.01, 
+    PLAYER_START_DECELERATE_X       = 0.9, 
+    PLAYER_START_ACCELERATION_Y     = height*0.0015, 
+    PLAYER_VELOCITY_Y_MAX           = height*0.015, 
+    PLAYER_START_DECELERATE_Y       = 0.9, 
+    PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.1, 
+    PLAYER_MAX_WIDTH                = width, 
+    PLAYER_MIN_Y                    = height/2, 
+    SLOW_MODIFIER                   = 0.9,
+    BOUNCE_MODIFIER                 = -0.8,
+    SECOND                          = 60, //one second
+    INVERTED_STARTING_TIMER         = SECOND*5, 
+    IMMUNE_STARTING_TIMER        = SECOND*1, 
+    SLOW_STARTING_TIMER             = SECOND*4, 
+    SHAKE_MODIFIER_MIN              = -width*0.003, 
+    SHAKE_MODIFIER_MAX              = width*0.0003, 
+    SHAKE_STARTING_TIMER            = SECOND*0.5, 
+    SHOOT_STARTING_TIMER            = SECOND*0.75,
+    SPLIT_STARTING_TIMER            = SECOND*10;
 
   float 
     x, 
@@ -47,13 +50,13 @@ class Player
     widthSplit1;
   boolean 
     inverted, //The direction the paddle moves in.
-    invisible, // invisibles the paddle into 2.
+    immune, // immunes the paddle into 2.
     slow, //slows the paddle
     shake, //shakes the paddle
     split;       //splits the paddle
   float //Duration of effects.
     invertedTimer, 
-    invisibleTimer, 
+    immuneTimer, 
     slowTimer, 
     shakeTimer, 
     splitTimer, 
@@ -78,8 +81,8 @@ class Player
     decelerateY       = PLAYER_START_DECELERATE_Y;
     inverted          = false;
     invertedTimer     = 0;
-    invisible         = false;
-    invisibleTimer    = 0;
+    immune         = false;
+    immuneTimer    = 0;
     slow              = false;
     slowTimer         = 0;
     shake             = false;
@@ -104,10 +107,6 @@ class Player
   //checks how to player should be drawn.
   void checkDisplay()
   {
-    if (invisible)
-    {
-      return;
-    } 
     if (shake)
     {
       shake();
@@ -207,6 +206,10 @@ class Player
     {
       velocityX = PLAYER_VELOCITY_X_MAX;
     }
+    if (velocityX < -PLAYER_VELOCITY_X_MAX)
+    {
+      velocityX = -PLAYER_VELOCITY_X_MAX;
+    }
     if (split && velocityXSplit > PLAYER_VELOCITY_X_MAX)
     {
       velocityXSplit = PLAYER_VELOCITY_X_MAX;
@@ -214,6 +217,10 @@ class Player
     if (velocityY > PLAYER_VELOCITY_Y_MAX)
     {
       velocityY = PLAYER_VELOCITY_Y_MAX;
+    }
+    if (velocityY < -PLAYER_VELOCITY_Y_MAX)
+    {
+      velocityY = -PLAYER_VELOCITY_Y_MAX;
     }
   }
   // modifies the X and Y positions
@@ -242,22 +249,22 @@ class Player
   {
     switch(type)
     {
-    case PowerUps.INVERTED:
+    case PowerUpTypes.INVERTED:
       playerSounds.play(Sounds.INVERTED);
       inverted = true;
       invertedTimer = INVERTED_STARTING_TIMER;
       break;
-    case PowerUps.INVISIBLE:
-      playerSounds.play(Sounds.INVISIBLE);
-      invisible = true;
-      invisibleTimer = INVISIBLE_STARTING_TIMER;
+    case PowerUpTypes.IMMUNE:
+      playerSounds.play(Sounds.IMMUNE);
+      immune = true;
+      immuneTimer = IMMUNE_STARTING_TIMER;
       break;
-    case PowerUps.SLOW:
+    case PowerUpTypes.SLOW:
       playerSounds.play(Sounds.SLOW);
       slow = true;
       slowTimer = SLOW_STARTING_TIMER;
       break;
-    case PowerUps.SPLIT:
+    case PowerUpTypes.SPLIT:
       playerSounds.play(Sounds.SPLIT);
       if (!split)
       {
@@ -281,15 +288,15 @@ class Player
   void detectCollisionEdge() 
   {
     //Y
-    if ( y < 0 )
+    if ( y < PLAYER_MIN_Y )
     {
-      y = 0;
-      velocityY = 0;
+      y = PLAYER_MIN_Y;
+      velocityY *= BOUNCE_MODIFIER;
     }
-    if ( y + playerHeigth > height )
+    if ( y + playerHeigth > height  )
     {
       y = height - playerHeigth;
-      velocityY = 0;
+      velocityY *= BOUNCE_MODIFIER;
     }
     //Unsplit X
     if (!split)
@@ -297,12 +304,12 @@ class Player
       if ( x < 0 )
       {
         x = 0;
-        velocityX = 0;
+        velocityX *= BOUNCE_MODIFIER;
       }
       if ( x + playerWidth > width )
       {
         x = width - playerWidth;
-        velocityX = 0;
+        velocityX *= BOUNCE_MODIFIER;
       }
       //Split X
     } else if (split)
@@ -310,22 +317,22 @@ class Player
       if ( x < 0 )
       {
         x = 0;
-        velocityX = 0;
+        velocityX *= BOUNCE_MODIFIER;
       }
       if ( x + widthSplit0 > width / 2 )
       {
         x = width / 2 - widthSplit0;
-        velocityX = 0;
+        velocityX *= BOUNCE_MODIFIER;
       }
       if ( xSplit < width / 2 )
       {
         xSplit = width / 2;
-        velocityXSplit = 0;
+        velocityXSplit *= BOUNCE_MODIFIER;
       }
       if ( xSplit + widthSplit1 > width )
       {
         xSplit = width - widthSplit1;
-        velocityXSplit = 0;
+        velocityXSplit *= BOUNCE_MODIFIER;
       }
     }
   }
@@ -341,14 +348,18 @@ class Player
     velocityY *= decelerateY;
   }
   //shrinks the paddle
-  void dealDamage( float damage, boolean isSplit)
+  void dealDamage( float damage, boolean isRight)
   {
+    if (shake || immune)
+    {
+      return;
+    } 
     playerSounds.play(Sounds.RECIEVE_DAMAGE);
     shake = true;
     shakeTimer = SHAKE_STARTING_TIMER;
-    if (split)
+    if (split)//<- als ie shaked moet ie geen dmg nemen, handig voor balancing en betere feel.
     {
-      if (isSplit)
+      if (isRight)
       {
         widthSplit1 -= damage;
       } else
@@ -402,12 +413,12 @@ class Player
         inverted=false;
       }
     }
-    if (invisible)
+    if (immune)
     {
-      invisibleTimer--;
-      if ( invisibleTimer <= 0 )
+      immuneTimer--;
+      if ( immuneTimer <= 0 )
       {
-        invisible=false;
+        immune=false;
       }
     }
     if (slow)
@@ -436,7 +447,7 @@ class Player
     }
     if (shootTimer>0)
     {
-     shootTimer--;
+      shootTimer--;
     }
   }
 
@@ -450,7 +461,7 @@ class Player
     if ( inverted )
     {
       return Colors.GREEN;
-    } else if (invisible)
+    } else if (immune)
     {
       return Colors.WHITE;
     } else if (slow)
@@ -466,15 +477,24 @@ class Player
   {
     if ( ammo<1 )
     {
+      playerSounds.play(Sounds.NO_AMMO);
       return;
     } 
+    if (stateBossPing)
+    {
+     playerSounds.play(Sounds.PING_SHOOT);
+     return;
+    }
     shootTimer=SHOOT_STARTING_TIMER;
     playerSounds.play(Sounds.SHOOT);
     ammo--;
-    activatesBullet(x);
     if (split)
     {
-      activatesBullet(xSplit);
+      activatesBullet(x+widthSplit0/2);
+      activatesBullet(xSplit+widthSplit1/2);
+    } else
+    {
+      activatesBullet(x+playerWidth/2);
     }
   }
   //adds aditional ammo.
@@ -486,7 +506,6 @@ class Player
   //returns the hitboxes
   Rectangles getHitboxes()
   {
-    println(x);
     return new Rectangles( x, xSplit, y, playerWidth, widthSplit0, widthSplit1, playerHeigth, split );
   }
 
@@ -526,7 +545,6 @@ class Rectangles
   Rectangle rectangle1;
   Rectangles( float xT0, float xT1, float yT, float widthT, float w0T, float w1T, float heightT, boolean existsT )
   {
-    println(xT1);
     float w0=widthT;
     float w1=widthT;
     if (existsT)

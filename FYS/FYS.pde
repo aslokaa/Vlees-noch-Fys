@@ -12,35 +12,36 @@ Test test;
 final int KEY_LIMIT = 1024;
 boolean[] keyCodesPressed = new boolean[KEY_LIMIT];
 boolean[] keysPressed = new boolean[KEY_LIMIT];
-final float DAVE_GRID_HEIGHT = 100;
-final float DAVE_HITBOX_RADIUS = 40;
-final color DAVE_COLOR = color(255, 20, 20);
-final float CHAD_HITBOX_RADIUS = 40;
-final color CHAD_COLOR = color(255, 20, 20);
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
 Space[] space = new Space[Arrays.STAR_COUNT];
-boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false;
+boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false;
 Startscreen startscreen;
 Pausescreen pausescreen;
 Endscreen endscreen;
 PlayerSounds playerSounds;
 MenuSounds menuSounds;
 PFont font;
-//SoundFile introMusic;
+SoundFile introMusic;
+BossPing ping;
 
 
 void setup()
 {
   size( 1600, 900, P2D ); //16:9
   smooth(0);
-  // introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
+  introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   player = new Player();
+  ping = new BossPing();
   test = new Test();
   balls.add(new Ball());
-  enemies.add(new EnemyDave( 100, 0, DAVE_HITBOX_RADIUS ));
-  enemies.add(new EnemyChad( 600, 200, CHAD_HITBOX_RADIUS));
+  for ( int daves = 0; daves < 10; daves++ )
+  {
+    enemies.add(new EnemyDave( 100, -daves * 200, EnemyFinals.DAVE_HITBOX_RADIUS ));
+  }
+  
+  enemies.add(new EnemyChad( 600, 200, EnemyFinals.CHAD_HITBOX_RADIUS));
   for (int i = 0; i < Arrays.BULLET_COUNT; i++) {
     playerBullets.add( new PlayerBullet(0, 0));
   }
@@ -48,7 +49,7 @@ void setup()
   startscreen   = new Startscreen();
   pausescreen   = new Pausescreen();
   endscreen     = new Endscreen();
-  font = loadFont("ComicSansMS-BoldItalic-40.vlw");
+  font          = loadFont("ComicSansMS-BoldItalic-40.vlw");
 }
 
 void updateGame()
@@ -61,6 +62,10 @@ void updateGame()
     pausescreen.update();
     if (!statePaused)
     {
+      if (stateBossPing)
+      {
+        ping.update();
+      }
       for ( Enemy enemy : enemies )
       {
         enemy.executeBehavior();//handles movement paterns
@@ -68,14 +73,14 @@ void updateGame()
 
       player.update();
       test.test();
-      
+
       for ( PlayerBullet playerBullet : playerBullets)
       {
         playerBullet.update();
       }
-      for (Ball ball : balls){
-      ball.updateBall();
-    }
+      for (Ball ball : balls) {
+        ball.updateBall();
+      }
     }
   } else if (stateEnd)
   {
@@ -83,7 +88,7 @@ void updateGame()
   }
   for ( int i = 0; i < space.length; i++ )
   {
-    space[i].update();
+   // space[i].update();
   }
 }
 
@@ -97,8 +102,13 @@ void drawGame()
     background(0);
     for ( int i = 0; i < space.length; i++ )
     {
-      space[i].display();
+//      space[i].display();
     }
+    
+      if (stateBossPing)
+      {
+        ping.display();
+      }
     for ( Enemy enemy : enemies )
     {
       enemy.display();//shows enemies on screen
@@ -107,7 +117,7 @@ void drawGame()
     {
       playerBullet.display();
     }
-    for (Ball ball : balls){
+    for (Ball ball : balls) {
       ball.drawBall();
     }
     player.checkDisplay();
