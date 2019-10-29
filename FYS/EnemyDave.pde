@@ -75,10 +75,10 @@ class EnemyDave extends Enemy
     {
       rowToMoveTo++;
       x = hitboxRadius;
-    } else if ( x + hitboxRadius > width )
+    } else if ( x + hitboxRadius > gamefield.GAMEFIELD_WIDTH )
     {
       rowToMoveTo++;
-      x = width - hitboxRadius;
+      x = gamefield.GAMEFIELD_WIDTH - hitboxRadius;
     }
   }
 
@@ -110,7 +110,7 @@ class EnemyDave extends Enemy
 
   void setXSpeed()
   {
-    if ( x >= width / 2 )
+    if ( x >= gamefield.GAMEFIELD_WIDTH / 2 )
     {
       moveLeft = true;
     } else
