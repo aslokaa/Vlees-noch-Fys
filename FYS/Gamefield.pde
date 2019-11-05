@@ -20,8 +20,8 @@ class Gamefield
     PLAYER_MIN_Y                    = height / 2, 
     ENEMY_MAX_Y                     = height, 
     ENEMY_START_Y                   = height * -0.18, 
-    ENEMY_START_X_LEFT              = GAMEFIELD_WIDTH * 0.05, 
-    ENEMY_START_X_RIGHT             = GAMEFIELD_WIDTH * 0.95;  
+    ENEMY_START_X_LEFT              = GAMEFIELD_WIDTH * 0.06, 
+    ENEMY_START_X_RIGHT             = GAMEFIELD_WIDTH * 0.94;  
   final int 
     CHAD_COUNTER_START              = 0, 
     DAVE_COUNTER_START              = 5;
@@ -30,22 +30,18 @@ class Gamefield
     waveCounter, 
     daveCounter, 
     chadCounter;
-  boolean
-    spawnWave;
 
 
   Gamefield()
   {
     daveCounter=DAVE_COUNTER_START;
     chadCounter=CHAD_COUNTER_START;
-    spawnWave=true;
     waveCounter=0;
   }
 
   void update()
   {
-    spawnWave();
-    spawnWave=checkWave();
+    spawnWave(checkWave());
   }
 
   void setupField()
@@ -54,7 +50,7 @@ class Gamefield
   }
 
   //activates the spawn functions.
-  void spawnWave()
+  void spawnWave(boolean spawnWave)
   {
     if (spawnWave)
     {
@@ -62,7 +58,6 @@ class Gamefield
       {
         spawnDaves(i);
       }
-      spawnWave=false;
       waveCounter+=1;
     }
   }
@@ -80,7 +75,7 @@ class Gamefield
           {
             xT=ENEMY_START_X_RIGHT;
           }
-          enemy.activate(xT, ENEMY_START_Y*yModifier);
+          enemy.activate(xT, ENEMY_START_Y*(yModifier+1));
           break;
         }
       }
