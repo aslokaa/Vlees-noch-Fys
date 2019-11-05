@@ -27,54 +27,83 @@ class Gamefield
     DAVE_COUNTER_START              = 5;
 
   int 
+    waveCounter, 
     daveCounter, 
     chadCounter;
   boolean
     spawnWave;
+
+
   Gamefield()
   {
     daveCounter=DAVE_COUNTER_START;
     chadCounter=CHAD_COUNTER_START;
     spawnWave=true;
+    waveCounter=0;
   }
 
   void update()
   {
     spawnWave();
+    spawnWave=checkWave();
   }
 
   void setupField()
   {
     //sets enemies to not active, sets player position to start position, sets up/resets space and score.
   }
-  //spawns in enemies.
+
+  //activates the spawn functions.
   void spawnWave()
   {
-    spawnDaves();
-  }
-  void spawnDaves()
-  {
-    int index=0;
     if (spawnWave)
     {
-      for (Enemy enemy : enemies)
+      for ( int i=0; i<daveCounter; i++)
       {
-        if (enemy instanceof EnemyDave)
+        spawnDaves(i);
+      }
+      spawnWave=false;
+      waveCounter+=1;
+    }
+  }
+  //spawns daves
+  void spawnDaves(int yModifier)
+  {
+    for (Enemy enemy : enemies)
+    {
+      if (enemy instanceof EnemyDave)
+      {
+        if (!enemy.active)
         {
-          if (enemy.active)
-          {
-            break;
-          }
           float xT=ENEMY_START_X_LEFT;
           if (random(1)>0.5)
           {
             xT=ENEMY_START_X_RIGHT;
           }
-          enemy.activate(xT, ENEMY_START_Y);
+          enemy.activate(xT, ENEMY_START_Y*yModifier);
           break;
         }
       }
-      spawnWave=false;
     }
+  }
+  //checks if all enemies are dead
+  boolean checkWave()
+  {
+    return checkDave();
+  }
+  //checks if all daves are dead
+  boolean checkDave()
+  {
+    for (Enemy enemy : enemies)
+    {
+      if (enemy instanceof EnemyDave)
+      {
+        if (enemy.active)
+        {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
