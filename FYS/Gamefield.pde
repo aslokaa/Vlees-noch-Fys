@@ -24,24 +24,32 @@ class Gamefield
     ENEMY_START_X_RIGHT             = GAMEFIELD_WIDTH * 0.94;  
   final int 
     CHAD_COUNTER_START              = 0, 
-    DAVE_COUNTER_START              = 5;
+    DAVE_COUNTER_START              = 5, 
+    CHAD_MAX                        = 10, 
+    AMOUNT_OF_BOSSES                = 2, 
+    DAVE_MAX                        = 50;
 
   int 
     waveCounter, 
     daveCounter, 
     chadCounter;
-
+  boolean
+    pingActivated, 
+    lesterActivated;
 
   Gamefield()
   {
     daveCounter=DAVE_COUNTER_START;
     chadCounter=CHAD_COUNTER_START;
     waveCounter=0;
+    pingActivated=false; 
+    lesterActivated=false;
   }
 
   void update()
   {
     spawnWave(checkWave());
+    println('w',waveCounter,'d',daveCounter,'c',chadCounter);
   }
 
   void setupField()
@@ -59,8 +67,10 @@ class Gamefield
         spawnDaves(i);
       }
       waveCounter+=1;
+      updateWaves();
     }
   }
+
   //spawns daves
   void spawnDaves(int yModifier)
   {
@@ -81,11 +91,13 @@ class Gamefield
       }
     }
   }
+
   //checks if all enemies are dead
   boolean checkWave()
   {
     return checkDave();
   }
+
   //checks if all daves are dead
   boolean checkDave()
   {
@@ -100,5 +112,70 @@ class Gamefield
       }
     }
     return true;
+  }
+
+  //modifies the makeup of waves.
+  void updateWaves()
+  {
+    if ( daveCounter < DAVE_MAX )
+    {
+      daveCounter+=1;
+    }
+    if ( chadCounter < CHAD_MAX )
+    {
+      if ( waveCounter%3 == 0 )
+      {
+        chadCounter+=1;
+      }
+    }
+    if ( waveCounter%10 == 0 )
+    {
+      chooseBoss();
+    }
+  }
+
+  //selects a random boss
+  void chooseBoss()
+  {
+    switch ((int)random(0, AMOUNT_OF_BOSSES+1))
+    {
+    case 0:
+      activatePing();
+      break;
+    case 1:
+      if (lesterActivated)
+      {
+      }
+      activateLester();
+      break;
+    default:
+      chooseBoss();
+    }
+  }
+
+  //starts the ping boss fight
+  void activatePing()
+  {
+    ping = new BossPing();
+    pingActivated=true;
+    stateBossPing=true;
+  }
+
+  //starts the lester boss fight
+  void activateLester()
+  {
+    lester = new BossLester(width / 2, 100);
+    lesterActivated=true;
+    stateBossLester=true;
+  }
+
+  //checks if all bosses have been activated
+  void checkBossRotation()
+  {
+    if ( pingActivated && lesterActivated )
+    {
+      pingActivated=false;
+      lesterActivated=false;
+    }
   }
 }

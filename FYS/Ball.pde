@@ -132,6 +132,7 @@ class Ball {
     }
   }
 
+//Eele
   void interactBossLester()
   {
     if ( stateBossLester )

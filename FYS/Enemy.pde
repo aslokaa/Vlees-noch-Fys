@@ -68,6 +68,7 @@ class Enemy
      this.x = posX;
      this.y = posY;
      this.active = true;
+     //currentrow moet ook gereset worden -niklas
   }
 
   void spawnPowerup()
