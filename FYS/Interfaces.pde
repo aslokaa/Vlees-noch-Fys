@@ -23,7 +23,6 @@ interface EnemyFinals
   final color CHAD_COLOR             = #ff0000;
   final float ENEMY_GRAVEYARD_X      = -500;
   final float ENEMY_GRAVEYARD_Y      = -500;
-
 }
 //finals for powerups
 interface PowerFinals
@@ -41,7 +40,7 @@ interface Colors
     BLUE       = #0000FF, 
     YELLOW     = #FFFF00, 
     RED        = #FF0000, 
-    BLACK      = #000000,
+    BLACK      = #000000, 
     DARK_GREEN = #008F11;
 }
 
@@ -51,7 +50,7 @@ interface Arrays
   final int
     STAR_COUNT    = 300, 
     BULLET_COUNT  = 30, 
-    OPTION_COUNT  = 3,
+    OPTION_COUNT  = 3, 
     DAVE_COUNT    = 10;
 }
 
@@ -72,7 +71,15 @@ interface Sounds
     END_MUSIC         = 11, 
     PAUSE             = 12, 
     UNPAUSE           = 13, 
-    PING_SHOOT        = 14,
-    NO_AMMO           = 15,
+    PING_SHOOT        = 14, 
+    NO_AMMO           = 15, 
     IMMUNE            = 1000;
+}
+
+//adding readability
+interface BossID
+{
+  final int
+    PING                =0, 
+    LESTER              =1;
 }

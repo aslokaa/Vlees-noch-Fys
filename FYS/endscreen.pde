@@ -23,6 +23,7 @@ class Endscreen
     if (checkInput())
     {
       player = new Player();
+      gamefield = new Gamefield();
       stateEnd=false;
       stateStart=true;
     }

@@ -27,9 +27,9 @@ class BossPing
     BOSS_VELOCITY_X_MAX           = player.PLAYER_VELOCITY_X_MAX, 
     BOSS_START_ACCELERATION_Y     = player.PLAYER_START_ACCELERATION_Y, 
     BOSS_VELOCITY_Y_MAX           = player.PLAYER_VELOCITY_Y_MAX, 
-    BOSS_MAX_Y               = height / 2, 
+    BOSS_MAX_Y                    = height / 2, 
     BALL_IS_CLOSE                 = BOSS_START_WIDTH*0.3, 
-    BACKGROUND_LINE_SIZE          = width*0.01,
+    BACKGROUND_LINE_SIZE          = width*0.01, 
     BOSS_START_DECELERATE_X       = 0.8, 
     BOSS_START_DECELERATE_Y       = 0.8;
 
@@ -81,7 +81,7 @@ class BossPing
     {
       for (Ball ball : balls) 
       {
-        
+
         float xT = ball.x;
         float yT = ball.y;
         if (dist(x + bossWidth/2, y + bossHeight/2, xT, yT)<dist(x + bossWidth/2, y + bossHeight/2, closestBallXT, closestBallYT))
@@ -219,17 +219,17 @@ class BossPing
     displayBackground();
     displayPing();
   }
-  
+
   //draws the background of the boss fight
   void displayBackground()
   {
-   fill (Colors.DARK_GREEN);
-   for ( int i =0; i < width / BACKGROUND_LINE_SIZE ; i++ )
-   {
-     rect(BACKGROUND_LINE_SIZE * i * 2 , height/2 - BACKGROUND_LINE_SIZE/2 , BACKGROUND_LINE_SIZE, BACKGROUND_LINE_SIZE);
-   }
+    fill (Colors.DARK_GREEN);
+    for ( int i =0; i < width / BACKGROUND_LINE_SIZE; i++ )
+    {
+      rect(BACKGROUND_LINE_SIZE * i * 2, height/2 - BACKGROUND_LINE_SIZE/2, BACKGROUND_LINE_SIZE, BACKGROUND_LINE_SIZE);
+    }
   }
-  
+
   //draws the Boss
   void displayPing()
   {

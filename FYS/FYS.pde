@@ -42,7 +42,7 @@ void setup()
   test = new Test();
   balls.add(new Ball());
   
-  for ( int daves = 0; daves < 10; daves++ )
+  for ( int daves = 0; daves < 20; daves++ )
   {
     enemies.add(new EnemyDave( EnemyFinals.ENEMY_GRAVEYARD_X, EnemyFinals.ENEMY_GRAVEYARD_Y, EnemyFinals.DAVE_HITBOX_RADIUS ));
   }

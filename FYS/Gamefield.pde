@@ -41,15 +41,16 @@ class Gamefield
   {
     daveCounter=DAVE_COUNTER_START;
     chadCounter=CHAD_COUNTER_START;
-    waveCounter=0;
+    waveCounter=9;
     pingActivated=false; 
     lesterActivated=false;
   }
 
   void update()
   {
+    checkBossRotation();
     spawnWave(checkWave());
-    println('w',waveCounter,'d',daveCounter,'c',chadCounter);
+    println('w', waveCounter, 'd', daveCounter, 'c', chadCounter);
   }
 
   void setupField()
@@ -139,14 +140,23 @@ class Gamefield
   {
     switch ((int)random(0, AMOUNT_OF_BOSSES+1))
     {
-    case 0:
-      activatePing();
+    case BossID.PING:
+      if (pingActivated)
+      {
+        chooseBoss();
+      } else
+      {
+        activatePing();
+      }
       break;
-    case 1:
+    case BossID.LESTER:
       if (lesterActivated)
       {
+        chooseBoss();
+      } else
+      {
+        activateLester();
       }
-      activateLester();
       break;
     default:
       chooseBoss();
