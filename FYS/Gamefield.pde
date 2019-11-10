@@ -50,7 +50,6 @@ class Gamefield
   {
     checkBossRotation();
     spawnWave(checkWave());
-    println('w', waveCounter, 'd', daveCounter, 'c', chadCounter);
   }
 
   void setupField()
@@ -138,7 +137,7 @@ class Gamefield
   //selects a random boss
   void chooseBoss()
   {
-    switch ((int)random(0, AMOUNT_OF_BOSSES+1))
+    switch ((int)random(0, AMOUNT_OF_BOSSES))
     {
     case BossID.PING:
       if (pingActivated)

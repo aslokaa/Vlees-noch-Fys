@@ -22,10 +22,18 @@ class Endscreen
   {
     if (checkInput())
     {
-      player = new Player();
-      gamefield = new Gamefield();
-      stateEnd=false;
-      stateStart=true;
+      player            = new Player();
+      gamefield         = new Gamefield();
+      stateStart        =true; 
+      statePlaying      =false;
+      statePaused       =false;
+      stateEnd          =false;
+      stateBossPing     =false;
+      stateBossLester   =false;
+      for ( Enemy enemy : enemies )
+      {
+        enemy.destroy();
+      }
     }
   }
 
