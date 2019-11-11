@@ -5,6 +5,7 @@
 
 import processing.sound.*;
 
+import de.bezier.data.sql.*;
 
 Player player;
 Test test;
@@ -41,15 +42,6 @@ void setup()
   lester = new BossLester(width / 2, 100);
   test = new Test();
   balls.add(new Ball());
-  
-  for ( int daves = 0; daves < 20; daves++ )
-  {
-    enemies.add(new EnemyDave( EnemyFinals.ENEMY_GRAVEYARD_X, EnemyFinals.ENEMY_GRAVEYARD_Y, EnemyFinals.DAVE_HITBOX_RADIUS ));
-  }
-  enemies.add(new EnemyChad( 600, 200, EnemyFinals.CHAD_HITBOX_RADIUS));
-  for (int i = 0; i < Arrays.BULLET_COUNT; i++) {
-    playerBullets.add( new PlayerBullet(0, 0));
-  }
   startscreen   = new Startscreen();
   pausescreen   = new Pausescreen();
   endscreen     = new Endscreen();

@@ -14,6 +14,9 @@ class Startscreen
     SUBTITLE_Y      = height * 0.4;
   boolean 
     drawn              =false, //checks if the start screen has been drawn.
+    davesInitialized   =false, //checks if daves are initialized.
+    chadsInitialized   =false, //checks if chads are initialized.
+    bulletsInitialized =false, //checks if bullets are initialized.
     soundsInitialized  =false; //checks if sounds are initialized.
 
   void update()
@@ -32,7 +35,7 @@ class Startscreen
   {
     displayBackground();
     displayText();
-   if (!introMusic.isPlaying())
+    if (!introMusic.isPlaying())
     {      
       introMusic.play();
     }
@@ -43,11 +46,57 @@ class Startscreen
   {
     if ( !soundsInitialized )
     {
-      playerSounds  = new PlayerSounds();
-      menuSounds    = new MenuSounds();
-      soundsInitialized=true;
+      loadSounds();
+    }
+    if ( !davesInitialized )
+    {
+      loadDaves();
+    }
+    if ( !chadsInitialized)
+    {
+      loadChads();
+    }
+    if ( !bulletsInitialized )
+    {
+      loadBullets();
     }
   }
+  //initializes sound
+  void loadSounds()
+  {
+    playerSounds  = new PlayerSounds();
+    menuSounds    = new MenuSounds();
+    soundsInitialized=true;
+  }
+
+  //initializes daves
+  void loadDaves()
+  {
+    for ( int i = 0; i < gamefield.DAVE_MAX; i++ )
+    {
+      enemies.add(new EnemyDave( EnemyFinals.ENEMY_GRAVEYARD_X, EnemyFinals.ENEMY_GRAVEYARD_Y, EnemyFinals.DAVE_HITBOX_RADIUS ));
+    }
+    davesInitialized = true;
+  }
+
+  //initializes the chads
+  void loadChads()
+  {
+    for (int i = 0; i < gamefield.CHAD_MAX; i++ )
+    {
+      enemies.add(new EnemyChad( 600, 200, EnemyFinals.CHAD_HITBOX_RADIUS));
+    }
+  }
+
+  //initializes the bullets
+  void loadBullets()
+  {
+    for (int i = 0; i < Arrays.BULLET_COUNT; i++) 
+    {
+      playerBullets.add( new PlayerBullet(0, 0));
+    }
+  }
+
   //draws the background
   void displayBackground()
   {

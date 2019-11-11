@@ -18,6 +18,8 @@ class BossPing
     bossHeight, 
     closestBallX, 
     closestBallY;
+  int
+    health;
   final float
     BOSS_START_WIDTH              = player.PLAYER_START_WIDTH, 
     BOSS_START_HEIGHT             = player.PLAYER_START_HEIGHT, 
@@ -32,7 +34,8 @@ class BossPing
     BACKGROUND_LINE_SIZE          = width*0.01, 
     BOSS_START_DECELERATE_X       = 0.8, 
     BOSS_START_DECELERATE_Y       = 0.8;
-
+  final int
+    BOSS_START_HEALTH             = 3;
   BossPing()
   {
     x                   = BOSS_START_X;
@@ -47,6 +50,7 @@ class BossPing
     bossHeight          = BOSS_START_HEIGHT;
     closestBallX        = 0;
     closestBallY        = 0;
+    health              = BOSS_START_HEALTH;
   }
 
   void update()
@@ -214,6 +218,12 @@ class BossPing
     }
   }
 
+  //damages the boss
+  void recieveDamage(int damage)
+  {
+    health-=damage;
+  }
+
   void display()
   {
     displayBackground();
@@ -229,6 +239,7 @@ class BossPing
       rect(BACKGROUND_LINE_SIZE * i * 2, height/2 - BACKGROUND_LINE_SIZE/2, BACKGROUND_LINE_SIZE, BACKGROUND_LINE_SIZE);
     }
   }
+
 
   //draws the Boss
   void displayPing()
