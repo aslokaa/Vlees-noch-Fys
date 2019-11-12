@@ -10,7 +10,7 @@ class Test
     if (keysPressed['k'])
     {
       println("k restore health" );
-      player.restoreHealth(10, true);
+      player.restoreHealth(10);
     }
     if (keysPressed['l'])
     {

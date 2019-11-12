@@ -222,6 +222,15 @@ class BossPing
   void recieveDamage(int damage)
   {
     health-=damage;
+    if ( health <= 0 )
+    {
+      killPing();
+    }
+  }
+
+  void killPing()
+  {
+    stateBossPing=false;
   }
 
   void display()

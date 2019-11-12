@@ -1,4 +1,4 @@
- //Galaxy Defence Force
+//Galaxy Defence Force
 //IG101-2, Vlees noch FYS
 //Niklas Leeuwin, Brent Sijm, Olger Klok , Mika Spoelstra, Eele Roet, 
 // x is bottom keys
@@ -14,10 +14,9 @@ final int KEY_LIMIT = 1024;
 boolean[] keyCodesPressed = new boolean[KEY_LIMIT];
 boolean[] keysPressed = new boolean[KEY_LIMIT];
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-ArrayList<EnemyBullet> enemyBullets = new ArrayList<EnemyBullet>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
-Power[] powers = new Power[Arrays.POWER_COUNT];
+Power[] powers = new Power[12];
 
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
 Gamefield gamefield;
@@ -33,23 +32,24 @@ SoundFile introMusic;
 BossPing ping;
 BossLester lester;
 
+
 void setup()
 {
   size( 1600, 900, P2D ); //16:9
   smooth(0);
-  introMusic               = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
-  gamefield                = new Gamefield();
-  space                    = new Space();
-  scores                   = new Scores();
-  player                   = new Player();
-  ping                     = new BossPing();
-  lester                   = new BossLester(width / 2, 100);
-  test                     = new Test();
+  introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
+  gamefield = new Gamefield();
+  space = new Space();
+  scores = new Scores();
+  player = new Player();
+  ping = new BossPing();
+  lester = new BossLester(width / 2, 100);
+  test = new Test();
   balls.add(new Ball());
-  startscreen              = new Startscreen();
-  pausescreen              = new Pausescreen();
-  endscreen                = new Endscreen();
-  font                     = loadFont("ComicSansMS-BoldItalic-40.vlw");
+  startscreen   = new Startscreen();
+  pausescreen   = new Pausescreen();
+  endscreen     = new Endscreen();
+  font          = loadFont("ComicSansMS-BoldItalic-40.vlw");
 }
 
 void updateGame()
@@ -76,23 +76,13 @@ void updateGame()
         enemy.executeBehavior();//handles movement paterns
       }
 
-      for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
-      {
-        powers[i].update();
-      }
-
       player.update();
       test.test();
       scores.update();
 
-
       for ( PlayerBullet playerBullet : playerBullets)
       {
         playerBullet.update();
-      }
-      for ( EnemyBullet bullet : enemyBullets )
-      {
-        bullet.update();
       }
       for (Ball ball : balls) {
         ball.updateBall();
@@ -120,11 +110,6 @@ void drawGame()
     space.display();
     scores.display();
 
-    for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
-    {
-      powers[i].display();
-    }
-
 
     if (stateBossPing)
     {
@@ -141,10 +126,6 @@ void drawGame()
     for ( PlayerBullet playerBullet : playerBullets )
     {
       playerBullet.display();
-    }
-    for ( EnemyBullet bullet : enemyBullets )
-    {
-      bullet.display();
     }
     for (Ball ball : balls) {
       ball.drawBall();

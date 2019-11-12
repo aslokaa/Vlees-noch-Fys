@@ -8,8 +8,11 @@ interface PowerUpTypes
   final int
     INVERTED     = 0, 
     IMMUNE       = 1, 
-    SLOW         = 2, 
-    SPLIT        = 3;
+    SLOW         = 2,
+    HP_UP        = 3,
+    AMMO_UP      = 4,
+    BOOM_BALL    = 5,
+    SPLIT        = 6;
 }  
 
 //finals for all enemies.
@@ -34,13 +37,14 @@ interface PowerFinals
 interface Colors
 {
   final color
-    PINK       = #FF00FF, 
+    PINK       = #FF69B4, 
     GREEN      = #00FF00, 
     WHITE      = #FFFFFF, 
     BLUE       = #0000FF, 
     YELLOW     = #FFFF00, 
     RED        = #FF0000, 
-    BLACK      = #000000, 
+    BLACK      = #000000,
+    MAGENTA    = #FF00FF,
     DARK_GREEN = #008F11;
 }
 
