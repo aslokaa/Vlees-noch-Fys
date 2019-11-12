@@ -61,7 +61,6 @@ class Power {
         ellipse(x, y, hitboxDiameter, hitboxDiameter);
         break;
         default:
-        println("wrong number");
       }
     }
   }
