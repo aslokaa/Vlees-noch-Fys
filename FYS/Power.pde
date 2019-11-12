@@ -18,10 +18,12 @@ class Power {
     velocityY = PowerFinals.VELOCITY_Y;
     hitboxDiameter = PowerFinals.HITBOX_DIAMETER;
     hitboxRadius = hitboxDiameter / 2;
+    powerActive = false;
   }
 
   void update() {
     move();
+    checkOffscreen();
   }
 
   void display() {
@@ -49,6 +51,13 @@ class Power {
     x = spawnX;
     y = spawnY;
     powerNumber = powerNumberNew;
+    powerActive = true;
+  }
+
+  void checkOffscreen(){
+   if ( y - hitboxRadius > height){
+    powerActive = false; 
+   }
   }
 
   void powerPickedUp() {
