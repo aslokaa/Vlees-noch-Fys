@@ -30,8 +30,8 @@ class Ball {
   }
 
   void updateBall() {
-    //if (active) {
-    //drawBall();
+
+
     if (!ballRespawn) {
       moveBall();
       interactPlayer();
@@ -41,14 +41,12 @@ class Ball {
     }
     bounceWall();
     countdownBallRespawn();
-    //}
   }
 
   void drawBall() {
-    //if (active) {
+
     fill(colorBall);
     ellipse(x, y, diameter, diameter);
-    //}
   }
   //gravity
   void moveBall() {
