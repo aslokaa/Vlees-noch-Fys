@@ -189,4 +189,7 @@ class Ball {
       }
     }
   }
+  void interactBossPing(){
+    
+  }
 }
