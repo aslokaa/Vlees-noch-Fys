@@ -37,7 +37,7 @@ interface PowerFinals
 interface Colors
 {
   final color
-    PINK       = #FF00FF, 
+    PINK       = #FF69B4, 
     GREEN      = #00FF00, 
     WHITE      = #FFFFFF, 
     BLUE       = #0000FF, 

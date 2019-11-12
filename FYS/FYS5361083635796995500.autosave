@@ -14,10 +14,9 @@ final int KEY_LIMIT = 1024;
 boolean[] keyCodesPressed = new boolean[KEY_LIMIT];
 boolean[] keysPressed = new boolean[KEY_LIMIT];
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-ArrayList<EnemyBullet> enemyBullets = new ArrayList<EnemyBullet>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
-Power[] powers = new Power[Arrays.POWER_COUNT];
+Power[] powers = new Power[12];
 
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
 Gamefield gamefield;
@@ -32,6 +31,7 @@ PFont font;
 SoundFile introMusic;
 BossPing ping;
 BossLester lester;
+
 
 void setup()
 {
@@ -76,15 +76,9 @@ void updateGame()
         enemy.executeBehavior();//handles movement paterns
       }
 
-      for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
-      {
-       powers[i].update();  
-      }
-      
       player.update();
       test.test();
       scores.update();
-      
 
       for ( PlayerBullet playerBullet : playerBullets)
       {
@@ -115,11 +109,6 @@ void drawGame()
 
     space.display();
     scores.display();
-    
-    for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
-      {
-       powers[i].display();  
-      }
 
 
     if (stateBossPing)
