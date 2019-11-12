@@ -37,6 +37,7 @@ class Ball {
       interactPlayer();
       interactEnemy();
       interactBossLester();
+      interactBossPing();
     }
     bounceWall();
     countdownBallRespawn();
@@ -72,7 +73,16 @@ class Ball {
       y = height /2;
     }
     if (y < radius) {
-      speedY *= -1;
+      if (!stateBossPing) {
+        speedY *= -1;
+      } else {
+        ballRespawn = true ;
+        ballRespawnTimer = timerCount;
+
+        x= gamefield.GAMEFIELD_WIDTH/2;
+        y = height /2;
+        ping.recieveDamage(1);
+      }
     }
   }
   //timer for respawn ball
@@ -189,7 +199,12 @@ class Ball {
       }
     }
   }
-  void interactBossPing(){
-    
+  void interactBossPing() {
+    if (stateBossPing) {
+      if((x + radius > ping.x)&&(x - radius < ping.x + ping.bossWidth) &&(y + radius > ping.y)&&(y - radius < ping.y + ping.bossHeight) ){
+        speedY *= -1;
+        y = ping.y + ping.bossHeight + 1 + radius;
+      }
+    }
   }
 }
