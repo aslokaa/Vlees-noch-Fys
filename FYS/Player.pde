@@ -32,7 +32,10 @@ class Player
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
     SPLIT_STARTING_TIMER            = SECOND*10;
 
-  float 
+  final int
+    STARTING_BULLETS                = 5;
+
+    float 
     x, 
     xSplit, 
     y, 
@@ -92,6 +95,7 @@ class Player
     xSplit            = 0;
     widthSplit0       = 0;
     widthSplit1       = 0;
+    ammo              = STARTING_BULLETS;
   }
 
   //updates the player
