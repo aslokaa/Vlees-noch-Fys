@@ -41,7 +41,7 @@ class Gamefield
   {
     daveCounter=DAVE_COUNTER_START;
     chadCounter=CHAD_COUNTER_START;
-    waveCounter=9;
+    waveCounter=0;
     pingActivated=false; 
     lesterActivated=false;
   }
