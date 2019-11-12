@@ -35,15 +35,19 @@ class Gamefield
     chadCounter;
   boolean
     pingActivated, 
-    lesterActivated;
+    lesterActivated, 
+    spawnPing, 
+    spawnLester;
 
   Gamefield()
   {
-    daveCounter=DAVE_COUNTER_START;
-    chadCounter=CHAD_COUNTER_START;
-    waveCounter=0;
-    pingActivated=false; 
-    lesterActivated=false;
+    daveCounter        =DAVE_COUNTER_START;
+    chadCounter        =CHAD_COUNTER_START;
+    waveCounter        =0;
+    pingActivated      =false; 
+    lesterActivated    =false;
+    spawnPing          =false;
+    spawnLester        =false;
   }
 
   void update()
@@ -60,13 +64,29 @@ class Gamefield
   //activates the spawn functions.
   void spawnWave(boolean spawnWave)
   {
-    if (spawnWave)
+    if (spawnWave && !stateBossLester && !stateBossPing)
     {
+      waveCounter+=1;
+      if (spawnPing)
+      {
+        activatePing();
+        updateWaves();
+        return;
+      }
+      if (spawnLester)
+      {
+        activateLester();
+        updateWaves();
+        return;
+      }
       for ( int i=0; i<daveCounter; i++)
       {
         spawnDaves(i);
       }
-      waveCounter+=1;
+      for ( int i=0; i<chadCounter; i++)
+      {
+       spawnChads(i); 
+      }
       updateWaves();
     }
   }
@@ -91,11 +111,33 @@ class Gamefield
       }
     }
   }
+  
+  //spawns chads
+  void spawnChads(int yModifier)
+  {
+    for (Enemy enemy : enemies)
+    {
+      if (enemy instanceof EnemyChad)
+      {
+        if (!enemy.active)
+        {
+          float xT=ENEMY_START_X_LEFT;
+          if (random(1)>0.5)
+          {
+            xT=ENEMY_START_X_RIGHT;
+          }
+          enemy.activate(xT, ENEMY_START_Y*(yModifier+1));
+          break;
+        }
+      }
+    }
+  }
+
 
   //checks if all enemies are dead
   boolean checkWave()
   {
-    return checkDave();
+    return checkDave()&&checkChad();
   }
 
   //checks if all daves are dead
@@ -104,6 +146,22 @@ class Gamefield
     for (Enemy enemy : enemies)
     {
       if (enemy instanceof EnemyDave)
+      {
+        if (enemy.active)
+        {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  
+  //checks if all chads are dead
+  boolean checkChad()
+  {
+    for (Enemy enemy : enemies)
+    {
+      if (enemy instanceof EnemyChad)
       {
         if (enemy.active)
         {
@@ -145,8 +203,7 @@ class Gamefield
         chooseBoss();
       } else
       {
-        activatePing();
-        println("tttttttt");
+        spawnPing=true;
       }
       break;
     case BossID.LESTER:
@@ -155,7 +212,7 @@ class Gamefield
         chooseBoss();
       } else
       {
-        activateLester();
+        spawnLester=true;
       }
       break;
     default:
@@ -166,17 +223,19 @@ class Gamefield
   //starts the ping boss fight
   void activatePing()
   {
-    ping = new BossPing();
-    pingActivated=true;
-    stateBossPing=true;
+    ping             = new BossPing();
+    pingActivated    = true;
+    stateBossPing    = true;
+    spawnPing        = false;
   }
 
   //starts the lester boss fight
   void activateLester()
   {
-    lester = new BossLester(width / 2, 100);
-    lesterActivated=true;
-    stateBossLester=true;
+    lester           = new BossLester(width / 2, 100);
+    lesterActivated  = true;
+    stateBossLester  = true;
+    spawnLester      = false;
   }
 
   //checks if all bosses have been activated

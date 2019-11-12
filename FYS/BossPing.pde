@@ -240,7 +240,6 @@ class BossPing
     }
   }
 
-
   //draws the Boss
   void displayPing()
   {
