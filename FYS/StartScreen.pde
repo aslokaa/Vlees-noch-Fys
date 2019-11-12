@@ -17,7 +17,8 @@ class Startscreen
     davesInitialized   =false, //checks if daves are initialized.
     chadsInitialized   =false, //checks if chads are initialized.
     bulletsInitialized =false, //checks if bullets are initialized.
-    soundsInitialized  =false; //checks if sounds are initialized.
+    soundsInitialized  =false, //checks if sounds are initialized.
+    powerInitialized   =false;
 
   void update()
   {
@@ -60,6 +61,10 @@ class Startscreen
     {
       loadBullets();
     }
+     if ( !powerInitialized )
+    {
+      loadPowers();
+    }
   }
   //initializes sound
   void loadSounds()
@@ -94,6 +99,14 @@ class Startscreen
     for (int i = 0; i < Arrays.BULLET_COUNT; i++) 
     {
       playerBullets.add( new PlayerBullet(0, 0));
+    }
+  }
+  
+  void loadPowers()
+  {
+    for (int i = 0; i < Arrays.POWER_COUNT; i++) 
+    {
+      powers[i] =  new Power(-100, -100, 0);
     }
   }
 

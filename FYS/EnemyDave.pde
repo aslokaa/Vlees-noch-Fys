@@ -67,6 +67,10 @@ class EnemyDave extends Enemy
 
     x += speedX;
     y += speedY;
+    if ( y - hitboxRadius > height)
+    {
+     active = false; 
+    }
   }
 
   void checkWallCollision()
@@ -103,9 +107,21 @@ class EnemyDave extends Enemy
 
   @Override void destroy()
   {
+    spawnPowerup();
+    explode();
     active = false;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
+    
+  }
+  
+ @Override void activate(float posX, float posY)
+  {
+     x = posX;
+     y = posY;
+     active = true;
+     currentRow = 0;
+     rowToMoveTo = 1;
   }
 
   void setXSpeed()
@@ -119,6 +135,22 @@ class EnemyDave extends Enemy
     }
   }
 
+@Override void spawnPowerup()
+{
+ float spawnChance = random(0, 1);
+  for ( Power power : powers )
+  {
+   if ( !power.powerActive )
+   {
+    if ( spawnChance <= 0.2 )
+    {
+     int dropType = round(random(0, 4));
+     power.drop(x, y, dropType);
+    }
+   }
+  }
+  
+}
   @Override void display()
   {
     if ( active )
