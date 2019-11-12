@@ -28,8 +28,8 @@ class Power {
     ellipse(x, y, hitboxDiameter, hitboxDiameter);
   }
 
-  void drop(int x, int y, int powerNumber) {
-  
+  void drop(float spawnX, float spawnY, int powerNumber) {
+    
   }
 
   void powerPickedUp() {
