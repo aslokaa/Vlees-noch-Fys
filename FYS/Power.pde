@@ -25,12 +25,30 @@ class Power {
   }
 
   void display() {
-
-    ellipse(x, y, hitboxDiameter, hitboxDiameter);
+    switch(powerNumber) {
+    case 0 : 
+      fill(Colors.GREEN);
+      ellipse(x, y, hitboxDiameter, hitboxDiameter);
+      break;
+    case 1 : 
+      fill(Colors.WHITE);
+      ellipse(x, y, hitboxDiameter, hitboxDiameter);
+      break;
+    case 2 :
+      fill(Colors.BLUE);
+      ellipse(x, y, hitboxDiameter, hitboxDiameter);
+      break;
+    case 3 :
+      fill(Colors.PINK);
+      ellipse(x, y, hitboxDiameter, hitboxDiameter);
+      break;
+    }
   }
 
   void drop(float spawnX, float spawnY, int powerNumber) {
-    
+    x = spawnX;
+    y = spawnY;
+    powerNumber = powerNumber;
   }
 
   void powerPickedUp() {
