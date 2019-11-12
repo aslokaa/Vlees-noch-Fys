@@ -30,7 +30,7 @@ class Power {
   void display() {
     switch(powerNumber) {
     case 0 : 
-      fill(Colors.GREEN);
+      fill(Colors.DARK_GREEN);
       ellipse(x, y, hitboxDiameter, hitboxDiameter);
       break;
     case 1 : 
@@ -42,6 +42,18 @@ class Power {
       ellipse(x, y, hitboxDiameter, hitboxDiameter);
       break;
     case 3 :
+      fill(Colors.GREEN);
+      ellipse(x, y, hitboxDiameter, hitboxDiameter);
+      break;
+    case 4 :
+      fill(Colors.YELLOW);
+      ellipse(x, y, hitboxDiameter, hitboxDiameter);
+      break;
+    case 5 :
+      fill(Colors.MAGENTA);
+      ellipse(x, y, hitboxDiameter, hitboxDiameter);
+      break;
+    case 6 :
       fill(Colors.PINK);
       ellipse(x, y, hitboxDiameter, hitboxDiameter);
       break;
