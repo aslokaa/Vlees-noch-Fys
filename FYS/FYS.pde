@@ -21,6 +21,7 @@ Power[] powers = new Power[12];
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
 Gamefield gamefield;
 Space space;
+Scores scores;
 Startscreen startscreen;
 Pausescreen pausescreen;
 Endscreen endscreen;
@@ -39,6 +40,7 @@ void setup()
   introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   gamefield = new Gamefield();
   space = new Space();
+  scores = new Scores();
   player = new Player();
   ping = new BossPing();
   lester = new BossLester(width / 2, 100);
@@ -105,6 +107,8 @@ void drawGame()
     rect(gamefield.GAMEFIELD_WIDTH, 0, width, height);
 
     space.display();
+    scores.display();
+    scores.update();
 
 
     if (stateBossPing)
