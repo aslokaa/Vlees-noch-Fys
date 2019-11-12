@@ -146,6 +146,7 @@ class Gamefield
       } else
       {
         activatePing();
+        println("tttttttt");
       }
       break;
     case BossID.LESTER:

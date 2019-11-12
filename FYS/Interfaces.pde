@@ -51,7 +51,9 @@ interface Arrays
     STAR_COUNT    = 300, 
     BULLET_COUNT  = 30, 
     OPTION_COUNT  = 3, 
-    DAVE_COUNT    = 10;
+    DAVE_COUNT    = 10,
+    POWER_COUNT   = 5;
+    
 }
 
 //adding readability
