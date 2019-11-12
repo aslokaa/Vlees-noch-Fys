@@ -17,13 +17,13 @@ class Ball {
     x= gamefield.GAMEFIELD_WIDTH/2;
     y = height/2;
     speedX = 0;
-    speedY = 10;
+    speedY = height * 0.013;
     radius = 25;
     colorBall = Colors.BLUE;
     active = true;
     ballRespawn=false;
     diameter = radius*2;
-    maxSpeedX = 10;
+    maxSpeedX = height * 0.013;
     ballRespawnTimer = 0;
     timerCount = 60;
     isChargedBom = false;

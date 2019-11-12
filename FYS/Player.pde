@@ -16,7 +16,7 @@ class Player
     PLAYER_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.01, 
     PLAYER_START_DECELERATE_X       = 0.9, 
     PLAYER_START_ACCELERATION_Y     = height * 0.0015, 
-    PLAYER_VELOCITY_Y_MAX           = height * 0.015, 
+    PLAYER_VELOCITY_Y_MAX           = height * 0.012, 
     PLAYER_START_DECELERATE_Y       = 0.9, 
     PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.1, 
     PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH , 

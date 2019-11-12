@@ -5,7 +5,7 @@
 
 import processing.sound.*;
 
-//import de.bezier.data.sql.*;
+import de.bezier.data.sql.*;
 
 Player player;
 Test test;
