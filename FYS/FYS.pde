@@ -78,6 +78,7 @@ void updateGame()
 
       player.update();
       test.test();
+      scores.update();
 
       for ( PlayerBullet playerBullet : playerBullets)
       {
@@ -108,7 +109,7 @@ void drawGame()
 
     space.display();
     scores.display();
-    scores.update();
+    
 
 
     if (stateBossPing)

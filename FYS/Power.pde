@@ -8,6 +8,7 @@ class Power {
   float hitboxDiameter;
   float hitboxRadius;
   boolean powerActive;
+  int powerNumber;
 
   Power(float x, float y, float velocityX) {
     this.x = x;
