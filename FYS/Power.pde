@@ -45,10 +45,10 @@ class Power {
     }
   }
 
-  void drop(float spawnX, float spawnY, int powerNumber) {
+  void drop(float spawnX, float spawnY, int powerNumberNew) {
     x = spawnX;
     y = spawnY;
-    powerNumber = powerNumber;
+    powerNumber = powerNumberNew;
   }
 
   void powerPickedUp() {
