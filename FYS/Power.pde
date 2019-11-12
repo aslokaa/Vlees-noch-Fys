@@ -2,41 +2,40 @@
 //Inverted, Invisable, Slow, Split, Ammo, HpUp
 
 class Power {
-  
-  float x,y;
-  float velocityX,velocityY;
+
+  float x, y;
+  float velocityX, velocityY;
   float hitboxDiameter;
   float hitboxRadius;
-  
-  Power(float x, float y, float velocityX){
+  boolean powerActive;
+
+  Power(float x, float y, float velocityX) {
     this.x = x;
     this.y = y;
     this.velocityX = velocityX;
     velocityX = 4;
     velocityY = PowerFinals.VELOCITY_Y;
     hitboxDiameter = PowerFinals.HITBOX_DIAMETER;
-    hitboxRadius = hitboxDiameter / 2; 
+    hitboxRadius = hitboxDiameter / 2;
   }
-  
-  void update(){
-  move();
+
+  void update() {
+    move();
   }
-  
-  void display(){
-    
+
+  void display() {
+
     ellipse(x, y, hitboxDiameter, hitboxDiameter);
+  }
+
+  void drop(float spawnX, float spawnY, int powerNumber) {
     
   }
-  
-  void drop(){
+
+  void powerPickedUp() {
   }
-  
-  void powerPickedUp(){
+
+  void move() {
+    x += velocityY;
   }
-  
-  void move(){
-  x += velocityY; 
-  }
-  
-  
 }

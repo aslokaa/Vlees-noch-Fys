@@ -31,23 +31,22 @@ class Ball {
 
   void updateBall() {
     //if (active) {
-      //drawBall();
-      if (!ballRespawn) {
-        moveBall();
-        interactPlayer();
-        interactEnemy();
-        interactBossLester();
-        
-      }
-      bounceWall();
-      countdownBallRespawn();
+    //drawBall();
+    if (!ballRespawn) {
+      moveBall();
+      interactPlayer();
+      interactEnemy();
+      interactBossLester();
+    }
+    bounceWall();
+    countdownBallRespawn();
     //}
   }
 
   void drawBall() {
     //if (active) {
-      fill(colorBall);
-      ellipse(x, y, diameter, diameter);
+    fill(colorBall);
+    ellipse(x, y, diameter, diameter);
     //}
   }
   //gravity
@@ -89,9 +88,9 @@ class Ball {
       }
     }
   }
-  void ballChargedBom(){
-    if(isChargedBom){
-       
+  void ballChargedBom() {
+    if (isChargedBom) {
+      diameter = 100;
     }
   }
 
@@ -131,16 +130,26 @@ class Ball {
   }
   void interactEnemy() {
     for (Enemy enemy : enemies) {
-
       if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius) {  //collision with enemie check.
-
-        enemy.destroy();  //enemie destroyd
-        speedY *= -1;  // enemie bounce off
+        if (isChargedBom) {
+          radius = 100;
+          for (Enemy enemyBomb : enemies) {
+            if (dist(x, y, enemyBomb.x, enemyBomb.y)< radius + enemyBomb.hitboxRadius) { 
+              enemyBomb.destroy();  //enemie destroyd
+              speedY *= -1;  // enemie bounce off
+              isChargedBom = false;
+              radius = 25;
+            }
+          }
+        } else {
+          enemy.destroy();  //enemie destroyd
+          speedY *= -1;  // enemie bounce off
+        }
       }
     }
   }
 
-//Eele
+  //Eele & Brent
   void interactBossLester()
   {
     if ( stateBossLester )
@@ -151,19 +160,31 @@ class Ball {
 
           lester.hitboxLeft.HP--;  //enemie destroyd 
           speedY *= -1;  // enemie bounce off
-          y += 100;
+          if (speedY < 0) {
+            y = lester.hitboxLeft.y - lester.hitboxLeft.HITBOX_RADIUS - radius;
+          } else {
+            y = lester.hitboxLeft.y + lester.hitboxLeft.HITBOX_RADIUS + radius;
+          }
         }
         if (lester.hitboxBottom.active && dist(x, y, lester.hitboxBottomPos.x, lester.hitboxBottomPos.y)< radius + lester.hitboxBottom.HITBOX_RADIUS) {  //collision with enemie check.
 
           lester.hitboxBottom.HP--;  //enemie destroyd 
           speedY *= -1;  // enemie bounce off
-          y += 100;
+          if (speedY < 0) {
+            y = lester.hitboxBottom.y - lester.hitboxBottom.HITBOX_RADIUS - radius;
+          } else {
+            y = lester.hitboxBottom.y + lester.hitboxBottom.HITBOX_RADIUS + radius;
+          }
         }
         if (lester.hitboxRight.active && dist(x, y, lester.hitboxRightPos.x, lester.hitboxRightPos.y)< radius + lester.hitboxRight.HITBOX_RADIUS) {  //collision with enemie check.
 
           lester.hitboxRight.HP--;  //enemie destroyd 
           speedY *= -1;  // enemie bounce off
-          y += 100;
+          if (speedY < 0) {
+            y = lester.hitboxRight.y - lester.hitboxRight.HITBOX_RADIUS - radius;
+          } else {
+            y = lester.hitboxRight.y + lester.hitboxRight.HITBOX_RADIUS + radius;
+          }
         }
       }
     }
