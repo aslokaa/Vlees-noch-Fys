@@ -76,9 +76,15 @@ void updateGame()
         enemy.executeBehavior();//handles movement paterns
       }
 
+      for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
+      {
+       powers[i].update();  
+      }
+      
       player.update();
       test.test();
       scores.update();
+      
 
       for ( PlayerBullet playerBullet : playerBullets)
       {
@@ -110,6 +116,10 @@ void drawGame()
     space.display();
     scores.display();
     
+    for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
+      {
+       powers[i].display();  
+      }
 
 
     if (stateBossPing)
