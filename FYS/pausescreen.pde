@@ -16,9 +16,9 @@ class Pausescreen
   final String[] OPTIONS_STRINGS  = new String[]
     {
   /*   0    */    "Press escape to unpause", 
-  /*   1    */    "Press A to increase the volume", 
-  /*   2    */    "Press S to decrease the volume", 
-  /*   3    */    "press Z to mute"
+  /*   1    */    "Press Z to end the game", 
+  /*   2    */    //"Press S to decrease the volume", 
+  /*   3    */    //"press Z to mute"
   };
   boolean 
     escapePressed         =false;
@@ -32,6 +32,7 @@ class Pausescreen
   void update()
   {
     changePausedState();
+    detectInput();
   }
 
   // pauses or unpauses the game.
@@ -54,8 +55,12 @@ class Pausescreen
   //detects player input
   void detectInput()
   {
-    if (keysPressed['a'])
+    if (statePaused)
     {
+      if (keysPressed['z'])
+      {
+        endscreen.loseGame();
+      }
     }
   }
 

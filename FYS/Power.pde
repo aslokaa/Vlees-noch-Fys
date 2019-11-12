@@ -1,3 +1,4 @@
+//Olger Klok, 50082502
 //Inverted, Invisable, Slow, Split, Ammo, HpUp
 
 class Power {
@@ -18,6 +19,7 @@ class Power {
   }
   
   void update(){
+  move();
   }
   
   void display(){
@@ -29,6 +31,9 @@ class Power {
   void powerPickedUp(){
   }
   
+  void move(){
+  x += velocityY; 
+  }
   
   
 }

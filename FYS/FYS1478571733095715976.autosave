@@ -5,7 +5,6 @@
 
 import processing.sound.*;
 
-import de.bezier.data.sql.*;
 
 Player player;
 Test test;
@@ -16,9 +15,8 @@ boolean[] keysPressed = new boolean[KEY_LIMIT];
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
-Power[] powers = new Power[12];
 Space[] space = new Space[Arrays.STAR_COUNT];
-boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
+boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false;
 Gamefield gamefield;
 Startscreen startscreen;
 Pausescreen pausescreen;
@@ -39,9 +37,17 @@ void setup()
   gamefield = new Gamefield();
   player = new Player();
   ping = new BossPing();
-  lester = new BossLester(width / 2, 100);
+  lester = new BossLester(width / 2,  100);
   test = new Test();
   balls.add(new Ball());
+  for ( int daves = 0; daves < 10; daves++ )
+  {
+    enemies.add(new EnemyDave( 100, -daves * gamefield.ENEMY_START_Y , EnemyFinals.DAVE_HITBOX_RADIUS ));
+  }
+  enemies.add(new EnemyChad( 600, 200, EnemyFinals.CHAD_HITBOX_RADIUS));
+  for (int i = 0; i < Arrays.BULLET_COUNT; i++) {
+    playerBullets.add( new PlayerBullet(0, 0));
+  }
   startscreen   = new Startscreen();
   pausescreen   = new Pausescreen();
   endscreen     = new Endscreen();
@@ -58,15 +64,11 @@ void updateGame()
     pausescreen.update();
     if (!statePaused)
     {
-      gamefield.update();
       if (stateBossPing)
       {
         ping.update();
       }
-      if (stateBossLester)
-      {
-       lester.update(); 
-      }
+      lester.update();
       for ( Enemy enemy : enemies )
       {
         enemy.executeBehavior();//handles movement paterns
@@ -112,14 +114,11 @@ void drawGame()
       {
         ping.display();
       }
-      if (stateBossLester)
-      {
-        lester.display(); 
-      }
     for ( Enemy enemy : enemies )
     {
       enemy.display();//shows enemies on screen
     }
+    lester.display();
     for ( PlayerBullet playerBullet : playerBullets )
     {
       playerBullet.display();

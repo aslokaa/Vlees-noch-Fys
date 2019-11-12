@@ -15,7 +15,7 @@ class EnemyChad extends Enemy
 
   EnemyChad(float x, float y, float hitboxRadius)
   {
-    super(true, x, y, hitboxRadius);
+    super(false, x, y, hitboxRadius);
     speedY = 1;
     speedX = 1;
     damageToDeal = 50;
@@ -116,6 +116,15 @@ class EnemyChad extends Enemy
   {
   }
 
+  @Override void spawnPowerup()
+  {
+    
+    //if there is no other powerup
+    //check chance to spawn a powerup
+    //check random spawn for particular powerup
+    //activate particular powerup from x,y
+    
+  }
   @Override void display()
   {
     if ( active )

@@ -59,6 +59,7 @@ class Enemy
   void destroy()
   {
     println("define the destroy method before using it");
+    spawnPowerup();
     explode();
   }
 
@@ -67,8 +68,13 @@ class Enemy
      this.x = posX;
      this.y = posY;
      this.active = true;
+     //currentrow moet ook gereset worden -niklas
   }
 
+  void spawnPowerup()
+  {
+    println("define the spawnPowerup method before using it");
+  }
     //handles dying animation.
   void explode()
   {

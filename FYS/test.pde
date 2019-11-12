@@ -58,5 +58,18 @@ class Test
       }
       keysPressed['m']=false;
     }
+    if (keysPressed['n'])
+    {
+      if(stateBossLester)
+      {
+        println("n Boss Lester leaving the game");
+     stateBossLester=false; 
+      } else
+      {
+     println("n Boss Lester Entering the game");
+     stateBossLester=true; 
+      }
+      keysPressed['n']=false;
+    }
   }
 }

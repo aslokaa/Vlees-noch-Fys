@@ -1,9 +1,9 @@
-class PowerInverted extends Power {
+//class PowerInverted extends Power {
   
   
-  PowerInverted(float x, float y, float velocityX){
-  super(x,y,velocityX);
+//  PowerInverted(float x, float y, float velocityX){
+//  super(x,y,velocityX);
     
-  }
+//  }
   
-}
+//}
