@@ -37,19 +37,19 @@ void setup()
 {
   size( 1600, 900, P2D ); //16:9
   smooth(0);
-  introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
-  gamefield = new Gamefield();
-  space = new Space();
-  scores = new Scores();
-  player = new Player();
-  ping = new BossPing();
-  lester = new BossLester(width / 2, 100);
-  test = new Test();
+  introMusic               = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
+  gamefield                = new Gamefield();
+  space                    = new Space();
+  scores                   = new Scores();
+  player                   = new Player();
+  ping                     = new BossPing();
+  lester                   = new BossLester(width / 2, 100);
+  test                     = new Test();
   balls.add(new Ball());
-  startscreen   = new Startscreen();
-  pausescreen   = new Pausescreen();
-  endscreen     = new Endscreen();
-  font          = loadFont("ComicSansMS-BoldItalic-40.vlw");
+  startscreen              = new Startscreen();
+  pausescreen              = new Pausescreen();
+  endscreen                = new Endscreen();
+  font                     = loadFont("ComicSansMS-BoldItalic-40.vlw");
 }
 
 void updateGame()

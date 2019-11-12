@@ -83,8 +83,8 @@ class Player
     decelerateY       = PLAYER_START_DECELERATE_Y;
     inverted          = false;
     invertedTimer     = 0;
-    immune         = false;
-    immuneTimer    = 0;
+    immune            = false;
+    immuneTimer       = 0;
     slow              = false;
     slowTimer         = 0;
     shake             = false;
@@ -107,6 +107,7 @@ class Player
     detectCollisionEdge();
     powerCountdown();
   }
+  
   //checks how to player should be drawn.
   void checkDisplay()
   {
