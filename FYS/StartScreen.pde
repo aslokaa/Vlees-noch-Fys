@@ -18,7 +18,7 @@ class Startscreen
     chadsInitialized   =false, //checks if chads are initialized.
     bulletsInitialized =false, //checks if bullets are initialized.
     soundsInitialized  =false, //checks if sounds are initialized.
-    powerInitialized   =false;
+    powerInitialized   =false; //checks if powers are intitialized.
 
   void update()
   {
@@ -61,7 +61,7 @@ class Startscreen
     {
       loadBullets();
     }
-     if ( !powerInitialized )
+    if ( !powerInitialized )
     {
       loadPowers();
     }
@@ -91,6 +91,7 @@ class Startscreen
     {
       enemies.add(new EnemyChad( 600, 200, EnemyFinals.CHAD_HITBOX_RADIUS));
     }
+    chadsInitialized = true;
   }
 
   //initializes the bullets
@@ -101,14 +102,16 @@ class Startscreen
       playerBullets.add( new PlayerBullet(0, 0));
       enemyBullets.add( new EnemyBullet());
     }
+    bulletsInitialized=true;
   }
-  
+
   void loadPowers()
   {
     for (int i = 0; i < Arrays.POWER_COUNT; i++) 
     {
       powers[i] =  new Power(-100, -100, 0);
     }
+    powerInitialized = true;
   }
 
   //draws the background
