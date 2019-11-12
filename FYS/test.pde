@@ -19,8 +19,8 @@ class Test
     }
     if (keysPressed['o'])
     {
-      println("o gain 1 bullet");
-      player.gainAmmo(1);
+      println("o gain 100 bullet");
+      player.gainAmmo(100);
       keysPressed['o']=false;
     }
     if (keysPressed['i'])
