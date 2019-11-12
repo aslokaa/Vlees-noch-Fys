@@ -24,5 +24,7 @@ class Scores {
     text("TIME:"+time/60+"s", width*0.92, height*0.87);
     
     text("AMMO:" + player.ammo, width*0.92, height*0.79);
+    
+     text("WAVE  " + gamefield.waveCounter, width*0.92, height*0.05);
   }
 }
