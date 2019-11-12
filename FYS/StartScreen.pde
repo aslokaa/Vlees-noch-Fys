@@ -99,6 +99,7 @@ class Startscreen
     for (int i = 0; i < Arrays.BULLET_COUNT; i++) 
     {
       playerBullets.add( new PlayerBullet(0, 0));
+      enemyBullets.add( new EnemyBullet());
     }
   }
   

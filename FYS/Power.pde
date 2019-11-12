@@ -18,10 +18,13 @@ class Power {
     velocityY = PowerFinals.VELOCITY_Y;
     hitboxDiameter = PowerFinals.HITBOX_DIAMETER;
     hitboxRadius = hitboxDiameter / 2;
+    powerActive = false;
   }
 
   void update() {
     move();
+    checkOffscreen();
+    powerPickedUp();
   }
 
   void display() {
@@ -49,10 +52,39 @@ class Power {
     x = spawnX;
     y = spawnY;
     powerNumber = powerNumberNew;
+    powerActive = true;
+  }
+
+  void checkOffscreen() {
+    if ( y - hitboxRadius > height) {
+      powerActive = false;
+    }
   }
 
   void powerPickedUp() {
+    Rectangles hitboxes = player.getHitboxes();
+
+    if (hitboxes.rectangle0.exists)  //check if player exist.
+    {
+
+      if (( x + hitboxRadius > hitboxes.rectangle0.x)&&(x - hitboxRadius < hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth)&&  //collision with player check.
+        (y + hitboxRadius > hitboxes.rectangle0.y)&&(y - hitboxRadius < hitboxes.rectangle0.y + hitboxes.rectangle0.rectangleHeight)) {
+        player.modifyPower(powerNumber);
+        powerActive= false;
+      }
+    }
+
+    if (hitboxes.rectangle1.exists)  // check if player 2(if player is split) exist.
+    {
+
+      if (( x + hitboxRadius > hitboxes.rectangle1.x)&&(x - hitboxRadius < hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth)&&  //collision with player 2 check.
+        (y + hitboxRadius > hitboxes.rectangle1.y)&&(y - hitboxRadius < hitboxes.rectangle1.y + hitboxes.rectangle1.rectangleHeight)) {
+        player.modifyPower(powerNumber);
+        powerActive= false;
+      }
+    }
   }
+
 
   void move() {
     y += velocityY;

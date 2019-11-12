@@ -14,6 +14,7 @@ final int KEY_LIMIT = 1024;
 boolean[] keyCodesPressed = new boolean[KEY_LIMIT];
 boolean[] keysPressed = new boolean[KEY_LIMIT];
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+ArrayList<EnemyBullet> enemyBullets = new ArrayList<EnemyBullet>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
 Power[] powers = new Power[Arrays.POWER_COUNT];
