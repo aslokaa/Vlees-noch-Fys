@@ -79,17 +79,21 @@ void updateGame()
 
       for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
       {
-       powers[i].update();  
+        powers[i].update();
       }
-      
+
       player.update();
       test.test();
       scores.update();
-      
+
 
       for ( PlayerBullet playerBullet : playerBullets)
       {
         playerBullet.update();
+      }
+      for ( EnemyBullet bullet : enemyBullets )
+      {
+        bullet.update();
       }
       for (Ball ball : balls) {
         ball.updateBall();
@@ -116,11 +120,11 @@ void drawGame()
 
     space.display();
     scores.display();
-    
+
     for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
-      {
-       powers[i].display();  
-      }
+    {
+      powers[i].display();
+    }
 
 
     if (stateBossPing)
@@ -138,6 +142,10 @@ void drawGame()
     for ( PlayerBullet playerBullet : playerBullets )
     {
       playerBullet.display();
+    }
+    for ( EnemyBullet bullet : enemyBullets )
+    {
+      bullet.display();
     }
     for (Ball ball : balls) {
       ball.drawBall();

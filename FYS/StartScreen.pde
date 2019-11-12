@@ -101,6 +101,7 @@ class Startscreen
       playerBullets.add( new PlayerBullet(0, 0));
       enemyBullets.add( new EnemyBullet());
     }
+    bulletsInitialized = true;
   }
   
   void loadPowers()
