@@ -5,7 +5,7 @@
 
 import processing.sound.*;
 
-import de.bezier.data.sql.*;
+//import de.bezier.data.sql.*;
 
 Player player;
 Test test;
@@ -17,9 +17,10 @@ ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
 Power[] powers = new Power[12];
-Space[] space = new Space[Arrays.STAR_COUNT];
+
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
 Gamefield gamefield;
+Space space;
 Startscreen startscreen;
 Pausescreen pausescreen;
 Endscreen endscreen;
@@ -37,6 +38,7 @@ void setup()
   smooth(0);
   introMusic = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   gamefield = new Gamefield();
+  space = new Space();
   player = new Player();
   ping = new BossPing();
   lester = new BossLester(width / 2, 100);
@@ -65,7 +67,7 @@ void updateGame()
       }
       if (stateBossLester)
       {
-       lester.update(); 
+        lester.update();
       }
       for ( Enemy enemy : enemies )
       {
@@ -87,10 +89,8 @@ void updateGame()
   {
     endscreen.update();
   }
-  for ( int i = 0; i < space.length; i++ )
-  {
-   // space[i].update();
-  }
+
+  space.update();
 }
 
 void drawGame()
@@ -102,20 +102,19 @@ void drawGame()
   {
     background(0);
     fill(Colors.RED);
-    rect(gamefield.GAMEFIELD_WIDTH,0,width,height);
-    for ( int i = 0; i < space.length; i++ )
+    rect(gamefield.GAMEFIELD_WIDTH, 0, width, height);
+
+    space.display();
+
+
+    if (stateBossPing)
     {
-//      space[i].display();
+      ping.display();
     }
-    
-      if (stateBossPing)
-      {
-        ping.display();
-      }
-      if (stateBossLester)
-      {
-        lester.display(); 
-      }
+    if (stateBossLester)
+    {
+      lester.display();
+    }
     for ( Enemy enemy : enemies )
     {
       enemy.display();//shows enemies on screen
