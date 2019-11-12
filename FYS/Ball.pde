@@ -71,6 +71,7 @@ class Ball {
       player.dealDamage(20, false);
       x= gamefield.GAMEFIELD_WIDTH/2;
       y = height /2;
+      speedX = 0;
     }
     if (y < radius) {
       if (!stateBossPing) {
