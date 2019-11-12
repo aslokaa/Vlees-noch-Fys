@@ -23,6 +23,9 @@ class Power {
   }
   
   void display(){
+    
+    ellipse(x, y, hitboxDiameter, hitboxDiameter);
+    
   }
   
   void drop(){
