@@ -27,7 +27,7 @@ interface EnemyFinals
 //finals for powerups
 interface PowerFinals
 {
-  final float HITBOX_DIAMETER = 20;
+  final float HITBOX_DIAMETER = 50;
   final float VELOCITY_Y = 5;
 }
 //adding readability to the colors

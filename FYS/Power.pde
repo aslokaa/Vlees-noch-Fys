@@ -14,7 +14,7 @@ class Power {
     this.x = x;
     this.y = y;
     this.velocityX = velocityX;
-    velocityX = 4;
+    velocityX = 0;
     velocityY = PowerFinals.VELOCITY_Y;
     hitboxDiameter = PowerFinals.HITBOX_DIAMETER;
     hitboxRadius = hitboxDiameter / 2;
@@ -55,6 +55,6 @@ class Power {
   }
 
   void move() {
-    x += velocityY;
+    y += velocityY;
   }
 }
