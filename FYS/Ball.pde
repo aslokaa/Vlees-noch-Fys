@@ -9,6 +9,7 @@ class Ball {
   int colorBall;
   boolean active;
   boolean ballRespawn;
+  boolean isChargedBom;
   float maxSpeedX;
   float ballRespawnTimer, timerCount;
 
@@ -25,6 +26,7 @@ class Ball {
     maxSpeedX = 10;
     ballRespawnTimer = 0;
     timerCount = 2;
+    isChargedBom = false;
   }
 
   void updateBall() {
@@ -83,6 +85,11 @@ class Ball {
       {
         ballRespawn=false;
       }
+    }
+  }
+  void ballChargedBom(){
+    if(isChargedBom){
+       
     }
   }
 
