@@ -47,6 +47,7 @@ class Endscreen
     }
     return false;
   }
+  
   void loseGame()
   {
     statePlaying=false;
