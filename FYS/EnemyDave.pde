@@ -144,7 +144,7 @@ class EnemyDave extends Enemy
    {
     if ( spawnChance <= 0.9 )
     {
-     int dropType = round(random(0, 4));
+     int dropType = round(random(0, 6));
      power.drop(x, y, dropType);
     
      return;
