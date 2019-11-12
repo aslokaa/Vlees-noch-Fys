@@ -25,29 +25,30 @@ class Ball {
     diameter = radius*2;
     maxSpeedX = 10;
     ballRespawnTimer = 0;
-    timerCount = 2;
+    timerCount = 60;
     isChargedBom = false;
   }
 
   void updateBall() {
-    if (active) {
+    //if (active) {
       //drawBall();
       if (!ballRespawn) {
         moveBall();
         interactPlayer();
         interactEnemy();
         interactBossLester();
-        bounceWall();
+        
       }
+      bounceWall();
       countdownBallRespawn();
-    }
+    //}
   }
 
   void drawBall() {
-    if (active) {
+    //if (active) {
       fill(colorBall);
       ellipse(x, y, diameter, diameter);
-    }
+    //}
   }
   //gravity
   void moveBall() {
