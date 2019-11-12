@@ -75,6 +75,7 @@ class Ball {
     if (y < radius) {
       if (!stateBossPing) {
         speedY *= -1;
+        y = radius + 1;
       } else {
         ballRespawn = true ;
         ballRespawnTimer = timerCount;
@@ -201,7 +202,7 @@ class Ball {
   }
   void interactBossPing() {
     if (stateBossPing) {
-      if((x + radius > ping.x)&&(x - radius < ping.x + ping.bossWidth) &&(y + radius > ping.y)&&(y - radius < ping.y + ping.bossHeight) ){
+      if ((x + radius > ping.x)&&(x - radius < ping.x + ping.bossWidth) &&(y + radius > ping.y)&&(y - radius < ping.y + ping.bossHeight) ) {
         speedY *= -1;
         y = ping.y + ping.bossHeight + 1 + radius;
       }
