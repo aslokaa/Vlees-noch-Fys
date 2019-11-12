@@ -19,9 +19,9 @@ class Player
     PLAYER_VELOCITY_Y_MAX           = height * 0.012, 
     PLAYER_START_DECELERATE_Y       = 0.9, 
     PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.1, 
-    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH , 
-    SLOW_MODIFIER                   = 0.9,
-    BOUNCE_MODIFIER                 = -0.8,
+    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH, 
+    SLOW_MODIFIER                   = 0.9, 
+    BOUNCE_MODIFIER                 = -0.8, 
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*5, 
     IMMUNE_STARTING_TIMER           = SECOND*1, 
@@ -29,7 +29,7 @@ class Player
     SHAKE_MODIFIER_MIN              = -gamefield.GAMEFIELD_WIDTH *0.003, 
     SHAKE_MODIFIER_MAX              = gamefield.GAMEFIELD_WIDTH *0.0003, 
     SHAKE_STARTING_TIMER            = SECOND*0.5, 
-    SHOOT_STARTING_TIMER            = SECOND*0.75,
+    SHOOT_STARTING_TIMER            = SECOND*0.75, 
     SPLIT_STARTING_TIMER            = SECOND*10;
 
   float 
@@ -278,6 +278,18 @@ class Player
       split = true;
       splitTimer=SPLIT_STARTING_TIMER;
       break;
+    case PowerUpTypes.HP_UP:
+      restoreHealth( 30 );
+      break;
+    case PowerUpTypes.AMMO_UP:
+      gainAmmo(5);
+      break;
+    case PowerUpTypes.BOOM_BALL:
+      for (Ball ball : balls) 
+      {
+        ball.isChargedBom=true;
+      }
+      break;
     default:
       println("modifyPower default");
     }
@@ -382,21 +394,18 @@ class Player
 
 
   //grows the paddle
-  void restoreHealth( float healing, boolean isSplit )
+  void restoreHealth( float healing)
   {
     playerSounds.play(Sounds.RESTORE_HEALTH);
-    if (split)
+    if ( widthSplit1 < PLAYER_MAX_WIDTH / 2 ) 
     {
-      if (isSplit)
-      {
-        if ( widthSplit1 < PLAYER_MAX_WIDTH / 2 )
-          widthSplit1 += healing;
-      } else
-      {
-        if ( widthSplit0 < PLAYER_MAX_WIDTH / 2 )
-          widthSplit0 += healing;
-      }
-    } else if ( playerWidth < PLAYER_MAX_WIDTH )
+      widthSplit1 += healing;
+    }
+    if ( widthSplit0 < PLAYER_MAX_WIDTH / 2 )
+    {
+      widthSplit0 += healing;
+    } 
+    if ( playerWidth < PLAYER_MAX_WIDTH )
     {
       playerWidth += healing;
     }
@@ -481,8 +490,8 @@ class Player
     } 
     if (stateBossPing)
     {
-     playerSounds.play(Sounds.PING_SHOOT);
-     return;
+      playerSounds.play(Sounds.PING_SHOOT);
+      return;
     }
     shootTimer=SHOOT_STARTING_TIMER;
     playerSounds.play(Sounds.SHOOT);

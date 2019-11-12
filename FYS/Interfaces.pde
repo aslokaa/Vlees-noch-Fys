@@ -8,8 +8,11 @@ interface PowerUpTypes
   final int
     INVERTED     = 0, 
     IMMUNE       = 1, 
-    SLOW         = 2, 
-    SPLIT        = 3;
+    SLOW         = 2,
+    HP_UP        = 3,
+    AMMO_UP      = 4,
+    BOOM_BALL    = 5,
+    SPLIT        = 6;
 }  
 
 //finals for all enemies.
