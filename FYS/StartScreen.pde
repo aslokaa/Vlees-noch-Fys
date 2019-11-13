@@ -47,22 +47,27 @@ class Startscreen
   {
     if ( !soundsInitialized )
     {
+      text("LOADING SOUND", SUBTITLE_X, SUBTITLE_Y);
       loadSounds();
     }
     if ( !davesInitialized )
     {
+      text("LOADING DAVES", SUBTITLE_X, SUBTITLE_Y);
       loadDaves();
     }
     if ( !chadsInitialized)
     {
+      text("LOADING CHADS", SUBTITLE_X, SUBTITLE_Y);
       loadChads();
     }
     if ( !bulletsInitialized )
     {
+      text("LOADING BULLETS", SUBTITLE_X, SUBTITLE_Y);
       loadBullets();
     }
     if ( !powerInitialized )
     {
+      text("LOADING POWERS", SUBTITLE_X, SUBTITLE_Y);
       loadPowers();
     }
   }

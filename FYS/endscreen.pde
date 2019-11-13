@@ -30,9 +30,14 @@ class Endscreen
       stateEnd          =false;
       stateBossPing     =false;
       stateBossLester   =false;
+      scores            = new Scores();
       for ( Enemy enemy : enemies )
       {
         enemy.destroy();
+      }
+      for (int i = 0; i < powers.length; i++)
+      {
+        powers[i].powerActive=false;
       }
     }
   }
@@ -47,7 +52,7 @@ class Endscreen
     }
     return false;
   }
-  
+
   void loseGame()
   {
     statePlaying=false;
