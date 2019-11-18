@@ -3,13 +3,17 @@ class BossLester
   boolean active;
   float x;
   float y;
-  final float HITBOX_OFFSET = 200;
+  final float HITBOX_OFFSET;
   float angle;
+  int randomNumber;
+  Enemy chadToSpawn;
+  
+  int shootTimer;
 
   PVector returnBulletSpeed = new PVector();
-  PVector hitboxLeftPos = new PVector(0, 0);
-  PVector hitboxBottomPos = new PVector(0, 0);
-  PVector hitboxRightPos = new PVector(0, 0);
+  PVector hitboxLeftPos = new PVector();
+  PVector hitboxBottomPos = new PVector();
+  PVector hitboxRightPos = new PVector();
 
   BossLesterHitbox hitboxLeft; 
   BossLesterHitbox hitboxBottom; 
@@ -22,6 +26,8 @@ class BossLester
     active = true;
     this.x = x;
     this.y = y;
+    HITBOX_OFFSET = 200;
+    chadToSpawn = new Enemy(false, 0, 0, 0);
     hitboxLeftPos.x = x - HITBOX_OFFSET;
     hitboxLeftPos.y = y;
     hitboxBottomPos.x = x;
@@ -41,6 +47,7 @@ class BossLester
       hitboxLeft.update();
       hitboxBottom.update();
       hitboxRight.update();
+      checkAlive();
 
       //setHitboxPositions();
       //check collisions
@@ -55,7 +62,7 @@ class BossLester
 
   void shootPlayer()
   {
-    if ( frameCount % 150 == 0 )
+    if ( frameCount % shootTimer == 0 )
     {
       Rectangles hitboxesToCheck = player.getHitboxes();
       PVector bulletSpeed;
@@ -99,7 +106,7 @@ class BossLester
           findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletSpeed.x, bulletSpeed.y);
           bulletSpeed = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle0, false);
           findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletSpeed.x, bulletSpeed.y);
-         println(bulletSpeed);
+          println(bulletSpeed);
         }
         if ( hitboxRight.active )
         {
@@ -107,7 +114,7 @@ class BossLester
           findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletSpeed.x, bulletSpeed.y);
           bulletSpeed = getBulletSpeed(hitboxRight.x, hitboxRight.y, hitboxesToCheck.rectangle0, false);
           findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletSpeed.x, bulletSpeed.y);
-         println(bulletSpeed);
+          println(bulletSpeed);
         }
       }
     }
@@ -115,7 +122,7 @@ class BossLester
 
   EnemyBullet findInactiveBullet()
   {
-   
+
     for ( EnemyBullet bullet : enemyBullets ) 
     {
       if ( !bullet.active )
@@ -128,30 +135,60 @@ class BossLester
 
   PVector getBulletSpeed(float boxX, float boxY, Rectangle rectangle, boolean left)
   {
-    
+
     translate(boxX, boxY);
-    fill(255);
-    ellipse(0,0,200, 200);
     if ( left )
     {
       angle = atan2( rectangle.y  - boxY, rectangle.x - ( rectangle.rectangleWidth * 0.5 ) - boxX);
-      angle += PI / 2;
+      angle += PI / 2;//half PI is added to rotate the speed of the ball by a quarter to the right to ensure the right angle
     } else 
     {
       angle = atan2( rectangle.y  - boxY, rectangle.x + ( rectangle.rectangleWidth * 1.5 ) - boxX);
-      angle += PI / 2;
+      angle += PI / 2;//half PI is added to rotate the speed of the ball by a quarter to the right to ensure the right angle
     }
-    translate(-boxX,-boxY);
+    translate(-boxX, -boxY);
 
-    
+
     returnBulletSpeed.x = angle ;
     returnBulletSpeed.y = 3;
-  
+
     return returnBulletSpeed;
   }
 
   void spawnChad()
   {
+
+    if ( frameCount % 300 == 0 )
+    {
+      for ( Enemy enemy : enemies)
+      {
+        if ( !enemy.active && enemy instanceof EnemyChad )
+        {
+          chadToSpawn = enemy;
+        }
+      }
+
+      randomNumber = round(random(0, 3));
+      println(randomNumber);
+      switch ( randomNumber ) {
+      case 0:
+        chadToSpawn.activate(hitboxLeft.x, hitboxLeft.y);
+        break;
+      case 1:
+        chadToSpawn.activate(hitboxBottom.x, hitboxBottom.y);
+        break;
+      case 2:
+        chadToSpawn.activate(hitboxRight.x, hitboxRight.y);
+      }
+    }
+  }
+
+  void checkAlive()
+  {
+    if ( !hitboxLeft.active && !hitboxBottom.active && !hitboxRight.active )
+    {
+      active = false;
+    }
   }
 
   void setHitboxPositions()

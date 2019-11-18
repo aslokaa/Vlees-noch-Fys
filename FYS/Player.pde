@@ -519,7 +519,7 @@ class Player
   //returns the hitboxes
   Rectangles getHitboxes()
   {
-    return new Rectangles( x, xSplit, y, playerWidth, widthSplit0, widthSplit1, playerHeigth, split );
+    return new Rectangles( x, xSplit, y, playerWidth, widthSplit0, widthSplit1, playerHeigth, split );//maakt iedere frame voor iedere enemy en enemyBullet een nieuwe rectangles aan. fix deze preformance pls
   }
 
   //activates a bullet.

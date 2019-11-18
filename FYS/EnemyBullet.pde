@@ -5,6 +5,7 @@ class EnemyBullet
   float y;
   float speedX;
   float speedY; 
+  float bulletSpeed;
   final float DIAMETER = 30;
   final float RADIUS = DIAMETER /2;
   final float START_X = -100;
@@ -14,6 +15,7 @@ class EnemyBullet
   {
     x = START_X;
     y = START_Y;
+    bulletSpeed = 3;
   }
 
 
@@ -35,6 +37,7 @@ class EnemyBullet
 
   void handlePlayerCollision()
   {
+    
   }
 
   void checkIfOutField()
