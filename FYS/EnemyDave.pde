@@ -142,9 +142,10 @@ class EnemyDave extends Enemy
   {
    if ( !power.powerActive )
    {
-    if ( spawnChance <= 0.9 )
+    if ( spawnChance <= 0.001 )
     {
-     int dropType = round(random(0, 6));
+
+     int dropType = round(random(0, PowerUpTypes.SPLIT));
      power.drop(x, y, dropType);
     
      return;

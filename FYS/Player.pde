@@ -32,7 +32,10 @@ class Player
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
     SPLIT_STARTING_TIMER            = SECOND*10;
 
-  float 
+  final int
+    STARTING_BULLETS                = 5;
+
+    float 
     x, 
     xSplit, 
     y, 
@@ -80,8 +83,8 @@ class Player
     decelerateY       = PLAYER_START_DECELERATE_Y;
     inverted          = false;
     invertedTimer     = 0;
-    immune         = false;
-    immuneTimer    = 0;
+    immune            = false;
+    immuneTimer       = 0;
     slow              = false;
     slowTimer         = 0;
     shake             = false;
@@ -92,6 +95,7 @@ class Player
     xSplit            = 0;
     widthSplit0       = 0;
     widthSplit1       = 0;
+    ammo              = STARTING_BULLETS;
   }
 
   //updates the player
@@ -103,6 +107,7 @@ class Player
     detectCollisionEdge();
     powerCountdown();
   }
+  
   //checks how to player should be drawn.
   void checkDisplay()
   {

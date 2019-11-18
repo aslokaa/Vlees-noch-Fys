@@ -53,7 +53,7 @@ interface Arrays
 {
   final int
     STAR_COUNT    = 300, 
-    BULLET_COUNT  = 30, 
+    BULLET_COUNT  = 150, 
     OPTION_COUNT  = 3, 
     DAVE_COUNT    = 10,
     POWER_COUNT   = 5;

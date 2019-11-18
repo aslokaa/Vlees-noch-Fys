@@ -4,10 +4,12 @@ class BossLester
   float x;
   float y;
   final float HITBOX_OFFSET = 200;
+  float angle;
 
-  PVector hitboxLeftPos = new PVector(0,0);
-  PVector hitboxBottomPos = new PVector(0,0);
-  PVector hitboxRightPos = new PVector(0,0);
+  PVector returnBulletSpeed = new PVector();
+  PVector hitboxLeftPos = new PVector(0, 0);
+  PVector hitboxBottomPos = new PVector(0, 0);
+  PVector hitboxRightPos = new PVector(0, 0);
 
   BossLesterHitbox hitboxLeft; 
   BossLesterHitbox hitboxBottom; 
@@ -39,6 +41,7 @@ class BossLester
       hitboxLeft.update();
       hitboxBottom.update();
       hitboxRight.update();
+
       //setHitboxPositions();
       //check collisions
     }
@@ -52,42 +55,100 @@ class BossLester
 
   void shootPlayer()
   {
-   /* //shoot from each active hitbox a bullet towards player
-    //get angle from each hitbox to player then shoot with those speeds to move in that direction
-     Rectangles hitboxesToCheck = player.getHitboxes();
-    Rectangle hitboxToFollow;
-    if ( hitboxesToCheck.rectangle1.exists )
+    if ( frameCount % 150 == 0 )
     {
-      
-        hitboxToFollow = hitboxesToCheck.rectangle0;
-      } else
+      Rectangles hitboxesToCheck = player.getHitboxes();
+      PVector bulletSpeed;
+      if ( hitboxesToCheck.rectangle1.exists )
       {
-        hitboxToFollow = hitboxesToCheck.rectangle1;
+        if ( hitboxLeft.active )
+        {
+          bulletSpeed = getBulletSpeed(hitboxLeft.x, hitboxLeft.y, hitboxesToCheck.rectangle1, true);
+          findInactiveBullet().shoot(hitboxLeft.x, hitboxLeft.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxLeft.x, hitboxLeft.y, hitboxesToCheck.rectangle1, false);
+          findInactiveBullet().shoot(hitboxLeft.x, hitboxLeft.y, bulletSpeed.x, bulletSpeed.y);
+        }
+        if ( hitboxBottom.active )
+        {
+          bulletSpeed = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle1, true);
+          findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle1, false);
+          findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletSpeed.x, bulletSpeed.y);
+        }
+        if ( hitboxRight.active )
+        {
+          bulletSpeed = getBulletSpeed(hitboxRight.x, hitboxRight.y, hitboxesToCheck.rectangle1, true);
+          findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxRight.x, hitboxRight.y, hitboxesToCheck.rectangle1, false);
+          findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletSpeed.x, bulletSpeed.y);
+        }
+      } 
+      if ( hitboxesToCheck.rectangle0.exists )
+      {
+        if ( hitboxLeft.active )
+        {
+          bulletSpeed = getBulletSpeed(hitboxLeft.x, hitboxLeft.y, hitboxesToCheck.rectangle0, true);
+          findInactiveBullet().shoot(hitboxLeft.x, hitboxLeft.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxLeft.x, hitboxLeft.y, hitboxesToCheck.rectangle0, false);
+          findInactiveBullet().shoot(hitboxLeft.x, hitboxLeft.y, bulletSpeed.x, bulletSpeed.y);
+          println(bulletSpeed);
+        }
+        if ( hitboxBottom.active )
+        {
+          bulletSpeed = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle0, true);
+          findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle0, false);
+          findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletSpeed.x, bulletSpeed.y);
+         println(bulletSpeed);
+        }
+        if ( hitboxRight.active )
+        {
+          bulletSpeed = getBulletSpeed(hitboxRight.x, hitboxRight.y, hitboxesToCheck.rectangle0, true);
+          findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxRight.x, hitboxRight.y, hitboxesToCheck.rectangle0, false);
+          findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletSpeed.x, bulletSpeed.y);
+         println(bulletSpeed);
+        }
       }
-    } else
-    {
-      hitboxToFollow = hitboxesToCheck.rectangle0;
     }
-    
-    
-    if ( hitboxLeft.active )
-    {
-      for ( EnemyBullet bullet : enemyBullets ) {
-       if ( !bullet.active ){
-         PVector bulletSpeed = getBulletSpeed(hitboxLeft.x, hitboxLeft.y);
-         bullet.shoot(hitboxLeft.x,hitboxLeft.y, bulletSpeed.x, bulletSpeed.y);
-       }
-      }
-    }*/
   }
-  
- /* PVector getBulletSpeed(float boxX, float boxY, float playerX, float playerY)
+
+  EnemyBullet findInactiveBullet()
   {
-    float speedX = dist( boxX, boxY, boxX + ( hitboxToFollow.rectangleWidth / 2 ), y ) / 
-            (dist( x, y, hitboxToFollow.x + ( hitboxToFollow.rectangleWidth / 2 ), y ) + dist( x, y, x, hitboxToFollow.y )) ;
-    float speedY = 1 - speedX;
-    return new PVector(boxX, boxY);
-  }*/
+   
+    for ( EnemyBullet bullet : enemyBullets ) 
+    {
+      if ( !bullet.active )
+      {
+        return bullet;
+      }
+    }
+    return null;
+  }
+
+  PVector getBulletSpeed(float boxX, float boxY, Rectangle rectangle, boolean left)
+  {
+    
+    translate(boxX, boxY);
+    fill(255);
+    ellipse(0,0,200, 200);
+    if ( left )
+    {
+      angle = atan2( rectangle.y  - boxY, rectangle.x - ( rectangle.rectangleWidth * 0.5 ) - boxX);
+      angle += PI / 2;
+    } else 
+    {
+      angle = atan2( rectangle.y  - boxY, rectangle.x + ( rectangle.rectangleWidth * 1.5 ) - boxX);
+      angle += PI / 2;
+    }
+    translate(-boxX,-boxY);
+
+    
+    returnBulletSpeed.x = angle ;
+    returnBulletSpeed.y = 3;
+  
+    return returnBulletSpeed;
+  }
 
   void spawnChad()
   {
@@ -95,9 +156,8 @@ class BossLester
 
   void setHitboxPositions()
   {
-    
   }
-  
+
   void display()
   {
     if ( active )

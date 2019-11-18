@@ -56,11 +56,6 @@ class Gamefield
     spawnWave(checkWave());
   }
 
-  void setupField()
-  {
-    //sets enemies to not active, sets player position to start position, sets up/resets space and score.
-  }
-
   //activates the spawn functions.
   void spawnWave(boolean spawnWave)
   {
