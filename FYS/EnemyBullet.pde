@@ -5,7 +5,7 @@ class EnemyBullet
   float y;
   float speedX;
   float speedY; 
-  final float DIAMETER = 20;
+  final float DIAMETER = 30;
   final float RADIUS = DIAMETER /2;
   final float START_X = -100;
   final float START_Y = -100;
@@ -45,13 +45,17 @@ class EnemyBullet
     }
   }
 
-  void shoot(float x, float y, float speedX, float speedY)
-  {
+  void shoot(float x, float y, float angle, float speed)
+  {   
+    active = true;
+    // Start the bullet at the player position
     this.x = x;
     this.y = y;
-    this.speedX = speedX;
-    this.speedY = speedY;
-    this.active = true;
+    // the vertical velocity is 10
+    speedX = speed * sin(angle);
+    speedY = speed * -cos(angle);
+   
+  
   }
 
   void display()

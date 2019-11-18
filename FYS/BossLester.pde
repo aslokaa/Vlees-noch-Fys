@@ -4,6 +4,7 @@ class BossLester
   float x;
   float y;
   final float HITBOX_OFFSET = 200;
+  float angle;
 
   PVector returnBulletSpeed = new PVector();
   PVector hitboxLeftPos = new PVector(0, 0);
@@ -54,7 +55,7 @@ class BossLester
 
   void shootPlayer()
   {
-    if ( frameCount % 80 == 0 )
+    if ( frameCount % 150 == 0 )
     {
       Rectangles hitboxesToCheck = player.getHitboxes();
       PVector bulletSpeed;
@@ -62,48 +63,51 @@ class BossLester
       {
         if ( hitboxLeft.active )
         {
-          bulletSpeed = getBulletSpeed(hitboxLeftPos.x, hitboxLeftPos.y, hitboxesToCheck.rectangle1, true);
-          findInactiveBullet().shoot(hitboxLeftPos.x, hitboxLeftPos.y, bulletSpeed.x, bulletSpeed.y);
-          bulletSpeed = getBulletSpeed(hitboxLeftPos.x, hitboxLeftPos.y, hitboxesToCheck.rectangle1, false);
-          findInactiveBullet().shoot(hitboxLeftPos.x, hitboxLeftPos.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxLeft.x, hitboxLeft.y, hitboxesToCheck.rectangle1, true);
+          findInactiveBullet().shoot(hitboxLeft.x, hitboxLeft.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxLeft.x, hitboxLeft.y, hitboxesToCheck.rectangle1, false);
+          findInactiveBullet().shoot(hitboxLeft.x, hitboxLeft.y, bulletSpeed.x, bulletSpeed.y);
         }
         if ( hitboxBottom.active )
         {
-          bulletSpeed = getBulletSpeed(hitboxBottomPos.x, hitboxBottomPos.y, hitboxesToCheck.rectangle1, true);
-          findInactiveBullet().shoot(hitboxBottomPos.x, hitboxBottomPos.y, bulletSpeed.x, bulletSpeed.y);
-          bulletSpeed = getBulletSpeed(hitboxBottomPos.x, hitboxBottomPos.y, hitboxesToCheck.rectangle1, false);
-          findInactiveBullet().shoot(hitboxBottomPos.x, hitboxBottomPos.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle1, true);
+          findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle1, false);
+          findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletSpeed.x, bulletSpeed.y);
         }
         if ( hitboxRight.active )
         {
-          bulletSpeed = getBulletSpeed(hitboxRightPos.x, hitboxRightPos.y, hitboxesToCheck.rectangle1, true);
-          findInactiveBullet().shoot(hitboxRightPos.x, hitboxRightPos.y, bulletSpeed.x, bulletSpeed.y);
-          bulletSpeed = getBulletSpeed(hitboxRightPos.x, hitboxRightPos.y, hitboxesToCheck.rectangle1, false);
-          findInactiveBullet().shoot(hitboxRightPos.x, hitboxRightPos.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxRight.x, hitboxRight.y, hitboxesToCheck.rectangle1, true);
+          findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxRight.x, hitboxRight.y, hitboxesToCheck.rectangle1, false);
+          findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletSpeed.x, bulletSpeed.y);
         }
       } 
       if ( hitboxesToCheck.rectangle0.exists )
       {
         if ( hitboxLeft.active )
         {
-          bulletSpeed = getBulletSpeed(hitboxLeftPos.x, hitboxLeftPos.y, hitboxesToCheck.rectangle0, true);
-          findInactiveBullet().shoot(hitboxLeftPos.x, hitboxLeftPos.y, bulletSpeed.x, bulletSpeed.y);
-          //bulletSpeed = getBulletSpeed(hitboxLeftPos.x, hitboxLeftPos.y, hitboxesToCheck.rectangle0, false);
-          //findInactiveBullet().shoot(hitboxLeftPos.x, hitboxLeftPos.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxLeft.x, hitboxLeft.y, hitboxesToCheck.rectangle0, true);
+          findInactiveBullet().shoot(hitboxLeft.x, hitboxLeft.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxLeft.x, hitboxLeft.y, hitboxesToCheck.rectangle0, false);
+          findInactiveBullet().shoot(hitboxLeft.x, hitboxLeft.y, bulletSpeed.x, bulletSpeed.y);
+          println(bulletSpeed);
         }
         if ( hitboxBottom.active )
         {
-          bulletSpeed = getBulletSpeed(hitboxBottomPos.x, hitboxBottomPos.y, hitboxesToCheck.rectangle0, true);
-          findInactiveBullet().shoot(hitboxBottomPos.x, hitboxBottomPos.y, bulletSpeed.x, bulletSpeed.y);
-         // bulletSpeed = getBulletSpeed(hitboxBottomPos.x, hitboxBottomPos.y, hitboxesToCheck.rectangle0, false);
-         // findInactiveBullet().shoot(hitboxBottomPos.x, hitboxBottomPos.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle0, true);
+          findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle0, false);
+          findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletSpeed.x, bulletSpeed.y);
+         println(bulletSpeed);
         }
         if ( hitboxRight.active )
         {
-          bulletSpeed = getBulletSpeed(hitboxRightPos.x, hitboxRightPos.y, hitboxesToCheck.rectangle0, true);
-          findInactiveBullet().shoot(hitboxRightPos.x, hitboxRightPos.y, bulletSpeed.x, bulletSpeed.y);
-         // bulletSpeed = getBulletSpeed(hitboxRightPos.x, hitboxRightPos.y, hitboxesToCheck.rectangle0, false);
-         //findInactiveBullet().shoot(hitboxRightPos.x, hitboxRightPos.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxRight.x, hitboxRight.y, hitboxesToCheck.rectangle0, true);
+          findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletSpeed.x, bulletSpeed.y);
+          bulletSpeed = getBulletSpeed(hitboxRight.x, hitboxRight.y, hitboxesToCheck.rectangle0, false);
+          findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletSpeed.x, bulletSpeed.y);
+         println(bulletSpeed);
         }
       }
     }
@@ -124,31 +128,24 @@ class BossLester
 
   PVector getBulletSpeed(float boxX, float boxY, Rectangle rectangle, boolean left)
   {
-    float speedX;
-    float speedY;
+    
+    translate(boxX, boxY);
+    fill(255);
+    ellipse(0,0,200, 200);
     if ( left )
     {
-    speedX = dist( boxX, boxY, rectangle.x +  rectangle.rectangleWidth  , boxY ) / 
-              (dist( boxX, boxY, rectangle.x +  rectangle.rectangleWidth , boxY ) + dist( boxX, boxY, boxX, rectangle.y )) ;
-      speedY = 1 - speedX;
-      if ( rectangle.x < boxX ) 
-      {
-        speedX *= -1;
-      }
+      angle = atan2( rectangle.y  - boxY, rectangle.x - ( rectangle.rectangleWidth * 0.5 ) - boxX);
+      angle += PI / 2;
     } else 
     {
-      speedX = dist( boxX, boxY, rectangle.x +  rectangle.rectangleWidth  , boxY ) / 
-              (dist( boxX, boxY, rectangle.x +  rectangle.rectangleWidth , boxY ) + dist( boxX, boxY, boxX, rectangle.y )) ;
-      speedY = 1 - speedX;        
-      if ( rectangle.x + rectangle.rectangleWidth + 200 < boxX ) 
-      {
-        speedX *= -1;
-      }
+      angle = atan2( rectangle.y  - boxY, rectangle.x + ( rectangle.rectangleWidth * 1.5 ) - boxX);
+      angle += PI / 2;
     }
+    translate(-boxX,-boxY);
 
-    speedY = 1 - speedX;
-    returnBulletSpeed.x = (speedX );
-    returnBulletSpeed.y = (speedY );
+    
+    returnBulletSpeed.x = angle ;
+    returnBulletSpeed.y = 3;
   
     return returnBulletSpeed;
   }
