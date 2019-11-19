@@ -32,9 +32,8 @@ class PlayerBullet
   }
   void display() { //Draws the bullet if it is shot
     if (shootBullet)
-    {
-      fill(Colors.YELLOW);  
-      ellipse(bulletX, bulletY, bulletDiameter, bulletDiameter);
+    {  
+      image(bulletImg, bulletX, bulletY, bulletDiameter, bulletDiameter);
     }
   }
   void createBullet(float playerX, float playerY) { // Moves the bullet to the players location 
