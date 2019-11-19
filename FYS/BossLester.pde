@@ -6,11 +6,12 @@ class BossLester
   final float HITBOX_OFFSET;
   final int SHOOT_TIMER;
   final int CHAD_SPAWN_TIMER;
+  final int POWER_SPAWN_TIMER;
   float angle;
   int randomNumber;
   Enemy chadToSpawn;
-  
-  
+
+
 
   float bulletAngle;
   PVector hitboxLeftPos = new PVector();
@@ -30,7 +31,8 @@ class BossLester
     this.y = y;
     HITBOX_OFFSET = 200;
     SHOOT_TIMER = 200;
-    CHAD_SPAWN_TIMER = 310;
+    CHAD_SPAWN_TIMER = 500;
+    POWER_SPAWN_TIMER = 400;
     chadToSpawn = new Enemy(false, 0, 0, 0);
     hitboxLeftPos.x = x - HITBOX_OFFSET;
     hitboxLeftPos.y = y;
@@ -62,6 +64,7 @@ class BossLester
   {
     shootPlayer();
     spawnChad();
+    spawnPower();
   }
 
   void shootPlayer()
@@ -139,11 +142,11 @@ class BossLester
     translate(boxX, boxY);
     if ( left )
     {
-      angle = atan2( rectangle.y  - boxY, rectangle.x - ( rectangle.rectangleWidth * 0.5 ) - boxX);
+      angle = atan2( rectangle.y  - boxY, rectangle.x - ( rectangle.rectangleWidth * 1 ) - boxX);
       angle += PI / 2;//half PI is added to rotate the speed of the ball by a quarter to the right to ensure the right angle
     } else 
     {
-      angle = atan2( rectangle.y  - boxY, rectangle.x + ( rectangle.rectangleWidth * 1.5 ) - boxX);
+      angle = atan2( rectangle.y  - boxY, rectangle.x + ( rectangle.rectangleWidth * 2 ) - boxX);
       angle += PI / 2;//half PI is added to rotate the speed of the ball by a quarter to the right to ensure the right angle
     }
     translate(-boxX, -boxY);
@@ -165,7 +168,6 @@ class BossLester
       }
 
       randomNumber = round(random(0, 2));
-      println(randomNumber);
       switch ( randomNumber ) {
       case 0:
         chadToSpawn.activate(hitboxLeft.x, hitboxLeft.y);
@@ -175,6 +177,22 @@ class BossLester
         break;
       case 2:
         chadToSpawn.activate(hitboxRight.x, hitboxRight.y);
+      }
+    }
+  }
+
+  void spawnPower()
+  {
+    if ( frameCount % POWER_SPAWN_TIMER == 0 )
+    {
+      for ( Power power : powers)
+      {
+        if ( !power.powerActive )
+        {
+          randomNumber = round(random(3, 4));
+          power.drop(random(200, gamefield.GAMEFIELD_WIDTH - 200), -50, randomNumber);
+          return;
+        }
       }
     }
   }

@@ -18,6 +18,8 @@ class EnemyDave extends Enemy
   boolean moveDown;
   int currentRow;
   int rowToMoveTo;
+  float spawnRate;
+  float spawnChance;
 
   EnemyDave(float x, float y, float hitboxRadius)
   {
@@ -31,6 +33,7 @@ class EnemyDave extends Enemy
     moveDown = false;
     currentRow = 0;
     rowToMoveTo = 1;
+    spawnRate = 0.15;
   }
 
   @Override void executeBehavior()
@@ -137,12 +140,12 @@ class EnemyDave extends Enemy
 
 @Override void spawnPowerup()
 {
- float spawnChance = random(0, 1);
+ spawnChance = random(0, 1);
   for ( Power power : powers )
   {
    if ( !power.powerActive )
    {
-    if ( spawnChance <= 0.001 )
+    if ( spawnChance <= spawnRate )
     {
 
      int dropType = round(random(0, PowerUpTypes.SPLIT));
