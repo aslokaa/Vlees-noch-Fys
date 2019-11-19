@@ -9,8 +9,6 @@ class Space {
 
   Space () { 
 
-
-
     for (int i = 0; i < Arrays.STAR_COUNT; i++) {
       x[i] = random(0, gamefield.GAMEFIELD_WIDTH);
       y[i] = random(0, height);

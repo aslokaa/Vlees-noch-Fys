@@ -1,4 +1,4 @@
- //Galaxy Defence Force
+//Galaxy Defence Force
 //IG101-2, Vlees noch FYS
 //Niklas Leeuwin, Brent Sijm, Olger Klok , Mika Spoelstra, Eele Roet, 
 // x is bottom keys
@@ -18,6 +18,7 @@ ArrayList<EnemyBullet> enemyBullets = new ArrayList<EnemyBullet>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
 ArrayList<Ball> balls = new ArrayList<Ball>();
 Power[] powers = new Power[Arrays.POWER_COUNT];
+Particle[] particles = new Particle[Arrays.PARTICLE_COUNT];
 
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
 Gamefield gamefield;
@@ -40,6 +41,7 @@ void setup()
   introMusic               = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   gamefield                = new Gamefield();
   space                    = new Space();
+
   scores                   = new Scores();
   player                   = new Player();
   ping                     = new BossPing();
@@ -79,6 +81,10 @@ void updateGame()
       for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
       {
         powers[i].update();
+      }
+      for ( int i = 0; i < Arrays.PARTICLE_COUNT; i++ )
+      {
+        particles[i].update();
       }
 
       player.update();
@@ -123,6 +129,11 @@ void drawGame()
     for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
     {
       powers[i].display();
+    }
+
+    for ( int i = 0; i < Arrays.PARTICLE_COUNT; i++ )
+    {
+      particles[i].display();
     }
 
 

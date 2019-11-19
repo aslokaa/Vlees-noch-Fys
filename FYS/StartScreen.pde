@@ -18,7 +18,8 @@ class Startscreen
     chadsInitialized   =false, //checks if chads are initialized.
     bulletsInitialized =false, //checks if bullets are initialized.
     soundsInitialized  =false, //checks if sounds are initialized.
-    powerInitialized   =false; //checks if powers are intitialized.
+    powerInitialized   =false, //checks if powers are intitialized.
+    particleInitialized = false;
 
   void update()
   {
@@ -70,6 +71,11 @@ class Startscreen
       text("LOADING POWERS", SUBTITLE_X, SUBTITLE_Y);
       loadPowers();
     }
+    if ( !particleInitialized )
+    {
+      text("LOADING PARTICLES", SUBTITLE_X, SUBTITLE_Y);
+      loadParticles();
+    }
   }
   //initializes sound
   void loadSounds()
@@ -119,6 +125,15 @@ class Startscreen
       powers[i] =  new Power(-100, -100, 0);
     }
     powerInitialized = true;
+  }
+  
+  void loadParticles()
+  {
+    for (int i = 0; i < Arrays.PARTICLE_COUNT; i++) 
+    {
+      particles[i] =  new Particle(-100, -100, 0, 0, 0);
+    }
+    particleInitialized = true;
   }
 
   //draws the background

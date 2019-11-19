@@ -79,6 +79,7 @@ class Enemy
   void explode()
   {
     println("define the explode method before using it");
+    
   }
 
     //gets called in the drawGame method in the main.
