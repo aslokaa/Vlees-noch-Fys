@@ -41,10 +41,10 @@ class Particle {
 
   void display() {
     if (active) {
-      fill(drawColor);
-        ellipse(x, y, diameter, diameter);
+      //fill(drawColor);
+      // ellipse(x, y, diameter, diameter);
       
-      /*switch(particleNumber) {
+      switch(particleNumber) {
       case 0:
         fill(Colors.DARK_GREEN);
         ellipse(x, y, diameter, diameter);
@@ -65,7 +65,7 @@ class Particle {
         fill(Colors.YELLOW);
         ellipse(x, y, diameter, diameter);
         break;
-      }*/
+      }
     }
   }
   void move() {
