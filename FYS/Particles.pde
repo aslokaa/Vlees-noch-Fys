@@ -14,6 +14,7 @@ class Particle {
   boolean active = false;
   int lifeTime;
   int particleNumber;
+  color drawColor = color(255, 255 ,255);
 
   Particle(float x, float y, float diameter, float velocityX, float velocityY) {
     //Particle() {
@@ -40,7 +41,10 @@ class Particle {
 
   void display() {
     if (active) {
-      switch(particleNumber) {
+      fill(drawColor);
+        ellipse(x, y, diameter, diameter);
+      
+      /*switch(particleNumber) {
       case 0:
         fill(Colors.DARK_GREEN);
         ellipse(x, y, diameter, diameter);
@@ -61,7 +65,7 @@ class Particle {
         fill(Colors.YELLOW);
         ellipse(x, y, diameter, diameter);
         break;
-      }
+      }*/
     }
   }
   void move() {
