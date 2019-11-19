@@ -5,6 +5,7 @@ class BossLester
   float y;
   final float HITBOX_OFFSET;
   final int SHOOT_TIMER;
+  final int CHAD_SPAWN_TIMER;
   float angle;
   int randomNumber;
   Enemy chadToSpawn;
@@ -28,7 +29,8 @@ class BossLester
     this.x = x;
     this.y = y;
     HITBOX_OFFSET = 200;
-    SHOOT_TIMER = 150;
+    SHOOT_TIMER = 200;
+    CHAD_SPAWN_TIMER = 310;
     chadToSpawn = new Enemy(false, 0, 0, 0);
     hitboxLeftPos.x = x - HITBOX_OFFSET;
     hitboxLeftPos.y = y;
@@ -152,7 +154,7 @@ class BossLester
   void spawnChad()
   {
 
-    if ( frameCount % 300 == 0 )
+    if ( frameCount % CHAD_SPAWN_TIMER == 0 )
     {
       for ( Enemy enemy : enemies)
       {
