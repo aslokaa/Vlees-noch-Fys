@@ -20,6 +20,7 @@ class EnemyDave extends Enemy
   int rowToMoveTo;
   float spawnRate;
   float spawnChance;
+  int explosionParticles;
 
   EnemyDave(float x, float y, float hitboxRadius)
   {
@@ -34,6 +35,7 @@ class EnemyDave extends Enemy
     currentRow = 0;
     rowToMoveTo = 1;
     spawnRate = 0.15;
+    explosionParticles = 10;
   }
 
   @Override void executeBehavior()
@@ -116,6 +118,22 @@ class EnemyDave extends Enemy
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
     
+  }
+  
+  @Override void explode()
+  {
+    for ( int i = 0; i < explosionParticles; i++ )
+    {
+      for ( Particle particle : particles )
+      {
+        if (!particle.active)
+        {
+          particle.activateParticle(x, y, random(3, 6), random(-3, 3), random(-3, 3), 1, 60 );
+          println(i);
+          break;
+        }
+      }
+    }
   }
   
  @Override void activate(float posX, float posY)
