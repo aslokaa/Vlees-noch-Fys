@@ -17,8 +17,8 @@ class EnemyBullet
   {
     x = START_X;
     y = START_Y;
-    speed = 3;
-    DAMAGE_TO_DEAL = 20;
+    speed = 4;
+    DAMAGE_TO_DEAL = 10;
   }
 
 
@@ -41,16 +41,16 @@ class EnemyBullet
   void handlePlayerCollision()
   {
     hitboxesToCheck = player.getHitboxes();
-    if ( hitboxesToCheck.rectangle1.exists )
+    if ( hitboxesToCheck.rectangle0.exists )
     {
-      if ( x > hitboxesToCheck.rectangle0.x && x < hitboxesToCheck.rectangle0.x + ( hitboxesToCheck.rectangle0.rectangleWidth  / 2 ) &&
-           y > hitboxesToCheck.rectangle0.y && y < hitboxesToCheck.rectangle0.y + ( hitboxesToCheck.rectangle0.rectangleHeight / 2 ))
+      if ( x > hitboxesToCheck.rectangle0.x && x < hitboxesToCheck.rectangle0.x + ( hitboxesToCheck.rectangle0.rectangleWidth  ) &&
+           y > hitboxesToCheck.rectangle0.y && y < hitboxesToCheck.rectangle0.y + ( hitboxesToCheck.rectangle0.rectangleHeight ))
       {
         active = false;
         player.dealDamage(DAMAGE_TO_DEAL, false);
       }
     }
-    if ( hitboxesToCheck.rectangle0.exists )
+    if ( hitboxesToCheck.rectangle1.exists )
     {
       if ( x > hitboxesToCheck.rectangle1.x && x < hitboxesToCheck.rectangle1.x + ( hitboxesToCheck.rectangle1.rectangleWidth  / 2 ) &&
            y > hitboxesToCheck.rectangle1.y && y < hitboxesToCheck.rectangle1.y + ( hitboxesToCheck.rectangle1.rectangleHeight / 2 ))
@@ -72,10 +72,8 @@ class EnemyBullet
   void shoot(float x, float y, float angle)
   {   
     active = true;
-    // Start the bullet at the player position
     this.x = x;
     this.y = y;
-    // the vertical velocity is 10
     speedX = speed * sin(angle);
     speedY = speed * -cos(angle);
   }
