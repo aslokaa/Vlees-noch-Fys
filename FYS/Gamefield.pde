@@ -23,12 +23,12 @@ class Gamefield
     ENEMY_START_X                   = GAMEFIELD_WIDTH * 0.06;  
   final int 
     CHAD_COUNTER_START              = 0, 
-    DAVE_COUNTER_START              = 5, 
+    DAVE_COUNTER_START              = 10, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2,
-    WAVES_UNTILL_DAVE               = 1,
-    WAVES_UNTILL_CHAD               = 3,
-    WAVES_UNTILL_BOSS               = 5,
+    AMOUNT_OF_BOSSES                = 2, 
+    WAVES_UNTILL_DAVE               = 1, 
+    WAVES_UNTILL_CHAD               = 3, 
+    WAVES_UNTILL_BOSS               = 5, 
     DAVE_MAX                        = 50;
 
   int 
@@ -64,6 +64,11 @@ class Gamefield
     if (spawnWave && !stateBossLester && !stateBossPing)
     {
       waveCounter+=1;
+      if (waveCounter==3)
+      {
+       spawnWave3();
+       return;
+      }
       if (spawnPing)
       {
         activatePing();
@@ -82,7 +87,7 @@ class Gamefield
       }
       for ( int i=0; i<chadCounter; i++)
       {
-       spawnChads(i); 
+        spawnChads(i);
       }
       updateWaves();
     }
@@ -103,7 +108,7 @@ class Gamefield
       }
     }
   }
-  
+
   //spawns chads
   void spawnChads(int yModifier)
   {
@@ -142,7 +147,7 @@ class Gamefield
     }
     return true;
   }
-  
+
   //checks if all chads are dead
   boolean checkChad()
   {
@@ -159,13 +164,22 @@ class Gamefield
     return true;
   }
 
-  //modifies the makeup of waves.
-  void updateWaves()
+
+//a special wave that only spawns 2 chads
+  void spawnWave3()
+  {
+    for (int i =0; i<3; i++){
+     spawnChads(i); 
+    }
+  }
+
+    //modifies the makeup of waves.
+    void updateWaves()
   {
     if ( daveCounter < DAVE_MAX )
     {
       if ( waveCounter % WAVES_UNTILL_DAVE == 0)
-      daveCounter+=1;
+        daveCounter+=1;
     }
     if ( chadCounter < CHAD_MAX )
     {
@@ -178,9 +192,9 @@ class Gamefield
     {
       if (waveCounter==5) //forces PING as first boss
       {
-       spawnPing=true; 
+        spawnPing=true;
       } else
-      chooseBoss();
+        chooseBoss();
     }
   }
 
