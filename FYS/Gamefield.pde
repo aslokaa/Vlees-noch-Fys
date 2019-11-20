@@ -66,8 +66,8 @@ class Gamefield
       waveCounter+=1;
       if (waveCounter==3)
       {
-       spawnWave3();
-       return;
+        spawnWave3();
+        return;
       }
       if (spawnPing)
       {
@@ -165,16 +165,16 @@ class Gamefield
   }
 
 
-//a special wave that only spawns 2 chads
+  //a special wave that only spawns 2 chads
   void spawnWave3()
   {
-    for (int i =0; i<3; i++){
-     spawnChads(i); 
+    for (int i =0; i<3; i++) {
+      spawnChads(i);
     }
   }
 
-    //modifies the makeup of waves.
-    void updateWaves()
+  //modifies the makeup of waves.
+  void updateWaves()
   {
     if ( daveCounter < DAVE_MAX )
     {

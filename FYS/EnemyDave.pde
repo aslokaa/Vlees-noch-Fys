@@ -74,7 +74,7 @@ class EnemyDave extends Enemy
     y += speedY;
     if ( y - hitboxRadius > height)
     {
-     active = false; 
+      active = false;
     }
   }
 
@@ -115,11 +115,11 @@ class EnemyDave extends Enemy
     spawnPowerup();
     explode();
     active = false;
+    score = score + 100;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
-    
   }
-  
+
   @Override void explode()
   {
     for ( int i = 0; i < EXPLOSION_PARTICLES; i++ )
@@ -134,14 +134,14 @@ class EnemyDave extends Enemy
       }
     }
   }
-  
- @Override void activate(float posX, float posY)
+
+  @Override void activate(float posX, float posY)
   {
-     x = posX;
-     y = posY;
-     active = true;
-     currentRow = 0;
-     rowToMoveTo = 1;
+    x = posX;
+    y = posY;
+    active = true;
+    currentRow = 0;
+    rowToMoveTo = 1;
   }
 
   void setXSpeed()
@@ -155,25 +155,24 @@ class EnemyDave extends Enemy
     }
   }
 
-@Override void spawnPowerup()
-{
- spawnChance = random(0, 1);
-  for ( Power power : powers )
+  @Override void spawnPowerup()
   {
-   if ( !power.powerActive )
-   {
-    if ( spawnChance <= spawnRate )
+    spawnChance = random(0, 1);
+    for ( Power power : powers )
     {
+      if ( !power.powerActive )
+      {
+        if ( spawnChance <= spawnRate )
+        {
 
-     int dropType = round(random(0, PowerUpTypes.SPLIT));
-     power.drop(x, y, dropType);
-    
-     return;
+          int dropType = round(random(0, PowerUpTypes.SPLIT));
+          power.drop(x, y, dropType);
+
+          return;
+        }
+      }
     }
-   }
   }
-  
-}
   @Override void display()
   {
     if ( active )
