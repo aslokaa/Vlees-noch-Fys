@@ -111,6 +111,7 @@ class EnemyChad extends Enemy
   @Override void destroy()
   {
     active = false;
+    score = score + 100;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
   }
