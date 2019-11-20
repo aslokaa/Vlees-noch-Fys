@@ -66,8 +66,8 @@ class BossPing
   //locates the nearest ball.
   void detectNearestBall()
   {
-    float closestBallXT = width/2;
-    float closestBallYT = height*height;
+    float closestBallXT = gamefield.GAMEFIELD_WIDTH/2;
+    float closestBallYT = 0;
     for (Ball ball : balls) 
     {
       float xT = ball.x;

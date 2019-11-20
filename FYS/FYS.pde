@@ -66,6 +66,7 @@ void updateGame()
     if (!statePaused)
     {
       gamefield.update();
+      player.update();
       if (stateBossPing)
       {
         ping.update();
@@ -88,7 +89,6 @@ void updateGame()
         particles[i].update();
       }
 
-      player.update();
       test.test();
       scores.update();
 

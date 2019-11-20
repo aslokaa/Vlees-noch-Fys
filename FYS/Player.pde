@@ -35,7 +35,7 @@ class Player
   final int
     STARTING_BULLETS                = 5;
 
-    float 
+  float 
     x, 
     xSplit, 
     y, 
@@ -66,6 +66,8 @@ class Player
   int 
     ammo, //amount of ammo
     shakeCounter; 
+  Rectangles
+    hitboxes;
 
 
   Player() //Constructor
@@ -95,6 +97,7 @@ class Player
     xSplit            = 0;
     widthSplit0       = 0;
     widthSplit1       = 0;
+    hitboxes          = new Rectangles();
     ammo              = STARTING_BULLETS;
   }
 
@@ -106,8 +109,9 @@ class Player
     checkMove();
     detectCollisionEdge();
     powerCountdown();
+    updateHitboxes();
   }
-  
+
   //checks how to player should be drawn.
   void checkDisplay()
   {
@@ -516,10 +520,17 @@ class Player
     ammo += newAmmo;
   }
 
+
+//updates the hitboxes.
+  void updateHitboxes()
+  {
+    hitboxes.update(x, xSplit, y, playerWidth, widthSplit0, widthSplit1, playerHeigth, split );
+  }
+
   //returns the hitboxes
   Rectangles getHitboxes()
   {
-    return new Rectangles( x, xSplit, y, playerWidth, widthSplit0, widthSplit1, playerHeigth, split );//maakt iedere frame voor iedere enemy en enemyBullet een nieuwe rectangles aan. fix deze preformance pls
+    return hitboxes;
   }
 
   //activates a bullet.
@@ -554,19 +565,24 @@ class Player
 //stores hitbox information
 class Rectangles
 {
-  Rectangle rectangle0;
-  Rectangle rectangle1;
-  Rectangles( float xT0, float xT1, float yT, float widthT, float w0T, float w1T, float heightT, boolean existsT )
+  Rectangle rectangle0 = new Rectangle();
+  Rectangle rectangle1 = new Rectangle();
+  Rectangles()
   {
-    float w0=widthT;
-    float w1=widthT;
-    if (existsT)
-    {
-      w0=w0T;
-      w1=w1T;
-    }
-    rectangle0 = new Rectangle( xT0, yT, w0, heightT, true );
-    rectangle1 = new Rectangle( xT1, yT, w1, heightT, existsT );
+  }
+  //updates the rectangles
+  void update( float x, float xSplit, float y, float playerWidth, float widthSplit0, float widthSplit1, float playerHeigth, boolean split )
+  {
+   float w0=playerWidth;
+   float w1=playerWidth;
+   
+   if (split)
+   {
+    w0=widthSplit0;
+    w1=widthSplit1;
+   }
+    rectangle0.update(x,y,w0,playerHeigth,true);
+    rectangle1.update(xSplit, y, w1, playerHeigth, split );
   }
 }
 
@@ -575,12 +591,22 @@ class Rectangle
 {
   float x, y, rectangleWidth, rectangleHeight;
   boolean exists;
-  Rectangle( float xT, float yT, float widthT, float heightT, boolean existsT )
+  Rectangle()
   {
-    x = xT;
-    y = yT;
-    rectangleWidth = widthT;
-    rectangleHeight = heightT;
-    exists = existsT;
+    x=0;
+    y=0;
+    rectangleWidth=0;
+    rectangleHeight=0;
+    exists=false;
+  }
+  //updates the rectangle
+  void update(float x, float y, float rectangleWidth, float rectangleHeight, boolean exists)
+  {
+    this.x = x;
+    this.y = y;
+    this.rectangleWidth = rectangleWidth;
+    this.rectangleHeight = rectangleHeight;
+    this.exists = exists; 
+    println(this.x);
   }
 }
