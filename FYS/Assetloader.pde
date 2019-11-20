@@ -1,4 +1,4 @@
-PImage bulletImg, playerSidesImg, playerForcefieldImg, lesterHitboxImg, enemyDaveImg;
+PImage bulletImg, playerSidesImg, playerForcefieldImg, lesterHitboxImg, enemyDaveImg, explosionImg;
 
 
 public void loadAssets() {
@@ -7,5 +7,6 @@ public void loadAssets() {
   playerForcefieldImg = loadImage("./sprites/PlayerBounceFysGame.png");
   lesterHitboxImg = loadImage("./sprites/LesterHitboxSpriteFYS.png");
   enemyDaveImg = loadImage("./sprites/daveSprite.png");
+  explosionImg = loadImage("./sprites/explosion_particle.png");
   
 }

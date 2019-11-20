@@ -35,7 +35,7 @@ class EnemyDave extends Enemy
     currentRow = 0;
     rowToMoveTo = 1;
     spawnRate = 0.15;
-    EXPLOSION_PARTICLES = 50;
+    EXPLOSION_PARTICLES = 75;
   }
 
   @Override void executeBehavior()
@@ -128,7 +128,7 @@ class EnemyDave extends Enemy
       {
         if (!particle.active)
         {
-          particle.activateParticle(x, y, random(3, 6), random(-3, 3), random(-3, 3), 1, round(random(30, 70) ));
+          particle.activateParticle(x, y, random(10, 25), random(-3, 3), random(-3, 3), 1, round(random(30, 70) ));
           break;
         }
       }

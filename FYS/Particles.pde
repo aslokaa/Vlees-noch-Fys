@@ -15,6 +15,8 @@ class Particle {
   int lifeTime;
   int particleNumber;
   color drawColor = color(255, 255, 255);
+  float spinSpeed;
+  float drawAngle;
 
   Particle(float x, float y, float diameter, float velocityX, float velocityY) {
     //Particle() {
@@ -24,14 +26,16 @@ class Particle {
     this.velocityX = velocityX;
     this.velocityY = velocityY;
     active = false;
+    drawAngle = 0;
+    spinSpeed = 0;
 
-    for (int i = 0; i < Arrays.PARTICLE_COUNT; i++) {
+    /*for (int i = 0; i < Arrays.PARTICLE_COUNT; i++) {
       x = 0;
       y = 0;
       velocityX = 0;
       velocityY = 0;
-      diameter = random(1.5, 2);
-    }
+      diameter = random(20, 35);
+    }*/
   }
 
   void update() {
@@ -39,6 +43,7 @@ class Particle {
 
       move();
       checkFrames();
+      updateAngle();
     }
   }
 
@@ -54,8 +59,14 @@ class Particle {
         ellipse(x, y, diameter, diameter);
         break;
       case 1:
-        fill(Colors.WHITE);
+       /* fill(Colors.WHITE);
         ellipse(x, y, diameter, diameter);
+        */
+        translate( x, y );
+        rotate(drawAngle);
+        image( explosionImg, -diameter / 2, -diameter / 2, diameter, diameter);
+        rotate( -drawAngle );
+        translate( -x, -y );
         break;
       case 2:
         fill(Colors.BLUE);
@@ -82,6 +93,18 @@ class Particle {
       active = false;
     }
   }
+  
+  void updateAngle()
+  {
+    drawAngle += spinSpeed;
+    if ( drawAngle < 0 && drawAngle < 2 * -PI )
+    {
+       drawAngle %= (2 * -PI); 
+    }else if ( drawAngle > 0 && drawAngle > 2 * PI)
+    {
+       drawAngle %= (2 * -PI);
+    }
+  }
 
   void activateParticle(float x, float y, float diameter, float velocityX, float velocityY, int particleNumber, int lifeTime) {
     this.x = x;
@@ -92,5 +115,6 @@ class Particle {
     this.particleNumber = particleNumber;
     this.lifeTime = lifeTime;
     active = true;
+    spinSpeed = random( -0.3, 0.3);
   }
 }
