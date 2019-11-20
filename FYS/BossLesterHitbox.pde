@@ -7,6 +7,7 @@ class BossLesterHitbox
   final float HITBOX_DIAMETER = 75;
   final float HITBOX_RADIUS = HITBOX_DIAMETER / 2;
   final int STARTING_HP = 4;
+  final int EXPLOSION_PARTICLES;
 
   BossLesterHitbox(float x, float y)
   {
@@ -14,6 +15,7 @@ class BossLesterHitbox
     this.y = y;
     this.active = true;
     this.HP = STARTING_HP;
+    this.EXPLOSION_PARTICLES = 75;
   }
 
   void update()
@@ -44,7 +46,23 @@ class BossLesterHitbox
     if ( HP <= 0 )
     {
      active = false; 
+     explode();
     }
+  }
+  
+  void explode()
+  {
+   for ( int i = 0; i < EXPLOSION_PARTICLES; i++ )
+    {
+      for ( Particle particle : particles )
+      {
+        if (!particle.active)
+        {
+          particle.activateParticle(x, y, random(3, 6), random(-3, 3), random(-3, 3), 1, round(random(30, 70) ) );
+          break;
+        }
+      }
+    } 
   }
 
   void display()
