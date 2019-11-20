@@ -19,14 +19,16 @@ class Gamefield
     GAMEFIELD_WIDTH                 = width * 0.87, 
     PLAYER_MIN_Y                    = height / 2, 
     ENEMY_MAX_Y                     = height, 
-    ENEMY_START_Y                   = height * -0.18, 
-    ENEMY_START_X_LEFT              = GAMEFIELD_WIDTH * 0.06, 
-    ENEMY_START_X_RIGHT             = GAMEFIELD_WIDTH * 0.94;  
+    ENEMY_START_Y                   = height * -0.13, 
+    ENEMY_START_X                   = GAMEFIELD_WIDTH * 0.06;  
   final int 
     CHAD_COUNTER_START              = 0, 
-    DAVE_COUNTER_START              = 5, 
+    DAVE_COUNTER_START              = 10, 
     CHAD_MAX                        = 10, 
     AMOUNT_OF_BOSSES                = 2, 
+    WAVES_UNTILL_DAVE               = 1, 
+    WAVES_UNTILL_CHAD               = 3, 
+    WAVES_UNTILL_BOSS               = 5, 
     DAVE_MAX                        = 50;
 
   int 
@@ -62,6 +64,11 @@ class Gamefield
     if (spawnWave && !stateBossLester && !stateBossPing)
     {
       waveCounter+=1;
+      if (waveCounter==3)
+      {
+       spawnWave3();
+       return;
+      }
       if (spawnPing)
       {
         activatePing();
@@ -80,7 +87,7 @@ class Gamefield
       }
       for ( int i=0; i<chadCounter; i++)
       {
-       spawnChads(i); 
+        spawnChads(i);
       }
       updateWaves();
     }
@@ -95,18 +102,13 @@ class Gamefield
       {
         if (!enemy.active)
         {
-          float xT=ENEMY_START_X_LEFT;
-          if (random(1)>0.5)
-          {
-            xT=ENEMY_START_X_RIGHT;
-          }
-          enemy.activate(xT, ENEMY_START_Y*(yModifier+1));
+          enemy.activate(ENEMY_START_X, ENEMY_START_Y*(yModifier+1));
           break;
         }
       }
     }
   }
-  
+
   //spawns chads
   void spawnChads(int yModifier)
   {
@@ -116,12 +118,7 @@ class Gamefield
       {
         if (!enemy.active)
         {
-          float xT=ENEMY_START_X_LEFT;
-          if (random(1)>0.5)
-          {
-            xT=ENEMY_START_X_RIGHT;
-          }
-          enemy.activate(xT, ENEMY_START_Y*(yModifier+1));
+          enemy.activate(ENEMY_START_X, ENEMY_START_Y*(yModifier+1));
           break;
         }
       }
@@ -150,7 +147,7 @@ class Gamefield
     }
     return true;
   }
-  
+
   //checks if all chads are dead
   boolean checkChad()
   {
@@ -167,23 +164,37 @@ class Gamefield
     return true;
   }
 
-  //modifies the makeup of waves.
-  void updateWaves()
+
+//a special wave that only spawns 2 chads
+  void spawnWave3()
+  {
+    for (int i =0; i<3; i++){
+     spawnChads(i); 
+    }
+  }
+
+    //modifies the makeup of waves.
+    void updateWaves()
   {
     if ( daveCounter < DAVE_MAX )
     {
-      daveCounter+=1;
+      if ( waveCounter % WAVES_UNTILL_DAVE == 0)
+        daveCounter+=1;
     }
     if ( chadCounter < CHAD_MAX )
     {
-      if ( waveCounter%3 == 0 )
+      if ( waveCounter % WAVES_UNTILL_CHAD == 0 )
       {
         chadCounter+=1;
       }
     }
-    if ( waveCounter%10 == 0 )
+    if ( waveCounter % WAVES_UNTILL_BOSS == 0 )
     {
-      chooseBoss();
+      if (waveCounter==5) //forces PING as first boss
+      {
+        spawnPing=true;
+      } else
+        chooseBoss();
     }
   }
 

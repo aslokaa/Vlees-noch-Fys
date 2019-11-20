@@ -26,9 +26,9 @@ class EnemyDave extends Enemy
   {
     super(false, x, y, hitboxRadius);
     damageToDeal = 50;
-    moveSpeedLeft = -5;
-    moveSpeedRight = 5;
-    moveSpeedDown = 5;
+    moveSpeedLeft = -3;
+    moveSpeedRight = 3;
+    moveSpeedDown = 3;
     moveLeft = false;
     moveRight = false;
     moveDown = false;
