@@ -3,6 +3,10 @@
  bal kan bewegen en interacteren met enemies en de player.
  
  */
+ 
+ 
+ //wanneer de bal gecharged is moet er een suggestie cirkel om de bal komen om te zien hoe groot de ontploffing word,
+ //deze suggestie cirkel is dezelfde radius als de hitbox van de exploderende bal.
 class Ball {
   float x, y, speedX, speedY;
   float radius, diameter;
@@ -149,6 +153,7 @@ class Ball {
               speedY *= -1;  // enemie bounce off
               isChargedBom = false;
               radius = 25;
+              // spawn particles vanaf de ball.
             }
           }
         } else {
