@@ -12,13 +12,16 @@ class EnemyChad extends Enemy
   float speedY;
   float accelX;
   float accelY;
+  float spawnChance;
+  float spawnRate;
 
   EnemyChad(float x, float y, float hitboxRadius)
   {
     super(false, x, y, hitboxRadius);
     speedY = 1;
     speedX = 1;
-    damageToDeal = 50;
+    damageToDeal = 30;
+    spawnRate = 0.15;
   }
 
   @Override void executeBehavior()
@@ -34,9 +37,9 @@ class EnemyChad extends Enemy
 
   void move()
   {
-    speedX += accelX / 2;
-    speedY += accelY / 2;
-   
+    speedX += accelX / 5;
+    speedY += accelY / 5;
+
     if ( speedX > 3 )
     {
       speedX = 3;
@@ -68,7 +71,7 @@ class EnemyChad extends Enemy
     }
     if ( y > height ) 
     {
-     y = height; 
+      y = height;
     }
   }
 
@@ -91,9 +94,9 @@ class EnemyChad extends Enemy
     }
 
     accelX = dist( x, y, hitboxToFollow.x + ( hitboxToFollow.rectangleWidth / 2 ), y ) / 
-            (dist( x, y, hitboxToFollow.x + ( hitboxToFollow.rectangleWidth / 2 ), y ) + dist( x, y, x, hitboxToFollow.y )) ;
+      (dist( x, y, hitboxToFollow.x + ( hitboxToFollow.rectangleWidth / 2 ), y ) + dist( x, y, x, hitboxToFollow.y )) ;
     accelY = 1 - accelX;
-    
+
     if ( x > hitboxToFollow.x + ( hitboxToFollow.rectangleWidth / 2 ) )
     {
       accelX *= -1;
@@ -118,20 +121,29 @@ class EnemyChad extends Enemy
 
   @Override void spawnPowerup()
   {
-    
-    //if there is no other powerup
-    //check chance to spawn a powerup
-    //check random spawn for particular powerup
-    //activate particular powerup from x,y
-    
-  }
-  @Override void display()
-  {
-    if ( active )
+    spawnChance = random(0, 1);
+    for ( Power power : powers )
     {
-      noStroke();
-      fill(EnemyFinals.CHAD_COLOR);
-      ellipse(x, y, hitboxDiameter, hitboxDiameter);
+      if ( !power.powerActive )
+      {
+        if ( spawnChance <= spawnRate )
+        {
+
+          int dropType = round(random(0, PowerUpTypes.SPLIT));
+          power.drop(x, y, dropType);
+
+          return;
+        }
+      }
     }
   }
-}
+    @Override void display()
+    {
+      if ( active )
+      {
+        noStroke();
+        fill(EnemyFinals.CHAD_COLOR);
+        ellipse(x, y, hitboxDiameter, hitboxDiameter);
+      }
+    }
+  }

@@ -11,9 +11,10 @@ class Particle {
   float x, y;
   float velocityX, velocityY;
   float diameter;
-  boolean active = false;
+  boolean active;
   int lifeTime;
   int particleNumber;
+  color drawColor = color(255, 255, 255);
 
   Particle(float x, float y, float diameter, float velocityX, float velocityY) {
     //Particle() {
@@ -34,12 +35,19 @@ class Particle {
   }
 
   void update() {
-    move();
-    checkFrames();
+    if ( active ) {
+
+      move();
+      checkFrames();
+    }
   }
 
   void display() {
     if (active) {
+     
+      //fill(drawColor);
+      // ellipse(x, y, diameter, diameter);
+
       switch(particleNumber) {
       case 0:
         fill(Colors.DARK_GREEN);
@@ -65,8 +73,8 @@ class Particle {
     }
   }
   void move() {
-    velocityX *= velocityX;
-    velocityY *= velocityY;
+    x += velocityX;
+    y += velocityY;
   }
   void checkFrames() {
     lifeTime --;
@@ -75,12 +83,13 @@ class Particle {
     }
   }
 
-  void activateParticle(float x, float y, float diameter, float velocityX, float velocityY, int lifeTime) {
+  void activateParticle(float x, float y, float diameter, float velocityX, float velocityY, int particleNumber, int lifeTime) {
     this.x = x;
     this.y = y;
     this.diameter = diameter;
     this.velocityX = velocityX;
     this.velocityY = velocityY;
+    this.particleNumber = particleNumber;
     this.lifeTime = lifeTime;
     active = true;
   }
