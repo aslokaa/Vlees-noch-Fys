@@ -48,7 +48,7 @@ class Particle {
       //fill(drawColor);
       // ellipse(x, y, diameter, diameter);
 
-      switch(particleNumber) {
+      switch(particleNumber) { // this is for the enemies to have diferent particles
       case 0:
         fill(Colors.DARK_GREEN);
         ellipse(x, y, diameter, diameter);
@@ -76,14 +76,14 @@ class Particle {
     x += velocityX;
     y += velocityY;
   }
-  void checkFrames() {
+  void checkFrames() { // here you say when the particles have to disapear
     lifeTime --;
     if (lifeTime < 0) {
       active = false;
     }
   }
 
-  void activateParticle(float x, float y, float diameter, float velocityX, float velocityY, int particleNumber, int lifeTime) {
+  void activateParticle(float x, float y, float diameter, float velocityX, float velocityY, int particleNumber, int lifeTime) { //here you activate the particles
     this.x = x;
     this.y = y;
     this.diameter = diameter;
