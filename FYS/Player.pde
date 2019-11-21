@@ -158,7 +158,7 @@ class Player
     rect(xSplit, y, widthSplit1, playerHeigth );
   }
   //detects user inputs.
-  void detectInput()
+  void detectInput()//spawn "rook" particles als de player links recht up en down beweegt. see activate method in Particle
   {
     if ( keyCodesPressed[LEFT] ) 
     {

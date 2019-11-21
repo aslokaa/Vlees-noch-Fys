@@ -30,7 +30,7 @@ class BossLester
     this.x = x;
     this.y = y;
     HITBOX_OFFSET = 200;
-    SHOOT_TIMER = 200;
+    SHOOT_TIMER = 250;
     CHAD_SPAWN_TIMER = 500;
     POWER_SPAWN_TIMER = 400;
     chadToSpawn = new Enemy(false, 0, 0, 0);
