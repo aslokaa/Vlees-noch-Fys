@@ -1,8 +1,11 @@
-PImage bulletImg, playerSidesImg, playerForcefieldImg, lesterBodyImg, lesterHitbox4HPImg, lesterHitbox3HPImg, lesterHitbox2HPImg, lesterHitbox1HPImg, lesterHitbox0HPImg, enemyDaveImg, explosionImg, smokeImg1, smokeImg2;
+
+PImage bulletImg, bulletPowerImg, playerSidesImg, playerForcefieldImg, lesterBodyImg, lesterHitbox4HPImg, lesterHitbox3HPImg, lesterHitbox2HPImg, lesterHitbox1HPImg, lesterHitbox0HPImg, enemyDaveImg, explosionImg, smokeImg1, smokeImg2, powerHpUpImg;
+
 
 
 public void loadAssets() {
   bulletImg = loadImage("./sprites/BulletFysGame.png");
+  bulletPowerImg = loadImage("./sprites/BulletFysGamePower.png");
   playerSidesImg = loadImage("./sprites/RocketPlayerFysGame.png");
   playerForcefieldImg = loadImage("./sprites/PlayerBounceFysGame.png");
   lesterBodyImg = loadImage("./sprites/lesterBodySprite.png");
@@ -13,7 +16,11 @@ public void loadAssets() {
   lesterHitbox0HPImg = loadImage("./sprites/lesterHitboxSprite0HP.png");
   enemyDaveImg = loadImage("./sprites/daveSprite.png");
   explosionImg = loadImage("./sprites/explosion_particle.png");
+
   smokeImg1 = loadImage("./sprites/smokeParticle1.png");
   smokeImg2 = loadImage("./sprites/smokeParticle2.png");
+
+  powerHpUpImg = loadImage("./sprites/HpUpFysGame.png");
+
   
 }

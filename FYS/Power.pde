@@ -46,11 +46,11 @@ class Power {
         break;
       case 3 :
         fill(Colors.GREEN);
-        ellipse(x, y, hitboxDiameter, hitboxDiameter);
+        image(powerHpUpImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
       case 4 :
         fill(Colors.YELLOW);
-        ellipse(x, y, hitboxDiameter, hitboxDiameter);
+        image(bulletPowerImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
       case 5 :
         fill(Colors.MAGENTA);
