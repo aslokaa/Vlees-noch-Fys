@@ -64,13 +64,18 @@ class Particle {
         */
         translate( x, y );
         rotate(drawAngle);
-        image( explosionImg, -diameter / 2, -diameter / 2, diameter, diameter);
+        image( smokeImg1, -diameter / 2, -diameter / 2, diameter, diameter);
         rotate( -drawAngle );
         translate( -x, -y );
         break;
       case 2:
-        fill(Colors.BLUE);
-        ellipse(x, y, diameter, diameter);
+        //fill(Colors.BLUE);
+        //ellipse(x, y, diameter, diameter);
+        translate( x, y );
+        rotate(drawAngle);
+        image( smokeImg2, -diameter / 2, -diameter / 2, diameter, diameter);
+        rotate( -drawAngle );
+        translate( -x, -y );
         break;
       case 3:
         fill(Colors.GREEN);

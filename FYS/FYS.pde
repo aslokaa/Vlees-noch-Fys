@@ -36,7 +36,8 @@ BossLester lester;
 
 void setup()
 {
-  size( 1600, 900, P2D ); //16:9
+  size( 1600, 900 ); //16:9
+  
   smooth(0);
   introMusic               = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   gamefield                = new Gamefield();
@@ -45,7 +46,7 @@ void setup()
   scores                   = new Scores();
   player                   = new Player();
   ping                     = new BossPing();
-  lester                   = new BossLester(width / 2, 100);
+  lester                   = new BossLester(gamefield.GAMEFIELD_WIDTH / 2, 100);
   test                     = new Test();
   balls.add(new Ball());
   startscreen              = new Startscreen();

@@ -3,6 +3,7 @@ class BossLester
   boolean active;
   float x;
   float y;
+  float bodySize;
   final float HITBOX_OFFSET;
   final int SHOOT_TIMER;
   final int CHAD_SPAWN_TIMER;
@@ -29,12 +30,13 @@ class BossLester
     active = true;
     this.x = x;
     this.y = y;
-    HITBOX_OFFSET = 200;
+    this.bodySize = 600;
+    HITBOX_OFFSET = 100;
     SHOOT_TIMER = 250;
     CHAD_SPAWN_TIMER = 500;
     POWER_SPAWN_TIMER = 400;
     chadToSpawn = new Enemy(false, 0, 0, 0);
-    hitboxLeftPos.x = x - HITBOX_OFFSET;
+    hitboxLeftPos.x = x - HITBOX_OFFSET / 2;
     hitboxLeftPos.y = y;
     hitboxBottomPos.x = x;
     hitboxBottomPos.y = y + HITBOX_OFFSET;
@@ -213,9 +215,17 @@ class BossLester
   {
     if ( active )
     {
+      displayBody();
       hitboxLeft.display();
       hitboxBottom.display();
       hitboxRight.display();
+      
     }
+  }
+  
+  void displayBody()
+  {
+    smooth(0);
+    image( lesterBodyImg, x - bodySize / 2, y - bodySize / 2, bodySize * 1.2, bodySize); 
   }
 }

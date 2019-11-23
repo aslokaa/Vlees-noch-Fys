@@ -21,6 +21,13 @@ class EnemyDave extends Enemy
   float spawnRate;
   float spawnChance;
   int EXPLOSION_PARTICLES;
+  float particleAngle;
+  float particleSpeed;
+  float particleSize;
+  int particleLifespan;
+  float particleSpeedX;
+  float particleSpeedY;
+  int particleType;
 
   EnemyDave(float x, float y, float hitboxRadius)
   {
@@ -35,7 +42,7 @@ class EnemyDave extends Enemy
     currentRow = 0;
     rowToMoveTo = 1;
     spawnRate = 0.15;
-    EXPLOSION_PARTICLES = 75;
+    EXPLOSION_PARTICLES = 100;
   }
 
   @Override void executeBehavior()
@@ -128,7 +135,14 @@ class EnemyDave extends Enemy
       {
         if (!particle.active)
         {
-          particle.activateParticle(x, y, random(10, 25), random(-3, 3), random(-3, 3), 1, round(random(30, 70) ));
+          particleSpeed = random( 0.5, 3 );
+          particleAngle = random( 0, 2 * PI );
+          particleSize = random( 5, 25 );
+          particleSpeedX = particleSpeed * sin(particleAngle);
+          particleSpeedY = particleSpeed * -cos(particleAngle);
+          particleLifespan = round( 60 - particleSize * 1.2 );
+          particleType = i % 2 == 0 ? 1 : 2;
+          particle.activateParticle( x, y, particleSize, particleSpeedX, particleSpeedY, particleType, particleLifespan );
           break;
         }
       }

@@ -7,6 +7,7 @@ class BossLesterHitbox
   final float HITBOX_DIAMETER = 75;
   final float HITBOX_RADIUS = HITBOX_DIAMETER / 2;
   final int STARTING_HP = 4;
+  float spriteSize;
   final int EXPLOSION_PARTICLES;
 
   BossLesterHitbox(float x, float y)
@@ -15,6 +16,7 @@ class BossLesterHitbox
     this.y = y;
     this.active = true;
     this.HP = STARTING_HP;
+    spriteSize = 50;
     this.EXPLOSION_PARTICLES = 75;
   }
 
@@ -22,7 +24,6 @@ class BossLesterHitbox
   {
     if ( active )
     {
-     // setPosition(x, y);
      handleBulletCollision();
     }
   }
@@ -67,13 +68,24 @@ class BossLesterHitbox
 
   void display()
   {
-    if ( active )
-    {
-      noStroke();
-      fill(Colors.DARK_GREEN);
-      ellipse(x, y, HITBOX_DIAMETER, HITBOX_DIAMETER);
-      fill(255);
-      text(HP, x, y);
-    }
-  }
+    
+     switch( HP )
+     {
+      case 4:
+        image( lesterHitbox4HPImg, x, y, spriteSize, spriteSize );
+        break;
+      case 3:
+        image( lesterHitbox3HPImg, x, y, spriteSize, spriteSize );
+        break;
+      case 2:
+        image( lesterHitbox2HPImg, x, y, spriteSize, spriteSize );
+        break;
+      case 1:
+        image( lesterHitbox1HPImg, x, y, spriteSize, spriteSize );
+        break;
+      case 0:
+        image( lesterHitbox0HPImg, x, y, spriteSize, spriteSize );
+        break;
+     }
+   }
 }
