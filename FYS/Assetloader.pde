@@ -1,6 +1,11 @@
 
+<<<<<<< HEAD
 PImage bulletImg ,shieldPowerImg, invertedPowerImg, bombPowerImg, snailPowerImg, bulletPowerImg, playerSidesImg, playerForcefieldImg, lesterBodyImg, lesterHitbox4HPImg, lesterHitbox3HPImg, lesterHitbox2HPImg, lesterHitbox1HPImg, lesterHitbox0HPImg, 
 enemyDaveImg, explosionImg, smokeImg1, smokeImg2, powerHpUpImg, BallFys1Img, BallFys2Img, BallFys3Img;
+=======
+PImage bulletImg,splitPowerImg, shieldPowerImg, invertedPowerImg, bombPowerImg, snailPowerImg, bulletPowerImg, playerSidesImg, playerForcefieldImg, lesterBodyImg, lesterHitbox4HPImg, lesterHitbox3HPImg, lesterHitbox2HPImg, lesterHitbox1HPImg, lesterHitbox0HPImg, enemyDaveImg, explosionImg, smokeImg1, smokeImg2, powerHpUpImg;
+
+>>>>>>> ab4758c58bf828504536ece295b857d018fb7652
 
 int numFramesBallAnimation = 3;
 PImage[] ballImages = new PImage[numFramesBallAnimation];
@@ -22,6 +27,7 @@ public void loadAssets() {
   bombPowerImg = loadImage("./sprites/bomb.png");
   invertedPowerImg = loadImage("./sprites/inverted.png");
   shieldPowerImg = loadImage("./sprites/shield.png");
+  splitPowerImg = loadImage("./sprites/split2.0.png");
 
   smokeImg1 = loadImage("./sprites/smokeParticle1.png");
   smokeImg2 = loadImage("./sprites/smokeParticle2.png");

@@ -36,9 +36,9 @@ BossLester lester;
 
 void setup()
 {
-  size( 1600, 900 ); //16:9
+ size( 1600, 900, P2D); //16:9
   
-  smooth(0);
+  smooth();
   introMusic               = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   gamefield                = new Gamefield();
   space                    = new Space();
@@ -104,7 +104,7 @@ void updateGame()
         bullet.update();
       }
       for (Ball ball : balls) {
-        ball.updateBall();
+       ball.updateBall();
       }
     }
   } else if (stateEnd)
