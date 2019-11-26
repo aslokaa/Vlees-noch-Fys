@@ -31,7 +31,7 @@ interface EnemyFinals
 interface PowerFinals
 {
   final float HITBOX_DIAMETER = 50;
-  final float VELOCITY_Y = 1;
+  final float VELOCITY_Y = 5;
 }
 //adding readability to the colors
 interface Colors
