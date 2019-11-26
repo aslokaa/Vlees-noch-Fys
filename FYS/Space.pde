@@ -29,9 +29,6 @@ class Space {
     }
   }
 
-
-
-
   void display() {
 
     for ( int i = 0; i < Arrays.STAR_COUNT; i++) {

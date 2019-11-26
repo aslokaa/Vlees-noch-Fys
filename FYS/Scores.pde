@@ -19,6 +19,7 @@ class Scores {
   void display() {
 
     textSize(textsize);
+    
     text("SCORE:", width*0.93, height*0.95);
     text(score, width*0.93, height*0.98);
 
