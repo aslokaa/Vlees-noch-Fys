@@ -41,7 +41,7 @@ class EnemyDave extends Enemy
     moveDown = false;
     currentRow = 0;
     rowToMoveTo = 1;
-    spawnRate = 1;
+    spawnRate = 0.50;
     EXPLOSION_PARTICLES = 100;
   }
 
