@@ -10,7 +10,7 @@ class Power {
   boolean powerActive;
   int powerNumber;
 
-  Power(float x, float y, float velocityX) {
+  Power(float x, float y, float velocityX) { //Constructor
     this.x = x;
     this.y = y;
     this.velocityX = velocityX;
@@ -21,7 +21,7 @@ class Power {
     powerActive = false;
   }
 
-  void update() {
+  void update() { //Updates the power if its active
     if (powerActive) {
       move();
       checkOffscreen();
@@ -29,7 +29,7 @@ class Power {
     }
   }
 
-  void display() {
+  void display() { //Gets a random number out of enemyDave and spawns the power with that number
     if (powerActive) {
       switch(powerNumber) {
       case 0 : 
@@ -65,20 +65,20 @@ class Power {
     }
   }
 
-  void drop(float spawnX, float spawnY, int powerNumberNew) {
+  void drop(float spawnX, float spawnY, int powerNumberNew) { //Spawns the power at the point where an enemy died
     x = spawnX;
     y = spawnY;
     powerNumber = powerNumberNew;
     powerActive = true;
   }
 
-  void checkOffscreen() {
+  void checkOffscreen() {  //Checks if the power fell off the screen and deactivates it if it is
     if ( y - hitboxRadius > height) {
       powerActive = false;
     }
   }
 
-  void powerPickedUp() {
+  void powerPickedUp() {  //Checks the collision with the player with and without the split function active
     Rectangles hitboxes = player.getHitboxes();
 
     if (hitboxes.rectangle0.exists)  //check if player exist.
@@ -103,7 +103,7 @@ class Power {
   }
 
 
-  void move() {
+  void move() { //Moves the player down each frame
     y += velocityY;
   }
 }

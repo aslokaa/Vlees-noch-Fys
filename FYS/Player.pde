@@ -23,14 +23,14 @@ class Player
     SLOW_MODIFIER                   = 0.9, 
     BOUNCE_MODIFIER                 = -0.8, 
     SECOND                          = 60, //one second
-    INVERTED_STARTING_TIMER         = SECOND*5, 
-    IMMUNE_STARTING_TIMER           = SECOND*1, 
-    SLOW_STARTING_TIMER             = SECOND*4, 
+    INVERTED_STARTING_TIMER         = SECOND*4, 
+    IMMUNE_STARTING_TIMER           = SECOND*5, 
+    SLOW_STARTING_TIMER             = SECOND*6, 
     SHAKE_MODIFIER_MIN              = -gamefield.GAMEFIELD_WIDTH *0.003, 
     SHAKE_MODIFIER_MAX              = gamefield.GAMEFIELD_WIDTH *0.0003, 
     SHAKE_STARTING_TIMER            = SECOND*0.5, 
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
-    SPLIT_STARTING_TIMER            = SECOND*10;
+    SPLIT_STARTING_TIMER            = SECOND*15;
 
   final int
     STARTING_BULLETS                = 5;

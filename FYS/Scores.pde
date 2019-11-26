@@ -5,6 +5,7 @@ class Scores {
 
   int textsize = 30;
   int time=0;
+  int min = 0;
 
 
   void update() {
@@ -14,16 +15,23 @@ class Scores {
     }
 
     time+=1;
+
+    if (time/60 == 60) {
+      time = 0;
+      min = min + 1;
+    }
   }
 
   void display() {
 
     textSize(textsize);
-    
+
     text("SCORE:", width*0.93, height*0.95);
     text(score, width*0.93, height*0.98);
 
-    text("TIME:"+time/60+"s", width*0.93, height*0.87);
+    text("TIME", width*0.93, height*0.86);
+    text(min+":"+time/60, width*0.93, height*0.89);
+
 
     text("AMMO:" + player.ammo, width*0.93, height*0.79);
 
