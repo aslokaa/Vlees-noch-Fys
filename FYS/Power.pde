@@ -34,11 +34,11 @@ class Power {
       switch(powerNumber) {
       case 0 : 
         fill(Colors.DARK_GREEN);
-        ellipse(x, y, hitboxDiameter, hitboxDiameter);
+        image(invertedPowerImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
       case 1 : 
         fill(Colors.WHITE);
-        ellipse(x, y, hitboxDiameter, hitboxDiameter);
+        image(shieldPowerImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
       case 2 :
         fill(Colors.BLUE);
