@@ -12,13 +12,13 @@ class Scores {
 
   void update() {
 
-    if (score <= 0) {
+    if (score <= 0) {// score can't go lower than 0
       score = 0;
     }
 
     time+=1;
 
-    if (time/60 == 60) {
+    if (time/60 == 60) {//every 60 seconds counts as one minute and resets seconds to 0
       time = 0;
       min = min + 1;
     }
@@ -28,21 +28,20 @@ class Scores {
 
     textSize(textsize);
 
-    text("SCORE:", width*0.93, height*0.95);
+    text("SCORE:", width*0.93, height*0.95);//displays the score throughout the game
     text(score, width*0.93, height*0.98);
 
     text("TIME", width*0.93, height*0.86);
-   
-    if( time/60 < 10) {
-    text(min+":"+"0"+time/60, width*0.93, height*0.89);
+
+    if ( time/60 < 10) {//the first 9 seconds start with a 0
+      text(min+":"+"0"+time/60, width*0.93, height*0.89);
     }
-    if( time/60 > 9) {
-    text(min+":"+time/60, width*0.93, height*0.89);
+    if ( time/60 > 9) {//10 to 60 seconds stay the same
+      text(min+":"+time/60, width*0.93, height*0.89);
     }
 
+    text("AMMO:" + player.getAmmo(), width*0.93, height*0.79);//shows the ammo the player currently haves
 
-    text("AMMO:" + player.getAmmo(), width*0.93, height*0.79);
-
-    text("WAVE  " + gamefield.waveCounter, width*0.93, height*0.05);
+    text("WAVE  " + gamefield.waveCounter, width*0.93, height*0.05);//every completed wave counts up the wavecounter by 1
   }
 }
