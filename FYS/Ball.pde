@@ -59,6 +59,10 @@ class Ball {
       ballAnimationTimer = 0;
     }
     image(ballImages[(currentAnimationFrame) % numFrames], x, y, diameter, diameter);
+    noFill();
+    stroke(Colors.BLUE);
+    strokeWeight(5);
+    ellipse(x,y,diameter,diameter);
     ballAnimationTimer ++;
   }
 
