@@ -1,3 +1,5 @@
+//Mika Spoelstra, 500826255
+
 class Space {
 
 
@@ -21,7 +23,6 @@ class Space {
   void update() {
 
     for ( int i = 0; i < Arrays.STAR_COUNT; i++) {
-
       y[i] = y[i] + speed[i];
       if (y[i]-diameter[i] > height) {
         y[i] = 0;
@@ -32,7 +33,6 @@ class Space {
   void display() {
 
     for ( int i = 0; i < Arrays.STAR_COUNT; i++) {
-
       fill(255);
       ellipse(x[i], y[i], diameter[i], diameter[i]);
     }

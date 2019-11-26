@@ -64,7 +64,7 @@ class Particle {
         */
         translate( x, y );
         rotate(drawAngle);
-        image( smokeImg1, -diameter / 2, -diameter / 2, diameter, diameter);
+        image( smokeImg1, 0, 0, diameter, diameter);
         rotate( -drawAngle );
         translate( -x, -y );
         break;
@@ -73,7 +73,7 @@ class Particle {
         //ellipse(x, y, diameter, diameter);
         translate( x, y );
         rotate(drawAngle);
-        image( smokeImg2, -diameter / 2, -diameter / 2, diameter, diameter);
+        image( smokeImg2, 0, 0, diameter, diameter);
         rotate( -drawAngle );
         translate( -x, -y );
         break;

@@ -10,6 +10,7 @@ class BossLester
   final int POWER_SPAWN_TIMER;
   float angle;
   int randomNumber;
+  int hitboxToFire;
   Enemy chadToSpawn;
 
 
@@ -22,6 +23,8 @@ class BossLester
   BossLesterHitbox hitboxLeft; 
   BossLesterHitbox hitboxBottom; 
   BossLesterHitbox hitboxRight;
+  
+  final float BODY_SPRITE_OFFSET;
 
 
 
@@ -30,13 +33,14 @@ class BossLester
     active = true;
     this.x = x;
     this.y = y;
-    this.bodySize = 600;
-    HITBOX_OFFSET = 100;
-    SHOOT_TIMER = 250;
+    this.bodySize = 700;
+    HITBOX_OFFSET = 300;
+    SHOOT_TIMER = 100;
     CHAD_SPAWN_TIMER = 500;
     POWER_SPAWN_TIMER = 400;
+    BODY_SPRITE_OFFSET = 50;
     chadToSpawn = new Enemy(false, 0, 0, 0);
-    hitboxLeftPos.x = x - HITBOX_OFFSET / 2;
+    hitboxLeftPos.x = x - HITBOX_OFFSET;
     hitboxLeftPos.y = y;
     hitboxBottomPos.x = x;
     hitboxBottomPos.y = y + HITBOX_OFFSET;
@@ -45,6 +49,7 @@ class BossLester
     hitboxLeft = new BossLesterHitbox(hitboxLeftPos.x, hitboxLeftPos.y);
     hitboxBottom = new BossLesterHitbox(hitboxBottomPos.x, hitboxBottomPos.y);
     hitboxRight = new BossLesterHitbox(hitboxRightPos.x, hitboxRightPos.y);
+    this.hitboxToFire = 1;
   }
 
   void update()
@@ -73,24 +78,25 @@ class BossLester
   {
     if ( frameCount % SHOOT_TIMER == 0 )
     {
+      
       Rectangles hitboxesToCheck = player.getHitboxes();
       if ( hitboxesToCheck.rectangle1.exists )
       {
-        if ( hitboxLeft.active )
+        if ( hitboxLeft.active && hitboxToFire == 1 )
         {
           bulletAngle = getBulletSpeed(hitboxLeft.x, hitboxLeft.y, hitboxesToCheck.rectangle1, true);
           findInactiveBullet().shoot(hitboxLeft.x, hitboxLeft.y, bulletAngle);
           bulletAngle = getBulletSpeed(hitboxLeft.x, hitboxLeft.y, hitboxesToCheck.rectangle1, false);
           findInactiveBullet().shoot(hitboxLeft.x, hitboxLeft.y, bulletAngle);
         }
-        if ( hitboxBottom.active )
+        if ( hitboxBottom.active && hitboxToFire == 2)
         {
           bulletAngle = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle1, true);
           findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletAngle);
           bulletAngle = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle1, false);
           findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletAngle);
         }
-        if ( hitboxRight.active )
+        if ( hitboxRight.active && hitboxToFire == 3)
         {
           bulletAngle = getBulletSpeed(hitboxRight.x, hitboxRight.y, hitboxesToCheck.rectangle1, true);
           findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletAngle);
@@ -100,21 +106,21 @@ class BossLester
       } 
       if ( hitboxesToCheck.rectangle0.exists )
       {
-        if ( hitboxLeft.active )
+        if ( hitboxLeft.active && hitboxToFire == 1)
         {
           bulletAngle = getBulletSpeed(hitboxLeft.x, hitboxLeft.y, hitboxesToCheck.rectangle0, true);
           findInactiveBullet().shoot(hitboxLeft.x, hitboxLeft.y, bulletAngle);
           bulletAngle = getBulletSpeed(hitboxLeft.x, hitboxLeft.y, hitboxesToCheck.rectangle0, false);
           findInactiveBullet().shoot(hitboxLeft.x, hitboxLeft.y, bulletAngle);
         }
-        if ( hitboxBottom.active )
+        if ( hitboxBottom.active && hitboxToFire == 2)
         {
           bulletAngle = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle0, true);
           findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletAngle);
           bulletAngle = getBulletSpeed(hitboxBottom.x, hitboxBottom.y, hitboxesToCheck.rectangle0, false);
           findInactiveBullet().shoot(hitboxBottom.x, hitboxBottom.y, bulletAngle);
         }
-        if ( hitboxRight.active )
+        if ( hitboxRight.active && hitboxToFire == 3)
         {
           bulletAngle = getBulletSpeed(hitboxRight.x, hitboxRight.y, hitboxesToCheck.rectangle0, true);
           findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletAngle);
@@ -122,6 +128,11 @@ class BossLester
           findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletAngle);
         }
       }
+    }
+    hitboxToFire++;
+    if ( hitboxToFire > 3 )
+    {
+     hitboxToFire = 1; 
     }
   }
 
@@ -216,7 +227,7 @@ class BossLester
   {
     if ( active )
     {
-      displayBody();
+    
       hitboxLeft.display();
       hitboxBottom.display();
       hitboxRight.display();
@@ -224,9 +235,5 @@ class BossLester
     }
   }
   
-  void displayBody()
-  {
-    smooth(0);
-    image( lesterBodyImg, x - bodySize / 2, y - bodySize / 2, bodySize * 1.2, bodySize); 
-  }
+
 }
