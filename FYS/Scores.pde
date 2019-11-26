@@ -1,10 +1,12 @@
+//Mika Spoelstra, 500826255
+
 int score = 0;
 
 class Scores {
 
 
   int textsize = 30;
-  int time=0;
+  int time = 0;
   int min = 0;
 
 
