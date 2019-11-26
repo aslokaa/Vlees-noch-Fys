@@ -41,7 +41,7 @@ class EnemyDave extends Enemy
     moveDown = false;
     currentRow = 0;
     rowToMoveTo = 1;
-    spawnRate = 1;
+    spawnRate = 0.50;
     EXPLOSION_PARTICLES = 100;
   }
 
@@ -193,7 +193,7 @@ class EnemyDave extends Enemy
     {
       noStroke();
       fill(EnemyFinals.DAVE_COLOR);
-      ellipse(x, y, hitboxDiameter, hitboxDiameter);
+      image(enemyDaveImg,x, y, hitboxDiameter, hitboxDiameter);
     }
   }
 }
