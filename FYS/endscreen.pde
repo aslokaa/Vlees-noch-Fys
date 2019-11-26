@@ -9,7 +9,8 @@ class Endscreen
   {
     background(Colors.WHITE);
     fill(Colors.BLACK);
-    text("Press Z to restart", width/2, height/2);
+    text("Press Z to restart.", width/2,height*0.3);
+    text("Your score was " + score + " which you achieved in " + gamefield.getWaveCounter() + " waves.", width/2, height/2);
     menuSounds.play(Sounds.END_MUSIC);
   }
   void update()
@@ -24,13 +25,14 @@ class Endscreen
     {
       player            = new Player();
       gamefield         = new Gamefield();
-      stateStart        =true; 
-      statePlaying      =false;
-      statePaused       =false;
-      stateEnd          =false;
-      stateBossPing     =false;
-      stateBossLester   =false;
+      stateStart        = true; 
+      statePlaying      = false;
+      statePaused       = false;
+      stateEnd          = false;
+      stateBossPing     = false;
+      stateBossLester   = false;
       scores            = new Scores();
+      score             = 0;
       for ( Enemy enemy : enemies )
       {
         enemy.destroy();
