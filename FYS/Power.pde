@@ -58,7 +58,7 @@ class Power {
         break;
       case 6 :
         fill(Colors.PINK);
-        ellipse(x, y, hitboxDiameter, hitboxDiameter);
+        image(splitPowerImg,x, y, hitboxDiameter, hitboxDiameter);
         break;
         default:
       }

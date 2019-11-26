@@ -1,5 +1,5 @@
 
-PImage bulletImg,shieldPowerImg, invertedPowerImg, bombPowerImg, snailPowerImg, bulletPowerImg, playerSidesImg, playerForcefieldImg, lesterBodyImg, lesterHitbox4HPImg, lesterHitbox3HPImg, lesterHitbox2HPImg, lesterHitbox1HPImg, lesterHitbox0HPImg, enemyDaveImg, explosionImg, smokeImg1, smokeImg2, powerHpUpImg;
+PImage bulletImg,splitPowerImg, shieldPowerImg, invertedPowerImg, bombPowerImg, snailPowerImg, bulletPowerImg, playerSidesImg, playerForcefieldImg, lesterBodyImg, lesterHitbox4HPImg, lesterHitbox3HPImg, lesterHitbox2HPImg, lesterHitbox1HPImg, lesterHitbox0HPImg, enemyDaveImg, explosionImg, smokeImg1, smokeImg2, powerHpUpImg;
 
 
 
@@ -20,6 +20,7 @@ public void loadAssets() {
   bombPowerImg = loadImage("./sprites/bomb.png");
   invertedPowerImg = loadImage("./sprites/inverted.png");
   shieldPowerImg = loadImage("./sprites/shield.png");
+  splitPowerImg = loadImage("./sprites/split2.0.png");
 
   smokeImg1 = loadImage("./sprites/smokeParticle1.png");
   smokeImg2 = loadImage("./sprites/smokeParticle2.png");
