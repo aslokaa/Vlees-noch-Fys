@@ -16,6 +16,9 @@ class Ball {
   boolean isChargedBom;
   float maxSpeedX;
   float ballRespawnTimer, timerCount;
+  int ballAnimationTimer;
+  int currentAnimationFrame;
+  int numFrames;
 
   Ball() {
     x= gamefield.GAMEFIELD_WIDTH/2;
@@ -31,6 +34,9 @@ class Ball {
     ballRespawnTimer = 0;
     timerCount = 60;
     isChargedBom = false;
+    ballAnimationTimer = 0;
+    currentAnimationFrame = 0;
+    numFrames = 3;
   }
 
   void updateBall() {
@@ -48,10 +54,14 @@ class Ball {
   }
 
   void drawBall() {
-
-    fill(colorBall);
-    ellipse(x, y, diameter, diameter);
+    if (ballAnimationTimer == 15) {
+      currentAnimationFrame = currentAnimationFrame + 1;
+      ballAnimationTimer = 0;
+    }
+    image(ballImages[(currentAnimationFrame) % numFrames], x, y, diameter, diameter);
+    ballAnimationTimer ++;
   }
+
   //gravity
   void moveBall() {
     x = x + speedX;
@@ -83,7 +93,7 @@ class Ball {
       } else {
         ballRespawn = true ;
         ballRespawnTimer = timerCount;
-   
+
         x= gamefield.GAMEFIELD_WIDTH/2;
         y = height /2;
         ping.recieveDamage(1);
