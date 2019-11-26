@@ -42,7 +42,7 @@ class Power {
         break;
       case 2 :
         fill(Colors.BLUE);
-        ellipse(x, y, hitboxDiameter, hitboxDiameter);
+        image(snailPowerImg, x, y, hitboxDiameter * 1.3, hitboxDiameter * 1.3);
         break;
       case 3 :
         fill(Colors.GREEN);
@@ -54,7 +54,7 @@ class Power {
         break;
       case 5 :
         fill(Colors.MAGENTA);
-        ellipse(x, y, hitboxDiameter, hitboxDiameter);
+        image(bombPowerImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
       case 6 :
         fill(Colors.PINK);
