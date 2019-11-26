@@ -193,7 +193,7 @@ class EnemyDave extends Enemy
     {
       noStroke();
       fill(EnemyFinals.DAVE_COLOR);
-      ellipse(x, y, hitboxDiameter, hitboxDiameter);
+      image(enemyDaveImg,x, y, hitboxDiameter, hitboxDiameter);
     }
   }
 }
