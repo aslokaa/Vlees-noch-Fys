@@ -26,7 +26,7 @@ class Enemy
     this.hitboxDiameter = hitboxRadius * 2;
   }
 
-    //gets called in the updateGame methode in the main.
+  //gets called in the updateGame methode in the main.
   void executeBehavior()
   {
     println("define the behavior method before using it");
@@ -34,7 +34,7 @@ class Enemy
 
   void handlePlayerCollision(Rectangles rectangles)
   {
-     if ( checkPlayerCollision(rectangles.rectangle0) ) 
+    if ( checkPlayerCollision(rectangles.rectangle0) ) 
     {
       player.dealDamage(damageToDeal, false);
     }
@@ -43,8 +43,8 @@ class Enemy
       player.dealDamage(damageToDeal, true);
     }
   }
-  
-    //does a circle-line collisioncheck with the enemy hitbox and the horizontal line in the middle of player.
+
+  //does a circle-line collisioncheck with the enemy hitbox and the horizontal line in the middle of player.
   boolean checkPlayerCollision(Rectangle rectangle)
   {
     if ( x >= rectangle.x && x <= rectangle.x + rectangle.rectangleWidth &&
@@ -55,7 +55,7 @@ class Enemy
     return false;
   }
 
-    //gets called when enemy needs to be destroyed.
+  //gets called when enemy needs to be destroyed.
   void destroy()
   {
     println("define the destroy method before using it");
@@ -65,24 +65,23 @@ class Enemy
 
   void activate(float posX, float posY)
   {
-     this.x = posX;
-     this.y = posY;
-     this.active = true;
-     //currentrow moet ook gereset worden -niklas
+    this.x = posX;
+    this.y = posY;
+    this.active = true;
+    //currentrow moet ook gereset worden -niklas
   }
 
   void spawnPowerup()
   {
     println("define the spawnPowerup method before using it");
   }
-    //handles dying animation.
+  //handles dying animation.
   void explode()
   {
     println("define the explode method before using it");
-    
   }
 
-    //gets called in the drawGame method in the main.
+  //gets called in the drawGame method in the main.
   void display()
   {
     println("define the display method before using it");

@@ -20,7 +20,14 @@ class EnemyDave extends Enemy
   int rowToMoveTo;
   float spawnRate;
   float spawnChance;
-  int explosionParticles;
+  int EXPLOSION_PARTICLES;
+  float particleAngle;
+  float particleSpeed;
+  float particleSize;
+  int particleLifespan;
+  float particleSpeedX;
+  float particleSpeedY;
+  int particleType;
 
   EnemyDave(float x, float y, float hitboxRadius)
   {
@@ -35,7 +42,7 @@ class EnemyDave extends Enemy
     currentRow = 0;
     rowToMoveTo = 1;
     spawnRate = 0.15;
-    explosionParticles = 10;
+    EXPLOSION_PARTICLES = 100;
   }
 
   @Override void executeBehavior()
@@ -74,7 +81,7 @@ class EnemyDave extends Enemy
     y += speedY;
     if ( y - hitboxRadius > height)
     {
-     active = false; 
+      active = false;
     }
   }
 
@@ -115,34 +122,40 @@ class EnemyDave extends Enemy
     spawnPowerup();
     explode();
     active = false;
+    score = score + 100;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
-    
   }
-  
+
   @Override void explode()
   {
-    for ( int i = 0; i < explosionParticles; i++ )
+    for ( int i = 0; i < EXPLOSION_PARTICLES; i++ )
     {
       for ( Particle particle : particles )
       {
         if (!particle.active)
         {
-          particle.activateParticle(x, y, random(3, 6), random(-3, 3), random(-3, 3), 1, 60 );
-          println(i);
+          particleSpeed = random( 0.5, 3 );
+          particleAngle = random( 0, 2 * PI );
+          particleSize = random( 5, 25 );
+          particleSpeedX = particleSpeed * sin(particleAngle);
+          particleSpeedY = particleSpeed * -cos(particleAngle);
+          particleLifespan = round( 60 - particleSize * 1.2 );
+          particleType = i % 2 == 0 ? 1 : 2;
+          particle.activateParticle( x, y, particleSize, particleSpeedX, particleSpeedY, particleType, particleLifespan );
           break;
         }
       }
     }
   }
-  
- @Override void activate(float posX, float posY)
+
+  @Override void activate(float posX, float posY)
   {
-     x = posX;
-     y = posY;
-     active = true;
-     currentRow = 0;
-     rowToMoveTo = 1;
+    x = posX;
+    y = posY;
+    active = true;
+    currentRow = 0;
+    rowToMoveTo = 1;
   }
 
   void setXSpeed()
@@ -156,25 +169,24 @@ class EnemyDave extends Enemy
     }
   }
 
-@Override void spawnPowerup()
-{
- spawnChance = random(0, 1);
-  for ( Power power : powers )
+  @Override void spawnPowerup()
   {
-   if ( !power.powerActive )
-   {
-    if ( spawnChance <= spawnRate )
+    spawnChance = random(0, 1);
+    for ( Power power : powers )
     {
+      if ( !power.powerActive )
+      {
+        if ( spawnChance <= spawnRate )
+        {
 
-     int dropType = round(random(0, PowerUpTypes.SPLIT));
-     power.drop(x, y, dropType);
-    
-     return;
+          int dropType = round(random(0, PowerUpTypes.SPLIT));
+          power.drop(x, y, dropType);
+
+          return;
+        }
+      }
     }
-   }
   }
-  
-}
   @Override void display()
   {
     if ( active )

@@ -231,6 +231,7 @@ class BossPing
   void killPing()
   {
     stateBossPing=false;
+    score = score + 1000;
   }
 
   void display()
