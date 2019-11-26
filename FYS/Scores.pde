@@ -35,7 +35,7 @@ class Scores {
     text(min+":"+time/60, width*0.93, height*0.89);
 
 
-    text("AMMO:" + player.ammo, width*0.93, height*0.79);
+    text("AMMO:" + player.getAmmo(), width*0.93, height*0.79);
 
     text("WAVE  " + gamefield.waveCounter, width*0.93, height*0.05);
   }
