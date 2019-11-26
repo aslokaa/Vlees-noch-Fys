@@ -20,16 +20,18 @@ class Gamefield
     PLAYER_MIN_Y                    = height / 2, 
     ENEMY_MAX_Y                     = height, 
     ENEMY_START_Y                   = height * -0.13, 
-    ENEMY_START_X                   = GAMEFIELD_WIDTH * 0.06;  
+    ENEMY_START_X                   = GAMEFIELD_WIDTH * 0.06,
+    ENEMY_START_X_ALT               = GAMEFIELD_WIDTH * 0.94;
+
   final int 
     CHAD_COUNTER_START              = 0, 
     DAVE_COUNTER_START              = 10, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2, 
+    AMOUNT_OF_BOSSES                = 2,  //<>//
     WAVES_UNTILL_DAVE               = 1, 
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50;
+    DAVE_MAX                        = 50; //<>//
 
   int 
     waveCounter, 
@@ -64,6 +66,10 @@ class Gamefield
     if (spawnWave && !stateBossLester && !stateBossPing)
     {
       waveCounter+=1;
+      if(waveCounter > 1){
+        score = score + 500;
+      }
+        
       if (waveCounter==3)
       {
         spawnWave3();
@@ -118,7 +124,12 @@ class Gamefield
       {
         if (!enemy.active)
         {
-          enemy.activate(ENEMY_START_X, ENEMY_START_Y*(yModifier+1));
+          float xTemp=ENEMY_START_X;
+          if (random(0,1)>0.5)
+          {
+           xTemp=ENEMY_START_X_ALT; 
+          }
+          enemy.activate(xTemp, ENEMY_START_Y*(yModifier+1));
           break;
         }
       }
@@ -253,4 +264,6 @@ class Gamefield
       lesterActivated=false;
     }
   }
+  
+  public int getWaveCounter(){return waveCounter;}
 }

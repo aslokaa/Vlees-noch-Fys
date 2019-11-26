@@ -7,7 +7,7 @@
 
 class Player
 {
-  public final float
+  final float
     PLAYER_START_WIDTH              = gamefield.GAMEFIELD_WIDTH * 0.13, 
     PLAYER_START_HEIGHT             = height * 0.045, 
     PLAYER_START_X                  = gamefield.GAMEFIELD_WIDTH / 2-PLAYER_START_WIDTH/2, 
@@ -18,10 +18,9 @@ class Player
     PLAYER_START_ACCELERATION_Y     = height * 0.0015, 
     PLAYER_VELOCITY_Y_MAX           = height * 0.012, 
     PLAYER_START_DECELERATE_Y       = 0.9, 
-    PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.3, 
-    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.6, 
-    SLOW_MODIFIER                   = 0.9,
-    SPLIT_WIDTH_MODIFIER            = 0.75,
+    PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.1, 
+    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH, 
+    SLOW_MODIFIER                   = 0.9, 
     BOUNCE_MODIFIER                 = -0.8, 
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*4, 
@@ -33,10 +32,10 @@ class Player
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
     SPLIT_STARTING_TIMER            = SECOND*15;
 
-  public final int
+  final int
     STARTING_BULLETS                = 5;
 
-  private float 
+  float 
     x, 
     xSplit, 
     y, 
@@ -51,26 +50,27 @@ class Player
     decelerateY, 
     widthSplit0, 
     widthSplit1;
-  private boolean 
+  boolean 
     inverted, //The direction the paddle moves in.
     immune, // immunes the paddle into 2.
     slow, //slows the paddle
     shake, //shakes the paddle
     split;       //splits the paddle
-  private float //Duration of effects.
+  float //Duration of effects.
     invertedTimer, 
     immuneTimer, 
     slowTimer, 
     shakeTimer, 
     splitTimer, 
     shootTimer; 
-  private int 
-    ammo; //amount of ammo 
-  private Rectangles
+  int 
+    ammo, //amount of ammo
+    shakeCounter; 
+  Rectangles 
     hitboxes;
 
 
-  public Player() //Constructor
+  Player() //Constructor
   {
     x                 = PLAYER_START_X;
     y                 = PLAYER_START_Y;
@@ -80,7 +80,7 @@ class Player
     accelerationY     = PLAYER_START_ACCELERATION_Y;
     velocityX         = 0;
     velocityXSplit    = 0;
-    velocityY         = PLAYER_VELOCITY_Y_MAX;
+    velocityY         = 0;
     decelerateX       = PLAYER_START_DECELERATE_X;
     decelerateY       = PLAYER_START_DECELERATE_Y;
     inverted          = false;
@@ -102,7 +102,7 @@ class Player
   }
 
   //updates the player
-  public void update()
+  void update()
   {
     detectInput();
     decelerate();
@@ -113,7 +113,7 @@ class Player
   }
 
   //checks how to player should be drawn.
-  public void checkDisplay()
+  void checkDisplay()
   {
     if (shake)
     {
@@ -126,14 +126,14 @@ class Player
   }
 
   //draws the standard player.
-  private void display()
+  void display()
   {
     noStroke();
     fill(getColor());
     rect( x, y, playerWidth, playerHeigth );
   }
   //shakes the player
-  private void shake()
+  void shake()
   {
     float xModifier = random( SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX );
     float yModifier = random( SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX );
@@ -150,16 +150,15 @@ class Player
     y -=yModifier;
   }
   //draws the splitted player.
-  private void displaySplit()
+  void displaySplit()
   {
     noStroke();
     fill(getColor());
     rect( x, y, widthSplit0, playerHeigth );
     rect(xSplit, y, widthSplit1, playerHeigth );
   }
-  
   //detects user inputs.
-  private void detectInput()//spawn "rook" particles als de player links recht up en down beweegt. see activate method in Particle
+  void detectInput()//spawn "rook" particles als de player links recht up en down beweegt. see activate method in Particle
   {
     if ( keyCodesPressed[LEFT] ) 
     {
@@ -191,7 +190,7 @@ class Player
     }
   }
   //checks what powers should affect the movement.
-  private void checkMove()
+  void checkMove()
   {
     checkVelocityMax();
     if (slow) // slows the player
@@ -209,7 +208,7 @@ class Player
   }
 
   //makes sure the player doesn't go to fast
-  private void checkVelocityMax()
+  void checkVelocityMax()
   {
     if (velocityX > PLAYER_VELOCITY_X_MAX)
     {
@@ -233,7 +232,7 @@ class Player
     }
   }
   // modifies the X and Y positions
-  private void move()
+  void move()
   {
     x += velocityX;
     y += velocityY;
@@ -243,7 +242,7 @@ class Player
     }
   }
   //modifies the X and Y posistions but inverted.
-  private void moveInverted()
+  void moveInverted()
   {
     x -= velocityX;
     y -= velocityY;
@@ -254,7 +253,7 @@ class Player
   }
 
   //Gives the player a powerup or down.
-  public void modifyPower( int type )
+  void modifyPower( int type )
   {
     switch(type)
     {
@@ -282,8 +281,8 @@ class Player
           x = gamefield.GAMEFIELD_WIDTH - x - playerWidth;
         }
       }
-      widthSplit0 = playerWidth * SPLIT_WIDTH_MODIFIER ;
-      widthSplit1 = playerWidth * SPLIT_WIDTH_MODIFIER;
+      widthSplit0 = playerWidth / 2;
+      widthSplit1 = playerWidth / 2;
       xSplit = gamefield.GAMEFIELD_WIDTH - x - widthSplit1;
       split = true;
       splitTimer=SPLIT_STARTING_TIMER;
@@ -301,12 +300,11 @@ class Player
       }
       break;
     default:
-      println("modifyPower default");
     }
   }
 
   //Prevents the player from going out of bounds
-  private void detectCollisionEdge() 
+  void detectCollisionEdge() 
   {
     //Y
     if ( y < gamefield.PLAYER_MIN_Y )
@@ -359,7 +357,7 @@ class Player
   }
 
   //decelerates the player
-  private void decelerate()
+  void decelerate()
   {
     velocityX *= decelerateX;
     if (split)
@@ -369,7 +367,7 @@ class Player
     velocityY *= decelerateY;
   }
   //shrinks the paddle
-  public void dealDamage( float damage, boolean isRight)
+  void dealDamage( float damage, boolean isRight)
   {
     if (shake || immune)
     {
@@ -404,7 +402,7 @@ class Player
 
 
   //grows the paddle
-  public void restoreHealth( float healing)
+  void restoreHealth( float healing)
   {
     playerSounds.play(Sounds.RESTORE_HEALTH);
     if ( widthSplit1 < PLAYER_MAX_WIDTH / 2 ) 
@@ -420,9 +418,8 @@ class Player
       playerWidth += healing;
     }
   }
-  
   //Keeps track of which powers are active and deactivates them.
-  private void powerCountdown()
+  void powerCountdown()
   {
     if (inverted)
     {
@@ -471,7 +468,7 @@ class Player
   }
 
   //Retrieves the color the player should have.
-  private color getColor()
+  color getColor()
   {
     if (shake)
     {
@@ -492,7 +489,7 @@ class Player
     }
   }
   //checks if you can shoot a bullet.
-  private void shoot()
+  void shoot()
   {
     if ( ammo<1 )
     {
@@ -517,26 +514,26 @@ class Player
     }
   }
   //adds aditional ammo.
-  public void gainAmmo( int newAmmo )
+  void gainAmmo( int newAmmo )
   {
     ammo += newAmmo;
   }
 
 
 //updates the hitboxes.
-  private void updateHitboxes()
+  void updateHitboxes()
   {
     hitboxes.update(x, xSplit, y, playerWidth, widthSplit0, widthSplit1, playerHeigth, split );
   }
 
   //returns the hitboxes
-  public Rectangles getHitboxes()
+  Rectangles getHitboxes()
   {
     return hitboxes;
   }
 
   //activates a bullet.
-  private void activatesBullet(float xT)
+  void activatesBullet(float xT)
   {
     for ( PlayerBullet playerBullet : playerBullets)
     {
@@ -548,7 +545,7 @@ class Player
     }
   }
   //unsplits the player
-  private void endSplit()
+  void endSplit()
   {
     split=false;
     playerWidth=widthSplit0+widthSplit1;
@@ -561,26 +558,19 @@ class Player
       x=xSplit;
     }
   }
-  public int getAmmo()
-  {
-   return ammo; 
-  }
 }
 
 
 //stores hitbox information
 class Rectangles
 {
-  public Rectangle rectangle0;
-  public Rectangle rectangle1;
-  
+  Rectangle rectangle0 = new Rectangle();
+  Rectangle rectangle1 = new Rectangle();
   Rectangles()
   {
-     rectangle0 = new Rectangle();
-     rectangle1 = new Rectangle();
   }
   //updates the rectangles
-  public void update( float x, float xSplit, float y, float playerWidth, float widthSplit0, float widthSplit1, float playerHeigth, boolean split )
+  void update( float x, float xSplit, float y, float playerWidth, float widthSplit0, float widthSplit1, float playerHeigth, boolean split )
   {
    float w0=playerWidth;
    float w1=playerWidth;
@@ -598,9 +588,9 @@ class Rectangles
 
 class Rectangle
 {
-  public float x, y, rectangleWidth, rectangleHeight;
-  public boolean exists;
-  public Rectangle()
+  float x, y, rectangleWidth, rectangleHeight;
+  boolean exists;
+  Rectangle()
   {
     x=0;
     y=0;
@@ -609,7 +599,7 @@ class Rectangle
     exists=false;
   }
   //updates the rectangle
-  public void update(float x, float y, float rectangleWidth, float rectangleHeight, boolean exists)
+  void update(float x, float y, float rectangleWidth, float rectangleHeight, boolean exists)
   {
     this.x = x;
     this.y = y;

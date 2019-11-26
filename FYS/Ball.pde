@@ -3,10 +3,10 @@
  bal kan bewegen en interacteren met enemies en de player.
  
  */
- 
- 
- //wanneer de bal gecharged is moet er een suggestie cirkel om de bal komen om te zien hoe groot de ontploffing word,
- //deze suggestie cirkel is dezelfde radius als de hitbox van de exploderende bal.
+
+
+//wanneer de bal gecharged is moet er een suggestie cirkel om de bal komen om te zien hoe groot de ontploffing word,
+//deze suggestie cirkel is dezelfde radius als de hitbox van de exploderende bal.
 class Ball {
   float x, y, speedX, speedY;
   float radius, diameter;
@@ -16,6 +16,9 @@ class Ball {
   boolean isChargedBom;
   float maxSpeedX;
   float ballRespawnTimer, timerCount;
+  int ballAnimationTimer;
+  int currentAnimationFrame;
+  int numFrames;
 
   Ball() {
     x= gamefield.GAMEFIELD_WIDTH/2;
@@ -31,6 +34,9 @@ class Ball {
     ballRespawnTimer = 0;
     timerCount = 60;
     isChargedBom = false;
+    ballAnimationTimer = 0;
+    currentAnimationFrame = 0;
+    numFrames = 3;
   }
 
   void updateBall() {
@@ -48,10 +54,18 @@ class Ball {
   }
 
   void drawBall() {
-
-    fill(colorBall);
-    ellipse(x, y, diameter, diameter);
+    if (ballAnimationTimer == 15) {
+      currentAnimationFrame = currentAnimationFrame + 1;
+      ballAnimationTimer = 0;
+    }
+    image(ballImages[(currentAnimationFrame) % numFrames], x, y, diameter, diameter);
+    noFill();
+    stroke(Colors.BLUE);
+    strokeWeight(5);
+    ellipse(x,y,diameter,diameter);
+    ballAnimationTimer ++;
   }
+
   //gravity
   void moveBall() {
     x = x + speedX;
@@ -74,6 +88,7 @@ class Ball {
       x= gamefield.GAMEFIELD_WIDTH/2;
       y = height /2;
       speedX = 0;
+      score = score - 300;
     }
     if (y < radius) {
       if (!stateBossPing) {

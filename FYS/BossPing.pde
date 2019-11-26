@@ -36,7 +36,7 @@ class BossPing
     BOSS_START_DECELERATE_Y       = 0.8;
   final int
     BOSS_START_HEALTH             = 3;
-  BossPing()
+  public BossPing()
   {
     x                   = BOSS_START_X;
     y                   = BOSS_START_Y;
@@ -53,7 +53,7 @@ class BossPing
     health              = BOSS_START_HEALTH;
   }
 
-  void update()
+  public void update()
   {
     detectNearestBall();
     accelerate();
@@ -64,10 +64,10 @@ class BossPing
   }
 
   //locates the nearest ball.
-  void detectNearestBall()
+  private void detectNearestBall()
   {
     float closestBallXT = gamefield.GAMEFIELD_WIDTH/2;
-    float closestBallYT = 0;
+    float closestBallYT = height;
     for (Ball ball : balls) 
     {
       float xT = ball.x;
@@ -97,29 +97,35 @@ class BossPing
     } 
     {
       closestBallX = closestBallXT;
+      if (closestBallYT==height)
+      {
+       closestBallY=0; 
+      } else
+      {
       closestBallY = closestBallYT;
+      }
     }
   }
 
   //checks if the ball is to the right of the boss.
-  boolean isBallRight()
+  private boolean isBallRight()
   {
     return closestBallX>x + bossWidth/2;
   }
 
   //checks if the ball is below the boss.
-  boolean isBallDown()
+  private boolean isBallDown()
   {
     return closestBallY>y + bossHeight;
   }
 
-  boolean isBallCloseX()
+  private boolean isBallCloseX()
   {
     return closestBallX+BALL_IS_CLOSE>x+bossWidth/2 && closestBallX-BALL_IS_CLOSE<x+bossWidth/2;
   }
 
   //accelerates the boss.
-  void accelerate()
+  private void accelerate()
   {
     //X
     if (!isBallCloseX())
@@ -143,7 +149,7 @@ class BossPing
   }
 
   //decelerates the boss.
-  void decelerate()
+  private void decelerate()
   {
     //stops
     if (velocityX<accelerationX && velocityX>0)
@@ -168,7 +174,7 @@ class BossPing
   }
 
   //makes sure the boss doesn't go too fast
-  void checkVelocityMax()
+  private void checkVelocityMax()
   {
     if (velocityX > BOSS_VELOCITY_X_MAX)
     {
@@ -187,13 +193,13 @@ class BossPing
   }
 
   //moves the boss
-  void move()
+  private void move()
   {
     x += velocityX;
     y += velocityY;
   }
   //Prevents the boss from going out of bounds
-  void detectCollisionEdge() 
+  private void detectCollisionEdge() 
   {
     //Y
     if ( y < 0 )
@@ -219,7 +225,7 @@ class BossPing
   }
 
   //damages the boss
-  void recieveDamage(int damage)
+  public void recieveDamage(int damage)
   {
     health-=damage;
     if ( health <= 0 )
@@ -228,20 +234,20 @@ class BossPing
     }
   }
 
-  void killPing()
+  public void killPing()
   {
     stateBossPing=false;
     score = score + 1000;
   }
 
-  void display()
+  public void display()
   {
     displayBackground();
     displayPing();
   }
 
   //draws the background of the boss fight
-  void displayBackground()
+  private void displayBackground()
   {
     fill (Colors.DARK_GREEN);
     for ( int i =0; i < width / BACKGROUND_LINE_SIZE; i++ )
@@ -251,7 +257,7 @@ class BossPing
   }
 
   //draws the Boss
-  void displayPing()
+  private void displayPing()
   {
     fill(Colors.DARK_GREEN);
     rect(x, y, bossWidth, bossHeight);
