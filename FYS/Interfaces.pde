@@ -5,7 +5,7 @@
 //Adding readability to the powerUps.
 interface PowerUpTypes 
 { 
-  final int
+  public final int
     INVERTED     = 0, 
     IMMUNE       = 1, 
     SLOW         = 2,
@@ -15,28 +15,28 @@ interface PowerUpTypes
     SPLIT        = 6;
 }  
 
-//finals for all enemies.
+//public finals for all enemies.
 interface EnemyFinals
 {
 
-  final float DAVE_GRID_HEIGHT       = 100;
-  final float DAVE_HITBOX_RADIUS     = 40;
-  final color DAVE_COLOR             = #ff0000;
-  final float CHAD_HITBOX_RADIUS     = 40;
-  final color CHAD_COLOR             = #ff0000;
-  final float ENEMY_GRAVEYARD_X      = -500;
-  final float ENEMY_GRAVEYARD_Y      = -500;
+  public final float DAVE_GRID_HEIGHT       = 100;
+  public final float DAVE_HITBOX_RADIUS     = 40;
+  public final color DAVE_COLOR             = #ff0000;
+  public final float CHAD_HITBOX_RADIUS     = 40;
+  public final color CHAD_COLOR             = #ff0000;
+  public final float ENEMY_GRAVEYARD_X      = -500;
+  public final float ENEMY_GRAVEYARD_Y      = -500;
 }
-//finals for powerups
+//public finals for powerups
 interface PowerFinals
 {
-  final float HITBOX_DIAMETER = 50;
-  final float VELOCITY_Y = 5;
+  public final float HITBOX_DIAMETER = 50;
+  public final float VELOCITY_Y = 5;
 }
 //adding readability to the colors
 interface Colors
 {
-  final color
+  public final color
     PINK       = #FF69B4, 
     GREEN      = #00FF00, 
     WHITE      = #FFFFFF, 
@@ -51,7 +51,7 @@ interface Colors
 //stores array amounts.
 interface Arrays
 {
-  final int
+  public final int
     STAR_COUNT    = 300, 
     BULLET_COUNT  = 150, 
     OPTION_COUNT  = 3, 
@@ -64,7 +64,7 @@ interface Arrays
 //adding readability
 interface Sounds
 {
-  final int
+  public final int
     RECIEVE_DAMAGE    = 0, 
     RESTORE_HEALTH    = 1, 
     SHOOT             = 2, 
@@ -86,7 +86,7 @@ interface Sounds
 //adding readability
 interface BossID
 {
-  final int
+  public final int
     PING                =0, 
     LESTER              =1;
 }

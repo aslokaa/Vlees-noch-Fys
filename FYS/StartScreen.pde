@@ -5,14 +5,14 @@
 //this class handles the startscreen.
 class Startscreen
 {
-  final float
+  private final float
     TITLE_SIZE      = width * 0.09, 
     SUBTITLE_SIZE   = width * 0.04, 
     TITLE_X         = width * 0.5, 
     TITLE_Y         = height * 0.2, 
     SUBTITLE_X      = width * 0.5, 
     SUBTITLE_Y      = height * 0.4;
-  boolean 
+  public boolean 
     drawn              =false, //checks if the start screen has been drawn.
     davesInitialized   =false, //checks if daves are initialized.
     chadsInitialized   =false, //checks if chads are initialized.
@@ -21,7 +21,7 @@ class Startscreen
     powerInitialized   =false, //checks if powers are intitialized.
     particleInitialized = false;
 
-  void update()
+  public void update()
   {
     updateGameStates();
     if ( drawn )
@@ -33,7 +33,7 @@ class Startscreen
       menuSounds.stop(Sounds.END_MUSIC);
     }
   }
-  void display()
+  public void display()
   {
     displayBackground();
     displayText();
@@ -44,7 +44,7 @@ class Startscreen
     drawn=true;
   }
   //loads game
-  void setupGame()
+  private void setupGame()
   {
     if ( !soundsInitialized )
     {
@@ -78,7 +78,7 @@ class Startscreen
     }
   }
   //initializes sound
-  void loadSounds()
+  private void loadSounds()
   {
     playerSounds  = new PlayerSounds();
     menuSounds    = new MenuSounds();
@@ -86,7 +86,7 @@ class Startscreen
   }
 
   //initializes daves
-  void loadDaves()
+  private void loadDaves()
   {
     for ( int i = 0; i < gamefield.DAVE_MAX; i++ )
     {
@@ -96,7 +96,7 @@ class Startscreen
   }
 
   //initializes the chads
-  void loadChads()
+  private void loadChads()
   {
     for (int i = 0; i < gamefield.CHAD_MAX; i++ )
     {
@@ -106,7 +106,7 @@ class Startscreen
   }
 
   //initializes the bullets
-  void loadBullets()
+  private void loadBullets()
   {
     for (int i = 0; i < Arrays.BULLET_COUNT; i++) 
     {
@@ -118,7 +118,7 @@ class Startscreen
 
   }
 
-  void loadPowers()
+  private void loadPowers()
   {
     for (int i = 0; i < Arrays.POWER_COUNT; i++) 
     {
@@ -127,7 +127,7 @@ class Startscreen
     powerInitialized = true;
   }
   
-  void loadParticles()
+  private void loadParticles()
   {
     for (int i = 0; i < Arrays.PARTICLE_COUNT; i++) 
     {
@@ -137,12 +137,12 @@ class Startscreen
   }
 
   //draws the background
-  void displayBackground()
+  private void displayBackground()
   {
     background(Colors.BLACK);
   }
   //draws the text.
-  void displayText()
+  private void displayText()
   {
     textFont(font, TITLE_SIZE);
     textAlign(CENTER);
@@ -159,7 +159,7 @@ class Startscreen
     }
   }
   //changes the gameState
-  void updateGameStates()
+  private void updateGameStates()
   {
     if (checkInput())
     {
@@ -170,7 +170,7 @@ class Startscreen
     }
   }
   //checks if the user enters any key.
-  boolean checkInput()
+  private boolean checkInput()
   {
     return (soundsInitialized &&(keyCodesPressed[LEFT]||keyCodesPressed[RIGHT]||keyCodesPressed[DOWN]||keyCodesPressed[UP]
       ||keysPressed['z']||keysPressed['x']||keysPressed['a']||keysPressed['s']));

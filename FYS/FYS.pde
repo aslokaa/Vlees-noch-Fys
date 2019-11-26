@@ -48,6 +48,8 @@ void setup()
   ping                     = new BossPing();
   lester                   = new BossLester(gamefield.GAMEFIELD_WIDTH / 2, 100);
   test                     = new Test();
+  //balls.add(new Ball(100));
+  //balls.add(new Ball(800));
   balls.add(new Ball());
   startscreen              = new Startscreen();
   pausescreen              = new Pausescreen();

@@ -38,6 +38,25 @@ class Ball {
     currentAnimationFrame = 0;
     numFrames = 3;
   }
+  Ball(float x)
+  {
+    this.x= x;
+    y = height/2;
+    speedX = 0;
+    speedY = height * 0.013;
+    radius = 25;
+    colorBall = Colors.BLUE;
+    active = true;
+    ballRespawn=false;
+    diameter = radius*2;
+    maxSpeedX = height * 0.013;
+    ballRespawnTimer = 0;
+    timerCount = 60;
+    isChargedBom = false;
+    ballAnimationTimer = 0;
+    currentAnimationFrame = 0;
+    numFrames = 3;
+  }
 
   void updateBall() {
 
@@ -221,9 +240,9 @@ class Ball {
   }
   void interactBossPing() {
     if (stateBossPing) {
-      if ((x + radius > ping.x)&&(x - radius < ping.x + ping.bossWidth) &&(y + radius > ping.y)&&(y - radius < ping.y + ping.bossHeight) ) {
+      if ((x + radius > ping.getX())&&(x - radius < ping.getX() + ping.getWidth()) &&(y + radius > ping.getY())&&(y - radius < ping.getY() + ping.getHeight()) ) {
         speedY *= -1;
-        y = ping.y + ping.bossHeight + 1 + radius;
+        y = ping.getY() + ping.getHeight() + 1 + radius;
       }
     }
   }

@@ -15,35 +15,35 @@
  */
 class Gamefield
 {
-  final float 
+  public final float 
     GAMEFIELD_WIDTH                 = width * 0.87, 
     PLAYER_MIN_Y                    = height / 2, 
     ENEMY_MAX_Y                     = height, 
     ENEMY_START_Y                   = height * -0.13, 
-    ENEMY_START_X                   = GAMEFIELD_WIDTH * 0.06,
+    ENEMY_START_X                   = GAMEFIELD_WIDTH * 0.06, 
     ENEMY_START_X_ALT               = GAMEFIELD_WIDTH * 0.94;
 
-  final int 
+  private final int 
     CHAD_COUNTER_START              = 0, 
     DAVE_COUNTER_START              = 10, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2,  //<>//
+    AMOUNT_OF_BOSSES                = 2, //<>// //<>//
     WAVES_UNTILL_DAVE               = 1, 
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50; //<>//
+    DAVE_MAX                        = 50; //<>// //<>//
 
-  int 
+  private int 
     waveCounter, 
     daveCounter, 
     chadCounter;
-  boolean
+  private boolean
     pingActivated, 
     lesterActivated, 
     spawnPing, 
     spawnLester;
 
-  Gamefield()
+  public Gamefield()
   {
     daveCounter        =DAVE_COUNTER_START;
     chadCounter        =CHAD_COUNTER_START;
@@ -54,22 +54,22 @@ class Gamefield
     spawnLester        =false;
   }
 
-  void update()
+  public void update()
   {
     checkBossRotation();
     spawnWave(checkWave());
   }
 
   //activates the spawn functions.
-  void spawnWave(boolean spawnWave)
+  private void spawnWave(boolean spawnWave)
   {
     if (spawnWave && !stateBossLester && !stateBossPing)
     {
       waveCounter+=1;
-      if(waveCounter > 1){
+      if (waveCounter > 1) {
         score = score + 500;
       }
-        
+
       if (waveCounter==3)
       {
         spawnWave3();
@@ -100,7 +100,7 @@ class Gamefield
   }
 
   //spawns daves
-  void spawnDaves(int yModifier)
+  private void spawnDaves(int yModifier)
   {
     for (Enemy enemy : enemies)
     {
@@ -116,7 +116,7 @@ class Gamefield
   }
 
   //spawns chads
-  void spawnChads(int yModifier)
+  private void spawnChads(int yModifier)
   {
     for (Enemy enemy : enemies)
     {
@@ -125,9 +125,9 @@ class Gamefield
         if (!enemy.active)
         {
           float xTemp=ENEMY_START_X;
-          if (random(0,1)>0.5)
+          if (random(0, 1)>0.5)
           {
-           xTemp=ENEMY_START_X_ALT; 
+            xTemp=ENEMY_START_X_ALT;
           }
           enemy.activate(xTemp, ENEMY_START_Y*(yModifier+1));
           break;
@@ -138,13 +138,13 @@ class Gamefield
 
 
   //checks if all enemies are dead
-  boolean checkWave()
+  private boolean checkWave()
   {
     return checkDave()&&checkChad();
   }
 
   //checks if all daves are dead
-  boolean checkDave()
+  private boolean checkDave()
   {
     for (Enemy enemy : enemies)
     {
@@ -160,7 +160,7 @@ class Gamefield
   }
 
   //checks if all chads are dead
-  boolean checkChad()
+  private boolean checkChad()
   {
     for (Enemy enemy : enemies)
     {
@@ -177,7 +177,7 @@ class Gamefield
 
 
   //a special wave that only spawns 2 chads
-  void spawnWave3()
+  private void spawnWave3()
   {
     for (int i =0; i<3; i++) {
       spawnChads(i);
@@ -185,7 +185,7 @@ class Gamefield
   }
 
   //modifies the makeup of waves.
-  void updateWaves()
+  private void updateWaves()
   {
     if ( daveCounter < DAVE_MAX )
     {
@@ -210,7 +210,7 @@ class Gamefield
   }
 
   //selects a random boss
-  void chooseBoss()
+  private void chooseBoss()
   {
     switch ((int)random(0, AMOUNT_OF_BOSSES))
     {
@@ -238,7 +238,7 @@ class Gamefield
   }
 
   //starts the ping boss fight
-  void activatePing()
+  private void activatePing()
   {
     ping             = new BossPing();
     pingActivated    = true;
@@ -247,7 +247,7 @@ class Gamefield
   }
 
   //starts the lester boss fight
-  void activateLester()
+  private void activateLester()
   {
     lester           = new BossLester(width / 2, 100);
     lesterActivated  = true;
@@ -256,7 +256,7 @@ class Gamefield
   }
 
   //checks if all bosses have been activated
-  void checkBossRotation()
+  private void checkBossRotation()
   {
     if ( pingActivated && lesterActivated )
     {
@@ -264,6 +264,8 @@ class Gamefield
       lesterActivated=false;
     }
   }
-  
-  public int getWaveCounter(){return waveCounter;}
+
+  public int getWaveCounter() {
+    return waveCounter;
+  }
 }

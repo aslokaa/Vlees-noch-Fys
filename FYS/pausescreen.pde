@@ -5,7 +5,7 @@
 //this class handles pausing the game.
 class Pausescreen
 {
-  final float
+  private final float
     TITLE_SIZE                    = width * 0.09, 
     SUBTITLE_SIZE                 = width * 0.04, 
     TEXT_CENTER_X                 = width * 0.5, 
@@ -13,30 +13,34 @@ class Pausescreen
     OPTION_Y                      = height * 0.6, 
     TITLE_Y                       = height * 0.5;
 
-  final String[] OPTIONS_STRINGS  = new String[]
+  private final String[] OPTIONS_STRINGS  = new String[]
     {
   /*   0    */    "Press escape to unpause", 
   /*   1    */    "Press Z to end the game", 
   /*   2    */    //"Press S to decrease the volume", 
   /*   3    */    //"press Z to mute"
   };
-  boolean 
-    escapePressed         =false;
+  private boolean 
+    escapePressed;
+
+  Pausescreen() {
+  }
+
   Text[] option = new Text[Arrays.OPTION_COUNT];
 
-  void display()
+  public void display()
   {
     displayText();
   }
 
-  void update()
+  public void update()
   {
     changePausedState();
     detectInput();
   }
 
   // pauses or unpauses the game.
-  void changePausedState()
+  private void changePausedState()
   {
     if (escapePressed)
     {
@@ -53,7 +57,7 @@ class Pausescreen
   }
 
   //detects player input
-  void detectInput()
+  private void detectInput()
   {
     if (statePaused)
     {
@@ -65,7 +69,7 @@ class Pausescreen
   }
 
   //displays text
-  void displayText()
+  private void displayText()
   {
     textFont(font, TITLE_SIZE);
     fill(Colors.RED);
@@ -77,7 +81,7 @@ class Pausescreen
     }
   }
 
-
+//handles the text for the pausescreen
   class Text
   {
     float   x, y;

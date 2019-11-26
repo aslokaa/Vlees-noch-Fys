@@ -5,7 +5,7 @@
 //this class handles the endscreen.
 class Endscreen
 {
-  void display()
+  public void display()
   {
     background(Colors.WHITE);
     fill(Colors.BLACK);
@@ -13,13 +13,13 @@ class Endscreen
     text("Your score was " + score + " which you achieved in " + gamefield.getWaveCounter() + " waves.", width/2, height/2);
     menuSounds.play(Sounds.END_MUSIC);
   }
-  void update()
+  public void update()
   {
     restart();
   }
 
   //restarts the game
-  void restart()
+  private void restart()
   {
     if (checkInput())
     {
@@ -32,7 +32,6 @@ class Endscreen
       stateBossPing     = false;
       stateBossLester   = false;
       scores            = new Scores();
-      score             = 0;
       for ( Enemy enemy : enemies )
       {
         enemy.destroy();
@@ -41,6 +40,7 @@ class Endscreen
       {
         powers[i].powerActive=false;
       }
+      score             = 0;
     }
   }
 

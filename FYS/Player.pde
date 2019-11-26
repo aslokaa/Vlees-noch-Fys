@@ -12,16 +12,16 @@ class Player
     PLAYER_START_HEIGHT             = height * 0.045, 
     PLAYER_START_X                  = gamefield.GAMEFIELD_WIDTH / 2-PLAYER_START_WIDTH/2, 
     PLAYER_START_Y                  = height - PLAYER_START_HEIGHT, 
-    PLAYER_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.0015, 
+    PLAYER_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.003, 
     PLAYER_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.01, 
-    PLAYER_START_DECELERATE_X       = 0.9, 
-    PLAYER_START_ACCELERATION_Y     = height * 0.0015, 
+    PLAYER_START_DECELERATE_X       = 0.85, 
+    PLAYER_START_DECELERATE_Y       = 0.85, 
+    PLAYER_START_ACCELERATION_Y     = height * 0.003, 
     PLAYER_VELOCITY_Y_MAX           = height * 0.012, 
-    PLAYER_START_DECELERATE_Y       = 0.9, 
     PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.3, 
     PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.6, 
-    SLOW_MODIFIER                   = 0.9,
-    SPLIT_WIDTH_MODIFIER            = 0.75,
+    SLOW_MODIFIER                   = 0.9, 
+    SPLIT_WIDTH_MODIFIER            = 0.75, 
     BOUNCE_MODIFIER                 = -0.8, 
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*4, 
@@ -157,7 +157,7 @@ class Player
     rect( x, y, widthSplit0, playerHeigth );
     rect(xSplit, y, widthSplit1, playerHeigth );
   }
-  
+
   //detects user inputs.
   private void detectInput()//spawn "rook" particles als de player links recht up en down beweegt. see activate method in Particle
   {
@@ -361,12 +361,18 @@ class Player
   //decelerates the player
   private void decelerate()
   {
-    velocityX *= decelerateX;
-    if (split)
+    if (!(keysPressed[LEFT] || keysPressed[RIGHT]))
     {
-      velocityXSplit *= decelerateX;
+      velocityX *= decelerateX;
+      if (split)
+      {
+        velocityXSplit *= decelerateX;
+      }
     }
-    velocityY *= decelerateY;
+    if (!(keysPressed[UP] || keysPressed[DOWN]))
+    {
+      velocityY *= decelerateY;
+    }
   }
   //shrinks the paddle
   public void dealDamage( float damage, boolean isRight)
@@ -420,7 +426,7 @@ class Player
       playerWidth += healing;
     }
   }
-  
+
   //Keeps track of which powers are active and deactivates them.
   private void powerCountdown()
   {
@@ -523,7 +529,7 @@ class Player
   }
 
 
-//updates the hitboxes.
+  //updates the hitboxes.
   private void updateHitboxes()
   {
     hitboxes.update(x, xSplit, y, playerWidth, widthSplit0, widthSplit1, playerHeigth, split );
@@ -563,7 +569,7 @@ class Player
   }
   public int getAmmo()
   {
-   return ammo; 
+    return ammo;
   }
 }
 
@@ -573,24 +579,24 @@ class Rectangles
 {
   public Rectangle rectangle0;
   public Rectangle rectangle1;
-  
+
   Rectangles()
   {
-     rectangle0 = new Rectangle();
-     rectangle1 = new Rectangle();
+    rectangle0 = new Rectangle();
+    rectangle1 = new Rectangle();
   }
   //updates the rectangles
   public void update( float x, float xSplit, float y, float playerWidth, float widthSplit0, float widthSplit1, float playerHeigth, boolean split )
   {
-   float w0=playerWidth;
-   float w1=playerWidth;
-   
-   if (split)
-   {
-    w0=widthSplit0;
-    w1=widthSplit1;
-   }
-    rectangle0.update(x,y,w0,playerHeigth,true);
+    float w0=playerWidth;
+    float w1=playerWidth;
+
+    if (split)
+    {
+      w0=widthSplit0;
+      w1=widthSplit1;
+    }
+    rectangle0.update(x, y, w0, playerHeigth, true);
     rectangle1.update(xSplit, y, w1, playerHeigth, split );
   }
 }
@@ -615,6 +621,6 @@ class Rectangle
     this.y = y;
     this.rectangleWidth = rectangleWidth;
     this.rectangleHeight = rectangleHeight;
-    this.exists = exists; 
+    this.exists = exists;
   }
 }

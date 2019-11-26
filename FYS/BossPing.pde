@@ -5,7 +5,7 @@
 //This is the class that handles the ping boss. It's like playing pong
 class BossPing
 {
-  float 
+  private float 
     x, 
     y, 
     velocityX, 
@@ -18,23 +18,25 @@ class BossPing
     bossHeight, 
     closestBallX, 
     closestBallY;
-  int
-    health;
-  final float
+  private int
+    health, 
+    damageTimer;
+  public final float
     BOSS_START_WIDTH              = player.PLAYER_START_WIDTH, 
     BOSS_START_HEIGHT             = player.PLAYER_START_HEIGHT, 
     BOSS_START_X                  = width/2-BOSS_START_WIDTH/2, 
     BOSS_START_Y                  = 0+BOSS_START_HEIGHT, 
     BOSS_START_ACCELERATION_X     = player.PLAYER_START_ACCELERATION_X, 
-    BOSS_VELOCITY_X_MAX           = player.PLAYER_VELOCITY_X_MAX, 
+    BOSS_VELOCITY_X_MAX           = player.PLAYER_VELOCITY_X_MAX,
     BOSS_START_ACCELERATION_Y     = player.PLAYER_START_ACCELERATION_Y, 
-    BOSS_VELOCITY_Y_MAX           = player.PLAYER_VELOCITY_Y_MAX, 
+    BOSS_VELOCITY_Y_MAX           = player.PLAYER_VELOCITY_Y_MAX,
     BOSS_MAX_Y                    = height / 2, 
     BALL_IS_CLOSE                 = BOSS_START_WIDTH*0.3, 
     BACKGROUND_LINE_SIZE          = width*0.01, 
     BOSS_START_DECELERATE_X       = 0.8, 
     BOSS_START_DECELERATE_Y       = 0.8;
-  final int
+  public final int
+    BOSS_DAMAGE_TIMER             = 10, 
     BOSS_START_HEALTH             = 3;
   public BossPing()
   {
@@ -60,6 +62,7 @@ class BossPing
     decelerate();
     checkVelocityMax();
     move();
+    countdown();
     detectCollisionEdge();
   }
 
@@ -99,10 +102,10 @@ class BossPing
       closestBallX = closestBallXT;
       if (closestBallYT==height)
       {
-       closestBallY=0; 
+        closestBallY=0;
       } else
       {
-      closestBallY = closestBallYT;
+        closestBallY = closestBallYT;
       }
     }
   }
@@ -227,13 +230,20 @@ class BossPing
   //damages the boss
   public void recieveDamage(int damage)
   {
+    if (damageTimer>=0)
+    {
+      return;
+    }
     health-=damage;
+    damageTimer=BOSS_DAMAGE_TIMER;
     if ( health <= 0 )
     {
       killPing();
     }
   }
 
+
+  //removes Ping from the game
   public void killPing()
   {
     stateBossPing=false;
@@ -261,5 +271,23 @@ class BossPing
   {
     fill(Colors.DARK_GREEN);
     rect(x, y, bossWidth, bossHeight);
+  }
+
+  private void countdown() {
+    if (damageTimer>=0) {
+      damageTimer--;
+    }
+  }
+  public float getX() { 
+    return x;
+  }
+  public float getY() { 
+    return y;
+  }
+  public float getWidth() {
+    return bossWidth;
+  }
+  public float getHeight() {
+    return bossHeight;
   }
 }
