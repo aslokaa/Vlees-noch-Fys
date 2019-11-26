@@ -74,7 +74,7 @@ class Ball {
       x= gamefield.GAMEFIELD_WIDTH/2;
       y = height /2;
       speedX = 0;
-      score = score - 100;
+      score = score - 300;
     }
     if (y < radius) {
       if (!stateBossPing) {

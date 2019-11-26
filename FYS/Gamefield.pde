@@ -64,7 +64,7 @@ class Gamefield
     if (spawnWave && !stateBossLester && !stateBossPing)
     {
       waveCounter+=1;
-      if(waveCounter>1){
+      if(waveCounter > 1){
         score = score + 500;
       }
         
