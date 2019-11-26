@@ -80,7 +80,7 @@ class Player
     accelerationY     = PLAYER_START_ACCELERATION_Y;
     velocityX         = 0;
     velocityXSplit    = 0;
-    velocityY         = 0;
+    velocityY         = PLAYER_VELOCITY_Y_MAX;
     decelerateX       = PLAYER_START_DECELERATE_X;
     decelerateY       = PLAYER_START_DECELERATE_Y;
     inverted          = false;

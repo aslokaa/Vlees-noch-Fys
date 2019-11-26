@@ -260,4 +260,6 @@ class Gamefield
       lesterActivated=false;
     }
   }
+  
+  public int getWaveCounter(){return waveCounter;}
 }
