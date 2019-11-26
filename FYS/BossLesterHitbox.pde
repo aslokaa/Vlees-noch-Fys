@@ -4,11 +4,12 @@ class BossLesterHitbox
   float y;
   int HP;
   boolean active;
-  final float HITBOX_DIAMETER = 75;
+  final float HITBOX_DIAMETER = 100;
   final float HITBOX_RADIUS = HITBOX_DIAMETER / 2;
   final int STARTING_HP = 4;
   float spriteSize;
   final int EXPLOSION_PARTICLES;
+  float angle;
 
   BossLesterHitbox(float x, float y)
   {
@@ -16,7 +17,7 @@ class BossLesterHitbox
     this.y = y;
     this.active = true;
     this.HP = STARTING_HP;
-    spriteSize = 50;
+    spriteSize = 100;
     this.EXPLOSION_PARTICLES = 75;
   }
 
@@ -66,26 +67,57 @@ class BossLesterHitbox
     } 
   }
 
+  float getPlayerAngle( Rectangle rectangle)
+  {
+
+    translate(x, y);
+   
+      angle = atan2( rectangle.y  - y, rectangle.x + ( rectangle.rectangleWidth * 0.5 ) - x);
+      angle -= PI / 2 ;//half PI is added to rotate the speed of the ball by a quarter to the right to ensure the right angle
+   
+    translate(-x, -y);
+
+    return angle;
+  }
+
   void display()
   {
-    
+    angle = getPlayerAngle( player.getHitboxes().rectangle0 );
+   
      switch( HP )
      {
       case 4:
-        image( lesterHitbox4HPImg, x, y, spriteSize, spriteSize );
+        translate(x, y);
+        rotate(angle);
+        image( lesterHitbox4HPImg, 0, 0, spriteSize, spriteSize );
+        rotate(-angle);
+        translate(-x, -y);
         break;
       case 3:
-        image( lesterHitbox3HPImg, x, y, spriteSize, spriteSize );
+        translate(x, y);
+        rotate(angle);
+        image( lesterHitbox3HPImg, 0, 0, spriteSize, spriteSize );
+        rotate(-angle);
+        translate(-x, -y);
         break;
       case 2:
-        image( lesterHitbox2HPImg, x, y, spriteSize, spriteSize );
+        translate(x, y);
+        rotate(angle);
+        image( lesterHitbox2HPImg, 0, 0, spriteSize, spriteSize );
+        rotate(-angle);
+        translate(-x, -y);
         break;
       case 1:
-        image( lesterHitbox1HPImg, x, y, spriteSize, spriteSize );
+        translate(x, y);
+        rotate(angle);
+        image( lesterHitbox1HPImg, 0, 0, spriteSize, spriteSize );
+        rotate(-angle);
+        translate(-x, -y);
         break;
       case 0:
         image( lesterHitbox0HPImg, x, y, spriteSize, spriteSize );
         break;
      }
+    
    }
 }
