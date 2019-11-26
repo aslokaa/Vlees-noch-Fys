@@ -18,9 +18,10 @@ class Player
     PLAYER_START_ACCELERATION_Y     = height * 0.0015, 
     PLAYER_VELOCITY_Y_MAX           = height * 0.012, 
     PLAYER_START_DECELERATE_Y       = 0.9, 
-    PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.1, 
-    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH, 
-    SLOW_MODIFIER                   = 0.9, 
+    PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.3, 
+    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.6, 
+    SLOW_MODIFIER                   = 0.9,
+    SPLIT_WIDTH_MODIFIER            = 0.75,
     BOUNCE_MODIFIER                 = -0.8, 
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*4, 
@@ -281,8 +282,8 @@ class Player
           x = gamefield.GAMEFIELD_WIDTH - x - playerWidth;
         }
       }
-      widthSplit0 = playerWidth / 2;
-      widthSplit1 = playerWidth / 2;
+      widthSplit0 = playerWidth * SPLIT_WIDTH_MODIFIER ;
+      widthSplit1 = playerWidth * SPLIT_WIDTH_MODIFIER;
       xSplit = gamefield.GAMEFIELD_WIDTH - x - widthSplit1;
       split = true;
       splitTimer=SPLIT_STARTING_TIMER;
@@ -615,6 +616,5 @@ class Rectangle
     this.rectangleWidth = rectangleWidth;
     this.rectangleHeight = rectangleHeight;
     this.exists = exists; 
-    println(this.x);
   }
 }
