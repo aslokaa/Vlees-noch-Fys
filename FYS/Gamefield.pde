@@ -124,12 +124,12 @@ class Gamefield
       {
         if (!enemy.active)
         {
-          float xTemp=ENEMY_START_X;
+          /*float xTemp=ENEMY_START_X;
           if (random(0, 1)>0.5)
           {
             xTemp=ENEMY_START_X_ALT;
-          }
-          enemy.activate(xTemp, ENEMY_START_Y*(yModifier+1));
+          }*/
+          enemy.activate(random( 0, 600), random(-500, -100));
           break;
         }
       }
