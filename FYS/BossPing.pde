@@ -21,15 +21,15 @@ class BossPing
   private int
     health, 
     damageTimer;
-  public final float
-    BOSS_START_WIDTH              = player.PLAYER_START_WIDTH, 
-    BOSS_START_HEIGHT             = player.PLAYER_START_HEIGHT, 
-    BOSS_START_X                  = width/2-BOSS_START_WIDTH/2, 
-    BOSS_START_Y                  = 0+BOSS_START_HEIGHT, 
-    BOSS_START_ACCELERATION_X     = player.PLAYER_START_ACCELERATION_X, 
-    BOSS_VELOCITY_X_MAX           = player.PLAYER_VELOCITY_X_MAX,
-    BOSS_START_ACCELERATION_Y     = player.PLAYER_START_ACCELERATION_Y, 
-    BOSS_VELOCITY_Y_MAX           = player.PLAYER_VELOCITY_Y_MAX,
+  private final float
+    BOSS_START_WIDTH              = gamefield.GAMEFIELD_WIDTH*0.13, 
+    BOSS_START_HEIGHT             = height * 0.045, 
+    BOSS_START_X                  = gamefield.GAMEFIELD_WIDTH/2-BOSS_START_WIDTH/2, 
+    BOSS_START_Y                  = BOSS_START_HEIGHT, 
+    BOSS_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.01, 
+    BOSS_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.01, 
+    BOSS_START_ACCELERATION_Y     = height * 0.002, 
+    BOSS_VELOCITY_Y_MAX           = height * 0.012, 
     BOSS_MAX_Y                    = height / 2, 
     BALL_IS_CLOSE                 = BOSS_START_WIDTH*0.3, 
     BACKGROUND_LINE_SIZE          = width*0.01, 
@@ -42,16 +42,12 @@ class BossPing
   {
     x                   = BOSS_START_X;
     y                   = BOSS_START_Y;
-    velocityX           = 0; 
-    velocityY           = 0; 
     accelerationX       = BOSS_START_ACCELERATION_X; 
     accelerationY       = BOSS_START_ACCELERATION_Y;
     decelerateX         = BOSS_START_DECELERATE_X;
     decelerateY         = BOSS_START_DECELERATE_Y;
     bossWidth           = BOSS_START_WIDTH;
     bossHeight          = BOSS_START_HEIGHT;
-    closestBallX        = 0;
-    closestBallY        = 0;
     health              = BOSS_START_HEALTH;
   }
 
@@ -70,7 +66,7 @@ class BossPing
   private void detectNearestBall()
   {
     float closestBallXT = gamefield.GAMEFIELD_WIDTH/2;
-    float closestBallYT = height;
+    float closestBallYT = height; //Futher away than a ball can possibly be.
     for (Ball ball : balls) 
     {
       float xT = ball.x;
@@ -83,22 +79,6 @@ class BossPing
           closestBallYT = yT;
         }
       }
-    }
-    if (closestBallXT==closestBallX && closestBallYT == closestBallY)
-    {
-      for (Ball ball : balls) 
-      {
-
-        float xT = ball.x;
-        float yT = ball.y;
-        if (dist(x + bossWidth/2, y + bossHeight/2, xT, yT)<dist(x + bossWidth/2, y + bossHeight/2, closestBallXT, closestBallYT))
-        {
-          closestBallXT = xT;
-          closestBallYT = yT;
-        }
-      }
-    } 
-    {
       closestBallX = closestBallXT;
       if (closestBallYT==height)
       {
