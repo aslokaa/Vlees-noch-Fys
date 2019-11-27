@@ -27,11 +27,12 @@ class Gamefield
     CHAD_COUNTER_START              = 0, 
     DAVE_COUNTER_START              = 10, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2, //<>// //<>//
-    WAVES_UNTILL_DAVE               = 1, 
+    AMOUNT_OF_BOSSES                = 2, //<>//
+    WAVES_UNTILL_DAVE               = 1,
+    WAVE3_CHADS                     = 2,
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50; //<>// //<>//
+    DAVE_MAX                        = 50; //<>//
 
   private int 
     waveCounter, 
@@ -47,11 +48,6 @@ class Gamefield
   {
     daveCounter        =DAVE_COUNTER_START;
     chadCounter        =CHAD_COUNTER_START;
-    waveCounter        =0;
-    pingActivated      =false; 
-    lesterActivated    =false;
-    spawnPing          =false;
-    spawnLester        =false;
   }
 
   public void update()
@@ -179,7 +175,7 @@ class Gamefield
   //a special wave that only spawns 2 chads
   private void spawnWave3()
   {
-    for (int i =0; i<3; i++) {
+    for (int i =0; i<WAVE3_CHADS; i++) {
       spawnChads(i);
     }
   }
