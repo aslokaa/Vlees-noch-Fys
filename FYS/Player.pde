@@ -56,6 +56,7 @@ class Player
     immune, // immunes the paddle into 2.
     slow, //slows the paddle
     shake, //shakes the paddle
+    hasImmune, //if the player is holding an immunity buff
     split;       //splits the paddle
   private float //Duration of effects.
     invertedTimer, 
@@ -78,25 +79,9 @@ class Player
     playerHeigth      = PLAYER_START_HEIGHT;
     accelerationX     = PLAYER_START_ACCELERATION_X;
     accelerationY     = PLAYER_START_ACCELERATION_Y;
-    velocityX         = 0;
-    velocityXSplit    = 0;
     velocityY         = PLAYER_VELOCITY_Y_MAX;
     decelerateX       = PLAYER_START_DECELERATE_X;
     decelerateY       = PLAYER_START_DECELERATE_Y;
-    inverted          = false;
-    invertedTimer     = 0;
-    immune            = false;
-    immuneTimer       = 0;
-    slow              = false;
-    slowTimer         = 0;
-    shake             = false;
-    shakeTimer        = 0;
-    split             = false;
-    splitTimer        = 0;
-    shootTimer        = 0;
-    xSplit            = 0;
-    widthSplit0       = 0;
-    widthSplit1       = 0;
     hitboxes          = new Rectangles();
     ammo              = STARTING_BULLETS;
   }
@@ -189,6 +174,9 @@ class Player
     {
       shoot();
     }
+    if (keysPressed['a']) {
+      activateImmune();
+    }
   }
   //checks what powers should affect the movement.
   private void checkMove()
@@ -265,8 +253,7 @@ class Player
       break;
     case PowerUpTypes.IMMUNE:
       playerSounds.play(Sounds.IMMUNE);
-      immune = true;
-      immuneTimer = IMMUNE_STARTING_TIMER;
+      hasImmune = true;
       break;
     case PowerUpTypes.SLOW:
       playerSounds.play(Sounds.SLOW);
@@ -302,6 +289,16 @@ class Player
       break;
     default:
       println("modifyPower default");
+    }
+  }
+
+  private void activateImmune() {
+    if (!hasImmune) {
+      return;
+    } else {
+      hasImmune=false; 
+      immune=true;
+      immuneTimer=IMMUNE_STARTING_TIMER;
     }
   }
 
@@ -570,6 +567,9 @@ class Player
   public int getAmmo()
   {
     return ammo;
+  }
+  public boolean getHasImmune() {
+    return hasImmune;
   }
 }
 
