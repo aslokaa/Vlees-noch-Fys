@@ -555,6 +555,9 @@ class Player
   {
     split=false;
     playerWidth=widthSplit0+widthSplit1;
+    if (playerWidth>PLAYER_MAX_WIDTH){
+     playerWidth=PLAYER_MAX_WIDTH; 
+    }
     splitTimer=0;
     if (widthSplit0>=widthSplit1)
     {
