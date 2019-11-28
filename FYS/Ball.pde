@@ -19,6 +19,7 @@ class Ball {
   int ballAnimationTimer;
   int currentAnimationFrame;
   int numFrames;
+  Animation ballAnimation;
 
   Ball() {
     x= gamefield.GAMEFIELD_WIDTH/2;
@@ -37,7 +38,10 @@ class Ball {
     ballAnimationTimer = 0;
     currentAnimationFrame = 0;
     numFrames = 3;
+    ballAnimation = new Animation(); ballAnimation.initializeAnimation("BallFys", 3, 15, diameter);
+    
   }
+  
   Ball(float x)
   {
     this.x= x;
@@ -73,16 +77,12 @@ class Ball {
   }
 
   void drawBall() {
-    if (ballAnimationTimer == 15) {
-      currentAnimationFrame = currentAnimationFrame + 1;
-      ballAnimationTimer = 0;
-    }
-    image(ballImages[(currentAnimationFrame) % numFrames], x, y, diameter, diameter);
+    ballAnimation.display(x, y);
     noFill();
     stroke(Colors.BLUE);
     strokeWeight(5);
     ellipse(x,y,diameter,diameter);
-    ballAnimationTimer ++;
+    
   }
 
   //gravity
