@@ -19,14 +19,20 @@ class Startscreen
     bulletsInitialized =false, //checks if bullets are initialized.
     soundsInitialized  =false, //checks if sounds are initialized.
     powerInitialized   =false, //checks if powers are intitialized.
-    particleInitialized = false;
+    particleInitialized = false,
+    animationInitialized = false;
+    
+    Startscreen()
+    {
+      setupGame();
+    }
 
   public void update()
   {
     updateGameStates();
     if ( drawn )
     {
-      setupGame();
+     // setupGame();
     } 
     if ( soundsInitialized )
     {
@@ -75,6 +81,11 @@ class Startscreen
     {
       text("LOADING PARTICLES", SUBTITLE_X, SUBTITLE_Y);
       loadParticles();
+    }
+    if ( !animationInitialized )
+    {
+     text("LOADING ANIMATIONS", SUBTITLE_X, SUBTITLE_Y);
+     loadAnimations();
     }
   }
   //initializes sound
@@ -134,6 +145,15 @@ class Startscreen
       particles[i] =  new Particle(-100, -100, 0, 0, 0);
     }
     particleInitialized = true;
+  }
+  
+  private void loadAnimations()
+  {
+    for (int i = 0; i < Arrays.ANIMATION_COUNT; i++) 
+    {
+      animations[i] =  new Animation();
+    }
+    animationInitialized = true;
   }
 
   //draws the background

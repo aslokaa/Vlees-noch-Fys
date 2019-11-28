@@ -3,6 +3,7 @@ class EnemyBullet
   boolean active = false;
   float x;
   float y;
+  float angle;
   float speedX;
   float speedY; 
   float speed;
@@ -12,6 +13,7 @@ class EnemyBullet
   final float START_X = -100;
   final float START_Y = -100;
   Rectangles hitboxesToCheck;
+  Animation bulletAnimation;
 
   EnemyBullet()
   {
@@ -74,16 +76,36 @@ class EnemyBullet
     active = true;
     this.x = x;
     this.y = y;
+    this.angle = angle + PI;
     speedX = speed * sin(angle);
     speedY = speed * -cos(angle);
+    setAnimation();
+  }
+  
+  void setAnimation()
+  {
+    for ( Animation animation : animations )
+    {
+      if ( !animation.active )
+      {
+        bulletAnimation = animation; 
+        bulletAnimation.initializeAnimation(enemyBulletAnimation, 3, 8, DIAMETER * 2);
+        break;
+      }
+    }
   }
 
   void display()
   {
     if (active)
     {
-      fill(Colors.WHITE);
-      ellipse(x, y, RADIUS, RADIUS);
+      translate( x, y );
+      rotate( angle );
+      bulletAnimation.display( 0, 0 );
+      rotate( -angle );
+      translate( -x, -y );
+      //fill( Colors.WHITE );
+      //ellipse(x, y, RADIUS, RADIUS);
     }
   }
 }

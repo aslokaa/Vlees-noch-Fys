@@ -4,6 +4,7 @@ int numFramesBallAnimation = 3;
 
 class Animation {
 
+  boolean active;
   int animationTimer;
   int FrameDelay;
   int currentAnimationFrame;
@@ -13,24 +14,23 @@ class Animation {
 
   Animation()
   {
+    active = false;
     animationTimer = 0;
     currentAnimationFrame = 0;
     numFrames = 0;
     imgDiameter = 0;
   }
 
-  void initializeAnimation( String gifName, int numOfFrames, int delay, float diameter)
+  void initializeAnimation( PImage[] newAnimation, int numOfFrames, int delay, float diameter)
   {
+    active = true;
     imgDiameter = diameter;
     FrameDelay = delay;
     animation = new PImage[numOfFrames];
     numFrames = numOfFrames;
-    String fileName;
-    for ( int i = 0; i < numOfFrames; i++ )
-    {
-      fileName = "./sprites/" + gifName + i + ".png";
-      animation[i] = loadImage(fileName);
-    }
+    animationTimer = 0;
+    currentAnimationFrame = 0;
+    animation = newAnimation;
   }
 
   void display(float x, float y) {

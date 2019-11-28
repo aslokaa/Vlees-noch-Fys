@@ -16,9 +16,10 @@ boolean[] keysPressed = new boolean[KEY_LIMIT];
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<EnemyBullet> enemyBullets = new ArrayList<EnemyBullet>();
 ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
-ArrayList<Ball> balls = new ArrayList<Ball>();
 Power[] powers = new Power[Arrays.POWER_COUNT];
 Particle[] particles = new Particle[Arrays.PARTICLE_COUNT];
+Animation[] animations = new Animation[Arrays.ANIMATION_COUNT];
+ArrayList<Ball> balls = new ArrayList<Ball>();
 
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
 Gamefield gamefield;
@@ -50,12 +51,14 @@ void setup()
   test                     = new Test();
   //balls.add(new Ball(100));
   //balls.add(new Ball(800));
-  balls.add(new Ball());
+
   startscreen              = new Startscreen();
   pausescreen              = new Pausescreen();
   endscreen                = new Endscreen();
   font                     = loadFont("ComicSansMS-BoldItalic-40.vlw");
+  
   loadAssets();
+  balls.add(new Ball());
   imageMode(CENTER);
 }
 

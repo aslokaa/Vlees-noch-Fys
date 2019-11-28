@@ -17,6 +17,7 @@ class Particle {
   color drawColor = color(255, 255, 255);
   float spinSpeed;
   float drawAngle;
+  Animation particleAnimation;
 
   Particle(float x, float y, float diameter, float velocityX, float velocityY) {
     //Particle() {
@@ -29,13 +30,7 @@ class Particle {
     drawAngle = 0;
     spinSpeed = 0;
 
-    /*for (int i = 0; i < Arrays.PARTICLE_COUNT; i++) {
-      x = 0;
-      y = 0;
-      velocityX = 0;
-      velocityY = 0;
-      diameter = random(20, 35);
-    }*/
+   
   }
 
   void update() {
@@ -64,7 +59,7 @@ class Particle {
         */
         translate( x, y );
         rotate(drawAngle);
-        image( smokeImg1, 0, 0, diameter, diameter);
+        particleAnimation.display(0, 0);
         rotate( -drawAngle );
         translate( -x, -y );
         break;
@@ -96,6 +91,7 @@ class Particle {
     lifeTime --;
     if (lifeTime < 0) {
       active = false;
+      particleAnimation.active = false;
     }
   }
   
@@ -120,6 +116,20 @@ class Particle {
     this.particleNumber = particleNumber;
     this.lifeTime = lifeTime;
     active = true;
-    spinSpeed = random( -0.3, 0.3);
+    spinSpeed = random( -0.2, 0.2);
+    setAnimation();
+  }
+  
+  void setAnimation()
+  {
+    for ( Animation animation : animations )
+    {
+      if ( !animation.active )
+      {
+        particleAnimation = animation; 
+        particleAnimation.initializeAnimation(explosionAnimation, 5, ceil(lifeTime / 4), diameter);
+        break;
+      }
+    }
   }
 }

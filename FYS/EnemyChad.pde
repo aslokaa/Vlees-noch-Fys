@@ -14,6 +14,7 @@ class EnemyChad extends Enemy
   float accelY;
   float spawnChance;
   float spawnRate;
+  float maxSpeed;
   final int EXPLOSION_PARTICLES;
 
   EnemyChad(float x, float y, float hitboxRadius)
@@ -23,6 +24,7 @@ class EnemyChad extends Enemy
     speedX = 1;
     damageToDeal = 30;
     spawnRate = 0.15;
+    maxSpeed = 5;
     EXPLOSION_PARTICLES = 50;
   }
 
@@ -42,20 +44,20 @@ class EnemyChad extends Enemy
     speedX += accelX / 4;
     speedY += accelY / 4;
 
-    if ( speedX > 7 )
+    if ( speedX > maxSpeed )
     {
-      speedX = 7;
-    } else if ( speedX < -7)
+      speedX = maxSpeed;
+    } else if ( speedX < -maxSpeed)
     {
-      speedX = -7;
+      speedX = -maxSpeed;
     }
 
-    if ( speedY > 7 )
+    if ( speedY > maxSpeed )
     {
-      speedY = 7;
-    } else if ( speedY < -7)
+      speedY = maxSpeed;
+    } else if ( speedY < -maxSpeed)
     {
-      speedY = -7;
+      speedY = -maxSpeed;
     }
     x += speedX;
     y += speedY;

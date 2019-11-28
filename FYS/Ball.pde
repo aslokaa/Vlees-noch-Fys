@@ -16,10 +16,7 @@ class Ball {
   boolean isChargedBom;
   float maxSpeedX;
   float ballRespawnTimer, timerCount;
-  int ballAnimationTimer;
-  int currentAnimationFrame;
-  int numFrames;
-  Animation ballAnimation;
+  Animation animation;
 
   Ball() {
     x= gamefield.GAMEFIELD_WIDTH/2;
@@ -35,13 +32,9 @@ class Ball {
     ballRespawnTimer = 0;
     timerCount = 60;
     isChargedBom = false;
-    ballAnimationTimer = 0;
-    currentAnimationFrame = 0;
-    numFrames = 3;
-    ballAnimation = new Animation(); ballAnimation.initializeAnimation("BallFys", 3, 15, diameter);
-    
+    setAnimation();
   }
-  
+
   Ball(float x)
   {
     this.x= x;
@@ -57,11 +50,21 @@ class Ball {
     ballRespawnTimer = 0;
     timerCount = 60;
     isChargedBom = false;
-    ballAnimationTimer = 0;
-    currentAnimationFrame = 0;
-    numFrames = 3;
   }
 
+  void setAnimation()
+  {
+    for ( Animation newAnimation : animations )
+    {
+      if ( !newAnimation.active )
+      {
+        animation = newAnimation; 
+        animation.initializeAnimation(ballAnimation, 3, 15, diameter);
+        break;
+      }
+    }
+  }
+  
   void updateBall() {
 
 
@@ -77,12 +80,11 @@ class Ball {
   }
 
   void drawBall() {
-    ballAnimation.display(x, y);
+    animation.display(x, y);
     noFill();
     stroke(Colors.BLUE);
     strokeWeight(5);
-    ellipse(x,y,diameter,diameter);
-    
+    ellipse(x, y, diameter, diameter);
   }
 
   //gravity

@@ -4,6 +4,10 @@ PImage bulletImg ,shieldPowerImg, invertedPowerImg, bombPowerImg, snailPowerImg,
 playerForcefieldImg, lesterBodyImg, lesterHitbox4HPImg, lesterHitbox3HPImg, lesterHitbox2HPImg, lesterHitbox1HPImg, lesterHitbox0HPImg, 
 enemyDaveImg, explosionImg, smokeImg1, smokeImg2, powerHpUpImg, BallFys1Img, BallFys2Img, BallFys3Img, splitPowerImg;
 
+PImage[] explosionAnimation = new PImage[5];
+PImage[] ballAnimation = new PImage[3];
+PImage[] enemyBulletAnimation = new PImage[3];
+String  fileName;
 
 public void loadAssets() {
   bulletImg = loadImage("./sprites/BulletFysGame.png");
@@ -29,6 +33,22 @@ public void loadAssets() {
 
   powerHpUpImg = loadImage("./sprites/HpUpFysGame.png");
 
-  
+   for ( int i = 0; i < 5; i++ )
+    {
+      fileName = "./sprites/smokeParticle" + i + ".png";
+      explosionAnimation[i] = loadImage(fileName);
+    }
+    
+    for ( int i = 0; i < 3; i++ )
+    {
+      fileName = "./sprites/BallFys" + i + ".png";
+      ballAnimation[i] = loadImage(fileName);
+    }
+    
+    for ( int i = 0; i < 3; i++ )
+    {
+      fileName = "./sprites/lesterBullet" + i + ".png";
+      enemyBulletAnimation[i] = loadImage(fileName);
+    }
   
 }

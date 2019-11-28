@@ -57,7 +57,8 @@ interface Arrays
     OPTION_COUNT  = 3, 
     DAVE_COUNT    = 10,
     POWER_COUNT   = 5,
-    PARTICLE_COUNT = 200;
+    PARTICLE_COUNT = 200,
+    ANIMATION_COUNT = 300;
     
 }
 
