@@ -115,7 +115,11 @@ class Player
   {
     noStroke();
     fill(getColor());
-    rect( x, y, playerWidth, playerHeigth );
+    imageMode(CORNER);
+    image(playerForcefieldImg, x, y, playerWidth, playerHeigth );
+    image(playerSidesImg, x - 15, y + playerHeigth, 30 , playerHeigth);
+    image(playerSidesImg, x + playerWidth - 15, y + playerHeigth, 30 , playerHeigth);
+    imageMode(CENTER);
   }
   //shakes the player
   private void shake()
@@ -139,8 +143,15 @@ class Player
   {
     noStroke();
     fill(getColor());
-    rect( x, y, widthSplit0, playerHeigth );
-    rect(xSplit, y, widthSplit1, playerHeigth );
+    imageMode(CORNER);
+    image(playerForcefieldImg, x, y, widthSplit0, playerHeigth );
+    image(playerSidesImg, x - 15, y + playerHeigth, 30 , playerHeigth);
+    image(playerSidesImg, x + widthSplit0 - 15, y + playerHeigth, 30 , playerHeigth);
+    
+    image(playerForcefieldImg, xSplit, y, widthSplit1, playerHeigth );
+    image(playerSidesImg, xSplit - 15, y + playerHeigth, 30 , playerHeigth);
+    image(playerSidesImg, xSplit + widthSplit1 - 15, y + playerHeigth, 30 , playerHeigth);
+    imageMode(CENTER);
   }
 
   //detects user inputs.
