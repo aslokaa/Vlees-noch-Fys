@@ -1,5 +1,4 @@
-
-
+MySQL conn;
 PImage bulletImg ,shieldPowerImg, invertedPowerImg, bombPowerImg, snailPowerImg, bulletPowerImg, playerSidesImg, 
 playerForcefieldImg, lesterBodyImg, lesterHitbox4HPImg, lesterHitbox3HPImg, lesterHitbox2HPImg, lesterHitbox1HPImg, lesterHitbox0HPImg, 
 enemyDaveImg, explosionImg, smokeImg1, smokeImg2, powerHpUpImg, BallFys1Img, BallFys2Img, BallFys3Img, splitPowerImg;
@@ -9,7 +8,13 @@ PImage[] ballAnimation = new PImage[3];
 PImage[] enemyBulletAnimation = new PImage[3];
 String  fileName;
 
+String connServer = "oege.ie.hva.nl";
+String connDB = "zroete";
+String connUser = "roete";
+String connPass = "KWVvztAFWytWOG";
+
 public void loadAssets() {
+  conn = new MySQL(this, connServer, connDB, connUser, connPass);
   bulletImg = loadImage("./sprites/BulletFysGame.png");
   bulletPowerImg = loadImage("./sprites/BulletFysGamePower.png");
   playerSidesImg = loadImage("./sprites/RocketPlayerFysGame.png");

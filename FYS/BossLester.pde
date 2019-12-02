@@ -35,9 +35,9 @@ class BossLester
     this.y = y;
     this.bodySize = 700;
     HITBOX_OFFSET = 300;
-    SHOOT_TIMER = 100;
-    CHAD_SPAWN_TIMER = 500;
-    POWER_SPAWN_TIMER = 400;
+    SHOOT_TIMER = 75;
+    CHAD_SPAWN_TIMER = 400;
+    POWER_SPAWN_TIMER = 300;
     BODY_SPRITE_OFFSET = 50;
     chadToSpawn = new Enemy(false, 0, 0, 0);
     hitboxLeftPos.x = x - HITBOX_OFFSET;
