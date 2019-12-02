@@ -23,7 +23,7 @@ class BossLester
   BossLesterHitbox hitboxLeft; 
   BossLesterHitbox hitboxBottom; 
   BossLesterHitbox hitboxRight;
-  
+
   final float BODY_SPRITE_OFFSET;
 
 
@@ -78,7 +78,7 @@ class BossLester
   {
     if ( frameCount % SHOOT_TIMER == 0 )
     {
-      
+      println(frameCount);
       Rectangles hitboxesToCheck = player.getHitboxes();
       if ( hitboxesToCheck.rectangle1.exists )
       {
@@ -128,11 +128,13 @@ class BossLester
           findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletAngle);
         }
       }
-    }
-    hitboxToFire++;
-    if ( hitboxToFire > 3 )
-    {
-     hitboxToFire = 1; 
+
+      hitboxToFire++;
+      println(hitboxToFire);
+      if ( hitboxToFire > 3 )
+      {
+        hitboxToFire = 1;
+      }
     }
   }
 
@@ -219,21 +221,14 @@ class BossLester
     }
   }
 
-  void setHitboxPositions()
-  {
-  }
-
   void display()
   {
     if ( active )
     {
-    
+
       hitboxLeft.display();
       hitboxBottom.display();
       hitboxRight.display();
-      
     }
   }
-  
-
 }

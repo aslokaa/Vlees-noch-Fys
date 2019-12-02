@@ -137,9 +137,9 @@ class EnemyDave extends Enemy
         {
           particleSpeed = random( 0.2, 2 );
           particleAngle = random( 0, 2 * PI );
-          particleSize = random( 5, 25 );
-          particleSpeedX = particleSpeed * sin(particleAngle);
-          particleSpeedY = particleSpeed * -cos(particleAngle);
+          particleSize = random( 15, 40 );
+          particleSpeedX = particleSpeed * sin(particleAngle) + speedX / 2;
+          particleSpeedY = particleSpeed * -cos(particleAngle) + speedY / 2;
           particleLifespan = round( 60 - particleSize * 1.2 );
           particleType = 1;
           particle.activateParticle( x, y, particleSize, particleSpeedX, particleSpeedY, particleType, particleLifespan );

@@ -38,7 +38,7 @@ class Enemy
     {
       player.dealDamage(damageToDeal, false);
     }
-    if ( checkPlayerCollision(rectangles.rectangle1) ) 
+    if ( checkPlayerCollision(rectangles.rectangle1) && rectangles.rectangle1.exists) 
     {
       player.dealDamage(damageToDeal, true);
     }
