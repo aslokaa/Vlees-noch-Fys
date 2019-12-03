@@ -3,6 +3,8 @@
 //
 
 //this class handles the startscreen.
+
+//Moet ook de ball inladen!!
 class Startscreen
 {
   private final float
