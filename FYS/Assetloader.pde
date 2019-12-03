@@ -1,6 +1,6 @@
 MySQL conn;
 PImage bulletImg ,shieldPowerImg, invertedPowerImg, bombPowerImg, snailPowerImg, bulletPowerImg, playerSidesImg, 
-playerForcefieldImg, lesterBodyImg, lesterHitbox4HPImg, lesterHitbox3HPImg, lesterHitbox2HPImg, lesterHitbox1HPImg, lesterHitbox0HPImg, 
+playerForcefieldImg, playerSlowImg, playerShieldImg, playerReverseImg, playerDmgImg, lesterBodyImg, lesterHitbox4HPImg, lesterHitbox3HPImg, lesterHitbox2HPImg, lesterHitbox1HPImg, lesterHitbox0HPImg, 
 enemyDaveImg, enemyChadImg, enemyChadThrusterImg, explosionImg, smokeImg1, smokeImg2, powerHpUpImg, BallFys1Img, BallFys2Img, BallFys3Img, splitPowerImg;
 
 PImage[] explosionAnimation = new PImage[5];
@@ -19,6 +19,10 @@ public void loadAssets() {
   bulletPowerImg = loadImage("./sprites/BulletFysGamePower.png");
   playerSidesImg = loadImage("./sprites/RocketPlayerFysGame.png");
   playerForcefieldImg = loadImage("./sprites/PlayerBounceFysGame.png");
+  playerSlowImg = loadImage("./sprites/PlayerSlowedBounceFysGame.png");
+  playerShieldImg = loadImage("./sprites/PlayerShieldBounceFysGame.png");
+  playerReverseImg = loadImage("./sprites/PlayerReversedBounceFysGame.png");
+  playerDmgImg = loadImage("./sprites/PlayerDmgBounceFysGame.png");
   lesterBodyImg = loadImage("./sprites/lesterBodySprite.png");
   lesterHitbox4HPImg = loadImage("./sprites/lesterHitboxSprite4HP.png");
   lesterHitbox3HPImg = loadImage("./sprites/lesterHitboxSprite3HP.png");
