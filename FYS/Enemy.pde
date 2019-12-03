@@ -1,8 +1,7 @@
 /*
-deze class is een base-class voor alle enemies, alle methodes en
- atributen zitten in alle enemies die gemaakt worden met deze class.
- het bevat een x en y positie, x en y snelheden, en een update en draw methode
- die executeBehavior en display heten.
+this class is a base-class for all enemies, all methods and fields are contained in 
+ all enemies derived from this class.
+ the fields are X and Y positions and X and Y speeds, the methods are called executeBehavior and display.
  
  Eele Roet 500795948
  */
@@ -26,8 +25,8 @@ class Enemy
     this.hitboxDiameter = hitboxRadius * 2;
   }
 
-  //gets called in the updateGame methode in the main.
-  void executeBehavior()
+  
+  void executeBehavior()//gets called in the updateGame methode in the main.
   {
     println("define the behavior method before using it");
   }
@@ -38,13 +37,13 @@ class Enemy
     {
       player.dealDamage(damageToDeal, false);
     }
-    if ( checkPlayerCollision(rectangles.rectangle1) ) 
+    if ( checkPlayerCollision(rectangles.rectangle1) && rectangles.rectangle1.exists) 
     {
       player.dealDamage(damageToDeal, true);
     }
   }
 
-  //does a circle-line collisioncheck with the enemy hitbox and the horizontal line in the middle of player.
+  //does a circle-line collision check with the enemy hitbox and the horizontal line in the middle of players height.
   boolean checkPlayerCollision(Rectangle rectangle)
   {
     if ( x >= rectangle.x && x <= rectangle.x + rectangle.rectangleWidth &&
@@ -55,8 +54,8 @@ class Enemy
     return false;
   }
 
-  //gets called when enemy needs to be destroyed.
-  void destroy()
+
+  void destroy()//gets called when enemy needs to be destroyed.
   {
     println("define the destroy method before using it");
     spawnPowerup();
@@ -68,21 +67,21 @@ class Enemy
     this.x = posX;
     this.y = posY;
     this.active = true;
-    //currentrow moet ook gereset worden -niklas
+    this.speedX = 0;
+    this.speedY = 0;
   }
 
   void spawnPowerup()
   {
     println("define the spawnPowerup method before using it");
   }
-  //handles dying animation.
-  void explode()
+
+  void explode()//handles dying animation.
   {
     println("define the explode method before using it");
   }
 
-  //gets called in the drawGame method in the main.
-  void display()
+  void display()//gets called in the drawGame method in the main.
   {
     println("define the display method before using it");
   }

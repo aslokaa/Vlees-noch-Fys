@@ -37,8 +37,8 @@ BossLester lester;
 
 void setup()
 {
- size( 1600, 900, P2D); //16:9
-  
+  size( 1600, 900, P2D); //16:9
+
   smooth();
   introMusic               = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   gamefield                = new Gamefield();
@@ -56,7 +56,7 @@ void setup()
   pausescreen              = new Pausescreen();
   endscreen                = new Endscreen();
   font                     = loadFont("ComicSansMS-BoldItalic-40.vlw");
-  
+
   loadAssets();
   balls.add(new Ball());
   imageMode(CENTER);
@@ -109,7 +109,7 @@ void updateGame()
         bullet.update();
       }
       for (Ball ball : balls) {
-       ball.updateBall();
+        ball.updateBall();
       }
     }
   } else if (stateEnd)
@@ -151,6 +151,10 @@ void drawGame()
     }
     if (stateBossLester)
     {
+      for ( EnemyBullet bullet : enemyBullets )
+      {
+        bullet.display();
+      }
       lester.display();
     }
     for ( Enemy enemy : enemies )
@@ -161,10 +165,7 @@ void drawGame()
     {
       playerBullet.display();
     }
-    for ( EnemyBullet bullet : enemyBullets )
-    {
-      bullet.display();
-    }
+
     for (Ball ball : balls) {
       ball.drawBall();
     }

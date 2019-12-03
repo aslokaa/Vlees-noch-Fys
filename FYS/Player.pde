@@ -19,7 +19,9 @@ class Player
     PLAYER_START_ACCELERATION_Y     = height * 0.003, 
     PLAYER_VELOCITY_Y_MAX           = height * 0.012, 
     PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.3, 
-    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.6, 
+    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.6,
+    ROCKET_SPRITE_HEIGHT            = 30,
+    ROCKET_SPRITE_X                 = 15,
     SLOW_MODIFIER                   = 0.9, 
     SPLIT_WIDTH_MODIFIER            = 0.75, 
     BOUNCE_MODIFIER                 = -0.8, 
@@ -115,7 +117,11 @@ class Player
   {
     noStroke();
     fill(getColor());
-    rect( x, y, playerWidth, playerHeigth );
+    imageMode(CORNER);
+    image(playerForcefieldImg, x, y, playerWidth, playerHeigth );
+    image(playerSidesImg, x - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT , playerHeigth);
+    image(playerSidesImg, x + playerWidth - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT , playerHeigth);
+    imageMode(CENTER);
   }
   //shakes the player
   private void shake()
@@ -139,8 +145,15 @@ class Player
   {
     noStroke();
     fill(getColor());
-    rect( x, y, widthSplit0, playerHeigth );
-    rect(xSplit, y, widthSplit1, playerHeigth );
+    imageMode(CORNER);
+    image(playerForcefieldImg, x, y, widthSplit0, playerHeigth );
+    image(playerSidesImg, x - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT , playerHeigth);
+    image(playerSidesImg, x + widthSplit0 - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT , playerHeigth);
+    
+    image(playerForcefieldImg, xSplit, y, widthSplit1, playerHeigth );
+    image(playerSidesImg, xSplit - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT , playerHeigth);
+    image(playerSidesImg, xSplit + widthSplit1 - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT , playerHeigth);
+    imageMode(CENTER);
   }
 
   //detects user inputs.

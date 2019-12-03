@@ -1,7 +1,7 @@
 MySQL conn;
 PImage bulletImg ,shieldPowerImg, invertedPowerImg, bombPowerImg, snailPowerImg, bulletPowerImg, playerSidesImg, 
 playerForcefieldImg, lesterBodyImg, lesterHitbox4HPImg, lesterHitbox3HPImg, lesterHitbox2HPImg, lesterHitbox1HPImg, lesterHitbox0HPImg, 
-enemyDaveImg, explosionImg, smokeImg1, smokeImg2, powerHpUpImg, BallFys1Img, BallFys2Img, BallFys3Img, splitPowerImg;
+enemyDaveImg, enemyChadImg, enemyChadThrusterImg, explosionImg, smokeImg1, smokeImg2, powerHpUpImg, BallFys1Img, BallFys2Img, BallFys3Img, splitPowerImg;
 
 PImage[] explosionAnimation = new PImage[5];
 PImage[] ballAnimation = new PImage[3];
@@ -26,6 +26,8 @@ public void loadAssets() {
   lesterHitbox1HPImg = loadImage("./sprites/lesterHitboxSprite1HP.png");
   lesterHitbox0HPImg = loadImage("./sprites/lesterHitboxSprite0HP.png");
   enemyDaveImg = loadImage("./sprites/daveSprite.png");
+  enemyChadImg = loadImage("./sprites/chadSprite.png");
+  enemyChadThrusterImg = loadImage("./sprites/chadThrusterSprite.png");
   explosionImg = loadImage("./sprites/explosion_particle.png");
   snailPowerImg = loadImage("./sprites/snail3.0.png");
   bombPowerImg = loadImage("./sprites/bomb.png");
