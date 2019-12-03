@@ -43,7 +43,6 @@ void setup()
   introMusic               = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   gamefield                = new Gamefield();
   space                    = new Space();
-
   scores                   = new Scores();
   player                   = new Player();
   ping                     = new BossPing();
@@ -58,7 +57,6 @@ void setup()
   font                     = loadFont("ComicSansMS-BoldItalic-40.vlw");
 
   loadAssets();
-  balls.add(new Ball());
   imageMode(CENTER);
 }
 

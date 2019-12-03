@@ -22,6 +22,7 @@ class Startscreen
     soundsInitialized  =false, //checks if sounds are initialized.
     powerInitialized   =false, //checks if powers are intitialized.
     particleInitialized = false,
+    ballsInitialized = false,
     animationInitialized = false;
     
     Startscreen()
@@ -96,6 +97,11 @@ class Startscreen
     playerSounds  = new PlayerSounds();
     menuSounds    = new MenuSounds();
     soundsInitialized=true;
+  }
+  
+  private void loadBalls(){
+    balls.add(new Ball());
+    ballsInitialized=true;
   }
 
   //initializes daves
