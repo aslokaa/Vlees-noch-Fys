@@ -1,15 +1,16 @@
 /*
- deze class bevat dave.
- comments over de @Override methodes staan in Enemy base-class.
- dave word boven y = 100 gespawned, dus alle y < 100.
- dave beweegt tot de eerste row op y is 100, dave gaat dan alleen in de x bewegen
- totdat hij een muur raakt dan gaat hij een row naar beneden, dus y 200 en gaat in de andere richting 
- in x bewegen. etc.
+ this class contains dave.
+ comments about the @Override methodes are in the Enemy base-class.
+ dave dave is spawned at  y < 100.
+ dave moves vertically down untill he hits y >= 100, dave then moves horizontally towards the furthest wall. 
+ when he hits this wall he moves down a row ( y >= 200 ) and start moving horizontally towards the other wall. 
+ untill he hits y >= height.
  Eele Roet 500795948
  */
 
 class EnemyDave extends Enemy
 {
+  //movement
   float moveSpeedLeft;
   float moveSpeedRight;
   float moveSpeedDown;
@@ -18,8 +19,10 @@ class EnemyDave extends Enemy
   boolean moveDown;
   int currentRow;
   int rowToMoveTo;
+  //powerUp info
   float spawnRate;
   float spawnChance;
+  //particle info
   int EXPLOSION_PARTICLES;
   float particleAngle;
   float particleSpeed;
@@ -82,6 +85,7 @@ class EnemyDave extends Enemy
     if ( y - hitboxRadius > height)
     {
       active = false;
+      player.dealDamage(damageToDeal,false);
     }
   }
 

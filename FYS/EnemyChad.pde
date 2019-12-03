@@ -1,22 +1,27 @@
 /*
 deze class bevat chad.
  comments over de @Override methodes staan in Enemy base-class.
- chad accelerates towards the player 
+ chad accelerates towards the player by a set amount, chad has wall collision, 
+ chad bounces off the player in the y axis when he deals damage. 
  
  Eele Roet 500795948
  */
 
 class EnemyChad extends Enemy
 {
+  //movement info
   float speedX;
   float speedY;
   float accelX;
   float accelY;
-  float angleToPlayer;
-  float spawnChance;
-  float spawnRate;
   float maxSpeed;
   Rectangle hitboxToFollow;
+  //sprite info
+  float angleToPlayer;
+  //powerUp info
+  float spawnChance;
+  float spawnRate;
+  //particle info
   final int EXPLOSION_PARTICLES;
 
   EnemyChad(float x, float y, float hitboxRadius)
@@ -42,7 +47,7 @@ class EnemyChad extends Enemy
     }
   }
 
-  void move()
+  void move()//adds acceleration to speed and speed to position, also handles maximum speed.
   {
     speedX += accelX / 4;
     speedY += accelY / 4;
