@@ -10,6 +10,12 @@ class BossLesterHitbox
   float spriteSize;
   final int EXPLOSION_PARTICLES;
   float angle;
+  float particleAngle;
+  float particleSpeed;
+  float particleSize;
+  int particleLifespan;
+  float particleSpeedX;
+  float particleSpeedY;
 
   BossLesterHitbox(float x, float y)
   {
@@ -54,17 +60,23 @@ class BossLesterHitbox
   
   void explode()
   {
-   for ( int i = 0; i < EXPLOSION_PARTICLES; i++ )
+    for ( int i = 0; i < EXPLOSION_PARTICLES; i++ )
     {
       for ( Particle particle : particles )
       {
         if (!particle.active)
         {
-          particle.activateParticle(x, y, random(3, 6), random(-3, 3), random(-3, 3), 1, round(random(30, 70) ) );
+          particleSpeed = random( 0.2, 2 );
+          particleAngle = random( 0, 2 * PI );
+          particleSize = random( 15, 40 );
+          particleSpeedX = particleSpeed * sin(particleAngle);
+          particleSpeedY = particleSpeed * -cos(particleAngle);
+          particleLifespan = round( 60 - particleSize * 1.2 );
+          particle.activateParticle( x, y, particleSize, particleSpeedX, particleSpeedY, particleLifespan );
           break;
         }
       }
-    } 
+    }
   }
 
   float getPlayerAngle( Rectangle rectangle)

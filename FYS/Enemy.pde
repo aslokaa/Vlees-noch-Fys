@@ -15,6 +15,13 @@ class Enemy
   float y;
   float speedX;
   float speedY;
+  int EXPLOSION_PARTICLES;
+  float particleAngle;
+  float particleSpeed;
+  float particleSize;
+  int particleLifespan;
+  float particleSpeedX;
+  float particleSpeedY;
 
   Enemy(boolean active, float x, float y, float hitboxRadius)
   {
@@ -78,7 +85,23 @@ class Enemy
 
   void explode()//handles dying animation.
   {
-    println("define the explode method before using it");
+    for ( int i = 0; i < EXPLOSION_PARTICLES; i++ )
+    {
+      for ( Particle particle : particles )
+      {
+        if (!particle.active)
+        {
+          particleSpeed = random( 0.2, 2 );
+          particleAngle = random( 0, 2 * PI );
+          particleSize = random( 15, 40 );
+          particleSpeedX = particleSpeed * sin(particleAngle) + speedX / 2;
+          particleSpeedY = particleSpeed * -cos(particleAngle) + speedY / 2;
+          particleLifespan = round( 60 - particleSize * 1.2 );
+          particle.activateParticle( x, y, particleSize, particleSpeedX, particleSpeedY, particleLifespan );
+          break;
+        }
+      }
+    }
   }
 
   void display()//gets called in the drawGame method in the main.

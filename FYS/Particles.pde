@@ -13,7 +13,7 @@ class Particle {
   float diameter;
   boolean active;
   int lifeTime;
-  int particleNumber;
+  //int particleNumber;
   color drawColor = color(255, 255, 255);
   float spinSpeed;
   float drawAngle;
@@ -44,7 +44,7 @@ class Particle {
 
   void display() {
     if (active) {
-     
+     /*
       //fill(drawColor);
       // ellipse(x, y, diameter, diameter);
 
@@ -62,6 +62,7 @@ class Particle {
         particleAnimation.display(0, 0);
         rotate( -drawAngle );
         translate( -x, -y );
+        /*
         break;
       case 2:
         //fill(Colors.BLUE);
@@ -80,7 +81,7 @@ class Particle {
         fill(Colors.YELLOW);
         ellipse(x, y, diameter, diameter);
         break;
-      }
+      }*/
     }
   }
   void move() {
@@ -107,13 +108,13 @@ class Particle {
     }
   }
 
-  void activateParticle(float x, float y, float diameter, float velocityX, float velocityY, int particleNumber, int lifeTime) { //here you activate the particles
+  void activateParticle(float x, float y, float diameter, float velocityX, float velocityY, /*int particleNumber,*/ int lifeTime) { //here you activate the particles
     this.x = x;
     this.y = y;
     this.diameter = diameter;
     this.velocityX = velocityX;
     this.velocityY = velocityY;
-    this.particleNumber = particleNumber;
+    //this.particleNumber = particleNumber;
     this.lifeTime = lifeTime;
     active = true;
     spinSpeed = random( -0.2, 0.2);

@@ -22,7 +22,6 @@ class EnemyChad extends Enemy
   float spawnChance;
   float spawnRate;
   //particle info
-  final int EXPLOSION_PARTICLES;
 
   EnemyChad(float x, float y, float hitboxRadius)
   {
@@ -141,27 +140,14 @@ class EnemyChad extends Enemy
 
   @Override void destroy()
   {
+    explode();
     active = false;
     score = score + 100;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
-    explode();
   }
 
-  @Override void explode()
-  {
-    for ( int i = 0; i < EXPLOSION_PARTICLES; i++ )
-    {
-      for ( Particle particle : particles )
-      {
-        if (!particle.active)
-        {
-          particle.activateParticle(x, y, random(3, 6), random(-3, 3), random(-3, 3), 1, round(random(30, 70) ) );
-          break;
-        }
-      }
-    }
-  }
+ 
 
   @Override void spawnPowerup()
   {
