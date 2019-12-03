@@ -217,6 +217,7 @@ class BossLester
     if ( !hitboxLeft.active && !hitboxBottom.active && !hitboxRight.active )
     {
       active = false;
+      stateBossLester=false;
       score = score + 1000;
     }
   }

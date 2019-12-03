@@ -4,7 +4,6 @@
 
 //this class handles the startscreen.
 
-//Moet ook de ball inladen!!
 class Startscreen
 {
   private final float
@@ -35,7 +34,7 @@ class Startscreen
     updateGameStates();
     if ( drawn )
     {
-      // setupGame();
+      setupGame();
     } 
     if ( soundsInitialized )
     {
