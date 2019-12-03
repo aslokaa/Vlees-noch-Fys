@@ -121,7 +121,7 @@ class Player
 
   //draws the standard player.
   private void display()
-  {
+  { 
     image(image, x, y, playerWidth, playerHeigth );
     image(playerSidesImg, x - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
     image(playerSidesImg, x + playerWidth - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
@@ -487,24 +487,23 @@ class Player
   //Retrieves the color the player should have.
   private PImage changeImage()
   {
-    return playerForcefieldImg;
-    /*if (shake)
-     {
-     return playerDmgImg;
-     }
-     if ( inverted )
-     {
-     return playerReverseImg;
-     } else if (immune)
-     {
-     return playerShieldImg;
-     } else if (slow)
-     {
-     return playerSlowImg;
-     } else
-     {
-     return playerForcefieldImg;
-     }*/
+    if (shake)
+    {
+      return playerDmgImg;
+    }
+    if ( inverted )
+    {
+      return playerReverseImg;
+    } else if (immune)
+    {
+      return playerShieldImg;
+    } else if (slow)
+    {
+      return playerSlowImg;
+    } else
+    {
+      return playerForcefieldImg;
+    }
   }
   //checks if you can shoot a bullet.
   private void shoot()

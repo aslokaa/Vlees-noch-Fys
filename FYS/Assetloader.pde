@@ -34,7 +34,6 @@ PImage[] explosionAnimation = new PImage[5];
 PImage[] ballAnimation = new PImage[3];
 PImage[] enemyBulletAnimation = new PImage[3];
 String  fileName;
-
 String connServer = "oege.ie.hva.nl";
 String connDB = "zroete";
 String connUser = "roete";

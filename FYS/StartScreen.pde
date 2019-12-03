@@ -21,21 +21,21 @@ class Startscreen
     bulletsInitialized =false, //checks if bullets are initialized.
     soundsInitialized  =false, //checks if sounds are initialized.
     powerInitialized   =false, //checks if powers are intitialized.
-    particleInitialized = false,
-    ballsInitialized = false,
+    particleInitialized = false, 
+    ballsInitialized = false, 
     animationInitialized = false;
-    
-    Startscreen()
-    {
-      setupGame();
-    }
+
+  Startscreen()
+  {
+    setupGame();
+  }
 
   public void update()
   {
     updateGameStates();
     if ( drawn )
     {
-     // setupGame();
+      // setupGame();
     } 
     if ( soundsInitialized )
     {
@@ -87,8 +87,11 @@ class Startscreen
     }
     if ( !animationInitialized )
     {
-     text("LOADING ANIMATIONS", SUBTITLE_X, SUBTITLE_Y);
-     loadAnimations();
+      text("LOADING ANIMATIONS", SUBTITLE_X, SUBTITLE_Y);
+      loadAnimations();
+    }
+    if (!ballsInitialized) {
+      loadBalls();
     }
   }
   //initializes sound
@@ -98,8 +101,8 @@ class Startscreen
     menuSounds    = new MenuSounds();
     soundsInitialized=true;
   }
-  
-  private void loadBalls(){
+
+  private void loadBalls() {
     balls.add(new Ball());
     ballsInitialized=true;
   }
@@ -134,7 +137,6 @@ class Startscreen
     }
 
     bulletsInitialized = true;
-
   }
 
   private void loadPowers()
@@ -145,7 +147,7 @@ class Startscreen
     }
     powerInitialized = true;
   }
-  
+
   private void loadParticles()
   {
     for (int i = 0; i < Arrays.PARTICLE_COUNT; i++) 
@@ -154,7 +156,7 @@ class Startscreen
     }
     particleInitialized = true;
   }
-  
+
   private void loadAnimations()
   {
     for (int i = 0; i < Arrays.ANIMATION_COUNT; i++) 

@@ -204,6 +204,6 @@ void keyReleased() {
 
 void draw()
 {
-  updateGame();
-  drawGame();
+    updateGame();
+    drawGame();
 }
