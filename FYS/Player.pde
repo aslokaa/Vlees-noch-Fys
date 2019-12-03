@@ -19,9 +19,9 @@ class Player
     PLAYER_START_ACCELERATION_Y     = height * 0.003, 
     PLAYER_VELOCITY_Y_MAX           = height * 0.012, 
     PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.3, 
-    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.6,
-    ROCKET_SPRITE_HEIGHT            = 30,
-    ROCKET_SPRITE_X                 = 15,
+    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.6, 
+    ROCKET_SPRITE_HEIGHT            = 30, 
+    ROCKET_SPRITE_X                 = 15, 
     SLOW_MODIFIER                   = 0.9, 
     SPLIT_WIDTH_MODIFIER            = 0.75, 
     BOUNCE_MODIFIER                 = -0.8, 
@@ -71,6 +71,7 @@ class Player
     ammo; //amount of ammo 
   private Rectangles
     hitboxes;
+  private PImage image;
 
 
   public Player() //Constructor
@@ -86,6 +87,7 @@ class Player
     decelerateY       = PLAYER_START_DECELERATE_Y;
     hitboxes          = new Rectangles();
     ammo              = STARTING_BULLETS;
+    image             = playerForcefieldImg;
   }
 
   //updates the player
@@ -102,26 +104,27 @@ class Player
   //checks how to player should be drawn.
   public void checkDisplay()
   {
+    noStroke();
+    image=changeImage();
+    imageMode(CORNER);
     if (shake)
     {
       shake();
     } else if (split)
     {
       displaySplit();
-    } else
+    } else {
       display();
+    }
+    imageMode(CENTER);
   }
 
   //draws the standard player.
   private void display()
   {
-    noStroke();
-    fill(getColor());
-    imageMode(CORNER);
-    image(playerForcefieldImg, x, y, playerWidth, playerHeigth );
-    image(playerSidesImg, x - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT , playerHeigth);
-    image(playerSidesImg, x + playerWidth - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT , playerHeigth);
-    imageMode(CENTER);
+    image(image, x, y, playerWidth, playerHeigth );
+    image(playerSidesImg, x - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
+    image(playerSidesImg, x + playerWidth - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
   }
   //shakes the player
   private void shake()
@@ -143,17 +146,12 @@ class Player
   //draws the splitted player.
   private void displaySplit()
   {
-    noStroke();
-    fill(getColor());
-    imageMode(CORNER);
-    image(playerForcefieldImg, x, y, widthSplit0, playerHeigth );
-    image(playerSidesImg, x - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT , playerHeigth);
-    image(playerSidesImg, x + widthSplit0 - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT , playerHeigth);
-    
-    image(playerForcefieldImg, xSplit, y, widthSplit1, playerHeigth );
-    image(playerSidesImg, xSplit - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT , playerHeigth);
-    image(playerSidesImg, xSplit + widthSplit1 - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT , playerHeigth);
-    imageMode(CENTER);
+    image(image, x, y, widthSplit0, playerHeigth );
+    image(playerSidesImg, x - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
+    image(playerSidesImg, x + widthSplit0 - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
+    image(image, xSplit, y, widthSplit1, playerHeigth );
+    image(playerSidesImg, xSplit - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
+    image(playerSidesImg, xSplit + widthSplit1 - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
   }
 
   //detects user inputs.
@@ -487,25 +485,26 @@ class Player
   }
 
   //Retrieves the color the player should have.
-  private color getColor()
+  private PImage changeImage()
   {
-    if (shake)
-    {
-      return Colors.RED;
-    }
-    if ( inverted )
-    {
-      return Colors.GREEN;
-    } else if (immune)
-    {
-      return Colors.WHITE;
-    } else if (slow)
-    {
-      return Colors.BLUE;
-    } else
-    {
-      return Colors.PINK;
-    }
+    return playerForcefieldImg;
+    /*if (shake)
+     {
+     return playerDmgImg;
+     }
+     if ( inverted )
+     {
+     return playerReverseImg;
+     } else if (immune)
+     {
+     return playerShieldImg;
+     } else if (slow)
+     {
+     return playerSlowImg;
+     } else
+     {
+     return playerForcefieldImg;
+     }*/
   }
   //checks if you can shoot a bullet.
   private void shoot()
@@ -568,8 +567,8 @@ class Player
   {
     split=false;
     playerWidth=widthSplit0+widthSplit1;
-    if (playerWidth>PLAYER_MAX_WIDTH){
-     playerWidth=PLAYER_MAX_WIDTH; 
+    if (playerWidth>PLAYER_MAX_WIDTH) {
+      playerWidth=PLAYER_MAX_WIDTH;
     }
     splitTimer=0;
     if (widthSplit0>=widthSplit1)
