@@ -1,7 +1,34 @@
 MySQL conn;
-PImage bulletImg ,shieldPowerImg, invertedPowerImg, bombPowerImg, snailPowerImg, bulletPowerImg, playerSidesImg, 
-playerForcefieldImg, playerSlowImg, playerShieldImg, playerReverseImg, playerDmgImg, lesterBodyImg, lesterHitbox4HPImg, lesterHitbox3HPImg, lesterHitbox2HPImg, lesterHitbox1HPImg, lesterHitbox0HPImg, 
-enemyDaveImg, enemyChadImg, enemyChadThrusterImg, explosionImg, smokeImg1, smokeImg2, powerHpUpImg, BallFys1Img, BallFys2Img, BallFys3Img, splitPowerImg;
+PImage 
+      bulletImg, 
+      shieldPowerImg, 
+      invertedPowerImg, 
+      bombPowerImg, 
+      snailPowerImg, 
+      bulletPowerImg, 
+      playerSidesImg, 
+      playerForcefieldImg,
+      playerSlowImg, 
+      playerShieldImg, 
+      playerReverseImg, 
+      playerDmgImg, 
+      lesterBodyImg, 
+      lesterHitbox4HPImg, 
+      lesterHitbox3HPImg, 
+      lesterHitbox2HPImg, 
+      lesterHitbox1HPImg, 
+      lesterHitbox0HPImg, 
+      enemyDaveImg, 
+      enemyChadImg, 
+      enemyChadThrusterImg, 
+      explosionImg, 
+      smokeImg1, 
+      smokeImg2, 
+      powerHpUpImg, 
+      BallFys1Img, 
+      BallFys2Img, 
+      BallFys3Img, 
+      splitPowerImg;
 
 PImage[] explosionAnimation = new PImage[5];
 PImage[] ballAnimation = new PImage[3];
