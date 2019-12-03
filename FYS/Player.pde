@@ -8,18 +8,18 @@
 class Player
 {
   public final float
-    PLAYER_START_WIDTH              = gamefield.GAMEFIELD_WIDTH * 0.13, 
+    PLAYER_START_WIDTH              = gamefield.GAMEFIELD_WIDTH * 0.16, 
     PLAYER_START_HEIGHT             = height * 0.045, 
     PLAYER_START_X                  = gamefield.GAMEFIELD_WIDTH / 2-PLAYER_START_WIDTH/2, 
     PLAYER_START_Y                  = height - PLAYER_START_HEIGHT, 
-    PLAYER_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.003, 
+    PLAYER_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.0035, 
     PLAYER_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.01, 
     PLAYER_START_DECELERATE_X       = 0.85, 
     PLAYER_START_DECELERATE_Y       = 0.85, 
     PLAYER_START_ACCELERATION_Y     = height * 0.003, 
     PLAYER_VELOCITY_Y_MAX           = height * 0.012, 
     PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.3, 
-    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.6, 
+    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.4, 
     ROCKET_SPRITE_HEIGHT            = 30, 
     ROCKET_SPRITE_X                 = 15, 
     SLOW_MODIFIER                   = 0.9, 
@@ -297,6 +297,9 @@ class Player
       {
         ball.isChargedBom=true;
       }
+      break;
+      case PowerUpTypes.EXTRA_BALL:
+      balls.add(new Ball(x+500));
       break;
     default:
       println("modifyPower default");

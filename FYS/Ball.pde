@@ -37,19 +37,8 @@ class Ball {
 
   Ball(float x)
   {
-    this.x= x;
-    y = height/2;
-    speedX = 0;
-    speedY = height * 0.013;
-    radius = 25;
-    colorBall = Colors.BLUE;
-    active = true;
-    ballRespawn=false;
-    diameter = radius*2;
-    maxSpeedX = height * 0.013;
-    ballRespawnTimer = 0;
-    timerCount = 60;
-    isChargedBom = false;
+    this();
+    this.x=x;
   }
 
   void setAnimation()

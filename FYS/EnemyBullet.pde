@@ -71,7 +71,8 @@ class EnemyBullet
     }
   }
 
-  void shoot(float x, float y, float angle)
+  void shoot(float
+  x, float y, float angle)
   {   
     active = true;
     this.x = x;

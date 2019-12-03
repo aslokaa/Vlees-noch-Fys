@@ -27,12 +27,12 @@ class Gamefield
     CHAD_COUNTER_START              = 0, 
     DAVE_COUNTER_START              = 10, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2, //<>//
+    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>//
     WAVES_UNTILL_DAVE               = 1,
     WAVE3_CHADS                     = 1,
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50; //<>//
+    DAVE_MAX                        = 50; //<>// //<>// //<>//
 
   private int 
     waveCounter, 

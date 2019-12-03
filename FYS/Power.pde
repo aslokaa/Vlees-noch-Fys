@@ -32,33 +32,37 @@ class Power {
   void display() { //Gets a random number out of enemyDave and spawns the power with that number
     if (powerActive) {
       switch(powerNumber) {
-      case 0 : 
+      case PowerUpTypes.INVERTED : 
         fill(Colors.DARK_GREEN);
         image(invertedPowerImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
-      case 1 : 
+      case PowerUpTypes.IMMUNE : 
         fill(Colors.WHITE);
         image(shieldPowerImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
-      case 2 :
+      case PowerUpTypes.SLOW :
         fill(Colors.BLUE);
         image(snailPowerImg, x, y, hitboxDiameter * 1.3, hitboxDiameter * 1.3);
         break;
-      case 3 :
+      case PowerUpTypes.HP_UP :
         fill(Colors.GREEN);
         image(powerHpUpImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
-      case 4 :
+      case  PowerUpTypes.AMMO_UP:
         fill(Colors.YELLOW);
         image(bulletPowerImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
-      case 5 :
+      case PowerUpTypes.BOOM_BALL :
         fill(Colors.MAGENTA);
         image(bombPowerImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
-      case 6 :
+      case PowerUpTypes.SPLIT :
         fill(Colors.PINK);
         image(splitPowerImg,x, y, hitboxDiameter, hitboxDiameter);
+        break;
+        case PowerUpTypes.EXTRA_BALL :
+        fill(Colors.BLUE);
+        ellipse(x,y,hitboxDiameter,hitboxDiameter);
         break;
         default:
       }
