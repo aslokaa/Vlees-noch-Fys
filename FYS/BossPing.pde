@@ -32,7 +32,7 @@ class BossPing
     BOSS_VELOCITY_Y_MAX           = height * 0.012, 
     BOSS_MAX_Y                    = height / 2, 
     BALL_IS_CLOSE                 = BOSS_START_WIDTH*0.3, 
-    BACKGROUND_LINE_SIZE          = width*0.01, 
+    BACKGROUND_LINE_SIZE          = gamefield.GAMEFIELD_WIDTH*0.01, 
     BOSS_START_DECELERATE_X       = 0.8, 
     BOSS_START_DECELERATE_Y       = 0.8;
   public final int
@@ -200,9 +200,9 @@ class BossPing
       x = 0;
       velocityX = 0;
     }
-    if ( x + bossWidth > width )
+    if ( x + bossWidth > gamefield.GAMEFIELD_WIDTH )
     {
-      x = width - bossWidth;
+      x = gamefield.GAMEFIELD_WIDTH - bossWidth;
       velocityX = 0;
     }
   }
@@ -240,8 +240,9 @@ class BossPing
   private void displayBackground()
   {
     fill (Colors.DARK_GREEN);
-    for ( int i =0; i < width / BACKGROUND_LINE_SIZE; i++ )
+    for ( int i =0; i < gamefield.GAMEFIELD_WIDTH/ (BACKGROUND_LINE_SIZE*2); i++ )
     {
+      println(gamefield.GAMEFIELD_WIDTH / BACKGROUND_LINE_SIZE *2);
       rect(BACKGROUND_LINE_SIZE * i * 2, height/2 - BACKGROUND_LINE_SIZE/2, BACKGROUND_LINE_SIZE, BACKGROUND_LINE_SIZE);
     }
   }

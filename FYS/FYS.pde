@@ -128,9 +128,10 @@ void drawGame()
     background(0);
     fill(Colors.RED);
     rect(gamefield.GAMEFIELD_WIDTH, 0, width, height);
-
+    
     space.display();
     scores.display();
+
 
     for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
     {
@@ -204,6 +205,6 @@ void keyReleased() {
 
 void draw()
 {
-    updateGame();
-    drawGame();
+  updateGame();
+  drawGame();
 }
