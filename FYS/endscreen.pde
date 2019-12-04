@@ -15,6 +15,9 @@ class Endscreen
   }
   public void update()
   {
+    if (score <= 0) {// score can't go lower than 0
+      score = 0;
+    }
     restart();
   }
 
@@ -40,6 +43,7 @@ class Endscreen
       {
         powers[i].powerActive=false;
       }
+       
       score             = 0;
     }
   }
