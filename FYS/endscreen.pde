@@ -40,6 +40,7 @@ class Endscreen
       {
         powers[i].powerActive=false;
       }
+       
       score             = 0;
     }
   }

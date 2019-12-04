@@ -299,7 +299,8 @@ class Player
       }
       break;
       case PowerUpTypes.EXTRA_BALL:
-      balls.add(new Ball(x+500));
+      //balls.add(new Ball(y-500));
+      restoreHealth(40);
       break;
     default:
       println("modifyPower default");
