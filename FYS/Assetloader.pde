@@ -28,7 +28,9 @@ PImage
       BallFys1Img, 
       BallFys2Img, 
       BallFys3Img, 
-      splitPowerImg;
+      splitPowerImg,
+      bulletPlaceholder,
+      shieldPlaceholder;
 
 PImage[] explosionAnimation = new PImage[5];
 PImage[] ballAnimation = new PImage[3];
@@ -64,6 +66,8 @@ public void loadAssets() {
   invertedPowerImg = loadImage("./sprites/inverted.png");
   shieldPowerImg = loadImage("./sprites/shield.png");
   splitPowerImg = loadImage("./sprites/split2.0.png");
+  bulletPlaceholder = loadImage("./sprites/BulletPlaceholder.png");
+  shieldPlaceholder = loadImage("./sprites/shieldPlaceholder.png");
 
   smokeImg1 = loadImage("./sprites/smokeParticle1.png");
   smokeImg2 = loadImage("./sprites/smokeParticle2.png");

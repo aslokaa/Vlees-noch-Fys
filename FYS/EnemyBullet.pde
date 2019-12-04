@@ -1,15 +1,26 @@
+/*
+this class contains a bullet that can be fired by enemies.
+when activated they are given an angle and a speed.
+bullets have player collision.
+*/
+
 class EnemyBullet
 {
   boolean active = false;
+  //position
   float x;
   float y;
+  //angle and speed
   float angle;
   float speedX;
   float speedY; 
   float speed;
+  //
   final float DAMAGE_TO_DEAL;
+  //size
   final float DIAMETER = 30;
   final float RADIUS = DIAMETER /2;
+  //graveyard position
   final float START_X = -100;
   final float START_Y = -100;
   Rectangles hitboxesToCheck;

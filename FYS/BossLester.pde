@@ -1,32 +1,39 @@
+/* this class contains bossfight lester.
+ lester has 3 seperate hitboxes which are made from the hitboxLester class.
+ lester shoots 2 bullets from every hitbox for every set interval.
+ lester also activates a chad enemy at a random hitbox every set interval.
+ lester also spawns 2 kinds of powerups randomly troughout the fight every set interval.
+ 
+ Eele
+ */
+
 class BossLester
 {
   boolean active;
+  //position
   float x;
   float y;
+  //sizes
   float bodySize;
   final float HITBOX_OFFSET;
+  //behavior timers
   final int SHOOT_TIMER;
   final int CHAD_SPAWN_TIMER;
   final int POWER_SPAWN_TIMER;
+  final float BODY_SPRITE_OFFSET;
+  //random placeholders
   float angle;
   int randomNumber;
   int hitboxToFire;
   Enemy chadToSpawn;
-
-
-
   float bulletAngle;
+  //hitboxes
   PVector hitboxLeftPos = new PVector();
   PVector hitboxBottomPos = new PVector();
   PVector hitboxRightPos = new PVector();
-
   BossLesterHitbox hitboxLeft; 
   BossLesterHitbox hitboxBottom; 
   BossLesterHitbox hitboxRight;
-
-  final float BODY_SPRITE_OFFSET;
-
-
 
   BossLester(float x, float y)
   {
@@ -60,27 +67,37 @@ class BossLester
       hitboxLeft.update();
       hitboxBottom.update();
       hitboxRight.update();
-      checkAlive();
-
-      //setHitboxPositions();
-      //check collisions
     }
   }
 
   void executeBehavior()
   {
+    checkAlive();
     shootPlayer();
     spawnChad();
     spawnPower();
   }
 
+  void checkAlive()//sets active to false when all hitboxes have 0 hp.
+  {
+    if ( !hitboxLeft.active && !hitboxBottom.active && !hitboxRight.active )
+    {
+      active = false;
+      stateBossLester=false;
+      score = score + 1000;
+    }
+  }
+
+
+  //every SHOOT_TIMER amount of frames 1 hitbox shoots 2 bullets at
+  //player.x - player.width and player.x + 2 * player.width. 
+  //after shooting hitboxToFire goes up by 1 and the next cycle the next hitbox will shoot
   void shootPlayer()
   {
     if ( frameCount % SHOOT_TIMER == 0 )
     {
-      println(frameCount);
       Rectangles hitboxesToCheck = player.getHitboxes();
-      if ( hitboxesToCheck.rectangle1.exists )
+      if ( hitboxesToCheck.rectangle1.exists )//this if statement handles shooting the regular hitbox
       {
         if ( hitboxLeft.active && hitboxToFire == 1 )
         {
@@ -104,7 +121,7 @@ class BossLester
           findInactiveBullet().shoot(hitboxRight.x, hitboxRight.y, bulletAngle);
         }
       } 
-      if ( hitboxesToCheck.rectangle0.exists )
+      if ( hitboxesToCheck.rectangle0.exists )//this if statement handles shooting the second hitbox when the player is split
       {
         if ( hitboxLeft.active && hitboxToFire == 1)
         {
@@ -130,7 +147,6 @@ class BossLester
       }
 
       hitboxToFire++;
-      println(hitboxToFire);
       if ( hitboxToFire > 3 )
       {
         hitboxToFire = 1;
@@ -138,7 +154,7 @@ class BossLester
     }
   }
 
-  EnemyBullet findInactiveBullet()
+  EnemyBullet findInactiveBullet()//returns an inactive enemybullet from the array.
   {
 
     for ( EnemyBullet bullet : enemyBullets ) 
@@ -151,6 +167,8 @@ class BossLester
     return null;
   }
 
+
+  //finds the angle to the player by using the translate and atan2 methods found in the processing reference.
   float getBulletSpeed(float boxX, float boxY, Rectangle rectangle, boolean left)
   {
 
@@ -169,7 +187,7 @@ class BossLester
     return angle;
   }
 
-  void spawnChad()
+  void spawnChad()//spawns a chad at the position of a random hitbox
   {
 
     if ( frameCount % CHAD_SPAWN_TIMER == 0 )
@@ -212,21 +230,11 @@ class BossLester
     }
   }
 
-  void checkAlive()
-  {
-    if ( !hitboxLeft.active && !hitboxBottom.active && !hitboxRight.active )
-    {
-      active = false;
-      stateBossLester=false;
-      score = score + 1000;
-    }
-  }
 
   void display()
   {
     if ( active )
     {
-
       hitboxLeft.display();
       hitboxBottom.display();
       hitboxRight.display();

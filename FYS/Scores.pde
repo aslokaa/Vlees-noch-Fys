@@ -25,8 +25,10 @@ class Scores {
   }
 
   void display() {
-
+    fill(Colors.RED);
+    rect(gamefield.GAMEFIELD_WIDTH, 0, width, height);
     textSize(textsize);
+    fill(Colors.WHITE);
 
     text("SCORE:", width*0.93, height*0.95);//displays the score throughout the game
     text(score, width*0.93, height*0.98);
@@ -39,8 +41,9 @@ class Scores {
     if ( time/60 > 9) {//10 to 60 seconds stay the same
       text(min+":"+time/60, width*0.93, height*0.89);
     }
-
-    text("AMMO:" + player.getAmmo(), width*0.93, height*0.79);//shows the ammo the player currently haves
+    image( player.getHasImmune() ? shieldPowerImg : shieldPlaceholder, width*0.91, height*0.70, 80, 80 );
+    image( bulletPlaceholder, width*0.91, height*0.79, 80, 60);
+    text( player.getAmmo(), width*0.95, height*0.79);//shows the ammo the player currently haves
 
     text("WAVE  " + gamefield.waveCounter, width*0.93, height*0.05);//every completed wave counts up the wavecounter by 1
   }
