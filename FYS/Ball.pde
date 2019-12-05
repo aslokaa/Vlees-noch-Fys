@@ -43,17 +43,19 @@ class Ball {
 
   void setAnimation()
   {
-    for ( Animation newAnimation : animations )
-    {
-      if ( !newAnimation.active )
+    if (!isChargedBom) {
+      for ( Animation newAnimation : animations )
       {
-        animation = newAnimation; 
-        animation.initializeAnimation(ballAnimation, 3, 15, diameter);
-        break;
+        if ( !newAnimation.active )
+        {
+          animation = newAnimation; 
+          animation.initializeAnimation(ballAnimation, 3, 15, diameter);
+          break;
+        }
       }
     }
   }
-  
+
   void updateBall() {
 
 
@@ -71,9 +73,15 @@ class Ball {
   void drawBall() {
     animation.display(x, y);
     noFill();
-    stroke(Colors.BLUE);
-    strokeWeight(5);
-    ellipse(x, y, diameter, diameter);
+    if (!isChargedBom) { 
+      stroke(Colors.BLUE);
+      strokeWeight(5);
+      ellipse(x, y, diameter, diameter);
+    } else { 
+      stroke(Colors.RED);
+      strokeWeight(5);
+      ellipse(x, y, diameter, diameter);
+    }
   }
 
   //gravity
