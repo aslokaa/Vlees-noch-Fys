@@ -172,7 +172,7 @@ class Gamefield
   }
 
 
-  //a special wave that only spawns 2 chads
+  //a special wave that only spawns chads
   private void spawnWave3()
   {
     for (int i =0; i<WAVE3_CHADS; i++) {
@@ -236,7 +236,7 @@ class Gamefield
   //starts the ping boss fight
   private void activatePing()
   {
-    ping             = new BossPing();
+    ping             = new BossPing();//moet in setup worden aangemaakt
     pingActivated    = true;
     stateBossPing    = true;
     spawnPing        = false;
@@ -245,7 +245,7 @@ class Gamefield
   //starts the lester boss fight
   private void activateLester()
   {
-    lester           = new BossLester(width / 2, 100);
+    lester           = new BossLester(width / 2, 100);//same here, nu heb je inactive objects in je memory.
     lesterActivated  = true;
     stateBossLester  = true;
     spawnLester      = false;

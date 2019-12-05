@@ -36,7 +36,7 @@ class BossLesterHitbox
   {
     this.x = x;
     this.y = y;
-    this.active = false;
+    this.active = true;
     this.HP = STARTING_HP;
     spriteSize = 100;
     this.EXPLOSION_PARTICLES = 75;

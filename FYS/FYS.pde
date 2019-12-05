@@ -39,7 +39,7 @@ void setup()
 {
   size( 1600, 900, P2D); //16:9
 
-  noSmooth();
+  smooth(4);
   introMusic               = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
   gamefield                = new Gamefield();
   space                    = new Space();

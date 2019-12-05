@@ -30,16 +30,16 @@ class Scores {
     textSize(textSize);
     fill(Colors.WHITE);
 
-    text("SCORE:", width*0.93, height*0.95);//displays the score throughout the game
-    text(score, width*0.93, height*0.98);
+    text("SCORE:", width*0.91, height*0.25);//displays the score throughout the game
+    text(score, width*0.97, height*0.25);
 
-    text("TIME", width*0.93, height*0.86);
+    text("TIME", width*0.90, height*0.15);
 
     if ( time/60 < 10) {//the first 9 seconds start with a 0
-      text(min+":"+"0"+time/60, width*0.93, height*0.89);
+      text(min+":"+"0"+time/60, width*0.95, height*0.15);
     }
     if ( time/60 > 9) {//10 to 60 seconds stay the same
-      text(min+":"+time/60, width*0.93, height*0.89);
+      text(min+":"+time/60, width*0.95, height*0.15);
     }
     image( player.getHasImmune() ? shieldPowerImg : shieldPlaceholder, width*0.91, height*0.70, 80, 80 );
     image( aButtonImg, width*0.97, height*0.7, width*0.03,width*0.03);
