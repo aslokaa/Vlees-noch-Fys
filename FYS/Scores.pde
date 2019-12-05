@@ -5,7 +5,7 @@ int score = 0;
 class Scores {
 
 
-  int textsize = 30;
+  int textSize = 30;
   int time = 0;
   int min = 0;
 
@@ -25,9 +25,9 @@ class Scores {
   }
 
   void display() {
-    fill(Colors.RED);
+    fill(Colors.BLUE);
     rect(gamefield.GAMEFIELD_WIDTH, 0, width, height);
-    textSize(textsize);
+    textSize(textSize);
     fill(Colors.WHITE);
 
     text("SCORE:", width*0.93, height*0.95);//displays the score throughout the game
@@ -42,8 +42,16 @@ class Scores {
       text(min+":"+time/60, width*0.93, height*0.89);
     }
     image( player.getHasImmune() ? shieldPowerImg : shieldPlaceholder, width*0.91, height*0.70, 80, 80 );
+    image( aButtonImg, width*0.97, height*0.7, width*0.03,width*0.03);
+    
     image( bulletPlaceholder, width*0.91, height*0.79, 80, 60);
-    text( player.getAmmo(), width*0.95, height*0.79);//shows the ammo the player currently haves
+    image( bButtonImg, width*0.97, height*0.79, width*0.03,width*0.03);
+    fill(Colors.RED);
+    textSize(textSize*1.5);
+    text( player.getAmmo(), width*0.94, height*0.81);
+    fill(Colors.WHITE);
+    textSize(textSize);
+
 
     text("WAVE  " + gamefield.waveCounter, width*0.93, height*0.05);//every completed wave counts up the wavecounter by 1
   }
