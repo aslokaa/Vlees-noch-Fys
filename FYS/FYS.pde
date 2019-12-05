@@ -55,7 +55,6 @@ void setup()
   pausescreen              = new Pausescreen();
   endscreen                = new Endscreen();
   font                     = loadFont("ComicSansMS-BoldItalic-40.vlw");
-
   loadAssets();
   imageMode(CENTER);
 }
