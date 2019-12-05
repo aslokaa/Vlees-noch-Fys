@@ -31,7 +31,7 @@ class EnemyChad extends Enemy
     speedX = 1;
     damageToDeal = 30;
     spawnRate = 0.15;
-    maxSpeed = 5;
+    maxSpeed = 4;
     EXPLOSION_PARTICLES = 50;
   }
 
