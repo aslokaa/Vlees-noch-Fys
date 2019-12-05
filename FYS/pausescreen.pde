@@ -15,8 +15,8 @@ class Pausescreen
 
   private final String[] OPTIONS_STRINGS  = new String[]
     {
-  /*   0    */    "Press escape to unpause", 
-  /*   1    */    "Press Z to end the game", 
+  /*   0    */    "Press start to unpause", 
+  /*   1    */    "Press select to end the game", 
   /*   2    */    //"Press S to decrease the volume", 
   /*   3    */    //"press Z to mute"
   };

@@ -113,7 +113,7 @@ class Ball {
         speedY *= -1;
         y = radius + 1;
       } else {
-        ballRespawn = true ;
+        ballRespawn = true;
         ballRespawnTimer = timerCount;
 
         x= gamefield.GAMEFIELD_WIDTH/2;
