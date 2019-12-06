@@ -8,18 +8,18 @@
 class Player
 {
   public final float
-    PLAYER_START_WIDTH              = gamefield.GAMEFIELD_WIDTH * 0.16, 
-    PLAYER_START_HEIGHT             = height * 0.045, 
+    PLAYER_START_WIDTH              = gamefield.GAMEFIELD_WIDTH * 0.17, 
+    PLAYER_START_HEIGTH             = height * 0.045, 
     PLAYER_START_X                  = gamefield.GAMEFIELD_WIDTH / 2-PLAYER_START_WIDTH/2, 
-    PLAYER_START_Y                  = height - PLAYER_START_HEIGHT, 
+    PLAYER_START_Y                  = height - PLAYER_START_HEIGTH, 
     PLAYER_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.0035, 
-    PLAYER_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.01, 
+    PLAYER_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.014, 
     PLAYER_START_DECELERATE_X       = 0.85, 
     PLAYER_START_DECELERATE_Y       = 0.85, 
     PLAYER_START_ACCELERATION_Y     = height * 0.003, 
     PLAYER_VELOCITY_Y_MAX           = height * 0.012, 
-    PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.3, 
-    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.4, 
+    PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.4, 
+    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.45, 
     ROCKET_SPRITE_HEIGHT            = 40, 
     ROCKET_SPRITE_X                 = 20, 
     SLOW_MODIFIER                   = 0.9, 
@@ -29,9 +29,8 @@ class Player
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*4, 
     IMMUNE_STARTING_TIMER           = SECOND*5, 
-    SLOW_STARTING_TIMER             = SECOND*6, 
-    SHAKE_MODIFIER_MIN              = -gamefield.GAMEFIELD_WIDTH *0.005, 
-    SHAKE_MODIFIER_MAX              = gamefield.GAMEFIELD_WIDTH *0.0005, 
+    SLOW_STARTING_TIMER             = SECOND*6,  
+    SHAKE_MODIFIER                  = gamefield.GAMEFIELD_WIDTH *0.005, 
     SHAKE_STARTING_TIMER            = SECOND*0.5, 
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
     BALL_HIT_STARTING_TIMER         = SECOND*0.5, 
@@ -84,7 +83,7 @@ class Player
     x                 = PLAYER_START_X;
     y                 = PLAYER_START_Y;
     playerWidth       = PLAYER_START_WIDTH;
-    playerHeigth      = PLAYER_START_HEIGHT;
+    playerHeigth      = PLAYER_START_HEIGTH;
     accelerationX     = PLAYER_START_ACCELERATION_X;
     accelerationY     = PLAYER_START_ACCELERATION_Y;
     velocityY         = PLAYER_VELOCITY_Y_MAX;
@@ -117,10 +116,10 @@ class Player
     } else if (shake)
     {
       shake();
-    } else{
-     checkSplit(); 
+    } else {
+      checkSplit();
     }
-    
+
     imageMode(CENTER);
   }
 
@@ -132,6 +131,7 @@ class Player
     image(playerSidesImg, x + playerWidth - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
   }
 
+  //checks if the split should be displayed
   private void checkSplit() {
     if (split)
     {
@@ -145,25 +145,24 @@ class Player
   //shakes the player
   private void shake()
   {
-    float xModifier = random( SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX );
-    float yModifier = random( SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX );
+    float xModifier = random( -SHAKE_MODIFIER, SHAKE_MODIFIER );
+    float yModifier = random( -SHAKE_MODIFIER, SHAKE_MODIFIER );
     x += xModifier;
     y += yModifier;
     checkSplit();
-    x -=xModifier;
-    y -=yModifier;
+    x -=xModifier*0.5;
+    y -=yModifier*0.5;
   }
 
+//increases the paddleheigth after hitting a ball.
   private void growBallHit() {
-    playerHeigth+=ballHitHeigth;
+    playerHeigth+=(ballHitHeigth-playerHeigth)*0.03;
     if (shake)
     {
       shake();
-    } else{
-     checkSplit(); 
+    } else {
+      checkSplit();
     }
-   
-    playerHeigth=PLAYER_START_HEIGHT;
   }
   //draws the splitted player.
   private void displaySplit()
@@ -468,54 +467,58 @@ class Player
       ballHitTimer--;
       if (ballHitTimer <= 0) {
         ballHit=false;
-      }
-
-      if (inverted)
-      {
-        invertedTimer--;
-        if ( invertedTimer <= 0 )
-        {
-          inverted=false;
-        }
-      }
-      if (immune)
-      {
-        immuneTimer--;
-        if ( immuneTimer <= 0 )
-        {
-          immune=false;
-        }
-      }
-      if (slow)
-      {
-        slowTimer--;
-        if ( slowTimer <= 0 )
-        {
-          slow=false;
-        }
-      }
-      if (shake)
-      {
-        shakeTimer--;
-        if ( shakeTimer <=0 )
-        {
-          shake=false;
-        }
-      }
-      if (split)
-      {
-        splitTimer--;
-        if ( splitTimer <= 0 )
-        {
-          endSplit();
-        }
-      }
-      if (shootTimer>0)
-      {
-        shootTimer--;
+        playerHeigth=PLAYER_START_HEIGTH;
       }
     }
+    if (inverted)
+    {
+      invertedTimer--;
+      if ( invertedTimer <= 0 )
+      {
+        inverted=false;
+      }
+    }
+    if (immune)
+    {
+      immuneTimer--;
+      if ( immuneTimer <= 0 )
+      {
+        immune=false;
+      }
+    }
+    if (slow)
+    {
+      slowTimer--;
+      if ( slowTimer <= 0 )
+      {
+        slow=false;
+      }
+    }
+    println(shake);
+    if (shake)
+    {
+      println(shakeTimer--);
+      slowTimer=0;
+      invertedTimer=0;
+      if ( shakeTimer <=0 )
+      {
+        shake=false;
+      }
+    }
+    if (split)
+    {
+      splitTimer--;
+      if ( splitTimer <= 0 )
+      {
+        endSplit();
+      }
+    }
+    if (shootTimer>0)
+    {
+      shootTimer--;
+    }
   }
+
   //Retrieves the color the player should have.
   private PImage changeImage()
   {
@@ -621,7 +624,7 @@ class Player
   public void collideBall(float ballVY) {
     ballHitTimer=BALL_HIT_STARTING_TIMER;
     ballHit=true;
-    ballHitHeigth=random(playerHeigth*0.1, playerHeigth*0.3);
+    ballHitHeigth=random(playerHeigth*1.1, playerHeigth*2);
     velocityY+=(velocityY+ballVY)*BALL_HIT_MODIFIER;
   }
 }
@@ -661,11 +664,6 @@ class Rectangle
   public boolean exists;
   public Rectangle()
   {
-    x=0;
-    y=0;
-    rectangleWidth=0;
-    rectangleHeight=0;
-    exists=false;
   }
   //updates the rectangle
   public void update(float x, float y, float rectangleWidth, float rectangleHeight, boolean exists)

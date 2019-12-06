@@ -22,7 +22,7 @@ class BossPing
     health, 
     damageTimer;
   private final float
-    BOSS_START_WIDTH              = gamefield.GAMEFIELD_WIDTH*0.13, 
+    BOSS_START_WIDTH              = gamefield.GAMEFIELD_WIDTH*0.12, 
     BOSS_START_HEIGHT             = height * 0.045, 
     BOSS_START_X                  = gamefield.GAMEFIELD_WIDTH/2-BOSS_START_WIDTH/2, 
     BOSS_START_Y                  = BOSS_START_HEIGHT, 
@@ -216,7 +216,7 @@ class BossPing
     }
     health-=damage;
     damageTimer=BOSS_DAMAGE_TIMER;
-    y-=y*0.5
+    y-=y*0.5;
     if ( health <= 0 )
     {
       killPing();

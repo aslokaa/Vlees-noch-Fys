@@ -50,11 +50,12 @@ class Test
       if(stateBossPing)
       {
         println("m Boss Ping leaving the game");
-     stateBossPing=false; 
+     ping.killPing();
       } else
       {
      println("m Boss Ping Entering the game");
-     stateBossPing=true; 
+     ping= new BossPing();
+     stateBossPing=true;
       }
       keysPressed['m']=false;
     }
