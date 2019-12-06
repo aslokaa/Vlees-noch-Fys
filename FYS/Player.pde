@@ -20,19 +20,21 @@ class Player
     PLAYER_VELOCITY_Y_MAX           = height * 0.012, 
     PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.3, 
     PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.4, 
-    ROCKET_SPRITE_HEIGHT            = 30, 
-    ROCKET_SPRITE_X                 = 15, 
+    ROCKET_SPRITE_HEIGHT            = 40, 
+    ROCKET_SPRITE_X                 = 20, 
     SLOW_MODIFIER                   = 0.9, 
     SPLIT_WIDTH_MODIFIER            = 0.75, 
+    BALL_HIT_MODIFIER               = 0.35, 
     BOUNCE_MODIFIER                 = -0.8, 
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*4, 
     IMMUNE_STARTING_TIMER           = SECOND*5, 
     SLOW_STARTING_TIMER             = SECOND*6, 
-    SHAKE_MODIFIER_MIN              = -gamefield.GAMEFIELD_WIDTH *0.003, 
-    SHAKE_MODIFIER_MAX              = gamefield.GAMEFIELD_WIDTH *0.0003, 
+    SHAKE_MODIFIER_MIN              = -gamefield.GAMEFIELD_WIDTH *0.005, 
+    SHAKE_MODIFIER_MAX              = gamefield.GAMEFIELD_WIDTH *0.0005, 
     SHAKE_STARTING_TIMER            = SECOND*0.5, 
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
+    BALL_HIT_STARTING_TIMER         = SECOND*0.5, 
     SPLIT_STARTING_TIMER            = SECOND*15;
 
   public final int
@@ -51,6 +53,7 @@ class Player
     velocityY, 
     decelerateX, 
     decelerateY, 
+    ballHitHeigth, 
     widthSplit0, 
     widthSplit1;
   private boolean 
@@ -59,6 +62,7 @@ class Player
     slow, //slows the paddle
     shake, //shakes the paddle
     hasImmune, //if the player is holding an immunity buff
+    ballHit, //enlarges the paddle after hitting the ball.
     split;       //splits the paddle
   private float //Duration of effects.
     invertedTimer, 
@@ -66,6 +70,7 @@ class Player
     slowTimer, 
     shakeTimer, 
     splitTimer, 
+    ballHitTimer, 
     shootTimer; 
   private int 
     ammo; //amount of ammo 
@@ -107,15 +112,15 @@ class Player
     noStroke();
     image=changeImage();
     imageMode(CORNER);
-    if (shake)
+    if (ballHit) {
+      growBallHit();
+    } else if (shake)
     {
       shake();
-    } else if (split)
-    {
-      displaySplit();
-    } else {
-      display();
+    } else{
+     checkSplit(); 
     }
+    
     imageMode(CENTER);
   }
 
@@ -126,13 +131,8 @@ class Player
     image(playerSidesImg, x - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
     image(playerSidesImg, x + playerWidth - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
   }
-  //shakes the player
-  private void shake()
-  {
-    float xModifier = random( SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX );
-    float yModifier = random( SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX );
-    x += xModifier;
-    y += yModifier;
+
+  private void checkSplit() {
     if (split)
     {
       displaySplit();
@@ -140,8 +140,30 @@ class Player
     {
       display();
     }
+  }
+
+  //shakes the player
+  private void shake()
+  {
+    float xModifier = random( SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX );
+    float yModifier = random( SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX );
+    x += xModifier;
+    y += yModifier;
+    checkSplit();
     x -=xModifier;
     y -=yModifier;
+  }
+
+  private void growBallHit() {
+    playerHeigth+=ballHitHeigth;
+    if (shake)
+    {
+      shake();
+    } else{
+     checkSplit(); 
+    }
+   
+    playerHeigth=PLAYER_START_HEIGHT;
   }
   //draws the splitted player.
   private void displaySplit()
@@ -298,7 +320,7 @@ class Player
         ball.isChargedBom=true;
       }
       break;
-      case PowerUpTypes.EXTRA_BALL:
+    case PowerUpTypes.EXTRA_BALL:
       //balls.add(new Ball(y-500));
       restoreHealth(40);
       break;
@@ -442,52 +464,58 @@ class Player
   //Keeps track of which powers are active and deactivates them.
   private void powerCountdown()
   {
-    if (inverted)
-    {
-      invertedTimer--;
-      if ( invertedTimer <= 0 )
-      {
-        inverted=false;
+    if (ballHit) {
+      ballHitTimer--;
+      if (ballHitTimer <= 0) {
+        ballHit=false;
       }
-    }
-    if (immune)
-    {
-      immuneTimer--;
-      if ( immuneTimer <= 0 )
+
+      if (inverted)
       {
-        immune=false;
+        invertedTimer--;
+        if ( invertedTimer <= 0 )
+        {
+          inverted=false;
+        }
       }
-    }
-    if (slow)
-    {
-      slowTimer--;
-      if ( slowTimer <= 0 )
+      if (immune)
       {
-        slow=false;
+        immuneTimer--;
+        if ( immuneTimer <= 0 )
+        {
+          immune=false;
+        }
       }
-    }
-    if (shake)
-    {
-      shakeTimer--;
-      if ( shakeTimer <=0 )
+      if (slow)
       {
-        shake=false;
+        slowTimer--;
+        if ( slowTimer <= 0 )
+        {
+          slow=false;
+        }
       }
-    }
-    if (split)
-    {
-      splitTimer--;
-      if ( splitTimer <= 0 )
+      if (shake)
       {
-        endSplit();
+        shakeTimer--;
+        if ( shakeTimer <=0 )
+        {
+          shake=false;
+        }
       }
-    }
-    if (shootTimer>0)
-    {
-      shootTimer--;
+      if (split)
+      {
+        splitTimer--;
+        if ( splitTimer <= 0 )
+        {
+          endSplit();
+        }
+      }
+      if (shootTimer>0)
+      {
+        shootTimer--;
+      }
     }
   }
-
   //Retrieves the color the player should have.
   private PImage changeImage()
   {
@@ -588,6 +616,13 @@ class Player
   }
   public boolean getHasImmune() {
     return hasImmune;
+  }
+  //
+  public void collideBall(float ballVY) {
+    ballHitTimer=BALL_HIT_STARTING_TIMER;
+    ballHit=true;
+    ballHitHeigth=random(playerHeigth*0.1, playerHeigth*0.3);
+    velocityY+=(velocityY+ballVY)*BALL_HIT_MODIFIER;
   }
 }
 
