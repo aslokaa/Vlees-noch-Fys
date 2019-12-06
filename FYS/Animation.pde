@@ -6,6 +6,7 @@ all animations are made at setup and initialized when they are needed.
 
 int numFramesBallAnimation = 3;
 
+
 class Animation {
 
   boolean active;

@@ -32,11 +32,15 @@ PImage
   bulletPlaceholder, 
   aButtonImg, 
   bButtonImg, 
-  shieldPlaceholder;
+  shieldPlaceholder,
+  ballBomImg1,
+  ballBomImg2,
+  ballBomImg3;
 
 PImage[] explosionAnimation = new PImage[5];
 PImage[] ballAnimation = new PImage[3];
 PImage[] enemyBulletAnimation = new PImage[3];
+PImage[] ballBombAnimation = new PImage[3];
 String  fileName;
 String connServer = "oege.ie.hva.nl";
 String connDB = "zroete";
@@ -93,5 +97,11 @@ public void loadAssets() {
   {
     fileName = "./sprites/lesterBullet" + i + ".png";
     enemyBulletAnimation[i] = loadImage(fileName);
+  }
+  
+   for ( int i = 0; i < 3; i++ )
+  {
+    fileName = "./sprites/BallBomb" + i + ".png";
+    ballBombAnimation[i] = loadImage(fileName);
   }
 }
