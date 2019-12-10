@@ -124,7 +124,7 @@ void drawGame()
     startscreen.display();
   } else if (statePlaying)
   {
-    background(0);
+    background(player.giveBackgroundColor());
    
     
     space.display();
