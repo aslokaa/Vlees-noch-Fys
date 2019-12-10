@@ -26,7 +26,7 @@ class BossPing
     BOSS_START_HEIGHT             = height * 0.045, 
     BOSS_START_X                  = gamefield.GAMEFIELD_WIDTH/2-BOSS_START_WIDTH/2, 
     BOSS_START_Y                  = BOSS_START_HEIGHT, 
-    BOSS_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.004, 
+    BOSS_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.002, 
     BOSS_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.01, 
     BOSS_START_ACCELERATION_Y     = height * 0.002, 
     BOSS_VELOCITY_Y_MAX           = height * 0.012, 
