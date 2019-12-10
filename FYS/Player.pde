@@ -35,7 +35,7 @@ class Player
     SHAKE_MODIFIER                  = gamefield.GAMEFIELD_WIDTH *0.01, 
     SHAKE_STARTING_TIMER            = SECOND*0.5, 
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
-    BALL_HIT_STARTING_TIMER         = SECOND*0.5, 
+    BALL_HIT_STARTING_TIMER         = SECOND*0.3, 
     SPLIT_STARTING_TIMER            = SECOND*15;
 
   public final int
@@ -632,7 +632,7 @@ class Player
   
   //shoots a bullet and adds particles
   public void spawnBullet(float x){
-   activatesBullet(x/2);
+   activatesBullet(x);
    emitParticles(x, BULLET_PARTICLES);
   }
 

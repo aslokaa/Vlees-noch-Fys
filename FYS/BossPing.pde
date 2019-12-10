@@ -16,7 +16,7 @@ class BossPing
     decelerateY, 
     bossWidth, 
     bossHeight, 
-    closestBallX,
+    closestBallX, 
     closestBallY;
   private int
     health, 
@@ -32,6 +32,7 @@ class BossPing
     BOSS_VELOCITY_Y_MAX           = height * 0.012, 
     BOSS_MAX_Y                    = height *0.3, 
     BALL_IS_CLOSE                 = BOSS_START_WIDTH*0.3, 
+    TEXT_SIZE                      = height*0.04, 
     BACKGROUND_LINE_SIZE          = gamefield.GAMEFIELD_WIDTH*0.01, 
     BOSS_START_DECELERATE_X       = 0.85, 
     BOSS_START_DECELERATE_Y       = 0.85;
@@ -181,10 +182,10 @@ class BossPing
     x += velocityX;
     y += velocityY;
   }
+
   //Prevents the boss from going out of bounds
   private void detectCollisionEdge() 
   {
-    //Y
     if ( y < 0 )
     {
       y = 0;
@@ -241,9 +242,10 @@ class BossPing
   private void displayBackground()
   {
     fill (Colors.DARK_GREEN);
+    textSize(TEXT_SIZE);
+    text(health,gamefield.GAMEFIELD_WIDTH*0.8, height*0.4);
     for ( int i =0; i < gamefield.GAMEFIELD_WIDTH/ (BACKGROUND_LINE_SIZE*2); i++ )
     {
-      println(gamefield.GAMEFIELD_WIDTH / BACKGROUND_LINE_SIZE *2);
       rect(BACKGROUND_LINE_SIZE * i * 2, height/2 - BACKGROUND_LINE_SIZE/2, BACKGROUND_LINE_SIZE, BACKGROUND_LINE_SIZE);
     }
   }
