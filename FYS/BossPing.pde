@@ -32,8 +32,10 @@ class BossPing
     BOSS_VELOCITY_Y_MAX           = height * 0.012, 
     BOSS_MAX_Y                    = height *0.3, 
     BALL_IS_CLOSE                 = BOSS_START_WIDTH*0.3, 
-    TEXT_SIZE                      = height*0.04, 
-    BACKGROUND_LINE_SIZE          = gamefield.GAMEFIELD_WIDTH*0.01, 
+    TEXT_SIZE                     = height*0.1, 
+    BACKGROUND_LINE_SIZE          = gamefield.GAMEFIELD_WIDTH*0.01,
+    HEALTH_TEXT_X                 = gamefield.GAMEFIELD_WIDTH*0.94,
+    HEALTH_TEXT_Y                 = height * 0.4,
     BOSS_START_DECELERATE_X       = 0.9, 
     BOSS_START_DECELERATE_Y       = 0.9;
   public final int
@@ -242,7 +244,7 @@ class BossPing
   {
     fill (Colors.DARK_GREEN);
     textSize(TEXT_SIZE);
-    text(health,gamefield.GAMEFIELD_WIDTH*0.8, height*0.4);
+    text(health, HEALTH_TEXT_X,HEALTH_TEXT_Y);
     for ( int i =0; i < gamefield.GAMEFIELD_WIDTH/ (BACKGROUND_LINE_SIZE*2); i++ )
     {
       rect(BACKGROUND_LINE_SIZE * i * 2, height/2 - BACKGROUND_LINE_SIZE/2, BACKGROUND_LINE_SIZE, BACKGROUND_LINE_SIZE);
