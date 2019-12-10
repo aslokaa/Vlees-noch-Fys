@@ -34,6 +34,7 @@ PFont font;
 SoundFile introMusic;
 BossPing ping;
 BossLester lester;
+ScreenScore screenScore;
 
 void setup()
 {
@@ -44,12 +45,14 @@ void setup()
   gamefield                = new Gamefield();
   space                    = new Space();
   scores                   = new Scores();
+  screenScore              = new ScreenScore();
   player                   = new Player();
   ping                     = new BossPing();
   lester                   = new BossLester(gamefield.GAMEFIELD_WIDTH / 2, 100);
   test                     = new Test();
   //balls.add(new Ball(100));
   //balls.add(new Ball(800));
+  
 
   startscreen              = new Startscreen();
   pausescreen              = new Pausescreen();

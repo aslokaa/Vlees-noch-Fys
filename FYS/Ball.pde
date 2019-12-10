@@ -154,7 +154,8 @@ class Ball {
         player.collideBall(speedY);
         speedY *= -1;
         y = hitboxes.rectangle0.y - 1 - radius;
-        speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 20;  //ball bounce with player.
+        speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 20;//ball bounce with player.
+        screenScore.comboScore = 0;
       }
     }
 
@@ -168,6 +169,7 @@ class Ball {
         speedY *= -1;
         y = hitboxes.rectangle1.y - 1 - radius;
         speedX += (x - (hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth / 2)) / 20;  //ball bounce with player 2.
+        screenScore.comboScore = 0;
       }
     }
     //fixes max speed of the ball
