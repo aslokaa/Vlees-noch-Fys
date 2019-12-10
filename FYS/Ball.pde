@@ -183,16 +183,17 @@ class Ball {
     for (Enemy enemy : enemies) {
       if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius) {  //collision with enemie check.
         if (isChargedBom) {
-          radius = 100;
+          radius = 300;
           for (Enemy enemyBomb : enemies) {
             if (dist(x, y, enemyBomb.x, enemyBomb.y)< radius + enemyBomb.hitboxRadius) { 
               enemyBomb.destroy();  //enemie destroyd
               speedY *= -1;  // enemie bounce off
               isChargedBom = false;
-              radius = 25;
+             
               // spawn particles vanaf de ball.
             }
           }
+           radius = 25;
         } else {
           enemy.destroy();  //enemie destroyd
           speedY *= -1;  // enemie bounce off
