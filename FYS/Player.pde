@@ -8,34 +8,40 @@
 class Player
 {
   public final float
-    PLAYER_START_WIDTH              = gamefield.GAMEFIELD_WIDTH * 0.16, 
+    PLAYER_START_WIDTH              = gamefield.GAMEFIELD_WIDTH * 0.17, 
     PLAYER_START_HEIGHT             = height * 0.045, 
     PLAYER_START_X                  = gamefield.GAMEFIELD_WIDTH / 2-PLAYER_START_WIDTH/2, 
     PLAYER_START_Y                  = height - PLAYER_START_HEIGHT, 
     PLAYER_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.0035, 
-    PLAYER_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.01, 
+    PLAYER_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.014, 
+    GROWTH_MODIFIER                 = 0.01, 
     PLAYER_START_DECELERATE_X       = 0.85, 
     PLAYER_START_DECELERATE_Y       = 0.85, 
     PLAYER_START_ACCELERATION_Y     = height * 0.003, 
     PLAYER_VELOCITY_Y_MAX           = height * 0.012, 
-    PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.3, 
-    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.4, 
-    ROCKET_SPRITE_HEIGHT            = 30, 
-    ROCKET_SPRITE_X                 = 15, 
-    SLOW_MODIFIER                   = 0.9, 
+    PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.4, 
+    PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.45, 
+    VELOCITY_MIN                    = PLAYER_START_ACCELERATION_Y*0.01, 
+    ROCKET_SPRITE_HEIGHT            = height * 0.09, 
+    ROCKET_SPRITE_WIDTH             = ROCKET_SPRITE_HEIGHT*0.8, 
+    SLOW_MODIFIER                   = 0.5, 
     SPLIT_WIDTH_MODIFIER            = 0.75, 
+    BALL_HIT_MODIFIER               = 0.35, 
     BOUNCE_MODIFIER                 = -0.8, 
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*4, 
     IMMUNE_STARTING_TIMER           = SECOND*5, 
-    SLOW_STARTING_TIMER             = SECOND*6, 
-    SHAKE_MODIFIER_MIN              = -gamefield.GAMEFIELD_WIDTH *0.003, 
-    SHAKE_MODIFIER_MAX              = gamefield.GAMEFIELD_WIDTH *0.0003, 
+    SLOW_STARTING_TIMER             = SECOND*2, 
+    SHAKE_MODIFIER                  = gamefield.GAMEFIELD_WIDTH *0.01, 
     SHAKE_STARTING_TIMER            = SECOND*0.5, 
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
+    BALL_HIT_STARTING_TIMER         = SECOND*0.5, 
     SPLIT_STARTING_TIMER            = SECOND*15;
 
   public final int
+    ROCKET_PARTICLES                = 20,
+    BULLET_PARTICLES                = 70,
+    DAMAGE_FRAMES                   = 6,
     STARTING_BULLETS                = 5;
 
   private float 
@@ -43,7 +49,7 @@ class Player
     xSplit, 
     y, 
     playerWidth, 
-    playerHeigth, 
+    playerHeight, 
     accelerationX, 
     accelerationY, 
     velocityX, 
@@ -51,6 +57,7 @@ class Player
     velocityY, 
     decelerateX, 
     decelerateY, 
+    ballHitHeight, 
     widthSplit0, 
     widthSplit1;
   private boolean 
@@ -59,6 +66,7 @@ class Player
     slow, //slows the paddle
     shake, //shakes the paddle
     hasImmune, //if the player is holding an immunity buff
+    ballHit, //enlarges the paddle after hitting the ball.
     split;       //splits the paddle
   private float //Duration of effects.
     invertedTimer, 
@@ -66,6 +74,7 @@ class Player
     slowTimer, 
     shakeTimer, 
     splitTimer, 
+    ballHitTimer, 
     shootTimer; 
   private int 
     ammo; //amount of ammo 
@@ -79,7 +88,7 @@ class Player
     x                 = PLAYER_START_X;
     y                 = PLAYER_START_Y;
     playerWidth       = PLAYER_START_WIDTH;
-    playerHeigth      = PLAYER_START_HEIGHT;
+    playerHeight      = PLAYER_START_HEIGHT;
     accelerationX     = PLAYER_START_ACCELERATION_X;
     accelerationY     = PLAYER_START_ACCELERATION_Y;
     velocityY         = PLAYER_VELOCITY_Y_MAX;
@@ -107,32 +116,35 @@ class Player
     noStroke();
     image=changeImage();
     imageMode(CORNER);
-    if (shake)
-    {
-      shake();
-    } else if (split)
-    {
-      displaySplit();
-    } else {
-      display();
+    if (ballHit) {
+      growBallHit();
+    } else { 
+      ShrinkPaddleBallHit();
+      if (shake)
+      {
+        shake();
+      } else {
+        checkSplit();
+      }
     }
+
     imageMode(CENTER);
   }
 
   //draws the standard player.
   private void display()
   { 
-    image(image, x, y, playerWidth, playerHeigth );
-    image(playerSidesImg, x - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
-    image(playerSidesImg, x + playerWidth - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
+    image(image, x, y, playerWidth, playerHeight );
+    image(playerSidesImg, x, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
+    image(playerSidesImg, x + playerWidth - ROCKET_SPRITE_WIDTH, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
+    if (checkVelocity()) {
+      emitParticles(x+playerWidth-ROCKET_SPRITE_WIDTH/2, ROCKET_PARTICLES);
+      emitParticles(x+ROCKET_SPRITE_WIDTH/2, ROCKET_PARTICLES);
+    }
   }
-  //shakes the player
-  private void shake()
-  {
-    float xModifier = random( SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX );
-    float yModifier = random( SHAKE_MODIFIER_MIN, SHAKE_MODIFIER_MAX );
-    x += xModifier;
-    y += yModifier;
+
+  //checks if the split should be displayed
+  private void checkSplit() {
     if (split)
     {
       displaySplit();
@@ -140,18 +152,60 @@ class Player
     {
       display();
     }
+  }
+
+  //shrinks the paddle after it grew from hitting a ball.
+  private void ShrinkPaddleBallHit() {
+    if (playerHeight>PLAYER_START_HEIGHT) {
+      playerHeight+=(PLAYER_START_HEIGHT-playerHeight)/(BALL_HIT_STARTING_TIMER*3);
+    }
+    if (playerHeight + playerHeight*GROWTH_MODIFIER< PLAYER_START_HEIGHT || playerHeight < PLAYER_START_HEIGHT) {
+      playerHeight=PLAYER_START_HEIGHT;
+    }
+  }
+
+  //returns true if any velocity exists
+  private boolean checkVelocity() {
+    return !(velocityX==0 && velocityY ==0);
+  }
+
+  //shakes the player
+  private void shake()
+  {
+    float xModifier = random( -SHAKE_MODIFIER, SHAKE_MODIFIER );
+    float yModifier = random( -SHAKE_MODIFIER, SHAKE_MODIFIER );
+    x += xModifier;
+    y += yModifier;
+    checkSplit();
     x -=xModifier;
     y -=yModifier;
+  }
+
+  //increases the paddleheight after hitting a ball.
+  private void growBallHit() {
+    playerHeight+=(ballHitHeight-playerHeight)/BALL_HIT_STARTING_TIMER;
+    if (shake)
+    {
+      shake();
+    } else {
+      checkSplit();
+    }
   }
   //draws the splitted player.
   private void displaySplit()
   {
-    image(image, x, y, widthSplit0, playerHeigth );
-    image(playerSidesImg, x - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
-    image(playerSidesImg, x + widthSplit0 - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
-    image(image, xSplit, y, widthSplit1, playerHeigth );
-    image(playerSidesImg, xSplit - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
-    image(playerSidesImg, xSplit + widthSplit1 - ROCKET_SPRITE_X, y + playerHeigth, ROCKET_SPRITE_HEIGHT, playerHeigth);
+    image(image, x, y, widthSplit0, playerHeight );
+    image(playerSidesImg, x, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
+    image(playerSidesImg, x + widthSplit0 - ROCKET_SPRITE_WIDTH, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
+    image(image, xSplit, y, widthSplit1, playerHeight );
+    image(playerSidesImg, xSplit, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
+    image(playerSidesImg, xSplit + widthSplit1 - ROCKET_SPRITE_WIDTH, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
+    if (checkVelocity()) {
+      emitParticles(xSplit+widthSplit1-ROCKET_SPRITE_WIDTH/2, ROCKET_PARTICLES/2);
+      emitParticles(xSplit+ROCKET_SPRITE_WIDTH/2, ROCKET_PARTICLES/2);
+      emitParticles(x+ROCKET_SPRITE_WIDTH/2, ROCKET_PARTICLES/2);
+      emitParticles(x+widthSplit0-ROCKET_SPRITE_WIDTH/2, ROCKET_PARTICLES/2);
+    }
   }
 
   //detects user inputs.
@@ -187,6 +241,28 @@ class Player
     }
     if (keysPressed['a']) {
       activateImmune();
+    }
+  }
+
+
+  //copied from enemies. emits smoke.
+  private void emitParticles(float xSmoke, int amountOfParticles) {
+    for ( int i = 0; i < amountOfParticles; i++ )
+    {
+      for ( Particle particle : particles )
+      {
+        if (!particle.active)
+        {
+          float particleSpeed = random( 5, 10 );
+          float particleAngle = random( 0.8 * PI, 1.2 *PI );
+          float particleSize = random( 20, 30 );
+          float particleSpeedX = particleSpeed * sin(particleAngle) + velocityX / 2;
+          float particleSpeedY = velocityY>-1 ? particleSpeed * -cos(particleAngle) + velocityY / 2 : particleSpeed * -cos(-particleAngle) + velocityY / 2;
+          int particleLifespan = round(particleSize * 0.3 );
+          particle.activateParticle( xSmoke, y+playerHeight+ROCKET_SPRITE_HEIGHT, particleSize, particleSpeedX, particleSpeedY, particleLifespan );
+          break;
+        }
+      }
     }
   }
   //checks what powers should affect the movement.
@@ -298,7 +374,7 @@ class Player
         ball.isChargedBom=true;
       }
       break;
-      case PowerUpTypes.EXTRA_BALL:
+    case PowerUpTypes.EXTRA_BALL:
       //balls.add(new Ball(y-500));
       restoreHealth(40);
       break;
@@ -326,9 +402,9 @@ class Player
       y = gamefield.PLAYER_MIN_Y;
       velocityY *= BOUNCE_MODIFIER;
     }
-    if ( y + playerHeigth > height  )
+    if ( y + playerHeight > height  )
     {
-      y = height - playerHeigth;
+      y = height - playerHeight;
       velocityY *= BOUNCE_MODIFIER;
     }
     //Unsplit X
@@ -376,15 +452,23 @@ class Player
     if (!(keysPressed[LEFT] || keysPressed[RIGHT]))
     {
       velocityX *= decelerateX;
+      velocityX=stopVelocity(velocityX);
       if (split)
       {
         velocityXSplit *= decelerateX;
+        velocityXSplit=stopVelocity(velocityXSplit);
       }
     }
     if (!(keysPressed[UP] || keysPressed[DOWN]))
     {
       velocityY *= decelerateY;
+      velocityY=stopVelocity(velocityY);
     }
+  }
+
+  //returns 0 if the velocity is really low.
+  private float stopVelocity(float v) {
+    return v<VELOCITY_MIN && v>-VELOCITY_MIN ? 0 : v;
   }
   //shrinks the paddle
   public void dealDamage( float damage, boolean isRight)
@@ -428,20 +512,29 @@ class Player
     if ( widthSplit1 < PLAYER_MAX_WIDTH / 2 ) 
     {
       widthSplit1 += healing;
+      x-=healing*0.5;
     }
     if ( widthSplit0 < PLAYER_MAX_WIDTH / 2 )
     {
       widthSplit0 += healing;
+      x-=healing*0.5;
     } 
     if ( playerWidth < PLAYER_MAX_WIDTH )
     {
       playerWidth += healing;
+      x-=healing*0.5;
     }
   }
 
   //Keeps track of which powers are active and deactivates them.
   private void powerCountdown()
   {
+    if (ballHit) {
+      ballHitTimer--;
+      if (ballHitTimer <= 0) {
+        ballHit=false;
+      }
+    }
     if (inverted)
     {
       invertedTimer--;
@@ -469,6 +562,8 @@ class Player
     if (shake)
     {
       shakeTimer--;
+      slowTimer=0;
+      invertedTimer=0;
       if ( shakeTimer <=0 )
       {
         shake=false;
@@ -517,21 +612,16 @@ class Player
       playerSounds.play(Sounds.NO_AMMO);
       return;
     } 
-    if (stateBossPing)
-    {
-      playerSounds.play(Sounds.PING_SHOOT);
-      return;
-    }
     shootTimer=SHOOT_STARTING_TIMER;
     playerSounds.play(Sounds.SHOOT);
     ammo--;
     if (split)
     {
-      activatesBullet(x+widthSplit0/2);
-      activatesBullet(xSplit+widthSplit1/2);
+      spawnBullet(x+widthSplit0/2);
+      spawnBullet(xSplit+widthSplit1/2);
     } else
     {
-      activatesBullet(x+playerWidth/2);
+      spawnBullet(x+playerWidth/2);
     }
   }
   //adds aditional ammo.
@@ -539,18 +629,11 @@ class Player
   {
     ammo += newAmmo;
   }
-
-
-  //updates the hitboxes.
-  private void updateHitboxes()
-  {
-    hitboxes.update(x, xSplit, y, playerWidth, widthSplit0, widthSplit1, playerHeigth, split );
-  }
-
-  //returns the hitboxes
-  public Rectangles getHitboxes()
-  {
-    return hitboxes;
+  
+  //shoots a bullet and adds particles
+  public void spawnBullet(float x){
+   activatesBullet(x/2);
+   emitParticles(x, BULLET_PARTICLES);
   }
 
   //activates a bullet.
@@ -565,6 +648,19 @@ class Player
       }
     }
   }
+  
+  //updates the hitboxes.
+  private void updateHitboxes()
+  {
+    hitboxes.update(x, xSplit, y, playerWidth, widthSplit0, widthSplit1, playerHeight, split );
+  }
+
+  //returns the hitboxes
+  public Rectangles getHitboxes()
+  {
+    return hitboxes;
+  }
+
   //unsplits the player
   private void endSplit()
   {
@@ -589,6 +685,17 @@ class Player
   public boolean getHasImmune() {
     return hasImmune;
   }
+  //
+  public void collideBall(float ballVY) {
+    ballHitTimer=BALL_HIT_STARTING_TIMER;
+    ballHit=true;
+    ballHitHeight=random(playerHeight*1.1, playerHeight*1.5);
+    velocityY+=(velocityY+ballVY)*BALL_HIT_MODIFIER;
+  }
+
+  public color giveBackgroundColor() {
+    return shakeTimer>SHAKE_STARTING_TIMER-DAMAGE_FRAMES ? Colors.BLOOD_RED : Colors.BLACK;
+  }
 }
 
 
@@ -604,7 +711,7 @@ class Rectangles
     rectangle1 = new Rectangle();
   }
   //updates the rectangles
-  public void update( float x, float xSplit, float y, float playerWidth, float widthSplit0, float widthSplit1, float playerHeigth, boolean split )
+  public void update( float x, float xSplit, float y, float playerWidth, float widthSplit0, float widthSplit1, float playerHeight, boolean split )
   {
     float w0=playerWidth;
     float w1=playerWidth;
@@ -614,8 +721,8 @@ class Rectangles
       w0=widthSplit0;
       w1=widthSplit1;
     }
-    rectangle0.update(x, y, w0, playerHeigth, true);
-    rectangle1.update(xSplit, y, w1, playerHeigth, split );
+    rectangle0.update(x, y, w0, playerHeight, true);
+    rectangle1.update(xSplit, y, w1, playerHeight, split );
   }
 }
 
@@ -626,11 +733,6 @@ class Rectangle
   public boolean exists;
   public Rectangle()
   {
-    x=0;
-    y=0;
-    rectangleWidth=0;
-    rectangleHeight=0;
-    exists=false;
   }
   //updates the rectangle
   public void update(float x, float y, float rectangleWidth, float rectangleHeight, boolean exists)

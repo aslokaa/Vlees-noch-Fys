@@ -40,34 +40,36 @@ class Test
     }
     if (keysPressed['e'])
     {
-      println("e frameRate",frameRate);
+      println("e frameRate", frameRate);
       fill(Colors.WHITE);
       textSize(height*0.1);
-      text(frameRate,width*0.95,height*0.1);
+      text(frameRate, width*0.95, height*0.1);
     }
     if (keysPressed['m'])
     {
-      if(stateBossPing)
+      if (stateBossPing)
       {
         println("m Boss Ping leaving the game");
-     stateBossPing=false; 
+        ping.killPing();
       } else
       {
-     println("m Boss Ping Entering the game");
-     stateBossPing=true; 
+        println("m Boss Ping Entering the game");
+        ping= new BossPing();
+        stateBossPing=true;
       }
       keysPressed['m']=false;
     }
     if (keysPressed['n'])
     {
-      if(stateBossLester)
+      if (stateBossLester)
       {
         println("n Boss Lester leaving the game");
-     stateBossLester=false; 
+        stateBossLester=false;
       } else
       {
-     println("n Boss Lester Entering the game");
-     stateBossLester=true; 
+        println("n Boss Lester Entering the game");
+        lester           = new BossLester(width / 2, 100);
+        stateBossLester=true;
       }
       keysPressed['n']=false;
     }

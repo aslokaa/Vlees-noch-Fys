@@ -43,7 +43,8 @@ interface Colors
     WHITE      = #FFFFFF, 
     BLUE       = #0000FF, 
     YELLOW     = #FFFF00, 
-    RED        = #FF0000, 
+    RED        = #FF0000,
+    BLOOD_RED  = #8A0707,
     BLACK      = #000000,
     MAGENTA    = #FF00FF,
     DARK_GREEN = #008F11;
@@ -58,8 +59,8 @@ interface Arrays
     OPTION_COUNT  = 3, 
     DAVE_COUNT    = 10,
     POWER_COUNT   = 5,
-    PARTICLE_COUNT = 200,
-    ANIMATION_COUNT = 300;
+    PARTICLE_COUNT = 2000,
+    ANIMATION_COUNT = 2500;
     
 }
 

@@ -27,12 +27,12 @@ class Gamefield
     CHAD_COUNTER_START              = 0, 
     DAVE_COUNTER_START              = 10, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>//
+    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>// //<>//
     WAVES_UNTILL_DAVE               = 1,
     WAVE3_CHADS                     = 1,
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50; //<>// //<>// //<>//
+    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>//
 
   private int 
     waveCounter, 
@@ -236,7 +236,7 @@ class Gamefield
   //starts the ping boss fight
   private void activatePing()
   {
-    ping             = new BossPing();//moet in setup worden aangemaakt
+    ping             = new BossPing();
     pingActivated    = true;
     stateBossPing    = true;
     spawnPing        = false;
@@ -245,7 +245,7 @@ class Gamefield
   //starts the lester boss fight
   private void activateLester()
   {
-    lester           = new BossLester(width / 2, 100);//same here, nu heb je inactive objects in je memory.
+    lester           = new BossLester(width / 2, 100);
     lesterActivated  = true;
     stateBossLester  = true;
     spawnLester      = false;

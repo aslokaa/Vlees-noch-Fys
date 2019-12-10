@@ -151,6 +151,7 @@ class Ball {
       if (( x + radius > hitboxes.rectangle0.x)&&(x -radius < hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth)&&  //collision with player check.
         (y + radius > hitboxes.rectangle0.y)&&(y - radius < hitboxes.rectangle0.y + hitboxes.rectangle0.rectangleHeight)) {
 
+        player.collideBall(speedY);
         speedY *= -1;
         y = hitboxes.rectangle0.y - 1 - radius;
         speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 20;  //ball bounce with player.
@@ -163,6 +164,7 @@ class Ball {
       if (( x + radius > hitboxes.rectangle1.x)&&(x -radius < hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth)&&  //collision with player 2 check.
         (y + radius > hitboxes.rectangle1.y)&&(y - radius < hitboxes.rectangle1.y + hitboxes.rectangle1.rectangleHeight)) {
 
+        player.collideBall(speedY);
         speedY *= -1;
         y = hitboxes.rectangle1.y - 1 - radius;
         speedX += (x - (hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth / 2)) / 20;  //ball bounce with player 2.
