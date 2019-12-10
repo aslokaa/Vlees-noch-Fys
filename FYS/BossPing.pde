@@ -22,11 +22,11 @@ class BossPing
     health, 
     damageTimer;
   private final float
-    BOSS_START_WIDTH              = gamefield.GAMEFIELD_WIDTH*0.12, 
+    BOSS_START_WIDTH              = gamefield.GAMEFIELD_WIDTH*0.13, 
     BOSS_START_HEIGHT             = height * 0.045, 
     BOSS_START_X                  = gamefield.GAMEFIELD_WIDTH/2-BOSS_START_WIDTH/2, 
     BOSS_START_Y                  = BOSS_START_HEIGHT, 
-    BOSS_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.0035, 
+    BOSS_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.002, 
     BOSS_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.01, 
     BOSS_START_ACCELERATION_Y     = height * 0.002, 
     BOSS_VELOCITY_Y_MAX           = height * 0.012, 
@@ -34,8 +34,8 @@ class BossPing
     BALL_IS_CLOSE                 = BOSS_START_WIDTH*0.3, 
     TEXT_SIZE                      = height*0.04, 
     BACKGROUND_LINE_SIZE          = gamefield.GAMEFIELD_WIDTH*0.01, 
-    BOSS_START_DECELERATE_X       = 0.85, 
-    BOSS_START_DECELERATE_Y       = 0.85;
+    BOSS_START_DECELERATE_X       = 0.9, 
+    BOSS_START_DECELERATE_Y       = 0.9;
   public final int
     BOSS_DAMAGE_TIMER             = 10, 
     BOSS_START_HEALTH             = 3;
@@ -217,7 +217,6 @@ class BossPing
     }
     health-=damage;
     damageTimer=BOSS_DAMAGE_TIMER;
-    y-=y*0.5;
     if ( health <= 0 )
     {
       killPing();

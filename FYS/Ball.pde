@@ -154,7 +154,8 @@ class Ball {
         player.collideBall(speedY);
         speedY *= -1;
         y = hitboxes.rectangle0.y - 1 - radius;
-        speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 20;  //ball bounce with player.
+        speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 20;//ball bounce with player.
+        screenScore.comboScore = 0;
       }
     }
 
@@ -168,6 +169,7 @@ class Ball {
         speedY *= -1;
         y = hitboxes.rectangle1.y - 1 - radius;
         speedX += (x - (hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth / 2)) / 20;  //ball bounce with player 2.
+        screenScore.comboScore = 0;
       }
     }
     //fixes max speed of the ball
@@ -181,16 +183,17 @@ class Ball {
     for (Enemy enemy : enemies) {
       if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius) {  //collision with enemie check.
         if (isChargedBom) {
-          radius = 100;
+          radius = 300;
           for (Enemy enemyBomb : enemies) {
             if (dist(x, y, enemyBomb.x, enemyBomb.y)< radius + enemyBomb.hitboxRadius) { 
               enemyBomb.destroy();  //enemie destroyd
               speedY *= -1;  // enemie bounce off
               isChargedBom = false;
-              radius = 25;
+             
               // spawn particles vanaf de ball.
             }
           }
+           radius = 25;
         } else {
           enemy.destroy();  //enemie destroyd
           speedY *= -1;  // enemie bounce off
