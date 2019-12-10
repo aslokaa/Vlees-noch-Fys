@@ -13,6 +13,14 @@
  Eele Roet 500795948
  Niklas Leeuwin  500784205
  */
+ 
+ /*
+ we hebben max ongeveer 20 waves, daarom kunnen we iedere wave formateren, we kunnen 
+ de methods checkBoss en spawnwave herschrijven in 1 method die een lange string/INTarray
+ neemt om te kijken wat er gespawned moet worden, dit zorgt voor veel hardcoden maar waves maken
+ en balancen word makkelijker. we kunnen ook iets van een switch statement maken die de rondes checkt
+ en de goede acties uitvoert zoals nu wordt gedaan maar met de tutorial waves erbij.
+ */
 class Gamefield
 {
   public final float 
@@ -27,24 +35,29 @@ class Gamefield
     CHAD_COUNTER_START              = 0, 
     DAVE_COUNTER_START              = 10, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2,  //<>//
+    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>// //<>//
     WAVES_UNTILL_DAVE               = 1,
     WAVE3_CHADS                     = 1,
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50; //<>//
-    
-  
+    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>//
+
   private int 
     waveCounter, 
-    daveCounter,
-    waveTimer,
-    chadCounter;
+    daveCounter, 
+    chadCounter,
+    roundStartCounter,
+    roundLengthCounter;
+
   private boolean
-    pingActivated, 
+   pingActivated, 
     lesterActivated, 
     spawnPing, 
-    spawnLester;
+    spawnLester,
+    ballActive,
+    safetyFloorActive,
+    roundSkippable;
+
 
   public Gamefield()
   {
@@ -96,13 +109,6 @@ class Gamefield
       updateWaves();
     }
   }
-  
-  private void countdown(){
-    
-  }
-  
-
-
 
   //spawns daves
   private void spawnDaves(int yModifier)
@@ -179,6 +185,7 @@ class Gamefield
     }
     return true;
   }
+
 
 
   //a special wave that only spawns chads

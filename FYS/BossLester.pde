@@ -10,6 +10,7 @@
 class BossLester
 {
   boolean active;
+  boolean introducing;
   //position
   float x;
   float y;
@@ -37,7 +38,8 @@ class BossLester
 
   BossLester(float x, float y)
   {
-    active = true;
+    active = false;
+    introducing = false;
     this.x = x;
     this.y = y;
     this.bodySize = 700;
@@ -63,11 +65,46 @@ class BossLester
   {
     if ( active )
     {
-      executeBehavior();
       hitboxLeft.update();
       hitboxBottom.update();
       hitboxRight.update();
+
+      if ( !introducing )
+      {
+        executeBehavior();
+      } else
+      {
+        introduce();
+      }
     }
+  }
+
+  void introduce()
+  {
+    move();
+    moveHitboxes();
+    restrictPlayerMovement();
+  }
+
+  void move()
+  {
+    //move down at set pace, when final pos is hit stop moving, shake screen more ,and end introduction.
+  }
+
+  void moveHitboxes()
+  {
+    hitboxLeft.x = x - HITBOX_OFFSET;
+    hitboxLeft.y = y;
+    hitboxBottom.x = x;
+    hitboxBottom.y = y + HITBOX_OFFSET;
+    hitboxRight.x = x + HITBOX_OFFSET;
+    hitboxRight.y = y;
+  }
+
+  void restrictPlayerMovement()
+  {
+    //set player pos to wanted pos and set playerspeeds to 0,
+    //needs to happen after movement update in player.
   }
 
   void executeBehavior()
@@ -175,11 +212,11 @@ class BossLester
     translate(boxX, boxY);
     if ( left )
     {
-      angle = atan2( rectangle.y  - boxY, rectangle.x - ( rectangle.rectangleWidth * 1 ) - boxX);
+      angle = atan2( rectangle.y  - boxY, rectangle.x - ( rectangle.rectangleWidth * 0.5 ) - boxX);
       angle += PI / 2;//half PI is added to rotate the speed of the ball by a quarter to the right to ensure the right angle
     } else 
     {
-      angle = atan2( rectangle.y  - boxY, rectangle.x + ( rectangle.rectangleWidth * 2 ) - boxX);
+      angle = atan2( rectangle.y  - boxY, rectangle.x + ( rectangle.rectangleWidth * 1.5 ) - boxX);
       angle += PI / 2;//half PI is added to rotate the speed of the ball by a quarter to the right to ensure the right angle
     }
     translate(-boxX, -boxY);
@@ -229,6 +266,19 @@ class BossLester
       }
     }
   }
+
+  void activate()
+  {
+    this.active = true;
+    this.introducing = true;
+    hitboxLeft.HP = 4;
+    hitboxBottom.HP = 4;
+    hitboxRight.HP = 4;
+    //changeMusic();
+    //shakeScreen();
+  }
+
+
 
 
   void display()

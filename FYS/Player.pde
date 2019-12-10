@@ -4,6 +4,10 @@
 
 
 //This is the class that handles the object the player controlls. 
+//of je moet hier in de player 4 bools bijhouden van welke pijltjes er om de player gedisplayed 
+//moeten worden of je maak er een aparte class van die een instance heeft in de player.
+//aparte class is handig want die houdt zelf bij welk pijltje hij moet tekenen
+//en tekent ze dan zelf.
 
 class Player
 {
@@ -35,7 +39,7 @@ class Player
     SHAKE_MODIFIER                  = gamefield.GAMEFIELD_WIDTH *0.01, 
     SHAKE_STARTING_TIMER            = SECOND*0.5, 
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
-    BALL_HIT_STARTING_TIMER         = SECOND*0.3, 
+    BALL_HIT_STARTING_TIMER         = SECOND*0.5, 
     SPLIT_STARTING_TIMER            = SECOND*15;
 
   public final int
@@ -632,7 +636,7 @@ class Player
   
   //shoots a bullet and adds particles
   public void spawnBullet(float x){
-   activatesBullet(x);
+   activatesBullet(x/2);
    emitParticles(x, BULLET_PARTICLES);
   }
 
