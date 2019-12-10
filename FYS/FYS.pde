@@ -132,7 +132,7 @@ void drawGame()
     
     space.display();
     scores.display();
-
+    
 
     for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
     {
@@ -143,7 +143,7 @@ void drawGame()
     {
       particles[i].display();
     }
-
+    
 
     if (stateBossPing)
     {
@@ -170,6 +170,9 @@ void drawGame()
       ball.drawBall();
     }
     player.checkDisplay();
+    
+    screenScore.drawScore();
+    
     if (statePaused)
     {
       pausescreen.display();
