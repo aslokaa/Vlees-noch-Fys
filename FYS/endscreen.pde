@@ -9,6 +9,7 @@ class Endscreen
   {
     background(Colors.WHITE);
     fill(Colors.BLACK);
+    textSize(40);
     text("Press Select to restart.", width/2,height*0.3);
     text("Your score was " + score + " which you achieved in " + gamefield.getWaveCounter() + " waves.", width/2, height/2);
     menuSounds.play(Sounds.END_MUSIC);
