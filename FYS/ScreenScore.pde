@@ -5,7 +5,6 @@ class ScreenScore {
   float scoreTimer;
   int comboScore;
   int maxTextSize;
-  int alpha;
 
   ScreenScore() {
 
@@ -15,7 +14,6 @@ class ScreenScore {
     textSize = 60;
     comboScore = 0;
     maxTextSize = 90;
-    alpha = 255;
   }
 
 
@@ -24,19 +22,34 @@ class ScreenScore {
     comboScoreY = enemyY;
     comboScore += 100;
     scoreTimer = 60;
-    textSize = 60;
-    alpha = 255;
+    textSize = comboScore/4+1;
   }
 
 
   void drawScore() {
-    fill(255, 255, 0, alpha);
-    alpha--;
-    if (textSize < 1) {
-      textSize = 1;
-    }
-    textSize( comboScore / 5 + 1);
+    fill(Colors.YELLOW);
 
-    text("+" + comboScore, comboScoreX, comboScoreY);
+    if (textSize >= maxTextSize) {
+      textSize = maxTextSize;
+    }
+
+    if (textSize == 1) {
+      textSize = 1;
+    } else {
+      textSize = textSize - 0.5;
+    }
+    
+    if(comboScore > 1){
+     scoreTimer--; 
+    }
+    if(scoreTimer == 0){
+     scoreTimer = 0;
+     comboScore = 0;
+    }
+
+    textSize(textSize);
+    if (scoreTimer >= 1) {
+      text("+" + comboScore, comboScoreX, comboScoreY);
+    }
   }
 }
