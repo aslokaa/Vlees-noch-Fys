@@ -43,7 +43,9 @@ class Endscreen
       {
         powers[i].powerActive=false;
       }
-       
+      for (int i =0; i<particles.length; i++){
+       particles[i].active=false; 
+      }
       score             = 0;
     }
   }

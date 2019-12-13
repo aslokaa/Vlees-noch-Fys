@@ -37,15 +37,15 @@ class Player
     IMMUNE_STARTING_TIMER           = SECOND*5, 
     SLOW_STARTING_TIMER             = SECOND*2, 
     SHAKE_MODIFIER                  = gamefield.GAMEFIELD_WIDTH *0.01, 
-    SHAKE_STARTING_TIMER            = SECOND*0.5, 
+    SHAKE_STARTING_TIMER            = SECOND*0.7, 
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
-    BALL_HIT_STARTING_TIMER         = SECOND*0.5, 
+    BALL_HIT_STARTING_TIMER         = SECOND*0.3, 
     SPLIT_STARTING_TIMER            = SECOND*15;
 
   public final int
-    ROCKET_PARTICLES                = 20,
-    BULLET_PARTICLES                = 100,
-    DAMAGE_FRAMES                   = 6,
+    ROCKET_PARTICLES                = 20, 
+    BULLET_PARTICLES                = 100, 
+    DAMAGE_FRAMES                   = 6, 
     STARTING_BULLETS                = 5;
 
   private float 
@@ -72,7 +72,7 @@ class Player
     hasImmune, //if the player is holding an immunity buff
     ballHit, //enlarges the paddle after hitting the ball.
     split;       //splits the paddle
-    private boolean[]
+  private boolean[]
     moved;
   private float //Duration of effects.
     invertedTimer, 
@@ -134,7 +134,6 @@ class Player
         checkSplit();
       }
     }
-
     imageMode(CENTER);
   }
 
@@ -145,8 +144,8 @@ class Player
     image(playerSidesImg, x, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
     image(playerSidesImg, x + playerWidth - ROCKET_SPRITE_WIDTH, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
     if (checkVelocity()) {
-      emitParticles(x+playerWidth-ROCKET_SPRITE_WIDTH/2,y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES, true);
-      emitParticles(x+ROCKET_SPRITE_WIDTH/2,y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES, true);
+      emitParticles(x+playerWidth-ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES, true);
+      emitParticles(x+ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES, true);
     }
   }
 
@@ -208,10 +207,10 @@ class Player
     image(playerSidesImg, xSplit, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
     image(playerSidesImg, xSplit + widthSplit1 - ROCKET_SPRITE_WIDTH, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
     if (checkVelocity()) {
-      emitParticles(xSplit+widthSplit1-ROCKET_SPRITE_WIDTH/2,y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES/2, true);
-      emitParticles(xSplit+ROCKET_SPRITE_WIDTH/2,y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES/2, true);
-      emitParticles(x+ROCKET_SPRITE_WIDTH/2,y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES/2,true );
-      emitParticles(x+widthSplit0-ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT,ROCKET_PARTICLES/2,true);
+      emitParticles(xSplit+widthSplit1-ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES/2, true);
+      emitParticles(xSplit+ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES/2, true);
+      emitParticles(x+ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES/2, true );
+      emitParticles(x+widthSplit0-ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES/2, true);
     }
   }
 
@@ -264,10 +263,10 @@ class Player
       {
         if (!particle.active)
         {
-          float particleAngle = random(0,1)>0.5 ? random( 0 , 0.5*PI ) : random(1.5*PI,2*PI);
-          float particleSpeed = rocket ? random( 5, 10 ) : random(1,5);
-          if (rocket){
-          particleAngle = random( 0.8 * PI, 1.2 *PI );
+          float particleAngle = random(0, 1)>0.5 ? random( 0, 0.5*PI ) : random(1.5*PI, 2*PI);
+          float particleSpeed = rocket ? random( 5, 10 ) : random(1, 5);
+          if (rocket) {
+            particleAngle = random( 0.8 * PI, 1.2 *PI );
           }
           float particleSize = random( 20, 30 );
           float particleSpeedX = particleSpeed * sin(particleAngle) + velocityX / 2;
@@ -643,12 +642,12 @@ class Player
   {
     ammo += newAmmo;
   }
-  
+
   //shoots a bullet and adds particles
-  public void spawnBullet(float x){
-   activatesBullet(x);
-   emitParticles(x,y, BULLET_PARTICLES, false);
-   }
+  public void spawnBullet(float x) {
+    activatesBullet(x);
+    emitParticles(x, y, BULLET_PARTICLES, false);
+  }
 
   //activates a bullet.
   private void activatesBullet(float xT)
@@ -662,7 +661,7 @@ class Player
       }
     }
   }
-  
+
   //updates the hitboxes.
   private void updateHitboxes()
   {
@@ -699,17 +698,17 @@ class Player
   public boolean getHasImmune() {
     return hasImmune;
   }
-  
+
   //returns true if the player has moved in all directions
-  public boolean hasMoved(){
-   for (int i=0; i>moved.length;i++){
-     if (!moved[i]){
-      return false; 
-     }
-   }
-   return true;
+  public boolean hasMoved() {
+    for (int i=0; i>moved.length; i++) {
+      if (!moved[i]) {
+        return false;
+      }
+    }
+    return true;
   }
-  
+
   //adds juice to hittin the ball
   public void collideBall(float ballVY) {
     ballHitTimer=BALL_HIT_STARTING_TIMER;
@@ -718,8 +717,16 @@ class Player
     velocityY+=(velocityY+ballVY)*BALL_HIT_MODIFIER;
   }
 
+//makes the background red for a couple of frames after getting damaged
   public color giveBackgroundColor() {
     return shakeTimer>SHAKE_STARTING_TIMER-DAMAGE_FRAMES ? Colors.BLOOD_RED : Colors.BLACK;
+  }
+
+//increases powerup spawnchance if the player is damaged
+  public float getPowerUpChance() {
+    float c=map (playerWidth, PLAYER_MIN_WIDTH, PLAYER_START_WIDTH, 0.7, 0.3); 
+    println(c);
+    return c;
   }
 }
 

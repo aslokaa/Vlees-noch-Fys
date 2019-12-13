@@ -126,7 +126,6 @@ void drawGame()
   } else if (statePlaying)
   {
     background(player.giveBackgroundColor());
-   
     
     space.display();
     scores.display();
