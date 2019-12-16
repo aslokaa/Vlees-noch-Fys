@@ -30,7 +30,9 @@ class Player
     ROCKET_SPRITE_WIDTH             = ROCKET_SPRITE_HEIGHT*0.8, 
     SLOW_MODIFIER                   = 0.5, 
     SPLIT_WIDTH_MODIFIER            = 0.75, 
-    BALL_HIT_MODIFIER               = 0.35, 
+    BALL_HIT_Y_MODIFIER             = 0.35,
+    BALL_HIT_HEIGHT_MAX_MODIFIER    = 0.4,
+    BALL_HIT_HEIGHT_MIN_MODIFIER    = 0.2,
     BOUNCE_MODIFIER                 = -0.8, 
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*4, 
@@ -163,7 +165,7 @@ class Player
   //shrinks the paddle after it grew from hitting a ball.
   private void ShrinkPaddleBallHit() {
     if (playerHeight>PLAYER_START_HEIGHT) {
-      playerHeight+=(PLAYER_START_HEIGHT-playerHeight)/(BALL_HIT_STARTING_TIMER*3);
+      playerHeight+=(PLAYER_START_HEIGHT-playerHeight)/(BALL_HIT_STARTING_TIMER);
     }
     if (playerHeight + playerHeight*GROWTH_MODIFIER< PLAYER_START_HEIGHT || playerHeight < PLAYER_START_HEIGHT) {
       playerHeight=PLAYER_START_HEIGHT;
@@ -714,7 +716,7 @@ class Player
     ballHitTimer=BALL_HIT_STARTING_TIMER;
     ballHit=true;
     ballHitHeight=random(playerHeight*1.1, playerHeight*1.5);
-    velocityY+=(velocityY+ballVY)*BALL_HIT_MODIFIER;
+    velocityY+=(velocityY+ballVY)*BALL_HIT_Y_MODIFIER;
   }
 
 //makes the background red for a couple of frames after getting damaged
