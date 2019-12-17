@@ -21,6 +21,7 @@ Particle[] particles = new Particle[Arrays.PARTICLE_COUNT];
 Animation[] animations = new Animation[Arrays.ANIMATION_COUNT];
 ArrayList<Ball> balls = new ArrayList<Ball>();
 
+
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
 Gamefield gamefield;
 Space space;
