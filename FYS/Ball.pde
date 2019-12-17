@@ -17,7 +17,12 @@ class Ball {
   boolean isChargedBom;
   float maxSpeedX;
   float ballRespawnTimer, timerCount;
+  float bomRadius;
   Animation animation;
+
+  ArrayList<PVector> history;
+   
+  
 
   Ball() {
 
@@ -33,14 +38,23 @@ class Ball {
     ballRespawnTimer = 0;
     timerCount = 60;
     isChargedBom = false;
+    bomRadius = 600;
     setAnimation();
+    
+    history = new ArrayList<PVector>();
+   
+    
+
+    
+    
   }
 
-  /* Ball(float x)
-   {
-   this();
-   this.x=x;
-   }*/
+  Ball(float x)
+  {
+    this();
+    this.x=x;
+    
+  }
 
   void setAnimation()
   {
@@ -81,22 +95,34 @@ class Ball {
       bounceWall();
       countdownBallRespawn();
     }
+    bounceWall();
+    countdownBallRespawn();
+    
+    PVector v = new PVector(x,y);
+    history.add(v);
+    if(history.size() > 15){
+      history.remove(0);
+    }
   }
 
   void drawBall() {
-    if ( active )
-    {
-      animation.display(x, y);
-      noFill();
-      if (!isChargedBom) { 
-        stroke(Colors.BLUE);
-        strokeWeight(5);
-        ellipse(x, y, diameter, diameter);
-      } else { 
-        stroke(Colors.RED);
-        strokeWeight(5);
-        ellipse(x, y, diameter, diameter);
-      }
+    animation.display(x, y);
+    noFill();
+    if (!isChargedBom) { 
+      stroke(Colors.BLUE);
+      strokeWeight(5);
+      ellipse(x, y, diameter, diameter);
+    } else { 
+      stroke(Colors.RED);
+      strokeWeight(5);
+      ellipse(x, y, diameter, diameter);
+      ellipse(x, y, bomRadius, bomRadius);
+    }
+    for(int i = 0; i< history.size(); i++){
+      PVector current = history.get(i);
+      
+      fill(255,100,100, i*20);
+      ellipse(current.x, current.y, 15 + i, 15 + i);
     }
   }
 
@@ -176,7 +202,6 @@ class Ball {
         speedY *= -1;
         y = hitboxes.rectangle0.y - 1 - radius;
         speedX += (x - (hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth / 2)) / 20;//ball bounce with player.
-        screenScore.comboScore = 0;
       }
     }
 
@@ -190,7 +215,6 @@ class Ball {
         speedY *= -1;
         y = hitboxes.rectangle1.y - 1 - radius;
         speedX += (x - (hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth / 2)) / 20;  //ball bounce with player 2.
-        screenScore.comboScore = 0;
       }
     }
     //fixes max speed of the ball
@@ -205,6 +229,7 @@ class Ball {
       if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius) {  //collision with enemie check.
         if (isChargedBom) {
           radius = 300;
+          
           for (Enemy enemyBomb : enemies) {
             if (dist(x, y, enemyBomb.x, enemyBomb.y)< radius + enemyBomb.hitboxRadius) { 
               enemyBomb.destroy();  //enemie destroyd

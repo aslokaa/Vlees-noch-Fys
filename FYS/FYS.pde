@@ -22,6 +22,7 @@ Animation[] animations = new Animation[Arrays.ANIMATION_COUNT];
 ArrayList<Ball> balls = new ArrayList<Ball>();
 WaveFormat[] waveFormats = new WaveFormat[Arrays.WAVE_FORMATS];
 
+
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
 Gamefield gamefield;
 Space space;
@@ -53,11 +54,6 @@ void setup()
   ping                     = new BossPing();
   lester                   = new BossLester(gamefield.GAMEFIELD_WIDTH / 2, -300);
   test                     = new Test();
-  //balls.add(new Ball(100));
-  //balls.add(new Ball(800));
-
-
-
   startscreen              = new Startscreen();
   pausescreen              = new Pausescreen();
   endscreen                = new Endscreen();
@@ -136,11 +132,10 @@ void drawGame()
   } else if (statePlaying)
   {
     background(player.giveBackgroundColor());
-
-
+    
     space.display();
     scores.display();
-
+    
 
     for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
     {
@@ -151,7 +146,7 @@ void drawGame()
     {
       particles[i].display();
     }
-
+    
 
     if (stateBossPing)
     {
@@ -178,7 +173,9 @@ void drawGame()
       ball.drawBall();
     }
     player.checkDisplay();
-    gamefield.displayWallFX();
+
+    screenScore.drawScore();
+
     if (statePaused)
     {
       pausescreen.display();

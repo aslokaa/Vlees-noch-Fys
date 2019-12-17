@@ -54,7 +54,7 @@ interface Colors
 interface Arrays
 {
   public final int
-    STAR_COUNT    = 300, 
+    STAR_COUNT    = 100, 
     BULLET_COUNT  = 150, 
     OPTION_COUNT  = 3, 
     DAVE_COUNT    = 10,

@@ -32,7 +32,9 @@ class Player
     MOVEMENT_ARROW_OFFSET           = gamefield.GAMEFIELD_WIDTH*0.2,
     SLOW_MODIFIER                   = 0.5, 
     SPLIT_WIDTH_MODIFIER            = 0.75, 
-    BALL_HIT_MODIFIER               = 0.35, 
+    BALL_HIT_Y_MODIFIER             = 0.35, 
+    BALL_HIT_HEIGHT_MAX_MODIFIER    = 0.4, 
+    BALL_HIT_HEIGHT_MIN_MODIFIER    = 0.2, 
     BOUNCE_MODIFIER                 = -0.8, 
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*4, 
@@ -42,14 +44,20 @@ class Player
     SHAKE_STARTING_TIMER            = SECOND*0.7, 
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
     BALL_HIT_STARTING_TIMER         = SECOND*0.3, 
-    SPLIT_STARTING_TIMER            = SECOND*15;
+    SPLIT_STARTING_TIMER            = SECOND*15,
+    SHIELD_DOT_WIDTH                = 30,
+    SHIELD_DOT_HEIGHT               = 15,
+    POWER_BLINK_DELAY               = 10;
+
 
   public final int
     ROCKET_PARTICLES                = 20, 
     BULLET_PARTICLES                = 100, 
     DAMAGE_FRAMES                   = 6, 
     STARTING_BULLETS                = 5;
-
+    
+  PImage currentImg;
+  
   private float 
     x, 
     xSplit, 
@@ -161,6 +169,35 @@ class Player
   //draws the standard player.
   private void display()
   { 
+    if ( hasImmune )
+    {
+      for ( int j = 0; j < 2; j++ )
+      {
+        for ( int i = 0; i < round( playerWidth / 50); i++ )
+        {
+          fill(255);
+          rect( x + 50 * i, y - SHIELD_DOT_HEIGHT / 2 + ( j * (playerHeight + SHIELD_DOT_HEIGHT / 2) ), SHIELD_DOT_WIDTH, SHIELD_DOT_HEIGHT / 2);
+        }
+      }
+      for ( int j = 0; j < 2; j++ )
+      {
+       for ( int i = 0; i < round( playerHeight / 50); i++ )
+       {
+        fill(255);
+        rect(x - SHIELD_DOT_HEIGHT / 2 + ( j * (playerWidth + SHIELD_DOT_HEIGHT / 2)), y + 50 *i, SHIELD_DOT_HEIGHT / 2, SHIELD_DOT_WIDTH);
+       }
+      }
+    }
+    
+    if ( immune )
+    {
+     strokeWeight(SHIELD_DOT_HEIGHT);
+     stroke(255);
+     noFill();
+     rect(x, y, playerWidth, playerHeight);
+     noStroke();
+    }
+
     image(image, x, y, playerWidth, playerHeight );
     image(playerSidesImg, x, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
     image(playerSidesImg, x + playerWidth - ROCKET_SPRITE_WIDTH, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
@@ -184,7 +221,7 @@ class Player
   //shrinks the paddle after it grew from hitting a ball.
   private void ShrinkPaddleBallHit() {
     if (playerHeight>PLAYER_START_HEIGHT) {
-      playerHeight+=(PLAYER_START_HEIGHT-playerHeight)/(BALL_HIT_STARTING_TIMER*3);
+      playerHeight+=(PLAYER_START_HEIGHT-playerHeight)/(BALL_HIT_STARTING_TIMER);
     }
     if (playerHeight + playerHeight*GROWTH_MODIFIER< PLAYER_START_HEIGHT || playerHeight < PLAYER_START_HEIGHT) {
       playerHeight=PLAYER_START_HEIGHT;
@@ -424,6 +461,7 @@ class Player
       hasImmune=false; 
       immune=true;
       immuneTimer=IMMUNE_STARTING_TIMER;
+      image = playerShieldImg;
     }
   }
   
@@ -584,6 +622,7 @@ class Player
     if (immune)
     {
       immuneTimer--;
+      
       if ( immuneTimer <= 0 )
       {
         immune=false;
@@ -620,6 +659,15 @@ class Player
       shootTimer--;
     }
   }
+  
+  void blinkPower(PImage powerImg)
+  {
+   if (frameCount % POWER_BLINK_DELAY == 0)
+   {
+    println(image == playerForcefieldImg ? "1" : "2");
+    image = (image == playerForcefieldImg ? powerImg : playerForcefieldImg );
+   }
+  }
 
   //Retrieves the color the player should have.
   private PImage changeImage()
@@ -633,7 +681,11 @@ class Player
       return playerReverseImg;
     } else if (immune)
     {
-      return playerShieldImg;
+      if ( immuneTimer < 180 )
+      {
+       blinkPower(playerShieldImg); 
+      }
+      return image;
     } else if (slow)
     {
       return playerSlowImg;
@@ -733,6 +785,7 @@ class Player
     }
     return true;
   }
+
   public void setPosition(float x, float y){
    this.x=x;
    this.y=y;
@@ -743,17 +796,19 @@ class Player
     ballHitTimer=BALL_HIT_STARTING_TIMER;
     ballHit=true;
     ballHitHeight=random(playerHeight*1.1, playerHeight*1.5);
-    velocityY+=(velocityY+ballVY)*BALL_HIT_MODIFIER;
+    velocityY+=(velocityY+ballVY)*BALL_HIT_Y_MODIFIER;
   }
 
 //makes the background red for a couple of frames after getting damaged
+
   public color giveBackgroundColor() {
     return shakeTimer>SHAKE_STARTING_TIMER-DAMAGE_FRAMES ? Colors.BLOOD_RED : Colors.BLACK;
   }
-
+  
 //increases powerup spawnchance if the player is damaged
   public float getPowerUpChance() {
     return map (playerWidth, PLAYER_MIN_WIDTH, PLAYER_START_WIDTH, 0.7, 0.3); 
+
   }
 }
 

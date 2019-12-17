@@ -9,13 +9,14 @@ class Space {
   float[] speed = new float[Arrays.STAR_COUNT]; 
   float[] diameter = new float[Arrays.STAR_COUNT]; 
 
+
   Space () { 
 
     for (int i = 0; i < Arrays.STAR_COUNT; i++) {
       x[i] = random(0, gamefield.GAMEFIELD_WIDTH);
       y[i] = random(0, height);
       speed[i] = random(0.5, 0.75);
-      diameter[i] = random(1.5, 2);
+      diameter[i] = random(12, 10);
     }
   }
 
@@ -33,9 +34,9 @@ class Space {
   void display() {
 
     for ( int i = 0; i < Arrays.STAR_COUNT; i++) {
-      noStroke();
-      fill(255);
-      ellipse(x[i], y[i], diameter[i], diameter[i]);
+      image(star, x[i], y[i], diameter[i], diameter[i]);
+
     }
+    image(earth, 800, 800, 850, 650);
   }
 }
