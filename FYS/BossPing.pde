@@ -33,14 +33,16 @@ class BossPing
     BOSS_VELOCITY_Y_MAX           = height * 0.012, 
     BOSS_MAX_Y                    = height *0.3, 
     BALL_IS_CLOSE                 = BOSS_START_WIDTH*0.3, 
-    TEXT_SIZE                      = height*0.04, 
+    TEXT_SIZE                     = height*0.04, 
     BACKGROUND_LINE_SIZE          = gamefield.GAMEFIELD_WIDTH*0.01, 
     BOSS_START_DECELERATE_X       = 0.9, 
     BOSS_START_DECELERATE_Y       = 0.9;
   public final int
     BOSS_DAMAGE_TIMER             = 10, 
     BOSS_START_HEALTH             = 3;
-  public BossPing()
+  public boolean 
+    active;
+    public BossPing()
   {
     x                   = BOSS_START_X;
     y                   = BOSS_START_Y;
@@ -229,6 +231,7 @@ class BossPing
   public void killPing()
   {
     stateBossPing=false;
+    active=false;
     score = score + 1000;
   }
 
@@ -243,7 +246,7 @@ class BossPing
   {
     fill (Colors.DARK_GREEN);
     textSize(TEXT_SIZE);
-    text(health,gamefield.GAMEFIELD_WIDTH*0.8, height*0.4);
+    text(health, gamefield.GAMEFIELD_WIDTH*0.8, height*0.4);
     for ( int i =0; i < gamefield.GAMEFIELD_WIDTH/ (BACKGROUND_LINE_SIZE*2); i++ )
     {
       rect(BACKGROUND_LINE_SIZE * i * 2, height/2 - BACKGROUND_LINE_SIZE/2, BACKGROUND_LINE_SIZE, BACKGROUND_LINE_SIZE);
