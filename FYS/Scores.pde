@@ -35,10 +35,10 @@ class Scores {
 
     text("TIME", width*0.90, height*0.15);
 
-    if ( time/60 < 10) {//the first 9 seconds start with a 0
+    if ( time/60 < 10) {//the first 9 seconds have  dubbel digits.
       text(min+":"+"0"+time/60, width*0.95, height*0.15);
     }
-    if ( time/60 > 9) {//10 to 60 seconds stay the same
+    if ( time/60 > 9) {//10 to 60 seconds are the same.
       text(min+":"+time/60, width*0.95, height*0.15);
     }
     image( player.getHasImmune() ? shieldPowerImg : shieldPlaceholder, width*0.91, height*0.70, 80, 80 );
