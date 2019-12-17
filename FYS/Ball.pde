@@ -215,6 +215,8 @@ class Ball {
               enemyBomb.destroy();  //enemie destroyd
               speedY *= -1;  // enemie bounce off
               isChargedBom = false;
+               
+              
              
               // spawn particles vanaf de ball.
             }
