@@ -15,7 +15,7 @@ class Player
     PLAYER_START_WIDTH              = gamefield.GAMEFIELD_WIDTH * 0.17, 
     PLAYER_START_HEIGHT             = height * 0.045, 
     PLAYER_START_X                  = gamefield.GAMEFIELD_WIDTH / 2-PLAYER_START_WIDTH/2, 
-    PLAYER_START_Y                  = height - PLAYER_START_HEIGHT, 
+    PLAYER_START_Y                  = height/2 - PLAYER_START_HEIGHT, 
     PLAYER_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.0035, 
     PLAYER_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.014, 
     GROWTH_MODIFIER                 = 0.01, 
@@ -53,7 +53,8 @@ class Player
   private float 
     x, 
     xSplit, 
-    y, 
+    y,
+    minY,
     playerWidth, 
     playerHeight, 
     accelerationX, 
@@ -99,7 +100,6 @@ class Player
     playerHeight      = PLAYER_START_HEIGHT;
     accelerationX     = PLAYER_START_ACCELERATION_X;
     accelerationY     = PLAYER_START_ACCELERATION_Y;
-    velocityY         = PLAYER_VELOCITY_Y_MAX;
     decelerateX       = PLAYER_START_DECELERATE_X;
     decelerateY       = PLAYER_START_DECELERATE_Y;
     hitboxes          = new Rectangles();
@@ -146,16 +146,16 @@ class Player
   public void displayArrows(){
     fill(Colors.RED);
     if (!moved[0]){
-      rect(gamefield.GAMEFIELD_WIDTH/2-MOVEMENT_ARROW_OFFSET,height/2,MOVEMENT_ARROW_SIZE,MOVEMENT_ARROW_SIZE);
+      rect(x+playerWidth/2-MOVEMENT_ARROW_OFFSET,y+playerHeight/2,MOVEMENT_ARROW_SIZE,MOVEMENT_ARROW_SIZE);
     }
     if (!moved[1]){
-     rect(gamefield.GAMEFIELD_WIDTH/2+MOVEMENT_ARROW_OFFSET,height/2,MOVEMENT_ARROW_SIZE,MOVEMENT_ARROW_SIZE); 
+     rect(x+playerWidth/2+MOVEMENT_ARROW_OFFSET,y+playerHeight/2,MOVEMENT_ARROW_SIZE,MOVEMENT_ARROW_SIZE); 
     }
     if (!moved[2]){
-     rect(gamefield.GAMEFIELD_WIDTH/2,height/2-MOVEMENT_ARROW_OFFSET,MOVEMENT_ARROW_SIZE,MOVEMENT_ARROW_SIZE); 
+     rect(x+playerWidth/2,y+playerHeight/2-MOVEMENT_ARROW_OFFSET,MOVEMENT_ARROW_SIZE,MOVEMENT_ARROW_SIZE); 
     }
     if (!moved[3]){
-     rect(gamefield.GAMEFIELD_WIDTH/2,height/2+MOVEMENT_ARROW_OFFSET,MOVEMENT_ARROW_SIZE,MOVEMENT_ARROW_SIZE); 
+     rect(x+playerWidth/2,y+playerHeight/2+MOVEMENT_ARROW_OFFSET,MOVEMENT_ARROW_SIZE,MOVEMENT_ARROW_SIZE); 
     }
   }
   //draws the standard player.
