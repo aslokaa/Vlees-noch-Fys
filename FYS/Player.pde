@@ -219,7 +219,7 @@ class Player
   {
     if ( keyCodesPressed[LEFT] ) 
     {
-      moved[0]=true;
+      //moved[0]=true;
       velocityX -= accelerationX ; //Accelerates to the left.
       if (split)
       {
@@ -409,8 +409,8 @@ class Player
   //Prevents the player from going out of bounds
   private void detectCollisionEdge() 
   {
-    //Y
-    if ( y < gamefield.PLAYER_MIN_Y )
+    //the player is allowd to go everywhere during the movement tutorial
+    if ( y < (hasMoved() ? gamefield.PLAYER_MIN_Y : 0 ))
     {
       y = gamefield.PLAYER_MIN_Y;
       velocityY *= BOUNCE_MODIFIER;
@@ -701,8 +701,10 @@ class Player
 
   //returns true if the player has moved in all directions
   public boolean hasMoved() {
-    for (int i=0; i>moved.length; i++) {
+    for (int i=0; i<moved.length; i++) {
+
       if (!moved[i]) {
+        ammo+=1000;
         return false;
       }
     }
@@ -724,9 +726,7 @@ class Player
 
 //increases powerup spawnchance if the player is damaged
   public float getPowerUpChance() {
-    float c=map (playerWidth, PLAYER_MIN_WIDTH, PLAYER_START_WIDTH, 0.7, 0.3); 
-    println(c);
-    return c;
+    return map (playerWidth, PLAYER_MIN_WIDTH, PLAYER_START_WIDTH, 0.7, 0.3); 
   }
 }
 
