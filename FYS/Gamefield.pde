@@ -35,12 +35,12 @@ class Gamefield
     CHAD_COUNTER_START              = 0, 
     DAVE_COUNTER_START              = 10, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>// //<>//
+    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>//
     WAVES_UNTILL_DAVE               = 1, 
     WAVE3_CHADS                     = 1, 
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>//
+    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>//
 
   private int 
     waveCounter, 
@@ -89,9 +89,9 @@ class Gamefield
       {
 
         currentWave = waveFormats[waveCounter];
-
+        println("oioi" + currentWave.minRoundLength);
         waveBumpDelay = int(currentWave.minRoundLength);
-
+        println(waveBumpDelay);
         waveCounter++;
         setConditions();
       }
@@ -123,7 +123,7 @@ class Gamefield
   {
     if ( waveCounter - 1 == 3 )
     {
-      spawnDullChad();
+      dullChadCounter = 1;
       for ( Power power : powers )
       {
         if ( !power.powerActive )
@@ -169,6 +169,11 @@ class Gamefield
       currentWave.roundStartCounter--;
     } else
     { 
+      if ( dullChadCounter > 0 )
+      {
+        spawnDullChad();
+        dullChadCounter--;
+      }
       if ( currentWave.daveCounter > 0 && frameCount % daveSpawnDelay == 0 )
       {
         println("2");
@@ -184,12 +189,6 @@ class Gamefield
       if ( currentWave.spawnLester  && !lester.active)
       {
         activateLester();
-        currentWave.spawnLester = false;
-      }
-      if ( currentWave.spawnPing && !pingActivated )
-      {
-        activatePing();
-        currentWave.spawnPing = false;
       }
     }
   }
