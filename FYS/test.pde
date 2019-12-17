@@ -15,7 +15,7 @@ class Test
     if (keysPressed['l'])
     {
       println("l inverted");
-      powers[1].drop(width/2,0,PowerUpTypes.SPIKE_BALL);
+      player.modifyPower(PowerUpTypes.INVERTED);
     }
     if (keysPressed['o'])
     {
