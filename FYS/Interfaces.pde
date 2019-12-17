@@ -54,7 +54,7 @@ interface Colors
 interface Arrays
 {
   public final int
-    STAR_COUNT    = 100, 
+    STAR_COUNT    = 300, 
     BULLET_COUNT  = 150, 
     OPTION_COUNT  = 3, 
     DAVE_COUNT    = 10,
@@ -62,7 +62,8 @@ interface Arrays
     PARTICLE_COUNT = 2000,
     ANIMATION_COUNT = 2500,
     DAVE_MAX = 50,
-    CHAD_MAX = 10;
+    CHAD_MAX = 10,
+    WAVE_FORMATS = 10;
     
 }
 

@@ -14,6 +14,8 @@ class BossLester
   //position
   float x;
   float y;
+  final float INTRODUCTION_Y_SPEED;
+  final float FINAL_Y;
   //sizes
   float bodySize;
   final float HITBOX_OFFSET;
@@ -42,7 +44,9 @@ class BossLester
     introducing = false;
     this.x = x;
     this.y = y;
-    this.bodySize = 700;
+    INTRODUCTION_Y_SPEED = 1;
+    FINAL_Y = 100;
+    bodySize = 700;
     HITBOX_OFFSET = 300;
     SHOOT_TIMER = 75;
     CHAD_SPAWN_TIMER = 400;
@@ -89,6 +93,16 @@ class BossLester
   void move()
   {
     //move down at set pace, when final pos is hit stop moving, shake screen more ,and end introduction.
+    if ( y < FINAL_Y )
+    {
+      y += INTRODUCTION_Y_SPEED;
+    }
+    else
+    {
+     introducing = false; 
+     println(1);
+     //shake screen even more, start next wave.
+    }
   }
 
   void moveHitboxes()
@@ -105,6 +119,8 @@ class BossLester
   {
     //set player pos to wanted pos and set playerspeeds to 0,
     //needs to happen after movement update in player.
+    //gebruik player.setPosition(x,y);
+    println("pls don't move cunt");
   }
 
   void executeBehavior()
@@ -122,6 +138,13 @@ class BossLester
       active = false;
       stateBossLester=false;
       score = score + 1000;
+      for ( Enemy enemy : enemies )
+      {
+       if ( enemy instanceof EnemyChad ) 
+       {
+        enemy.destroy(); 
+       }
+      }
     }
   }
 

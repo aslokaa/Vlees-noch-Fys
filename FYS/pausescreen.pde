@@ -30,6 +30,7 @@ class Pausescreen
 
   public void display()
   {
+    for (int i = 0; i != NUM; tboxes[i++].display());
     displayText();
   }
 

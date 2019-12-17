@@ -20,7 +20,7 @@ Power[] powers = new Power[Arrays.POWER_COUNT];
 Particle[] particles = new Particle[Arrays.PARTICLE_COUNT];
 Animation[] animations = new Animation[Arrays.ANIMATION_COUNT];
 ArrayList<Ball> balls = new ArrayList<Ball>();
-
+WaveFormat[] waveFormats = new WaveFormat[Arrays.WAVE_FORMATS];
 
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
 Gamefield gamefield;
@@ -41,24 +41,33 @@ void setup()
 {
   size( 1600, 900, P2D); //16:9
 
-  smooth(4);
+  smooth(2);
   introMusic               = new SoundFile(this, "menuSounds" + '/' + "introMusic.wav");
-  gamefield                = new Gamefield();
+
+
+  gamefield = new Gamefield(); 
   space                    = new Space();
   scores                   = new Scores();
   screenScore              = new ScreenScore();
   player                   = new Player();
   ping                     = new BossPing();
-  lester                   = new BossLester(gamefield.GAMEFIELD_WIDTH / 2, 100);
+  lester                   = new BossLester(gamefield.GAMEFIELD_WIDTH / 2, -300);
   test                     = new Test();
   //balls.add(new Ball(100));
   //balls.add(new Ball(800));
+
+
+
   startscreen              = new Startscreen();
   pausescreen              = new Pausescreen();
   endscreen                = new Endscreen();
   font                     = loadFont("ComicSansMS-BoldItalic-40.vlw");
   loadAssets();
   imageMode(CENTER);
+
+
+  instantiateBoxes();
+  tboxes[idx = 1].isFocused = true;
 }
 
 void updateGame()
@@ -127,10 +136,11 @@ void drawGame()
   } else if (statePlaying)
   {
     background(player.giveBackgroundColor());
-    
+
+
     space.display();
     scores.display();
-    
+
 
     for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
     {
@@ -141,7 +151,7 @@ void drawGame()
     {
       particles[i].display();
     }
-    
+
 
     if (stateBossPing)
     {
@@ -168,9 +178,7 @@ void drawGame()
       ball.drawBall();
     }
     player.checkDisplay();
-    
-    screenScore.drawScore();
-    
+    gamefield.displayWallFX();
     if (statePaused)
     {
       pausescreen.display();
@@ -183,6 +191,18 @@ void drawGame()
 
 // Keyboard handling...
 void keyPressed() {  
+  if ( stateStart )
+  {
+    if (key != CODED | idx < 0)  return;
+    final int k = keyCode;
+
+    final TextBox tbox = tboxes[idx];
+    final int len = tbox.txt.length();
+
+    if (k == LEFT)  tbox.txt = tbox.txt.substring(0, max(0, len-1));
+    else if (k == RIGHT & len < tbox.lim-3)  tbox.txt += "    ";
+  }
+
   if (keyCode >= KEY_LIMIT) return; //safety: if keycode exceeds limit, exit methhod ('return').
   keyCodesPressed[keyCode] = true; // set its boolean to true
   if (key>=KEY_LIMIT) return;

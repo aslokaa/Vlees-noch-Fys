@@ -91,7 +91,7 @@ class Enemy
       {
         if (!particle.active)
         {
-          particleSpeed = random( 0.2, 2 );
+          particleSpeed = random( 0.2, 5 );
           particleAngle = random( 0, 2 * PI );
           particleSize = random( 15, 40 );
           particleSpeedX = particleSpeed * sin(particleAngle) + speedX / 2;

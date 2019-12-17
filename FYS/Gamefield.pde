@@ -1,5 +1,5 @@
-/*
-  //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves?
+/* //<>// //<>// //<>// //<>//
+ //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves?
  this class keeps track of where elements are spawned and the boundries they are allowed to be in.
  contains list of finals for outlining:
  where the player is allowed to move to,
@@ -13,8 +13,8 @@
  Eele Roet 500795948
  Niklas Leeuwin  500784205
  */
- 
- /*
+
+/*
  we hebben max ongeveer 20 waves, daarom kunnen we iedere wave formateren, we kunnen 
  de methods checkBoss en spawnwave herschrijven in 1 method die een lange string/INTarray
  neemt om te kijken wat er gespawned moet worden, dit zorgt voor veel hardcoden maar waves maken
@@ -36,8 +36,8 @@ class Gamefield
     DAVE_COUNTER_START              = 10, 
     CHAD_MAX                        = 10, 
     AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>// //<>//
-    WAVES_UNTILL_DAVE               = 1,
-    WAVE3_CHADS                     = 1,
+    WAVES_UNTILL_DAVE               = 1, 
+    WAVE3_CHADS                     = 1, 
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
     DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>//
@@ -45,31 +45,156 @@ class Gamefield
   private int 
     waveCounter, 
     daveCounter, 
-    chadCounter,
-    roundStartCounter,
-    roundLengthCounter;
+    daveSpawnDelay = 20, 
+    chadCounter, 
+    chadSpawnDelay = 180, 
+    dullChadCounter = 0, 
+    roundStartCounter = 0, 
+    roundLengthCounter, 
+    waveBumpDelay;
 
   private boolean
-   pingActivated, 
+    pingActivated, 
     lesterActivated, 
     spawnPing, 
-    spawnLester,
-    ballActive,
-    safetyFloorActive,
+    spawnLester, 
+    ballActive, 
+    safetyFloorActive, 
     roundSkippable;
+
+  private WaveFormat currentWave = new WaveFormat(0, 0, 0, 60, 0, false, false, false, false, false);
 
 
   public Gamefield()
   {
-    daveCounter        =DAVE_COUNTER_START;
-    chadCounter        =CHAD_COUNTER_START;
+    waveBumpDelay = 60;
   }
 
   public void update()
   {
-    checkBossRotation();
-    spawnWave(checkWave());
+    // checkBossRotation();
+    //spawnWave(checkWave());
+    bumpWave();
+    handleWave();
   }
+
+  private void bumpWave()
+  {
+    if ( currentWave.roundLengthCounter > 0 )
+    {
+      currentWave.roundLengthCounter--;
+    } else 
+    {
+      if ( checkWaveBumpDelay() )
+      {
+
+        currentWave = waveFormats[waveCounter];
+
+        waveBumpDelay = int(currentWave.minRoundLength);
+
+        waveCounter++;
+        setConditions();
+      }
+    }
+    if (checkWaveCleared())
+    {
+      if ( checkWaveBumpDelay() )
+      {
+        currentWave = waveFormats[waveCounter];
+        waveBumpDelay = int(currentWave.minRoundLength);
+        waveCounter++;
+        setConditions();
+      }
+    }
+  }
+
+  private boolean checkWaveBumpDelay()
+  {
+    println(waveBumpDelay);
+    if ( waveBumpDelay <= 0 )
+    {
+      return true;
+    }
+    waveBumpDelay--;
+    return false;
+  }
+
+  private void setConditions()
+  {
+    if ( waveCounter - 1 == 3 )
+    {
+      spawnDullChad();
+      for ( Power power : powers )
+      {
+        if ( !power.powerActive )
+        {
+          power.drop(GAMEFIELD_WIDTH / 2, -50, 4);
+          //restrict player movement
+          break;
+        }
+      }
+    }
+    if ( currentWave.ballActive )
+    {
+      //activate ball 
+      if ( !balls.get(0).active )
+      {
+        balls.get(0).activate(GAMEFIELD_WIDTH / 2, height / 2);
+        println("this round has a ball");
+      }
+    } else
+    {
+      //deactivate ball
+      balls.get(0).active = false;
+      println("this round has no ball");
+    }
+
+    if ( currentWave.safetyFloorActive )
+    {
+      //activate safetyfloor 
+      balls.get(0).safetyWallActive = true;
+      println("this round has a safety floor");
+    } else
+    {
+      //deactivate safetyfloor
+      balls.get(0).safetyWallActive = false;
+      println("this round doesn't have a safety floor");
+    }
+  }
+
+  private void handleWave()
+  {
+    if ( currentWave.roundStartCounter > 0 )
+    {
+      currentWave.roundStartCounter--;
+    } else
+    { 
+      if ( currentWave.daveCounter > 0 && frameCount % daveSpawnDelay == 0 )
+      {
+        println("2");
+        spawnDaves();
+        currentWave.daveCounter--;
+      }
+      if ( currentWave.chadCounter > 0 && frameCount % chadSpawnDelay == 0 )
+      {
+        println(4);
+        spawnChads();
+        currentWave.chadCounter--;
+      }
+      if ( currentWave.spawnLester  && !lester.active)
+      {
+        activateLester();
+        currentWave.spawnLester = false;
+      }
+      if ( currentWave.spawnPing && !pingActivated )
+      {
+        activatePing();
+        currentWave.spawnPing = false;
+      }
+    }
+  }
+
+
 
   //activates the spawn functions.
   private void spawnWave(boolean spawnWave)
@@ -100,18 +225,34 @@ class Gamefield
       }
       for ( int i=0; i<daveCounter; i++)
       {
-        spawnDaves(i);
+        spawnDaves();
       }
       for ( int i=0; i<chadCounter; i++)
       {
-        spawnChads(i);
+        spawnChads();
       }
       updateWaves();
     }
   }
 
+  private void spawnDullChad()
+  {
+    for (Enemy enemy : enemies)
+    {
+      if (enemy instanceof EnemyDullChad)
+      {
+        if (!enemy.active)
+        {
+          enemy.activate(gamefield.GAMEFIELD_WIDTH / 2, - 100);
+          daveCounter--;
+          return;
+        }
+      }
+    }
+  }
+
   //spawns daves
-  private void spawnDaves(int yModifier)
+  private void spawnDaves()
   {
     for (Enemy enemy : enemies)
     {
@@ -119,15 +260,16 @@ class Gamefield
       {
         if (!enemy.active)
         {
-          enemy.activate(ENEMY_START_X, ENEMY_START_Y*(yModifier+1));
-          break;
+          enemy.activate(ENEMY_START_X, ENEMY_START_Y);
+          daveCounter--;
+          return;
         }
       }
     }
   }
 
   //spawns chads
-  private void spawnChads(int yModifier)
+  private void spawnChads()
   {
     for (Enemy enemy : enemies)
     {
@@ -135,11 +277,6 @@ class Gamefield
       {
         if (!enemy.active)
         {
-          /*float xTemp=ENEMY_START_X;
-          if (random(0, 1)>0.5)
-          {
-            xTemp=ENEMY_START_X_ALT;
-          }*/
           enemy.activate(random( 0, 600), random(-500, -100));
           break;
         }
@@ -149,14 +286,25 @@ class Gamefield
 
 
   //checks if all enemies are dead
-  private boolean checkWave()
+  private boolean checkWaveCleared()
   {
-    return checkDave()&&checkChad();
+    return checkEnemies()&&checkBosses();
   }
 
   //checks if all daves are dead
-  private boolean checkDave()
+  private boolean checkEnemies()
   {
+
+    for (Enemy enemy : enemies)
+    {
+      if (enemy instanceof EnemyDullChad)
+      {
+        if (enemy.active)
+        {
+          return false;
+        }
+      }
+    }
     for (Enemy enemy : enemies)
     {
       if (enemy instanceof EnemyDave)
@@ -166,15 +314,6 @@ class Gamefield
           return false;
         }
       }
-    }
-    return true;
-  }
-
-  //checks if all chads are dead
-  private boolean checkChad()
-  {
-    for (Enemy enemy : enemies)
-    {
       if (enemy instanceof EnemyChad)
       {
         if (enemy.active)
@@ -186,13 +325,22 @@ class Gamefield
     return true;
   }
 
+  private boolean checkBosses()
+  {
+    if ( !lester.active && !pingActivated )
+    {
+      return true;
+    }
+    return false;
+  }
+
 
 
   //a special wave that only spawns chads
   private void spawnWave3()
   {
     for (int i =0; i<WAVE3_CHADS; i++) {
-      spawnChads(i);
+      spawnChads();
     }
   }
 
@@ -261,7 +409,8 @@ class Gamefield
   //starts the lester boss fight
   private void activateLester()
   {
-    lester           = new BossLester(width / 2, 100);
+    println("yet");
+    lester.activate();
     lesterActivated  = true;
     stateBossLester  = true;
     spawnLester      = false;
@@ -279,5 +428,17 @@ class Gamefield
 
   public int getWaveCounter() {
     return waveCounter;
+  }
+
+  private void displayWallFX()
+  {
+    //ball near wall effect.
+    //safetyWall bottom.
+    if ( currentWave.safetyFloorActive )
+    {
+      fill( 255 );
+      rect(0, height - 10, gamefield.GAMEFIELD_WIDTH, 10);
+    }
+    //tweening easing/ squishy walls ofzo.
   }
 }
