@@ -136,8 +136,7 @@ void drawGame()
   } else if (statePlaying)
   {
     background(player.giveBackgroundColor());
-
-
+    
     space.display();
     scores.display();
 
@@ -179,6 +178,7 @@ void drawGame()
     }
     player.checkDisplay();
     gamefield.displayWallFX();
+    screenScore.drawScore();
     if (statePaused)
     {
       pausescreen.display();
