@@ -58,13 +58,14 @@ class Power {
         break;
       case PowerUpTypes.SPLIT :
         fill(Colors.PINK);
-        image(splitPowerImg,x, y, hitboxDiameter, hitboxDiameter);
+        image(splitPowerImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
-        case PowerUpTypes.EXTRA_BALL :
+      case PowerUpTypes.EXTRA_BALL :
         fill(Colors.BLUE);
-        ellipse(x,y,hitboxDiameter,hitboxDiameter);
+        ellipse(x, y, hitboxDiameter, hitboxDiameter);
         break;
-        default:
+      
+      default:
       }
     }
   }

@@ -122,7 +122,7 @@ class Ball {
     {
       if ( y + radius > height )
       {
-       y = height + radius;
+       y = height - radius;
        speedY *= -1;
       }
     }
@@ -254,7 +254,7 @@ class Ball {
     {
       if ( lester.active )
       {
-        if (lester.hitboxLeft.active && dist(x, y, lester.hitboxLeftPos.x, lester.hitboxLeftPos.y)< radius + lester.hitboxLeft.HITBOX_RADIUS) {  //collision with enemie check.
+        if (lester.hitboxLeft.active && dist(x, y, lester.hitboxLeft.x, lester.hitboxLeft.y) < radius + lester.hitboxLeft.HITBOX_RADIUS) {  //collision with enemie check.
 
           lester.hitboxLeft.HP--;  //enemie destroyd 
           speedY *= -1;  // enemie bounce off
@@ -264,7 +264,7 @@ class Ball {
             y = lester.hitboxLeft.y + lester.hitboxLeft.HITBOX_RADIUS + radius;
           }
         }
-        if (lester.hitboxBottom.active && dist(x, y, lester.hitboxBottomPos.x, lester.hitboxBottomPos.y)< radius + lester.hitboxBottom.HITBOX_RADIUS) {  //collision with enemie check.
+        if (lester.hitboxBottom.active && dist(x, y, lester.hitboxBottom.x, lester.hitboxBottom.y)< radius + lester.hitboxBottom.HITBOX_RADIUS) {  //collision with enemie check.
 
           lester.hitboxBottom.HP--;  //enemie destroyd 
           speedY *= -1;  // enemie bounce off
@@ -274,7 +274,7 @@ class Ball {
             y = lester.hitboxBottom.y + lester.hitboxBottom.HITBOX_RADIUS + radius;
           }
         }
-        if (lester.hitboxRight.active && dist(x, y, lester.hitboxRightPos.x, lester.hitboxRightPos.y)< radius + lester.hitboxRight.HITBOX_RADIUS) {  //collision with enemie check.
+        if (lester.hitboxRight.active && dist(x, y, lester.hitboxRight.x, lester.hitboxRight.y)< radius + lester.hitboxRight.HITBOX_RADIUS) {  //collision with enemie check.
 
           lester.hitboxRight.HP--;  //enemie destroyd 
           speedY *= -1;  // enemie bounce off
