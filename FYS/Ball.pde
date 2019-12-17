@@ -12,6 +12,7 @@ class Ball {
   float radius, diameter;
   int colorBall;
   boolean active;
+  boolean safetyWallActive;
   boolean ballRespawn;
   boolean isChargedBom;
   float maxSpeedX;
@@ -19,14 +20,14 @@ class Ball {
   Animation animation;
 
   Ball() {
-    x= gamefield.GAMEFIELD_WIDTH/2;
+
     y = height/2;
     speedX = 0;
     speedY = height * 0.013;
     radius = 25;
     colorBall = Colors.BLUE;
-    active = true;
-    ballRespawn=false;
+    active = false;
+    ballRespawn = false;
     diameter = radius*2;
     maxSpeedX = height * 0.013;
     ballRespawnTimer = 0;
@@ -35,11 +36,11 @@ class Ball {
     setAnimation();
   }
 
-  Ball(float x)
-  {
-    this();
-    this.x=x;
-  }
+  /* Ball(float x)
+   {
+   this();
+   this.x=x;
+   }*/
 
   void setAnimation()
   {
@@ -56,31 +57,46 @@ class Ball {
     }
   }
 
+  void activate(float x, float y)
+  {
+    if ( !active )
+    {
+      this.active = true;
+      this.x = x;
+      this.y = y;
+    }
+  }
+
   void updateBall() {
 
+    if ( active) {
 
-    if (!ballRespawn) {
-      moveBall();
-      interactPlayer();
-      interactEnemy();
-      interactBossLester();
-      interactBossPing();
+      if (!ballRespawn) {
+        moveBall();
+        interactPlayer();
+        interactEnemy();
+        interactBossLester();
+        interactBossPing();
+      }
+      bounceWall();
+      countdownBallRespawn();
     }
-    bounceWall();
-    countdownBallRespawn();
   }
 
   void drawBall() {
-    animation.display(x, y);
-    noFill();
-    if (!isChargedBom) { 
-      stroke(Colors.BLUE);
-      strokeWeight(5);
-      ellipse(x, y, diameter, diameter);
-    } else { 
-      stroke(Colors.RED);
-      strokeWeight(5);
-      ellipse(x, y, diameter, diameter);
+    if ( active )
+    {
+      animation.display(x, y);
+      noFill();
+      if (!isChargedBom) { 
+        stroke(Colors.BLUE);
+        strokeWeight(5);
+        ellipse(x, y, diameter, diameter);
+      } else { 
+        stroke(Colors.RED);
+        strokeWeight(5);
+        ellipse(x, y, diameter, diameter);
+      }
     }
   }
 
@@ -98,15 +114,20 @@ class Ball {
       speedX *= -1;
     }
     if (y > height && !ballRespawn) { // damage to player end start respawn
-
-      ballRespawn = true ;
-      ballRespawnTimer = timerCount;
-      player.dealDamage(20, true);
-      player.dealDamage(20, false);
-      x= gamefield.GAMEFIELD_WIDTH/2;
-      y = height /2;
-      speedX = 0;
-      score = score - 300;
+      if ( safetyWallActive )
+      {
+        speedY *= -1;
+        y = height - radius;
+      } else {
+        ballRespawn = true ;
+        ballRespawnTimer = timerCount;
+        player.dealDamage(20, true);
+        player.dealDamage(20, false);
+        x= gamefield.GAMEFIELD_WIDTH/2;
+        y = height /2;
+        speedX = 0;
+        score = score - 300;
+      }
     }
     if (y < radius) {
       if (!stateBossPing) {
@@ -189,11 +210,11 @@ class Ball {
               enemyBomb.destroy();  //enemie destroyd
               speedY *= -1;  // enemie bounce off
               isChargedBom = false;
-             
+
               // spawn particles vanaf de ball.
             }
           }
-           radius = 25;
+          radius = 25;
         } else {
           enemy.destroy();  //enemie destroyd
           speedY *= -1;  // enemie bounce off

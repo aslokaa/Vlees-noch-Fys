@@ -3,6 +3,7 @@
 //some things have been copied from the Player class.
 
 //This is the class that handles the ping boss. It's like playing pong
+//should work with an active boolean instead of pingActive bool in gamefield.
 class BossPing
 {
   private float 

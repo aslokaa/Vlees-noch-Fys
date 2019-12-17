@@ -49,6 +49,7 @@ String connPass = "KWVvztAFWytWOG";
 
 public void loadAssets() {
   conn = new MySQL(this, connServer, connDB, connUser, connPass);
+  conn.connect();
   bulletImg = loadImage("./sprites/BulletFysGame.png");
   bulletPowerImg = loadImage("./sprites/BulletFysGamePower.png");
   playerSidesImg = loadImage("./sprites/RocketPlayerFysGame.png");

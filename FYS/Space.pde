@@ -33,6 +33,7 @@ class Space {
   void display() {
 
     for ( int i = 0; i < Arrays.STAR_COUNT; i++) {
+      noStroke();
       fill(255);
       ellipse(x[i], y[i], diameter[i], diameter[i]);
     }

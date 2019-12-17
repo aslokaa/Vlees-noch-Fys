@@ -62,7 +62,8 @@ interface Arrays
     PARTICLE_COUNT = 2000,
     ANIMATION_COUNT = 2500,
     DAVE_MAX = 50,
-    CHAD_MAX = 10;
+    CHAD_MAX = 10,
+    WAVE_FORMATS = 10;
     
 }
 
