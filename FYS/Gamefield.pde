@@ -35,12 +35,12 @@ class Gamefield
     CHAD_COUNTER_START              = 0, 
     DAVE_COUNTER_START              = 10, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>// //<>//
+    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>// //<>// //<>//
     WAVES_UNTILL_DAVE               = 1, 
     WAVE3_CHADS                     = 1, 
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>//
+    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>// //<>//
 
   private int 
     waveCounter, 
@@ -139,7 +139,7 @@ class Gamefield
       //activate ball 
       if ( !balls.get(0).active )
       {
-        balls.get(0).activate(GAMEFIELD_WIDTH / 2, height / 2);
+        //balls.get(0).activate(GAMEFIELD_WIDTH / 2, height / 2);
         println("this round has a ball");
       }
     } else
@@ -152,12 +152,12 @@ class Gamefield
     if ( currentWave.safetyFloorActive )
     {
       //activate safetyfloor 
-      balls.get(0).safetyWallActive = true;
+      //balls.get(0).safetyWallActive = true;
       println("this round has a safety floor");
     } else
     {
       //deactivate safetyfloor
-      balls.get(0).safetyWallActive = false;
+      //balls.get(0).safetyWallActive = false;
       println("this round doesn't have a safety floor");
     }
   }
