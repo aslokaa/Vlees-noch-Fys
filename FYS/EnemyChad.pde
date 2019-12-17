@@ -142,7 +142,6 @@ class EnemyChad extends Enemy
   {
     explode();
     active = false;
-    screenScore.updateScore(x,y);
     score = score + 100;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;

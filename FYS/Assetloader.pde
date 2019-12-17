@@ -35,10 +35,7 @@ PImage
   shieldPlaceholder,
   ballBomImg1,
   ballBomImg2,
-  ballBomImg3,
-  earth,
-  star;
- 
+  ballBomImg3;
 
 PImage[] explosionAnimation = new PImage[5];
 PImage[] ballAnimation = new PImage[3];
@@ -82,8 +79,7 @@ public void loadAssets() {
   bButtonImg = loadImage("./sprites/bButtonImg.png");
   smokeImg1 = loadImage("./sprites/smokeParticle1.png");
   smokeImg2 = loadImage("./sprites/smokeParticle2.png");
-  earth = loadImage("./sprites/earth.png");//http://planetpixelemporium.com/earth.html
-  star = loadImage("./sprites/star.png");
+
   powerHpUpImg = loadImage("./sprites/HpUpFysGame.png");
 
   for ( int i = 0; i < 5; i++ )

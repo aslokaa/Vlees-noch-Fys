@@ -18,7 +18,7 @@ class PlayerBullet
     bulletX = Xpos;
     bulletY = Ypos;
     bulletSpeed = -height*0.03;
-    bulletDiameter = 100;
+    bulletDiameter = 25;
     shootBullet = false;
   }
 
@@ -60,9 +60,6 @@ class PlayerBullet
         shootBullet = false;
         enemy.destroy();
       }
-    }
-    if (ping.checkCollision(bulletX,bulletY,bulletDiameter)){
-      
     }
   }
 }

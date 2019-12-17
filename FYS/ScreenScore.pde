@@ -3,53 +3,35 @@ class ScreenScore {
   float comboScoreX, comboScoreY;
   float textSize;
   float scoreTimer;
-  int comboScore;
-  int maxTextSize;
+  float comboScore;
 
   ScreenScore() {
 
     comboScoreX = 0;
     comboScoreY = 0;
     scoreTimer = 0;
-    textSize = 60;
+    textSize = 40;
     comboScore = 0;
-    maxTextSize = 90;
   }
 
-
-  void updateScore(float enemyX, float enemyY) {
+  
+  void updateScore(float enemyX,float enemyY) {
     comboScoreX = enemyX;
     comboScoreY = enemyY;
-    comboScore += 100;
-    scoreTimer = 60;
-    textSize = comboScore/4+1;
+    comboScore ++;
+    scoreTimer = 180;
+    textSize(textSize*comboScore);
+    text("+" + comboScore * 100, comboScoreX, comboScoreY);
+    println(comboScore);
+    drawScore();
+    scoreTimer--;
   }
-
-
-  void drawScore() {
-    fill(Colors.YELLOW);
-
-    if (textSize >= maxTextSize) {
-      textSize = maxTextSize;
-    }
-
-    if (textSize == 1) {
-      textSize = 1;
-    } else {
-      textSize = textSize - 0.5;
-    }
-    
-    if(comboScore > 1){
-     scoreTimer--; 
-    }
-    if(scoreTimer == 0){
-     scoreTimer = 0;
-     comboScore = 0;
-    }
-
-    textSize(textSize);
-    if (scoreTimer >= 1) {
-      text("+" + comboScore, comboScoreX, comboScoreY);
-    }
+  
+  
+  void drawScore(){
+   if ( scoreTimer > 0){
+    text("+" + comboScore * 100, comboScoreX, comboScoreY);
+   }
   }
+  
 }
