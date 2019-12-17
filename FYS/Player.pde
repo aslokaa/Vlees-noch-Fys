@@ -4,6 +4,10 @@
 
 
 //This is the class that handles the object the player controlls. 
+//of je moet hier in de player 4 bools bijhouden van welke pijltjes er om de player gedisplayed 
+//moeten worden of je maak er een aparte class van die een instance heeft in de player.
+//aparte class is handig want die houdt zelf bij welk pijltje hij moet tekenen
+//en tekent ze dan zelf.
 
 class Player
 {
@@ -26,24 +30,31 @@ class Player
     ROCKET_SPRITE_WIDTH             = ROCKET_SPRITE_HEIGHT*0.8, 
     SLOW_MODIFIER                   = 0.5, 
     SPLIT_WIDTH_MODIFIER            = 0.75, 
-    BALL_HIT_MODIFIER               = 0.35, 
+    BALL_HIT_Y_MODIFIER             = 0.35, 
+    BALL_HIT_HEIGHT_MAX_MODIFIER    = 0.4, 
+    BALL_HIT_HEIGHT_MIN_MODIFIER    = 0.2, 
     BOUNCE_MODIFIER                 = -0.8, 
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*4, 
     IMMUNE_STARTING_TIMER           = SECOND*5, 
     SLOW_STARTING_TIMER             = SECOND*2, 
     SHAKE_MODIFIER                  = gamefield.GAMEFIELD_WIDTH *0.01, 
-    SHAKE_STARTING_TIMER            = SECOND*0.5, 
+    SHAKE_STARTING_TIMER            = SECOND*0.7, 
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
-    BALL_HIT_STARTING_TIMER         = SECOND*0.5, 
-    SPLIT_STARTING_TIMER            = SECOND*15;
+    BALL_HIT_STARTING_TIMER         = SECOND*0.3, 
+    SPLIT_STARTING_TIMER            = SECOND*15,
+    SHIELD_DOT_WIDTH                = 30,
+    SHIELD_DOT_HEIGHT               = 15,
+    POWER_BLINK_DELAY               = 10;
 
   public final int
-    ROCKET_PARTICLES                = 20,
-    BULLET_PARTICLES                = 70,
-    DAMAGE_FRAMES                   = 6,
+    ROCKET_PARTICLES                = 20, 
+    BULLET_PARTICLES                = 100, 
+    DAMAGE_FRAMES                   = 6, 
     STARTING_BULLETS                = 5;
-
+    
+  PImage currentImg;
+  
   private float 
     x, 
     xSplit, 
@@ -68,6 +79,8 @@ class Player
     hasImmune, //if the player is holding an immunity buff
     ballHit, //enlarges the paddle after hitting the ball.
     split;       //splits the paddle
+  private boolean[]
+    moved;
   private float //Duration of effects.
     invertedTimer, 
     immuneTimer, 
@@ -97,6 +110,7 @@ class Player
     hitboxes          = new Rectangles();
     ammo              = STARTING_BULLETS;
     image             = playerForcefieldImg;
+    moved             = new boolean[4];
   }
 
   //updates the player
@@ -127,19 +141,47 @@ class Player
         checkSplit();
       }
     }
-
     imageMode(CENTER);
   }
 
   //draws the standard player.
   private void display()
   { 
+    if ( hasImmune )
+    {
+      for ( int j = 0; j < 2; j++ )
+      {
+        for ( int i = 0; i < round( playerWidth / 50); i++ )
+        {
+          fill(255);
+          rect( x + 50 * i, y - SHIELD_DOT_HEIGHT / 2 + ( j * (playerHeight + SHIELD_DOT_HEIGHT / 2) ), SHIELD_DOT_WIDTH, SHIELD_DOT_HEIGHT / 2);
+        }
+      }
+      for ( int j = 0; j < 2; j++ )
+      {
+       for ( int i = 0; i < round( playerHeight / 50); i++ )
+       {
+        fill(255);
+        rect(x - SHIELD_DOT_HEIGHT / 2 + ( j * (playerWidth + SHIELD_DOT_HEIGHT / 2)), y + 50 *i, SHIELD_DOT_HEIGHT / 2, SHIELD_DOT_WIDTH);
+       }
+      }
+    }
+    
+    if ( immune )
+    {
+     strokeWeight(SHIELD_DOT_HEIGHT);
+     stroke(255);
+     noFill();
+     rect(x, y, playerWidth, playerHeight);
+     noStroke();
+    }
+
     image(image, x, y, playerWidth, playerHeight );
     image(playerSidesImg, x, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
     image(playerSidesImg, x + playerWidth - ROCKET_SPRITE_WIDTH, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
     if (checkVelocity()) {
-      emitParticles(x+playerWidth-ROCKET_SPRITE_WIDTH/2, ROCKET_PARTICLES);
-      emitParticles(x+ROCKET_SPRITE_WIDTH/2, ROCKET_PARTICLES);
+      emitParticles(x+playerWidth-ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES, true);
+      emitParticles(x+ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES, true);
     }
   }
 
@@ -157,7 +199,7 @@ class Player
   //shrinks the paddle after it grew from hitting a ball.
   private void ShrinkPaddleBallHit() {
     if (playerHeight>PLAYER_START_HEIGHT) {
-      playerHeight+=(PLAYER_START_HEIGHT-playerHeight)/(BALL_HIT_STARTING_TIMER*3);
+      playerHeight+=(PLAYER_START_HEIGHT-playerHeight)/(BALL_HIT_STARTING_TIMER);
     }
     if (playerHeight + playerHeight*GROWTH_MODIFIER< PLAYER_START_HEIGHT || playerHeight < PLAYER_START_HEIGHT) {
       playerHeight=PLAYER_START_HEIGHT;
@@ -201,10 +243,10 @@ class Player
     image(playerSidesImg, xSplit, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
     image(playerSidesImg, xSplit + widthSplit1 - ROCKET_SPRITE_WIDTH, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
     if (checkVelocity()) {
-      emitParticles(xSplit+widthSplit1-ROCKET_SPRITE_WIDTH/2, ROCKET_PARTICLES/2);
-      emitParticles(xSplit+ROCKET_SPRITE_WIDTH/2, ROCKET_PARTICLES/2);
-      emitParticles(x+ROCKET_SPRITE_WIDTH/2, ROCKET_PARTICLES/2);
-      emitParticles(x+widthSplit0-ROCKET_SPRITE_WIDTH/2, ROCKET_PARTICLES/2);
+      emitParticles(xSplit+widthSplit1-ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES/2, true);
+      emitParticles(xSplit+ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES/2, true);
+      emitParticles(x+ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES/2, true );
+      emitParticles(x+widthSplit0-ROCKET_SPRITE_WIDTH/2, y+playerHeight+ROCKET_SPRITE_HEIGHT, ROCKET_PARTICLES/2, true);
     }
   }
 
@@ -213,6 +255,7 @@ class Player
   {
     if ( keyCodesPressed[LEFT] ) 
     {
+      moved[0]=true;
       velocityX -= accelerationX ; //Accelerates to the left.
       if (split)
       {
@@ -221,6 +264,7 @@ class Player
     }
     if ( keyCodesPressed[RIGHT] ) 
     {
+      moved[1]=true;
       velocityX += accelerationX; //Accelerates to the right.
       if (split)
       {
@@ -229,10 +273,12 @@ class Player
     }
     if ( keyCodesPressed[UP] )
     {
+      moved[2]=true;
       velocityY -= accelerationY; //Accelerates to upwards.
     }
     if ( keyCodesPressed[DOWN] )
     {
+      moved[3]=true;
       velocityY += accelerationY; //Accelerates to downwards.
     }
     if ( keysPressed['x'] && shootTimer <= 1 )
@@ -246,20 +292,23 @@ class Player
 
 
   //copied from enemies. emits smoke.
-  private void emitParticles(float xSmoke, int amountOfParticles) {
+  private void emitParticles(float xSmoke, float ySmoke, int amountOfParticles, boolean rocket) {
     for ( int i = 0; i < amountOfParticles; i++ )
     {
       for ( Particle particle : particles )
       {
         if (!particle.active)
         {
-          float particleSpeed = random( 5, 10 );
-          float particleAngle = random( 0.8 * PI, 1.2 *PI );
+          float particleAngle = random(0, 1)>0.5 ? random( 0, 0.5*PI ) : random(1.5*PI, 2*PI);
+          float particleSpeed = rocket ? random( 5, 10 ) : random(1, 5);
+          if (rocket) {
+            particleAngle = random( 0.8 * PI, 1.2 *PI );
+          }
           float particleSize = random( 20, 30 );
           float particleSpeedX = particleSpeed * sin(particleAngle) + velocityX / 2;
           float particleSpeedY = velocityY>-1 ? particleSpeed * -cos(particleAngle) + velocityY / 2 : particleSpeed * -cos(-particleAngle) + velocityY / 2;
           int particleLifespan = round(particleSize * 0.3 );
-          particle.activateParticle( xSmoke, y+playerHeight+ROCKET_SPRITE_HEIGHT, particleSize, particleSpeedX, particleSpeedY, particleLifespan );
+          particle.activateParticle( xSmoke, ySmoke, particleSize, particleSpeedX, particleSpeedY, particleLifespan );
           break;
         }
       }
@@ -269,11 +318,11 @@ class Player
   private void checkMove()
   {
     checkVelocityMax();
-    if (slow) // slows the player
-    {
-      velocityX *= SLOW_MODIFIER;
-      velocityY *= SLOW_MODIFIER;
-    }
+    //if (slow) // slows the player
+    //{
+    //  velocityX *= SLOW_MODIFIER;
+    //  velocityY *= SLOW_MODIFIER;
+    //}
     if (inverted) // inverts the player
     {
       moveInverted();
@@ -390,6 +439,7 @@ class Player
       hasImmune=false; 
       immune=true;
       immuneTimer=IMMUNE_STARTING_TIMER;
+      image = playerShieldImg;
     }
   }
 
@@ -546,6 +596,7 @@ class Player
     if (immune)
     {
       immuneTimer--;
+      
       if ( immuneTimer <= 0 )
       {
         immune=false;
@@ -582,6 +633,15 @@ class Player
       shootTimer--;
     }
   }
+  
+  void blinkPower(PImage powerImg)
+  {
+   if (frameCount % POWER_BLINK_DELAY == 0)
+   {
+    println(image == playerForcefieldImg ? "1" : "2");
+    image = (image == playerForcefieldImg ? powerImg : playerForcefieldImg );
+   }
+  }
 
   //Retrieves the color the player should have.
   private PImage changeImage()
@@ -595,7 +655,11 @@ class Player
       return playerReverseImg;
     } else if (immune)
     {
-      return playerShieldImg;
+      if ( immuneTimer < 180 )
+      {
+       blinkPower(playerShieldImg); 
+      }
+      return image;
     } else if (slow)
     {
       return playerSlowImg;
@@ -629,11 +693,11 @@ class Player
   {
     ammo += newAmmo;
   }
-  
+
   //shoots a bullet and adds particles
-  public void spawnBullet(float x){
-   activatesBullet(x/2);
-   emitParticles(x, BULLET_PARTICLES);
+  public void spawnBullet(float x) {
+    activatesBullet(x);
+    emitParticles(x, y, BULLET_PARTICLES, false);
   }
 
   //activates a bullet.
@@ -648,7 +712,7 @@ class Player
       }
     }
   }
-  
+
   //updates the hitboxes.
   private void updateHitboxes()
   {
@@ -685,16 +749,35 @@ class Player
   public boolean getHasImmune() {
     return hasImmune;
   }
-  //
+
+  //returns true if the player has moved in all directions
+  public boolean hasMoved() {
+    for (int i=0; i>moved.length; i++) {
+      if (!moved[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  //adds juice to hittin the ball
   public void collideBall(float ballVY) {
     ballHitTimer=BALL_HIT_STARTING_TIMER;
     ballHit=true;
     ballHitHeight=random(playerHeight*1.1, playerHeight*1.5);
-    velocityY+=(velocityY+ballVY)*BALL_HIT_MODIFIER;
+    velocityY+=(velocityY+ballVY)*BALL_HIT_Y_MODIFIER;
   }
 
+  //makes the background red for a couple of frames after getting damaged
   public color giveBackgroundColor() {
     return shakeTimer>SHAKE_STARTING_TIMER-DAMAGE_FRAMES ? Colors.BLOOD_RED : Colors.BLACK;
+  }
+
+  //increases powerup spawnchance if the player is damaged
+  public float getPowerUpChance() {
+    float c=map (playerWidth, PLAYER_MIN_WIDTH, PLAYER_START_WIDTH, 0.7, 0.3); 
+    println(c);
+    return c;
   }
 }
 

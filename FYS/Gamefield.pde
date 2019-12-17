@@ -13,6 +13,14 @@
  Eele Roet 500795948
  Niklas Leeuwin  500784205
  */
+ 
+ /*
+ we hebben max ongeveer 20 waves, daarom kunnen we iedere wave formateren, we kunnen 
+ de methods checkBoss en spawnwave herschrijven in 1 method die een lange string/INTarray
+ neemt om te kijken wat er gespawned moet worden, dit zorgt voor veel hardcoden maar waves maken
+ en balancen word makkelijker. we kunnen ook iets van een switch statement maken die de rondes checkt
+ en de goede acties uitvoert zoals nu wordt gedaan maar met de tutorial waves erbij.
+ */
 class Gamefield
 {
   public final float 
@@ -37,12 +45,19 @@ class Gamefield
   private int 
     waveCounter, 
     daveCounter, 
-    chadCounter;
+    chadCounter,
+    roundStartCounter,
+    roundLengthCounter;
+
   private boolean
-    pingActivated, 
+   pingActivated, 
     lesterActivated, 
     spawnPing, 
-    spawnLester;
+    spawnLester,
+    ballActive,
+    safetyFloorActive,
+    roundSkippable;
+
 
   public Gamefield()
   {
@@ -170,6 +185,7 @@ class Gamefield
     }
     return true;
   }
+
 
 
   //a special wave that only spawns chads

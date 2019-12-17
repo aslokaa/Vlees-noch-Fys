@@ -109,7 +109,7 @@ class Startscreen
   //initializes daves
   private void loadDaves()
   {
-    for ( int i = 0; i < gamefield.DAVE_MAX; i++ )
+    for ( int i = 0; i < Arrays.DAVE_MAX; i++ )
     {
       enemies.add(new EnemyDave( EnemyFinals.ENEMY_GRAVEYARD_X, EnemyFinals.ENEMY_GRAVEYARD_Y, EnemyFinals.DAVE_HITBOX_RADIUS ));
     }
@@ -119,9 +119,9 @@ class Startscreen
   //initializes the chads
   private void loadChads()
   {
-    for (int i = 0; i < gamefield.CHAD_MAX; i++ )
+    for (int i = 0; i < Arrays.CHAD_MAX; i++ )
     {
-      enemies.add(new EnemyChad( 600, 200, EnemyFinals.CHAD_HITBOX_RADIUS));
+      enemies.add(new EnemyChad( EnemyFinals.ENEMY_GRAVEYARD_X, EnemyFinals.ENEMY_GRAVEYARD_Y, EnemyFinals.CHAD_HITBOX_RADIUS));
     }
     chadsInitialized = true;
   }

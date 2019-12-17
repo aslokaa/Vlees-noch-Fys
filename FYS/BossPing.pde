@@ -22,33 +22,36 @@ class BossPing
     health, 
     damageTimer;
   private final float
-    BOSS_START_WIDTH              = gamefield.GAMEFIELD_WIDTH*0.13, 
-    BOSS_START_HEIGHT             = height * 0.045, 
-    BOSS_START_X                  = gamefield.GAMEFIELD_WIDTH/2-BOSS_START_WIDTH/2, 
-    BOSS_START_Y                  = BOSS_START_HEIGHT, 
-    BOSS_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.002, 
-    BOSS_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.01, 
-    BOSS_START_ACCELERATION_Y     = height * 0.002, 
-    BOSS_VELOCITY_Y_MAX           = height * 0.012, 
-    BOSS_MAX_Y                    = height *0.3, 
-    BALL_IS_CLOSE                 = BOSS_START_WIDTH*0.3, 
+    START_WIDTH                   = gamefield.GAMEFIELD_WIDTH*0.16, 
+    START_HEIGHT                  = height * 0.045, 
+    START_X                       = gamefield.GAMEFIELD_WIDTH/2-START_WIDTH/2, 
+    START_Y                       = START_HEIGHT, 
+    START_ACCELERATION_X          = gamefield.GAMEFIELD_WIDTH * 0.0015, 
+    VELOCITY_X_MAX                = gamefield.GAMEFIELD_WIDTH * 0.01, 
+    START_ACCELERATION_Y          = height * 0.0015, 
+    VELOCITY_Y_MAX                = height * 0.012, 
+    MAX_Y                         = height *0.3, 
+    BALL_IS_CLOSE                 = START_WIDTH*0.3, 
+    TEXT_SIZE                     = height*0.1, 
     BACKGROUND_LINE_SIZE          = gamefield.GAMEFIELD_WIDTH*0.01, 
-    BOSS_START_DECELERATE_X       = 0.9, 
-    BOSS_START_DECELERATE_Y       = 0.9;
+    HEALTH_TEXT_X                 = gamefield.GAMEFIELD_WIDTH*0.94, 
+    HEALTH_TEXT_Y                 = height * 0.4, 
+    START_DECELERATE_X            = 0.8, 
+    START_DECELERATE_Y            = 0.8;
   public final int
-    BOSS_DAMAGE_TIMER             = 10, 
-    BOSS_START_HEALTH             = 3;
+    DAMAGE_TIMER                  = 10, 
+    START_HEALTH                  = 4;
   public BossPing()
   {
-    x                   = BOSS_START_X;
-    y                   = BOSS_START_Y;
-    accelerationX       = BOSS_START_ACCELERATION_X; 
-    accelerationY       = BOSS_START_ACCELERATION_Y;
-    decelerateX         = BOSS_START_DECELERATE_X;
-    decelerateY         = BOSS_START_DECELERATE_Y;
-    bossWidth           = BOSS_START_WIDTH;
-    bossHeight          = BOSS_START_HEIGHT;
-    health              = BOSS_START_HEALTH;
+    x                   = START_X;
+    y                   = START_Y;
+    accelerationX       = START_ACCELERATION_X; 
+    accelerationY       = START_ACCELERATION_Y;
+    decelerateX         = START_DECELERATE_X;
+    decelerateY         = START_DECELERATE_Y;
+    bossWidth           = START_WIDTH;
+    bossHeight          = START_HEIGHT;
+    health              = START_HEALTH;
   }
 
   public void update()
@@ -152,26 +155,37 @@ class BossPing
     {
       velocityY=0;
     }
-    velocityX *= decelerateX;
-    velocityY *= decelerateY;
+    if (shouldDecelerate()) {
+      velocityX *= decelerateX;
+      velocityY *= decelerateY;
+    }
+  }
+
+  private boolean shouldDecelerate() {
+    for (Ball ball : balls) {
+      if (ball.y<MAX_Y*2) {
+        return false;
+      }
+    }
+    return true;
   }
 
   //makes sure the boss doesn't go too fast
   private void checkVelocityMax()
   {
-    if (velocityX > BOSS_VELOCITY_X_MAX)
+    if (velocityX > VELOCITY_X_MAX)
     {
-      velocityX = BOSS_VELOCITY_X_MAX;
-    } else if (velocityX < -BOSS_VELOCITY_X_MAX)
+      velocityX = VELOCITY_X_MAX;
+    } else if (velocityX < -VELOCITY_X_MAX)
     {
-      velocityX = -BOSS_VELOCITY_X_MAX;
+      velocityX = -VELOCITY_X_MAX;
     }
-    if (velocityY > BOSS_VELOCITY_Y_MAX)
+    if (velocityY > VELOCITY_Y_MAX)
     {
-      velocityY = BOSS_VELOCITY_Y_MAX;
-    } else if (velocityY < -BOSS_VELOCITY_Y_MAX)
+      velocityY = VELOCITY_Y_MAX;
+    } else if (velocityY < -VELOCITY_Y_MAX)
     {
-      velocityY = -BOSS_VELOCITY_Y_MAX;
+      velocityY = -VELOCITY_Y_MAX;
     }
   }
 
@@ -181,18 +195,18 @@ class BossPing
     x += velocityX;
     y += velocityY;
   }
+
   //Prevents the boss from going out of bounds
   private void detectCollisionEdge() 
   {
-    //Y
     if ( y < 0 )
     {
       y = 0;
       velocityY *= -1;
     }
-    if ( y + bossHeight > BOSS_MAX_Y )
+    if ( y + bossHeight > MAX_Y )
     {
-      y = BOSS_MAX_Y - bossHeight;
+      y = MAX_Y - bossHeight;
       velocityY *= -1;
     }
     if ( x < 0 )
@@ -215,7 +229,7 @@ class BossPing
       return;
     }
     health-=damage;
-    damageTimer=BOSS_DAMAGE_TIMER;
+    damageTimer=DAMAGE_TIMER;
     if ( health <= 0 )
     {
       killPing();
@@ -240,9 +254,10 @@ class BossPing
   private void displayBackground()
   {
     fill (Colors.DARK_GREEN);
+    textSize(TEXT_SIZE);
+    text(health, HEALTH_TEXT_X, HEALTH_TEXT_Y);
     for ( int i =0; i < gamefield.GAMEFIELD_WIDTH/ (BACKGROUND_LINE_SIZE*2); i++ )
     {
-      println(gamefield.GAMEFIELD_WIDTH / BACKGROUND_LINE_SIZE *2);
       rect(BACKGROUND_LINE_SIZE * i * 2, height/2 - BACKGROUND_LINE_SIZE/2, BACKGROUND_LINE_SIZE, BACKGROUND_LINE_SIZE);
     }
   }
@@ -253,7 +268,7 @@ class BossPing
     fill(Colors.DARK_GREEN);
     rect(x, y, bossWidth, bossHeight);
   }
-
+  //counts insert
   private void countdown() {
     if (damageTimer>=0) {
       damageTimer--;
@@ -270,5 +285,8 @@ class BossPing
   }
   public float getHeight() {
     return bossHeight;
+  }
+  public boolean checkCollision(float xT,float yT,float diameterT){
+   return y>yT+diameterT && dist(xT, yT, x, y) < (bossWidth +(diameterT/2)) ;
   }
 }
