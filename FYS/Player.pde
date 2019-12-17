@@ -26,8 +26,10 @@ class Player
     PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.4, 
     PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.45, 
     VELOCITY_MIN                    = PLAYER_START_ACCELERATION_Y*0.01, 
-    ROCKET_SPRITE_HEIGHT            = height * 0.09, 
-    ROCKET_SPRITE_WIDTH             = ROCKET_SPRITE_HEIGHT*0.8, 
+    ROCKET_SPRITE_HEIGHT            = height * 0.09,
+    ROCKET_SPRITE_WIDTH             = ROCKET_SPRITE_HEIGHT*0.8,
+    MOVEMENT_ARROW_SIZE             = gamefield.GAMEFIELD_WIDTH*0.08,
+    MOVEMENT_ARROW_OFFSET           = gamefield.GAMEFIELD_WIDTH*0.2,
     SLOW_MODIFIER                   = 0.5, 
     SPLIT_WIDTH_MODIFIER            = 0.75, 
     BALL_HIT_MODIFIER               = 0.35, 
@@ -123,6 +125,9 @@ class Player
     noStroke();
     image=changeImage();
     imageMode(CORNER);
+    if(!hasMoved()){
+      displayArrows();
+    }
     if (ballHit) {
       growBallHit();
     } else { 
@@ -136,7 +141,23 @@ class Player
     }
     imageMode(CENTER);
   }
-
+  
+  //displays the movement tutorial arrows
+  public void displayArrows(){
+    fill(Colors.RED);
+    if (!moved[0]){
+      rect(gamefield.GAMEFIELD_WIDTH/2-MOVEMENT_ARROW_OFFSET,height/2,MOVEMENT_ARROW_SIZE,MOVEMENT_ARROW_SIZE);
+    }
+    if (!moved[1]){
+     rect(gamefield.GAMEFIELD_WIDTH/2+MOVEMENT_ARROW_OFFSET,height/2,MOVEMENT_ARROW_SIZE,MOVEMENT_ARROW_SIZE); 
+    }
+    if (!moved[2]){
+     rect(gamefield.GAMEFIELD_WIDTH/2,height/2-MOVEMENT_ARROW_OFFSET,MOVEMENT_ARROW_SIZE,MOVEMENT_ARROW_SIZE); 
+    }
+    if (!moved[3]){
+     rect(gamefield.GAMEFIELD_WIDTH/2,height/2+MOVEMENT_ARROW_OFFSET,MOVEMENT_ARROW_SIZE,MOVEMENT_ARROW_SIZE); 
+    }
+  }
   //draws the standard player.
   private void display()
   { 
@@ -219,7 +240,7 @@ class Player
   {
     if ( keyCodesPressed[LEFT] ) 
     {
-      //moved[0]=true;
+      moved[0]=true;
       velocityX -= accelerationX ; //Accelerates to the left.
       if (split)
       {
@@ -405,14 +426,18 @@ class Player
       immuneTimer=IMMUNE_STARTING_TIMER;
     }
   }
+  
+  private float getMinY(){
+   return  hasMoved() ? gamefield.PLAYER_MIN_Y : 0 ;
+  }
 
   //Prevents the player from going out of bounds
   private void detectCollisionEdge() 
   {
     //the player is allowd to go everywhere during the movement tutorial
-    if ( y < (hasMoved() ? gamefield.PLAYER_MIN_Y : 0 ))
+    if ( y < getMinY())
     {
-      y = gamefield.PLAYER_MIN_Y;
+      y = getMinY();
       velocityY *= BOUNCE_MODIFIER;
     }
     if ( y + playerHeight > height  )
@@ -702,13 +727,15 @@ class Player
   //returns true if the player has moved in all directions
   public boolean hasMoved() {
     for (int i=0; i<moved.length; i++) {
-
       if (!moved[i]) {
-        ammo+=1000;
         return false;
       }
     }
     return true;
+  }
+  public void setPosition(float x, float y){
+   this.x=x;
+   this.y=y;
   }
 
   //adds juice to hittin the ball

@@ -119,6 +119,7 @@ class BossLester
   {
     //set player pos to wanted pos and set playerspeeds to 0,
     //needs to happen after movement update in player.
+    //gebruik player.setPosition(x,y);
     println("pls don't move cunt");
   }
 
