@@ -107,7 +107,7 @@ class Ball {
       PVector current = history.get(i);
       
       fill(255,100,100, i*20);
-      ellipse(current.x, current.y, 25+ i*2, 25+i*2);
+      ellipse(current.x, current.y, 15 + i, 15 + i);
     }
   }
 
