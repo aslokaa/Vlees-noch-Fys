@@ -138,6 +138,13 @@ class BossLester
       active = false;
       stateBossLester=false;
       score = score + 1000;
+      for ( Enemy enemy : enemies )
+      {
+       if ( enemy instanceof EnemyChad ) 
+       {
+        enemy.destroy(); 
+       }
+      }
     }
   }
 
