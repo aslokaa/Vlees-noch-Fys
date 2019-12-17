@@ -383,18 +383,20 @@ class Player
     switch(type)
     {
     case PowerUpTypes.INVERTED:
-      playerSounds.play(Sounds.INVERTED);
-      inverted = true;
-      invertedTimer = INVERTED_STARTING_TIMER;
+      //playerSounds.play(Sounds.INVERTED);
+      //inverted = true;
+      //invertedTimer = INVERTED_STARTING_TIMER;
+      modifyPower(PowerUpTypes.HP_UP);
       break;
     case PowerUpTypes.IMMUNE:
       playerSounds.play(Sounds.IMMUNE);
       hasImmune = true;
       break;
     case PowerUpTypes.SLOW:
-      playerSounds.play(Sounds.SLOW);
-      slow = true;
-      slowTimer = SLOW_STARTING_TIMER;
+      //playerSounds.play(Sounds.SLOW);
+      //slow = true;
+      //slowTimer = SLOW_STARTING_TIMER;
+      modifyPower(PowerUpTypes.HP_UP);
       break;
     case PowerUpTypes.SPLIT:
       playerSounds.play(Sounds.SPLIT);
@@ -638,7 +640,6 @@ class Player
   {
    if (frameCount % POWER_BLINK_DELAY == 0)
    {
-    println(image == playerForcefieldImg ? "1" : "2");
     image = (image == playerForcefieldImg ? powerImg : playerForcefieldImg );
    }
   }
@@ -655,7 +656,7 @@ class Player
       return playerReverseImg;
     } else if (immune)
     {
-      if ( immuneTimer < 180 )
+      if ( immuneTimer < SECOND*3 )
       {
        blinkPower(playerShieldImg); 
       }
