@@ -1,6 +1,7 @@
 MySQL conn;
 PImage 
-  bulletImg, 
+  bulletImg,
+  spikeBallImg,
   shieldPowerImg, 
   invertedPowerImg, 
   bombPowerImg, 
@@ -53,6 +54,7 @@ String connPass = "KWVvztAFWytWOG";
 public void loadAssets() {
   conn = new MySQL(this, connServer, connDB, connUser, connPass);
   bulletImg = loadImage("./sprites/BulletFysGame.png");
+  spikeBallImg = loadImage("./sprites/SpikeSpriteFysGame.png");
   bulletPowerImg = loadImage("./sprites/BulletFysGamePower.png");
   playerSidesImg = loadImage("./sprites/RocketPlayerFysGame.png");
   playerForcefieldImg = loadImage("./sprites/PlayerBounceFysGame.png");
