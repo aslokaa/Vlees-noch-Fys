@@ -14,14 +14,15 @@ class Ball {
   boolean active;
   boolean ballRespawn;
   boolean isChargedBom;
+  boolean safetyWallActive;
   float maxSpeedX;
   float ballRespawnTimer, timerCount;
   float bomRadius;
   Animation animation;
 
   ArrayList<PVector> history;
-   
-  
+
+
 
   Ball() {
     x= gamefield.GAMEFIELD_WIDTH/2;
@@ -30,7 +31,7 @@ class Ball {
     speedY = height * 0.013;
     radius = 25;
     colorBall = Colors.BLUE;
-    active = true;
+    active = false;
     ballRespawn=false;
     diameter = radius*2;
     maxSpeedX = height * 0.013;
@@ -39,20 +40,14 @@ class Ball {
     isChargedBom = false;
     bomRadius = 600;
     setAnimation();
-    
-    history = new ArrayList<PVector>();
-   
-    
 
-    
-    
+    history = new ArrayList<PVector>();
   }
 
   Ball(float x)
   {
     this();
     this.x=x;
-    
   }
 
   void setAnimation()
@@ -71,43 +66,48 @@ class Ball {
   }
 
   void updateBall() {
+    if ( active )
+    {
 
+      if (!ballRespawn) {
+        moveBall();
+        interactPlayer();
+        interactEnemy();
+        interactBossLester();
+        interactBossPing();
+      }
+      bounceWall();
+      countdownBallRespawn();
 
-    if (!ballRespawn) {
-      moveBall();
-      interactPlayer();
-      interactEnemy();
-      interactBossLester();
-      interactBossPing();
-    }
-    bounceWall();
-    countdownBallRespawn();
-    
-    PVector v = new PVector(x,y);
-    history.add(v);
-    if(history.size() > 15){
-      history.remove(0);
+      PVector v = new PVector(x, y);
+      history.add(v);
+      if (history.size() > 15) {
+        history.remove(0);
+      }
     }
   }
 
   void drawBall() {
-    animation.display(x, y);
-    noFill();
-    if (!isChargedBom) { 
-      stroke(Colors.BLUE);
-      strokeWeight(5);
-      ellipse(x, y, diameter, diameter);
-    } else { 
-      stroke(Colors.RED);
-      strokeWeight(5);
-      ellipse(x, y, diameter, diameter);
-      ellipse(x, y, bomRadius, bomRadius);
-    }
-    for(int i = 0; i< history.size(); i++){
-      PVector current = history.get(i);
-      
-      fill(255,100,100, i*20);
-      ellipse(current.x, current.y, 15 + i, 15 + i);
+    if ( active )
+    {
+      animation.display(x, y);
+      noFill();
+      if (!isChargedBom) { 
+        stroke(Colors.BLUE);
+        strokeWeight(5);
+        ellipse(x, y, diameter, diameter);
+      } else { 
+        stroke(Colors.RED);
+        strokeWeight(5);
+        ellipse(x, y, diameter, diameter);
+        ellipse(x, y, bomRadius, bomRadius);
+      }
+      for (int i = 0; i< history.size(); i++) {
+        PVector current = history.get(i);
+
+        fill(255, 100, 100, i*20);
+        ellipse(current.x, current.y, 15 + i, 15 + i);
+      }
     }
   }
 
@@ -118,6 +118,14 @@ class Ball {
   }
   //bounce on walls 
   void bounceWall() {
+    if ( safetyWallActive )
+    {
+      if ( y + radius > height )
+      {
+       y = height + radius;
+       speedY *= -1;
+      }
+    }
     if (x > gamefield.GAMEFIELD_WIDTH - radius) {
       speedX = -speedX;
     }
@@ -209,25 +217,34 @@ class Ball {
       if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius) {  //collision with enemie check.
         if (isChargedBom) {
           radius = 300;
-          
+
           for (Enemy enemyBomb : enemies) {
             if (dist(x, y, enemyBomb.x, enemyBomb.y)< radius + enemyBomb.hitboxRadius) { 
               enemyBomb.destroy();  //enemie destroyd
               speedY *= -1;  // enemie bounce off
               isChargedBom = false;
-               
-              
-             
+
+
+
               // spawn particles vanaf de ball.
             }
           }
-           radius = 25;
+          radius = 25;
         } else {
           enemy.destroy();  //enemie destroyd
           speedY *= -1;  // enemie bounce off
         }
       }
     }
+  }
+
+  void activate(float x, float y)
+  {
+    active = true;
+    this.x = x;
+    this.y = y;
+    ballRespawn = true;
+    ballRespawnTimer = timerCount;
   }
 
   //Eele & Brent
