@@ -136,8 +136,7 @@ void drawGame()
   } else if (statePlaying)
   {
     background(player.giveBackgroundColor());
-
-
+    
     space.display();
 
     for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
@@ -176,6 +175,8 @@ void drawGame()
       ball.drawBall();
     }
     player.checkDisplay();
+    gamefield.displayWallFX();
+    screenScore.drawScore();
     if (statePaused)
     {
       pausescreen.display();

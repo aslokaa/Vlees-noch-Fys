@@ -87,6 +87,7 @@ class BossLester
   {
     move();
     moveHitboxes();
+    println(hitboxBottom.y);
     restrictPlayerMovement();
   }
 
