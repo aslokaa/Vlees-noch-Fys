@@ -37,6 +37,7 @@ PImage
   ballBomImg2,
   ballBomImg3,
   earth,
+  arrowImg,
   star;
  
 
@@ -84,6 +85,7 @@ public void loadAssets() {
   earth = loadImage("./sprites/earth.png");//http://planetpixelemporium.com/earth.html
   star = loadImage("./sprites/star.png");
   powerHpUpImg = loadImage("./sprites/HpUpFysGame.png");
+  arrowImg = loadImage("./sprites/arrowImg.png");
 
   for ( int i = 0; i < 5; i++ )
   {

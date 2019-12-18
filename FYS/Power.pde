@@ -63,10 +63,11 @@ class Power {
       case PowerUpTypes.EXTRA_BALL :
         fill(Colors.BLUE);
         ellipse(x, y, hitboxDiameter, hitboxDiameter);
-        break;
+        break;/*
       case PowerUpTypes.SPIKE_BALL :
         image(spikeBallImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
+*/
       default:
       }
     }

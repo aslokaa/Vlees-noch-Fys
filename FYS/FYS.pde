@@ -139,8 +139,6 @@ void drawGame()
 
 
     space.display();
-    scores.display();
-
 
     for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
     {
@@ -178,11 +176,12 @@ void drawGame()
       ball.drawBall();
     }
     player.checkDisplay();
-    gamefield.displayWallFX();
     if (statePaused)
     {
       pausescreen.display();
     }
+    scores.display();
+    gamefield.displayWallFX();
   } else if (stateEnd)
   {
     endscreen.display();
