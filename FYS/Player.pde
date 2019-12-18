@@ -150,7 +150,8 @@ class Player
     imageMode(CENTER);
   }
 
-  //displays the movement tutorial arrows
+  //displays the movement tutorial arrows 
+  //for loop maybe? 
   public void displayArrows() {
     if (!moved[0]) {
       image(arrowImg, x+playerWidth/2-MOVEMENT_ARROW_OFFSET, y+playerHeight/2, MOVEMENT_ARROW_SIZE, MOVEMENT_ARROW_SIZE);
@@ -187,7 +188,8 @@ class Player
         for ( int i = 0; i < round( playerWidth / 50); i++ )
         {
           fill(255);
-          rect( x + 50 * i, y - SHIELD_DOT_HEIGHT / 2 + ( j * (playerHeight + SHIELD_DOT_HEIGHT / 2) ), SHIELD_DOT_WIDTH, SHIELD_DOT_HEIGHT / 2);
+          arc( x + ( SHIELD_DOT_WIDTH / 2 ) + 50 * i, y + ( j * playerHeight ), SHIELD_DOT_WIDTH, SHIELD_DOT_WIDTH, PI + ( j * PI), TAU + ( j * PI ) );
+          //rect( x + 50 * i, y - SHIELD_DOT_HEIGHT / 2 + ( j * (playerHeight + SHIELD_DOT_HEIGHT / 2) ), SHIELD_DOT_WIDTH, SHIELD_DOT_HEIGHT / 2);
         }
       }
       for ( int j = 0; j < 2; j++ )

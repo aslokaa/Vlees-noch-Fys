@@ -180,12 +180,14 @@ class Startscreen
   
   private void loadWaveFormats()
   {
-      waveFormats[0] =  new WaveFormat( 0, 0, 0, 300, 600, false, false, false, false, false );
-      waveFormats[1] =  new WaveFormat( 0, 0, 0, 300, 600, false, false, true, true, false );
-      waveFormats[2] =  new WaveFormat( 4, 0, 0, 60, 600, false, false, true, true, true );
+      waveFormats[0] =  new WaveFormat( 0, 0, 0, 1000, 1000, false, false, false, false, false );
+      waveFormats[1] =  new WaveFormat( 0, 0, 0, 800, 800, false, false, true, true, true );
+      waveFormats[2] =  new WaveFormat( 20, 0, 0, 60, 3600  , false, false, true, true, true );
       waveFormats[3] =  new WaveFormat( 0, 0, 0, 300, 600, false, false, false, false, true );
-      waveFormats[4] =  new WaveFormat( 0, 0, 0, 300, 6000, false, true, true, false, false );
-      waveFormats[5] =  new WaveFormat( 0, 0, 0, 300, 6000, true, false, true, false, false );
+      waveFormats[4] =  new WaveFormat( 25, 2, 0, 300, 600, false, false, true, false, true );
+      waveFormats[5] =  new WaveFormat( 30, 4, 0, 300, 600, false, false, true, false, true );
+      waveFormats[6] =  new WaveFormat( 0, 0, 0, 300, 6000, false, true, true, false, false );
+      waveFormats[7] =  new WaveFormat( 0, 0, 0, 300, 6000, true, false, true, false, false );
 
       
       

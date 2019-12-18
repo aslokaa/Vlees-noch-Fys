@@ -122,8 +122,8 @@ class Ball {
     {
       if ( y + radius > height )
       {
-       y = height - radius;
-       speedY *= -1;
+        y = height - radius;
+        speedY *= -1;
       }
     }
     if (x > gamefield.GAMEFIELD_WIDTH - radius) {
@@ -170,6 +170,7 @@ class Ball {
       }
     }
   }
+
   void ballChargedBom() {
     if (isChargedBom) {
       diameter = 100;
@@ -212,6 +213,7 @@ class Ball {
       speedX = -maxSpeedX;
     }
   }
+
   void interactEnemy() {
     for (Enemy enemy : enemies) {
       if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius) {  //collision with enemie check.

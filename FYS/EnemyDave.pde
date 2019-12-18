@@ -23,7 +23,7 @@ class EnemyDave extends Enemy
   float spawnRate;
   float spawnChance;
   //particle info
-  
+
 
   EnemyDave(float x, float y, float hitboxRadius)
   {
@@ -78,7 +78,7 @@ class EnemyDave extends Enemy
     if ( y - hitboxRadius > height)
     {
       active = false;
-      player.dealDamage(damageToDeal,false);
+      player.dealDamage(damageToDeal, false);
     }
   }
 
@@ -119,7 +119,7 @@ class EnemyDave extends Enemy
     spawnPowerup();
     explode();
     active = false;
-    screenScore.updateScore(x,y);
+    screenScore.updateScore(x, y);
     score = score + 100;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
@@ -143,6 +143,13 @@ class EnemyDave extends Enemy
     {
       moveRight = true;
     }
+  }
+
+  void setSpeeds(float newSpeed)
+  {
+    moveSpeedLeft = -newSpeed;
+    moveSpeedRight = newSpeed;
+    moveSpeedDown = newSpeed;
   }
 
   @Override void spawnPowerup()
@@ -169,7 +176,7 @@ class EnemyDave extends Enemy
     {
       noStroke();
       fill(EnemyFinals.DAVE_COLOR);
-      image(enemyDaveImg,x, y, hitboxDiameter, hitboxDiameter);
+      image(enemyDaveImg, x, y, hitboxDiameter, hitboxDiameter);
     }
   }
 }
