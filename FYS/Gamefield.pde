@@ -35,6 +35,7 @@ class Gamefield
     CHAD_COUNTER_START              = 0, 
     DAVE_COUNTER_START              = 10, 
     DAVE_SPEED_START                = 3, 
+    DAVE_SPEED_MAX                  = 6,
     CHAD_MAX                        = 10, 
     AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>//
     WAVES_UNTILL_DAVE               = 1, 
@@ -46,7 +47,6 @@ class Gamefield
   private int 
     waveCounter, 
     daveCounter, 
-    daveSpawnDelay = 20, 
     chadCounter, 
     chadSpawnDelay = 180, 
     dullChadCounter = 0, 
@@ -114,6 +114,7 @@ class Gamefield
     currentWave = waveFormats[waveCounter];
     waveBumpDelay = int(currentWave.minRoundLength);
     waveCounter++;
+    daveSpeed = DAVE_SPEED_START;
     setConditions();
   }
 
@@ -177,15 +178,13 @@ class Gamefield
       currentWave.roundStartCounter--;
     } else
     { 
-      if ( currentWave.daveCounter > 0 && frameCount % daveSpawnDelay == 0 )
+      if ( currentWave.daveCounter > 0 && checkDaveSpawnCollision() )
       {
-        println("2");
         spawnDaves();
         currentWave.daveCounter--;
       }
       if ( currentWave.chadCounter > 0 && frameCount % chadSpawnDelay == 0 )
       {
-        println(4);
         spawnChads();
         currentWave.chadCounter--;
       }
@@ -199,6 +198,33 @@ class Gamefield
         activatePing();
         currentWave.spawnPing = false;
       }
+    }
+  }
+  
+  private boolean checkDaveSpawnCollision()
+  {
+    for (Enemy enemy : enemies)
+    {
+      if (enemy instanceof EnemyDave)
+      {
+        if (enemy.active && enemy.y - enemy.hitboxRadius * 2.2 < ENEMY_START_Y )
+        {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  
+  public void setDaveMoveSpeed()
+  {
+    daveSpeed += abs((DAVE_SPEED_MAX - daveSpeed) / daveCounter);
+    for ( Enemy enemy : enemies )
+    {
+     if ( enemy.active && enemy instanceof EnemyDave )
+     {
+       enemy.setMoveSpeed(daveSpeed);
+     }
     }
   }
 

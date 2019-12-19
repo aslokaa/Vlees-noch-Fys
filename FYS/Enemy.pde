@@ -103,6 +103,11 @@ class Enemy
       }
     }
   }
+  
+  void setMoveSpeed(float speed)
+  {
+   //define setMoveSpeeds method before using it. 
+  }
 
   void display()//gets called in the drawGame method in the main.
   {
