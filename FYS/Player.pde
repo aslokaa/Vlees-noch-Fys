@@ -673,12 +673,13 @@ class Player
     }
   }
 
-  void blinkPower(PImage powerImg)
+  PImage blinkPower(PImage powerImg)
   {
     if (frameCount % POWER_BLINK_DELAY == 0)
     {
-      image = (image == playerForcefieldImg ? powerImg : playerForcefieldImg );
+      return( image == playerForcefieldImg ? powerImg : playerForcefieldImg );
     }
+    return image;
   }
 
   //Retrieves the color the player should have.
@@ -693,9 +694,9 @@ class Player
       return playerReverseImg;
     } else if (immune)
     {
-      if ( immuneTimer < SECOND*3 )
+      if ( immuneTimer < SECOND * 2 )
       {
-        blinkPower(playerShieldImg);
+        return blinkPower(playerShieldImg);
       }
       return playerShieldImg;
     } else if (slow)
