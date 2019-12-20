@@ -8,12 +8,12 @@ interface PowerUpTypes
   public final int
     INVERTED     = 0, 
     IMMUNE       = 1, 
-    SLOW         = 2,
-    HP_UP        = 3,
-    AMMO_UP      = 4,
-    BOOM_BALL    = 5,
-    EXTRA_BALL   = 8,
-    SPLIT        = 6,
+    SLOW         = 2, 
+    HP_UP        = 3, 
+    AMMO_UP      = 4, 
+    BOOM_BALL    = 5, 
+    EXTRA_BALL   = 8, 
+    SPLIT        = 6, 
     SPIKE_BALL   = 9;
 }  
 
@@ -44,10 +44,10 @@ interface Colors
     WHITE      = #FFFFFF, 
     BLUE       = #0000FF, 
     YELLOW     = #FFFF00, 
-    RED        = #FF0000,
-    BLOOD_RED  = #8A0707,
-    BLACK      = #000000,
-    MAGENTA    = #FF00FF,
+    RED        = #FF0000, 
+    BLOOD_RED  = #8A0707, 
+    BLACK      = #000000, 
+    MAGENTA    = #FF00FF, 
     DARK_GREEN = #008F11;
 }
 
@@ -58,14 +58,13 @@ interface Arrays
     STAR_COUNT    = 300, 
     BULLET_COUNT  = 150, 
     OPTION_COUNT  = 3, 
-    DAVE_COUNT    = 10,
-    POWER_COUNT   = 5,
-    PARTICLE_COUNT = 2000,
-    ANIMATION_COUNT = 2500,
-    DAVE_MAX = 50,
-    CHAD_MAX = 10,
+    DAVE_COUNT    = 10, 
+    POWER_COUNT   = 5, 
+    PARTICLE_COUNT = 2000, 
+    ANIMATION_COUNT = 2500, 
+    DAVE_MAX = 50, 
+    CHAD_MAX = 10, 
     WAVE_FORMATS = 10;
-    
 }
 
 //adding readability
@@ -96,4 +95,13 @@ interface BossID
   public final int
     PING                =0, 
     LESTER              =1;
+}
+
+interface BallHit
+{
+  public final int
+    GROW      =0, 
+    SHRINK    =1, 
+    REGROW    =2,
+    NOTHING   =3;
 }
