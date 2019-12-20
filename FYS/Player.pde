@@ -143,6 +143,8 @@ class Player
         
       } else {
       ShrinkPaddleBallHit();
+      
+      }if (shake)
       {
         shake();
       } else {
