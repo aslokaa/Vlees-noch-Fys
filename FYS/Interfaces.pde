@@ -13,7 +13,8 @@ interface PowerUpTypes
     AMMO_UP      = 4,
     BOOM_BALL    = 5,
     EXTRA_BALL   = 8,
-    SPLIT        = 6;
+    SPLIT        = 6,
+    SPIKE_BALL   = 9;
 }  
 
 //public finals for all enemies.
