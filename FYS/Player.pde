@@ -139,8 +139,10 @@ class Player
     if (ballHit) {
       growBallHit();
     } else { 
+      if (regrow){
+        
+      } else {
       ShrinkPaddleBallHit();
-      if (shake)
       {
         shake();
       } else {
@@ -230,12 +232,11 @@ class Player
 
   //shrinks the paddle after it grew from hitting a ball.
   private void ShrinkPaddleBallHit() {
-    if (playerHeight>PLAYER_START_HEIGHT) {
-      playerHeight+=(PLAYER_START_HEIGHT-playerHeight)/(BALL_HIT_STARTING_TIMER);
+    if (playerHeight>PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER) {
+      playerHeight+=(PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER-playerHeight)/(BALL_HIT_STARTING_TIMER);
     }
-
-    if (playerHeight + playerHeight*GROWTH_MODIFIER< PLAYER_START_HEIGHT || playerHeight < PLAYER_START_HEIGHT) {
-      playerHeight=PLAYER_START_HEIGHT;
+    if (playerHeight + playerHeight*GROWTH_MODIFIER< PLAYER_START_HEIGHT || playerHeight < PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER) {
+      
     }
   }
 
