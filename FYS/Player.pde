@@ -81,7 +81,6 @@ class Player extends Paddle
     shake, //shakes the paddle
     hasImmune, //if the player is holding an immunity buff
     ballHit, //enlarges the paddle after hitting the ball.
-    regrow, 
     split;       //splits the paddle
 
   private boolean[]
@@ -146,7 +145,6 @@ class Player extends Paddle
     } else {
       checkSplit();
     }
-    display();
     imageMode(CENTER);
   }
 
@@ -173,6 +171,7 @@ class Player extends Paddle
   private void shrinkPaddleBallHit() {
     playerHeight+=(PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER-playerHeight)/BALL_HIT_STARTING_TIMER;
     if (playerHeight - SHRINK_MARGIN< PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER) {
+      playerHeight=PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER;
       ballHitState=BallHit.REGROW;
     }
   }
@@ -184,6 +183,7 @@ class Player extends Paddle
     }
     if (playerHeight+playerHeight*BALL_HIT_MODIFIER>PLAYER_START_HEIGHT)
     {
+      playerHeight=PLAYER_START_HEIGHT;
       ballHitState=BallHit.NOTHING;
     }
   }
@@ -258,12 +258,6 @@ class Player extends Paddle
     }
   }
 
-  //shrinks the paddle after it grew from hitting a ball.
-  private void ShrinkPaddleBallHit() {
-    if (playerHeight>PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER) {
-      playerHeight+=(PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER-playerHeight)/(BALL_HIT_STARTING_TIMER);
-    }
-  }
   //returns true if any velocity exists
   private boolean checkVelocity() {
     return !(velocityX==0 && velocityY ==0);
@@ -581,17 +575,7 @@ class Player extends Paddle
     shakeTimer = SHAKE_STARTING_TIMER;
     if (split)//<- als ie shaked moet ie geen dmg nemen, handig voor balancing en betere feel.
     {
-      if (isRight)
-        if (ballHitState==BallHit.GROW) {
-          ballHitTimer--;
-          if (ballHitTimer <= 0) {
-            ballHitState=BallHit.SHRINK;
-          }
-        }
-      if (widthSplit0<PLAYER_MIN_WIDTH || widthSplit1 <PLAYER_MIN_WIDTH)
-      {
-        endSplit();
-      }
+      endSplit();
     } else if (!split)
     {
       playerWidth -= damage;
@@ -629,10 +613,10 @@ class Player extends Paddle
   @Override
     void countdown()
   {
-    if (ballHit) {
+    if (ballHitState==BallHit.GROW) {
       ballHitTimer--;
       if (ballHitTimer <= 0) {
-        ballHit=false;
+        ballHitState=BallHit.SHRINK;
       }
     }
     if (inverted)

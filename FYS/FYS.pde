@@ -1,7 +1,6 @@
 //Galaxy Defence Force
 //IG101-2, Vlees noch FYS
 //Niklas Leeuwin, Brent Sijm, Olger Klok , Mika Spoelstra, Eele Roet, 
-// x is bottom keys
 
 import processing.sound.*;
 
@@ -131,7 +130,7 @@ void drawGame()
   } else if (statePlaying)
   {
     background(player.giveBackgroundColor());
-    
+
     space.display();
 
     for ( int i = 0; i < Arrays.POWER_COUNT; i++ )
