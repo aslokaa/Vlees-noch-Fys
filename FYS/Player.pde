@@ -9,7 +9,7 @@
 //aparte class is handig want die houdt zelf bij welk pijltje hij moet tekenen
 //en tekent ze dan zelf.
 
-class Player
+class Player extends Paddle
 {
   public final float
     PLAYER_START_WIDTH              = gamefield.GAMEFIELD_WIDTH * 0.17, 
@@ -59,7 +59,6 @@ class Player
     currentImg;
 
   private float 
-    x, 
     xSplit, 
     y, 
     minY, 
@@ -123,7 +122,7 @@ class Player
     decelerate();
     checkMove();
     detectCollisionEdge();
-    powerCountdown();
+    countdown();
     updateHitboxes();
   }
 
@@ -284,7 +283,7 @@ class Player
   }
 
   //detects user inputs.
-  private void detectInput()//spawn "rook" particles als de player links recht up en down beweegt. see activate method in Particle
+  private void detectInput()
   {
     if ( keyCodesPressed[LEFT] ) 
     {
@@ -389,11 +388,13 @@ class Player
       velocityY = -PLAYER_VELOCITY_Y_MAX;
     }
   }
+  
+  @Override
   // modifies the X and Y positions
-  private void move()
+  void move()
   {
-    x += velocityX;
-    y += velocityY;
+    super.move();
+    println(x);
     if (split)
     {
       xSplit+=velocityXSplit;
@@ -540,24 +541,17 @@ class Player
     if (!(keysPressed[LEFT] || keysPressed[RIGHT]))
     {
       velocityX *= decelerateX;
-      velocityX=stopVelocity(velocityX);
       if (split)
       {
         velocityXSplit *= decelerateX;
-        velocityXSplit=stopVelocity(velocityXSplit);
       }
     }
     if (!(keysPressed[UP] || keysPressed[DOWN]))
     {
       velocityY *= decelerateY;
-      velocityY=stopVelocity(velocityY);
     }
   }
 
-  //returns 0 if the velocity is really low.
-  private float stopVelocity(float v) {
-    return v<VELOCITY_MIN && v>-VELOCITY_MIN ? 0 : v;
-  }
   //shrinks the paddle
   public void dealDamage( float damage, boolean isRight)
   {
@@ -615,7 +609,8 @@ class Player
   }
 
   //Keeps track of which powers are active and deactivates them.
-  private void powerCountdown()
+  @Override
+  void countdown()
   {
     if (ballHit) {
       ballHitTimer--;

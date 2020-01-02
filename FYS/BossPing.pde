@@ -3,7 +3,7 @@
 //some things have been copied from the Player class.
 
 //This is the class that handles the ping boss. It's like playing pong
-class BossPing
+class BossPing extends Paddle
 {
   private float 
     x, 
@@ -14,8 +14,8 @@ class BossPing
     accelerationY, 
     decelerateX, 
     decelerateY, 
-    bossWidth, 
-    bossHeight, 
+    paddleWidth, 
+    paddleHeight, 
     closestBallX, 
     closestBallY;
   private int
@@ -49,8 +49,8 @@ class BossPing
     accelerationY       = START_ACCELERATION_Y;
     decelerateX         = START_DECELERATE_X;
     decelerateY         = START_DECELERATE_Y;
-    bossWidth           = START_WIDTH;
-    bossHeight          = START_HEIGHT;
+    paddleWidth           = START_WIDTH;
+    paddleHeight          = START_HEIGHT;
     health              = START_HEALTH;
   }
 
@@ -76,7 +76,7 @@ class BossPing
       float yT = ball.y;
       if (ball.speedY<0)
       {
-        if (dist(x + bossWidth/2, y + bossHeight/2, xT, yT)<dist(x + bossWidth/2, y + bossHeight/2, closestBallXT, closestBallYT))
+        if (dist(x + paddleWidth/2, y + paddleHeight/2, xT, yT)<dist(x + paddleWidth/2, y + paddleHeight/2, closestBallXT, closestBallYT))
         {
           closestBallXT = xT;
           closestBallYT = yT;
@@ -96,18 +96,18 @@ class BossPing
   //checks if the ball is to the right of the boss.
   private boolean isBallRight()
   {
-    return closestBallX>x + bossWidth/2;
+    return closestBallX>x + paddleWidth/2;
   }
 
   //checks if the ball is below the boss.
   private boolean isBallDown()
   {
-    return closestBallY>y + bossHeight;
+    return closestBallY>y + paddleHeight;
   }
 
   private boolean isBallCloseX()
   {
-    return closestBallX+BALL_IS_CLOSE>x+bossWidth/2 && closestBallX-BALL_IS_CLOSE<x+bossWidth/2;
+    return closestBallX+BALL_IS_CLOSE>x+paddleWidth/2 && closestBallX-BALL_IS_CLOSE<x+paddleWidth/2;
   }
 
   //accelerates the boss.
@@ -190,7 +190,7 @@ class BossPing
   }
 
   //moves the boss
-  private void move()
+  void move()
   {
     x += velocityX;
     y += velocityY;
@@ -204,9 +204,9 @@ class BossPing
       y = 0;
       velocityY *= -1;
     }
-    if ( y + bossHeight > MAX_Y )
+    if ( y + paddleHeight > MAX_Y )
     {
-      y = MAX_Y - bossHeight;
+      y = MAX_Y - paddleHeight;
       velocityY *= -1;
     }
     if ( x < 0 )
@@ -214,9 +214,9 @@ class BossPing
       x = 0;
       velocityX = 0;
     }
-    if ( x + bossWidth > gamefield.GAMEFIELD_WIDTH )
+    if ( x + paddleWidth > gamefield.GAMEFIELD_WIDTH )
     {
-      x = gamefield.GAMEFIELD_WIDTH - bossWidth;
+      x = gamefield.GAMEFIELD_WIDTH - paddleWidth;
       velocityX = 0;
     }
   }
@@ -266,10 +266,12 @@ class BossPing
   private void displayPing()
   {
     fill(Colors.DARK_GREEN);
-    rect(x, y, bossWidth, bossHeight);
+    rect(x, y, paddleWidth, paddleHeight);
   }
+  
+  @Override
   //counts insert
-  private void countdown() {
+  void countdown() {
     if (damageTimer>=0) {
       damageTimer--;
     }
@@ -281,12 +283,12 @@ class BossPing
     return y;
   }
   public float getWidth() {
-    return bossWidth;
+    return paddleWidth;
   }
   public float getHeight() {
-    return bossHeight;
+    return paddleHeight;
   }
   public boolean checkCollision(float xT,float yT,float diameterT){
-   return y>yT+diameterT && dist(xT, yT, x, y) < (bossWidth +(diameterT/2)) ;
+   return y>yT+diameterT && dist(xT, yT, x, y) < (paddleWidth +(diameterT/2)) ;
   }
 }
