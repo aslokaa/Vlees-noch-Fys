@@ -16,11 +16,7 @@ public abstract class Paddle {
      return velocity * decelerate;
   }
   protected abstract void countdown(); 
-  protected void move()
-  {
-    x += velocityX;
-    y += velocityY;
-  }
+  abstract void move();
     public void setPosition(float x, float y) {
     this.x=x;
     this.y=y;
