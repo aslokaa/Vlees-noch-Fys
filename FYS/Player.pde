@@ -138,8 +138,12 @@ class Player extends Paddle
     if (ballHit) {
       growBallHit();
     } else { 
+      if (regrow){
+        
+      } else {
       ShrinkPaddleBallHit();
-      if (shake)
+      
+      }if (shake)
       {
         shake();
       } else {
@@ -149,7 +153,8 @@ class Player extends Paddle
     imageMode(CENTER);
   }
 
-  //displays the movement tutorial arrows
+  //displays the movement tutorial arrows 
+  //for loop maybe? 
   public void displayArrows() {
     if (!moved[0]) {
       image(arrowImg, x+playerWidth/2-MOVEMENT_ARROW_OFFSET, y+playerHeight/2, MOVEMENT_ARROW_SIZE, MOVEMENT_ARROW_SIZE);
@@ -186,7 +191,8 @@ class Player extends Paddle
         for ( int i = 0; i < round( playerWidth / 50); i++ )
         {
           fill(255);
-          rect( x + 50 * i, y - SHIELD_DOT_HEIGHT / 2 + ( j * (playerHeight + SHIELD_DOT_HEIGHT / 2) ), SHIELD_DOT_WIDTH, SHIELD_DOT_HEIGHT / 2);
+          arc( x + ( SHIELD_DOT_WIDTH / 2 ) + 50 * i, y + ( j * playerHeight ), SHIELD_DOT_WIDTH, SHIELD_DOT_WIDTH, PI + ( j * PI), TAU + ( j * PI ) );
+          //rect( x + 50 * i, y - SHIELD_DOT_HEIGHT / 2 + ( j * (playerHeight + SHIELD_DOT_HEIGHT / 2) ), SHIELD_DOT_WIDTH, SHIELD_DOT_HEIGHT / 2);
         }
       }
       for ( int j = 0; j < 2; j++ )
@@ -229,12 +235,11 @@ class Player extends Paddle
 
   //shrinks the paddle after it grew from hitting a ball.
   private void ShrinkPaddleBallHit() {
-    if (playerHeight>PLAYER_START_HEIGHT) {
-      playerHeight+=(PLAYER_START_HEIGHT-playerHeight)/(BALL_HIT_STARTING_TIMER);
+    if (playerHeight>PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER) {
+      playerHeight+=(PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER-playerHeight)/(BALL_HIT_STARTING_TIMER);
     }
-
-    if (playerHeight + playerHeight*GROWTH_MODIFIER< PLAYER_START_HEIGHT || playerHeight < PLAYER_START_HEIGHT) {
-      playerHeight=PLAYER_START_HEIGHT;
+    if (playerHeight + playerHeight*GROWTH_MODIFIER< PLAYER_START_HEIGHT || playerHeight < PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER) {
+      
     }
   }
 
@@ -666,12 +671,13 @@ class Player extends Paddle
     }
   }
 
-  void blinkPower(PImage powerImg)
+  PImage blinkPower(PImage powerImg)
   {
     if (frameCount % POWER_BLINK_DELAY == 0)
     {
-      image = (image == playerForcefieldImg ? powerImg : playerForcefieldImg );
+      return( image == playerForcefieldImg ? powerImg : playerForcefieldImg );
     }
+    return image;
   }
 
   //Retrieves the color the player should have.
@@ -686,9 +692,9 @@ class Player extends Paddle
       return playerReverseImg;
     } else if (immune)
     {
-      if ( immuneTimer < SECOND*3 )
+      if ( immuneTimer < SECOND * 2 )
       {
-        blinkPower(playerShieldImg);
+        return blinkPower(playerShieldImg);
       }
       return playerShieldImg;
     } else if (slow)

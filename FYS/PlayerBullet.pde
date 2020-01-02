@@ -61,8 +61,7 @@ class PlayerBullet
         enemy.destroy();
       }
     }
-    if (ping.checkCollision(bulletX,bulletY,bulletDiameter)){
-      
+    if (ping.checkCollision(bulletX,bulletY,bulletDiameter)){     
     }
   }
 }

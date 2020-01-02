@@ -11,9 +11,7 @@
 class EnemyDave extends Enemy
 {
   //movement
-  float moveSpeedLeft;
-  float moveSpeedRight;
-  float moveSpeedDown;
+  float moveSpeed;
   boolean moveLeft;
   boolean moveRight;
   boolean moveDown;
@@ -23,15 +21,13 @@ class EnemyDave extends Enemy
   float spawnRate;
   float spawnChance;
   //particle info
-  
 
-  EnemyDave(float x, float y, float hitboxRadius)
+
+  EnemyDave(float x, float y, float moveSpeed, float hitboxRadius)
   {
     super(false, x, y, hitboxRadius);
     damageToDeal = 50;
-    moveSpeedLeft = -3;
-    moveSpeedRight = 3;
-    moveSpeedDown = 3;
+    this.moveSpeed = moveSpeed;
     moveLeft = false;
     moveRight = false;
     moveDown = false;
@@ -56,10 +52,10 @@ class EnemyDave extends Enemy
   {
     if ( moveRight )
     {
-      speedX = moveSpeedRight;
+      speedX = moveSpeed;
     } else if ( moveLeft )
     {
-      speedX = moveSpeedLeft;
+      speedX = -moveSpeed;
     } else
     {
       speedX = 0;
@@ -67,7 +63,7 @@ class EnemyDave extends Enemy
 
     if ( moveDown )
     {
-      speedY = moveSpeedDown;
+      speedY = moveSpeed;
     } else
     {
       speedY = 0;
@@ -78,7 +74,7 @@ class EnemyDave extends Enemy
     if ( y - hitboxRadius > height)
     {
       active = false;
-      player.dealDamage(damageToDeal,false);
+      player.dealDamage(damageToDeal, false);
     }
   }
 
@@ -119,10 +115,11 @@ class EnemyDave extends Enemy
     spawnPowerup();
     explode();
     active = false;
-    screenScore.updateScore(x,y);
+    screenScore.updateScore(x, y);
     score = score + 100;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
+    gamefield.setDaveMoveSpeed();
   }
 
   @Override void activate(float posX, float posY)
@@ -132,6 +129,7 @@ class EnemyDave extends Enemy
     active = true;
     currentRow = 0;
     rowToMoveTo = 1;
+    moveSpeed = gamefield.daveSpeed;
   }
 
   void setXSpeed()
@@ -143,6 +141,11 @@ class EnemyDave extends Enemy
     {
       moveRight = true;
     }
+  }
+
+  @Override void setMoveSpeed(float newSpeed)
+  {
+    moveSpeed = newSpeed;
   }
 
   @Override void spawnPowerup()
@@ -167,9 +170,7 @@ class EnemyDave extends Enemy
   {
     if ( active )
     {
-      noStroke();
-      fill(EnemyFinals.DAVE_COLOR);
-      image(enemyDaveImg,x, y, hitboxDiameter, hitboxDiameter);
+      image(enemyDaveImg, x, y, hitboxDiameter, hitboxDiameter);
     }
   }
 }

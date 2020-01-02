@@ -32,7 +32,7 @@ class BossPing extends Paddle
     VELOCITY_Y_MAX                = height * 0.012, 
     MAX_Y                         = height *0.3, 
     BALL_IS_CLOSE                 = START_WIDTH*0.3, 
-    TEXT_SIZE                     = height*0.1, 
+     TEXT_SIZE                     = height*0.1, 
     BACKGROUND_LINE_SIZE          = gamefield.GAMEFIELD_WIDTH*0.01, 
     HEALTH_TEXT_X                 = gamefield.GAMEFIELD_WIDTH*0.94, 
     HEALTH_TEXT_Y                 = height * 0.4, 

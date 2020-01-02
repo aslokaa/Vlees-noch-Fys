@@ -1,4 +1,4 @@
-/* //<>// //<>// //<>// //<>//
+/* //<>// //<>// //<>//
  //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves?
  this class keeps track of where elements are spawned and the boundries they are allowed to be in.
  contains list of finals for outlining:
@@ -34,24 +34,28 @@ class Gamefield
   private final int 
     CHAD_COUNTER_START              = 0, 
     DAVE_COUNTER_START              = 10, 
+    DAVE_SPEED_START                = 3, 
+    DAVE_SPEED_MAX                  = 6,
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>// //<>//
+    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>//
     WAVES_UNTILL_DAVE               = 1, 
     WAVE3_CHADS                     = 1, 
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>//
+    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>//
 
   private int 
     waveCounter, 
     daveCounter, 
-    daveSpawnDelay = 20, 
     chadCounter, 
     chadSpawnDelay = 180, 
     dullChadCounter = 0, 
     roundStartCounter = 0, 
     roundLengthCounter, 
     waveBumpDelay;
+
+  public float 
+    daveSpeed;
 
   private boolean
     pingActivated, 
@@ -68,6 +72,7 @@ class Gamefield
   public Gamefield()
   {
     waveBumpDelay = 60;
+    daveSpeed = DAVE_SPEED_START;
   }
 
   public void update()
@@ -88,29 +93,33 @@ class Gamefield
       if ( checkWaveBumpDelay() )
       {
 
-        currentWave = waveFormats[waveCounter];
-
-        waveBumpDelay = int(currentWave.minRoundLength);
-
-        waveCounter++;
-        setConditions();
+        nextWave();
       }
     }
     if (checkWaveCleared())
     {
       if ( checkWaveBumpDelay() )
       {
-        currentWave = waveFormats[waveCounter];
-        waveBumpDelay = int(currentWave.minRoundLength);
-        waveCounter++;
-        setConditions();
+        nextWave();
       }
     }
+    if ( waveCounter == 1 && player.hasMoved())
+    {
+       nextWave(); 
+    }
+  }
+
+  private void nextWave()
+  {
+    currentWave = waveFormats[waveCounter];
+    waveBumpDelay = int(currentWave.minRoundLength);
+    waveCounter++;
+    daveSpeed = DAVE_SPEED_START;
+    setConditions();
   }
 
   private boolean checkWaveBumpDelay()
   {
-    println(waveBumpDelay);
     if ( waveBumpDelay <= 0 )
     {
       return true;
@@ -169,15 +178,13 @@ class Gamefield
       currentWave.roundStartCounter--;
     } else
     { 
-      if ( currentWave.daveCounter > 0 && frameCount % daveSpawnDelay == 0 )
+      if ( currentWave.daveCounter > 0 && checkDaveSpawnCollision() )
       {
-        println("2");
         spawnDaves();
         currentWave.daveCounter--;
       }
       if ( currentWave.chadCounter > 0 && frameCount % chadSpawnDelay == 0 )
       {
-        println(4);
         spawnChads();
         currentWave.chadCounter--;
       }
@@ -191,6 +198,33 @@ class Gamefield
         activatePing();
         currentWave.spawnPing = false;
       }
+    }
+  }
+  
+  private boolean checkDaveSpawnCollision()
+  {
+    for (Enemy enemy : enemies)
+    {
+      if (enemy instanceof EnemyDave)
+      {
+        if (enemy.active && enemy.y - enemy.hitboxRadius * 2.2 < ENEMY_START_Y )
+        {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  
+  public void setDaveMoveSpeed()
+  {
+    daveSpeed += abs((DAVE_SPEED_MAX - daveSpeed) / daveCounter);
+    for ( Enemy enemy : enemies )
+    {
+     if ( enemy.active && enemy instanceof EnemyDave )
+     {
+       enemy.setMoveSpeed(daveSpeed);
+     }
     }
   }
 
