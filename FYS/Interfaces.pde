@@ -120,5 +120,5 @@ interface AchievementID
     A_LITTLE_BIT    =8, //Kill 100 enemies.
     SOME_OF_THE     =9, //Kill 500 enemies.
     ALL_THE_MURDER  =10, //kill 1000 enemies.
-    THE_COLLECTOR   =99; //get all achievements.
+    THE_COLLECTOR   =11; //get all achievements.
 }

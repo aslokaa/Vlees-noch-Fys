@@ -27,6 +27,7 @@ Space space;
 Scores scores;
 Startscreen startscreen;
 Pausescreen pausescreen;
+Achievements achievement;
 Endscreen endscreen;
 PlayerSounds playerSounds;
 MenuSounds menuSounds;
@@ -209,7 +210,7 @@ void keyPressed() {
     }
     key=0; //now the game doesn't exit after escape is pressed.
   }
-   gamefield.checkRoundSkip();
+  gamefield.checkRoundSkip();
 }
 
 //..and with each key Released vice versa from FYS

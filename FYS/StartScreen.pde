@@ -1,5 +1,5 @@
-//Niklas Leeuwin
-//500784205
+// 
+//
 //
 
 //this class handles the startscreen.
@@ -22,14 +22,14 @@ class Startscreen
     powerInitialized   =false, //checks if powers are intitialized.
     particleInitialized = false, 
     ballsInitialized = false, 
-    animationInitialized = false,
+    animationInitialized = false, 
+    achievementsInitialized= false, 
     waveFormatsInitialized = false;
 
   Startscreen()
   {
-    
+
     setupGame();
-    
   }
 
   public void update()
@@ -57,7 +57,7 @@ class Startscreen
   //loads game
   private void setupGame()
   {
-     
+
     if ( !soundsInitialized )
     {
       text("LOADING SOUND", SUBTITLE_X, SUBTITLE_Y);
@@ -78,6 +78,10 @@ class Startscreen
       text("LOADING BULLETS", SUBTITLE_X, SUBTITLE_Y);
       loadBullets();
     }
+    if (!achievementsInitialized) {
+      achievement=new Achievements();
+      achievementsInitialized=true;
+    }
     if ( !powerInitialized )
     {
       text("LOADING POWERS", SUBTITLE_X, SUBTITLE_Y);
@@ -96,14 +100,11 @@ class Startscreen
     if (!ballsInitialized) {
       loadBalls();
     }
-    
+
     if ( !waveFormatsInitialized )
     {
       loadWaveFormats();
     }
-    
-    
-    
   }
   //initializes sound
   private void loadSounds()
@@ -177,26 +178,26 @@ class Startscreen
     }
     animationInitialized = true;
   }
-  
+
   private void loadWaveFormats()
   {
-      waveFormats[0] =  new WaveFormat( 0, 0, 0, 1000, 1000, false, false, false, false, false );
-      waveFormats[1] =  new WaveFormat( 0, 0, 0, 800, 800, false, false, true, true, true );
-      waveFormats[2] =  new WaveFormat( 20, 0, 0, 60, 3600  , false, false, true, true, true );
-      waveFormats[3] =  new WaveFormat( 0, 0, 0, 300, 600, false, false, false, false, false );
-      waveFormats[4] =  new WaveFormat( 35, 2, 0, 300, 2000, false, false, true, false, true );
-      waveFormats[5] =  new WaveFormat( 40, 4, 0, 300, 2000, false, false, true, false, false );
-      waveFormats[6] =  new WaveFormat( 0, 0, 0, 300, 6000, false, true, true, false, false );
-      waveFormats[7] =  new WaveFormat( 0, 0, 0, 300, 6000, true, false, true, false, false );
+    waveFormats[0] =  new WaveFormat( 0, 0, 0, 1000, 1000, false, false, false, false, false );
+    waveFormats[1] =  new WaveFormat( 0, 0, 0, 800, 800, false, false, true, true, true );
+    waveFormats[2] =  new WaveFormat( 20, 0, 0, 60, 3600, false, false, true, true, true );
+    waveFormats[3] =  new WaveFormat( 0, 0, 0, 300, 600, false, false, false, false, false );
+    waveFormats[4] =  new WaveFormat( 35, 2, 0, 300, 2000, false, false, true, false, true );
+    waveFormats[5] =  new WaveFormat( 40, 4, 0, 300, 2000, false, false, true, false, false );
+    waveFormats[6] =  new WaveFormat( 0, 0, 0, 300, 6000, false, true, true, false, false );
+    waveFormats[7] =  new WaveFormat( 0, 0, 0, 300, 6000, true, false, true, false, false );
 
-      
-      
-      
-    
+
+
+
+
     waveFormatsInitialized = true;
   }
-  
-  
+
+
 
   //draws the background
   private void displayBackground()
