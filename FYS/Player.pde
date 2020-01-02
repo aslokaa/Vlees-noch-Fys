@@ -82,7 +82,8 @@ class Player
     shake, //shakes the paddle
     hasImmune, //if the player is holding an immunity buff
     ballHit, //enlarges the paddle after hitting the ball.
-    split;       //splits the paddle
+    split,
+    regrow;//splits the paddle
   private boolean[]
     moved;
   private float //Duration of effects.

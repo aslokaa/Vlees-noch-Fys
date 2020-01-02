@@ -475,4 +475,16 @@ class Gamefield
     }
     //tweening easing/ squishy walls ofzo.
   }
+  
+  public void checkRoundSkip()
+  {
+    if( keysPressed['s'] )
+    {
+      if ( currentWave.roundSkippable )
+      { 
+        nextWave();
+      }
+    }
+  }
+  
 }

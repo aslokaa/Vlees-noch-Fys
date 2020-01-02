@@ -210,6 +210,7 @@ void keyPressed() {
     }
     key=0; //now the game doesn't exit after escape is pressed.
   }
+   gamefield.checkRoundSkip();
 }
 
 //..and with each key Released vice versa from FYS
