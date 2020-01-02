@@ -9,34 +9,33 @@
 //aparte class is handig want die houdt zelf bij welk pijltje hij moet tekenen
 //en tekent ze dan zelf.
 
-class Player
+class Player extends Paddle
 {
   public final float
     PLAYER_START_WIDTH              = gamefield.GAMEFIELD_WIDTH * 0.17, 
-    PLAYER_START_HEIGHT             = height * 0.045, 
+    PLAYER_START_HEIGHT             = height * 0.05, 
     PLAYER_START_X                  = gamefield.GAMEFIELD_WIDTH / 2-PLAYER_START_WIDTH/2, 
     PLAYER_START_Y                  = height/2 - PLAYER_START_HEIGHT, 
     PLAYER_START_ACCELERATION_X     = gamefield.GAMEFIELD_WIDTH * 0.0035, 
     PLAYER_VELOCITY_X_MAX           = gamefield.GAMEFIELD_WIDTH * 0.014, 
-    GROWTH_MODIFIER                 = 0.01, 
+    BALL_HIT_MODIFIER               = 0.01, 
     PLAYER_START_DECELERATE_X       = 0.85, 
     PLAYER_START_DECELERATE_Y       = 0.85, 
     PLAYER_START_ACCELERATION_Y     = height * 0.003, 
     PLAYER_VELOCITY_Y_MAX           = height * 0.012, 
     PLAYER_MIN_WIDTH                = PLAYER_START_WIDTH*0.4, 
     PLAYER_MAX_WIDTH                = gamefield.GAMEFIELD_WIDTH*0.45, 
-    VELOCITY_MIN                    = PLAYER_START_ACCELERATION_Y*0.01, 
+    VELOCITY_MIN                    = PLAYER_START_ACCELERATION_Y*0.015, 
     ROCKET_SPRITE_HEIGHT            = height * 0.09, 
     ROCKET_SPRITE_WIDTH             = ROCKET_SPRITE_HEIGHT*0.8, 
     MOVEMENT_ARROW_SIZE             = gamefield.GAMEFIELD_WIDTH*0.08, 
     MOVEMENT_ARROW_OFFSET           = gamefield.GAMEFIELD_WIDTH*0.2, 
-    SLOW_MODIFIER                   = 0.5, 
     SPLIT_WIDTH_MODIFIER            = 0.75, 
     BALL_HIT_Y_MODIFIER             = 0.35, 
-    BALL_HIT_HEIGHT_MAX_MODIFIER    = 0.4, 
-    BALL_HIT_HEIGHT_MIN_MODIFIER    = 0.2, 
+    BALL_HIT_HEIGHT_MAX_MODIFIER    = 0.5, 
+    BALL_HIT_HEIGHT_MIN_MODIFIER    = 0.3, 
     BALL_HIT_SMALLER_HEIGHT_MODIFIER= 0.8, 
-    BOUNCE_MODIFIER                 = -0.8, 
+    BOUNCE_MODIFIER                 = -0.3, 
     SECOND                          = 60, //one second
     INVERTED_STARTING_TIMER         = SECOND*4, 
     IMMUNE_STARTING_TIMER           = SECOND*5, 
@@ -44,8 +43,9 @@ class Player
     SHAKE_MODIFIER                  = gamefield.GAMEFIELD_WIDTH *0.01, 
     SHAKE_STARTING_TIMER            = SECOND*0.7, 
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
-    BALL_HIT_STARTING_TIMER         = SECOND*0.3, 
+    BALL_HIT_STARTING_TIMER         = SECOND*0.4, 
     SPLIT_STARTING_TIMER            = SECOND*15, 
+    SHRINK_MARGIN                   = 5, 
     SHIELD_DOT_WIDTH                = 30, 
     SHIELD_DOT_HEIGHT               = 15, 
     POWER_BLINK_DELAY               = 10;
@@ -59,7 +59,6 @@ class Player
     currentImg;
 
   private float 
-    x, 
     xSplit, 
     y, 
     minY, 
@@ -82,8 +81,10 @@ class Player
     shake, //shakes the paddle
     hasImmune, //if the player is holding an immunity buff
     ballHit, //enlarges the paddle after hitting the ball.
-    split,
-    regrow;//splits the paddle
+
+    split;       //splits the paddle
+
+
   private boolean[]
     moved;
   private float //Duration of effects.
@@ -95,6 +96,7 @@ class Player
     ballHitTimer, 
     shootTimer; 
   private int 
+    ballHitState, //keeps track of how the paddle should interact with the fact it has hit a ball 
     ammo; //amount of ammo 
   private Rectangles
     hitboxes;
@@ -115,6 +117,7 @@ class Player
     ammo              = STARTING_BULLETS;
     image             = playerForcefieldImg;
     moved             = new boolean[4];
+    ballHitState      = BallHit.NOTHING;
   }
 
   //updates the player
@@ -124,7 +127,7 @@ class Player
     decelerate();
     checkMove();
     detectCollisionEdge();
-    powerCountdown();
+    countdown();
     updateHitboxes();
   }
 
@@ -136,46 +139,78 @@ class Player
     if (!hasMoved()) {
       displayArrows();
     }
+    checkBallHitState();
     imageMode(CORNER);
-    if (ballHit) {
-      growBallHit();
-    } else { 
-      if (regrow){
-        
-      } else {
-      ShrinkPaddleBallHit();
-      
-      }if (shake)
-      {
-        shake();
-      } else {
-        checkSplit();
-      }
+    if (shake)
+    {
+      shake();
+    } else {
+      checkSplit();
     }
     imageMode(CENTER);
   }
 
-  //displays the movement tutorial arrows 
-  //for loop maybe? 
+  private void checkBallHitState() {
+    switch (ballHitState) {
+    case BallHit.GROW:
+      growBallHit();
+      break;
+    case BallHit.SHRINK:
+      shrinkPaddleBallHit();
+      break;
+    case BallHit.REGROW:
+      regrowPaddleBallHit();
+      break;
+    }
+  }
+
+  //increases the paddleheight after hitting a ball.
+  private void growBallHit() {
+    playerHeight+=(ballHitHeight-playerHeight)/BALL_HIT_STARTING_TIMER;
+  }
+
+  //shrinks the paddle after it grew from hitting a ball.
+  private void shrinkPaddleBallHit() {
+    playerHeight+=(PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER-playerHeight)/BALL_HIT_STARTING_TIMER;
+    if (playerHeight - SHRINK_MARGIN< PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER) {
+      playerHeight=PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER;
+      ballHitState=BallHit.REGROW;
+    }
+  }
+
+  //makes the paddle the starting height after shrinking from hitting a ball.
+  private void regrowPaddleBallHit() {
+    if (playerHeight < PLAYER_START_HEIGHT) {
+      playerHeight+=( PLAYER_START_HEIGHT-playerHeight)/(BALL_HIT_STARTING_TIMER/2);
+    }
+    if (playerHeight+playerHeight*BALL_HIT_MODIFIER>PLAYER_START_HEIGHT)
+    {
+      playerHeight=PLAYER_START_HEIGHT;
+      ballHitState=BallHit.NOTHING;
+    }
+  }
+
+
+  //displays the movement tutorial arrows
   public void displayArrows() {
-    if (!moved[0]) {
+    if (!moved[0]) { //left
       image(arrowImg, x+playerWidth/2-MOVEMENT_ARROW_OFFSET, y+playerHeight/2, MOVEMENT_ARROW_SIZE, MOVEMENT_ARROW_SIZE);
     }
-    if (!moved[1]) {
+    if (!moved[1]) { //right
       pushMatrix();
       translate(x+playerWidth/2+MOVEMENT_ARROW_OFFSET, y+playerHeight/2);
       rotate(PI);
       image(arrowImg, 0, 0, MOVEMENT_ARROW_SIZE, MOVEMENT_ARROW_SIZE);
       popMatrix();
     }
-    if (!moved[2]) {
+    if (!moved[2]) { //up
       pushMatrix();
-      translate(x+playerWidth/2, y+playerHeight/2+MOVEMENT_ARROW_OFFSET);
+      translate(x+playerWidth/2, y+playerHeight/2-MOVEMENT_ARROW_OFFSET);
       rotate(0.5*PI);
       image(arrowImg, 0, 0, MOVEMENT_ARROW_SIZE, MOVEMENT_ARROW_SIZE);
       popMatrix();
     }
-    if (!moved[3]) {
+    if (!moved[3]) { // down
       pushMatrix();
       translate(x+playerWidth/2, y+playerHeight/2+MOVEMENT_ARROW_OFFSET);
       rotate(PI*1.5);
@@ -194,26 +229,16 @@ class Player
         {
           fill(255);
           arc( x + ( SHIELD_DOT_WIDTH / 2 ) + 50 * i, y + ( j * playerHeight ), SHIELD_DOT_WIDTH, SHIELD_DOT_WIDTH, PI + ( j * PI), TAU + ( j * PI ) );
-          //rect( x + 50 * i, y - SHIELD_DOT_HEIGHT / 2 + ( j * (playerHeight + SHIELD_DOT_HEIGHT / 2) ), SHIELD_DOT_WIDTH, SHIELD_DOT_HEIGHT / 2);
         }
-      }
-      for ( int j = 0; j < 2; j++ )
-      {
-        for ( int i = 0; i < round( playerHeight / 50); i++ )
+        if ( immune )
         {
-          fill(255);
-          rect(x - SHIELD_DOT_HEIGHT / 2 + ( j * (playerWidth + SHIELD_DOT_HEIGHT / 2)), y + 50 *i, SHIELD_DOT_HEIGHT / 2, SHIELD_DOT_WIDTH);
+          strokeWeight(SHIELD_DOT_HEIGHT);
+          stroke(255);
+          noFill();
+          rect(x, y, playerWidth, playerHeight);
+          noStroke();
         }
       }
-    }
-
-    if ( immune )
-    {
-      strokeWeight(SHIELD_DOT_HEIGHT);
-      stroke(255);
-      noFill();
-      rect(x, y, playerWidth, playerHeight);
-      noStroke();
     }
     image(image, x, y, playerWidth, playerHeight );
     image(playerSidesImg, x, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
@@ -235,16 +260,6 @@ class Player
     }
   }
 
-  //shrinks the paddle after it grew from hitting a ball.
-  private void ShrinkPaddleBallHit() {
-    if (playerHeight>PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER) {
-      playerHeight+=(PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER-playerHeight)/(BALL_HIT_STARTING_TIMER);
-    }
-    if (playerHeight + playerHeight*GROWTH_MODIFIER< PLAYER_START_HEIGHT || playerHeight < PLAYER_START_HEIGHT*BALL_HIT_SMALLER_HEIGHT_MODIFIER) {
-      
-    }
-  }
-
   //returns true if any velocity exists
   private boolean checkVelocity() {
     return !(velocityX==0 && velocityY ==0);
@@ -262,16 +277,7 @@ class Player
     y -=yModifier;
   }
 
-  //increases the paddleheight after hitting a ball.
-  private void growBallHit() {
-    playerHeight+=(ballHitHeight-playerHeight)/BALL_HIT_STARTING_TIMER;
-    if (shake)
-    {
-      shake();
-    } else {
-      checkSplit();
-    }
-  }
+
   //draws the splitted player.
   private void displaySplit()
   {
@@ -290,7 +296,7 @@ class Player
   }
 
   //detects user inputs.
-  private void detectInput()//spawn "rook" particles als de player links recht up en down beweegt. see activate method in Particle
+  private void detectInput()
   {
     if ( keyCodesPressed[LEFT] ) 
     {
@@ -395,11 +401,13 @@ class Player
       velocityY = -PLAYER_VELOCITY_Y_MAX;
     }
   }
-  // modifies the X and Y positions
-  private void move()
+
+  @Override
+    // modifies the X and Y positions
+    void move()
   {
-    x += velocityX;
-    y += velocityY;
+    x+=velocityX;
+    y+=velocityY;
     if (split)
     {
       xSplit+=velocityXSplit;
@@ -546,24 +554,17 @@ class Player
     if (!(keysPressed[LEFT] || keysPressed[RIGHT]))
     {
       velocityX *= decelerateX;
-      velocityX=stopVelocity(velocityX);
       if (split)
       {
         velocityXSplit *= decelerateX;
-        velocityXSplit=stopVelocity(velocityXSplit);
       }
     }
     if (!(keysPressed[UP] || keysPressed[DOWN]))
     {
       velocityY *= decelerateY;
-      velocityY=stopVelocity(velocityY);
     }
   }
 
-  //returns 0 if the velocity is really low.
-  private float stopVelocity(float v) {
-    return v<VELOCITY_MIN && v>-VELOCITY_MIN ? 0 : v;
-  }
   //shrinks the paddle
   public void dealDamage( float damage, boolean isRight)
   {
@@ -576,17 +577,7 @@ class Player
     shakeTimer = SHAKE_STARTING_TIMER;
     if (split)//<- als ie shaked moet ie geen dmg nemen, handig voor balancing en betere feel.
     {
-      if (isRight)
-      {
-        widthSplit1 -= damage;
-      } else
-      {
-        widthSplit0 -= damage;
-      }
-      if (widthSplit0<PLAYER_MIN_WIDTH || widthSplit1 <PLAYER_MIN_WIDTH)
-      {
-        endSplit();
-      }
+      endSplit();
     } else if (!split)
     {
       playerWidth -= damage;
@@ -621,12 +612,13 @@ class Player
   }
 
   //Keeps track of which powers are active and deactivates them.
-  private void powerCountdown()
+  @Override
+    void countdown()
   {
-    if (ballHit) {
+    if (ballHitState==BallHit.GROW) {
       ballHitTimer--;
       if (ballHitTimer <= 0) {
-        ballHit=false;
+        ballHitState=BallHit.SHRINK;
       }
     }
     if (inverted)
@@ -810,8 +802,8 @@ class Player
   //adds juice to hittin the ball
   public void collideBall(float ballVY) {
     ballHitTimer=BALL_HIT_STARTING_TIMER;
-    ballHit=true;
-    ballHitHeight=random(playerHeight*1.1, playerHeight*1.5);
+    ballHitState=BallHit.GROW;
+    ballHitHeight=random(PLAYER_START_HEIGHT*1.1, PLAYER_START_HEIGHT*1.5);
     velocityY+=(velocityY+ballVY)*BALL_HIT_Y_MODIFIER;
   }
 
@@ -825,7 +817,6 @@ class Player
     return map (playerWidth, PLAYER_MIN_WIDTH, PLAYER_START_WIDTH, 0.7, 0.3);
   }
 }
-
 
 //stores hitbox information
 class Rectangles
