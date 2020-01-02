@@ -46,8 +46,8 @@ class Player extends Paddle
     BALL_HIT_STARTING_TIMER         = SECOND*0.4, 
     SPLIT_STARTING_TIMER            = SECOND*15, 
     SHRINK_MARGIN                   = 5, 
-    SHIELD_DOT_WIDTH                = 30, 
-    SHIELD_DOT_HEIGHT               = 15, 
+    SHIELD_DOT_WIDTH                = 15, 
+    SHIELD_DOT_MARGIN               = 30, 
     POWER_BLINK_DELAY               = 10;
 
   public final int
@@ -225,21 +225,28 @@ class Player extends Paddle
     {
       for ( int j = 0; j < 2; j++ )
       {
-        for ( int i = 0; i < round( playerWidth / 50); i++ )
+        for ( int i = 0; i < round( playerWidth / SHIELD_DOT_WIDTH); i++ )
         {
           fill(255);
-          arc( x + ( SHIELD_DOT_WIDTH / 2 ) + 50 * i, y + ( j * playerHeight ), SHIELD_DOT_WIDTH, SHIELD_DOT_WIDTH, PI + ( j * PI), TAU + ( j * PI ) );
+          arc( x + ( SHIELD_DOT_WIDTH / 2 ) + SHIELD_DOT_WIDTH * i, y + ( j * playerHeight ), SHIELD_DOT_WIDTH, SHIELD_DOT_WIDTH, PI + ( j * PI), TAU + ( j * PI ) );
         }
-        if ( immune )
+        for ( int i = 0; i < round( playerHeight / SHIELD_DOT_WIDTH); i++ )
         {
-          strokeWeight(SHIELD_DOT_HEIGHT);
-          stroke(255);
-          noFill();
-          rect(x, y, playerWidth, playerHeight);
-          noStroke();
+          fill(255);
+          arc( x + ( j * playerWidth ), y + ( SHIELD_DOT_WIDTH / 2 ) + SHIELD_DOT_WIDTH * i, SHIELD_DOT_WIDTH, SHIELD_DOT_WIDTH, PI / 2 + ( j * PI), PI * 1.5 + ( j * PI ) );
         }
       }
     }
+    if ( immune )
+    {
+      println("ya");
+      strokeWeight(SHIELD_DOT_WIDTH / 2);
+      stroke(255);
+      noFill();
+      rect(x + SHIELD_DOT_WIDTH / 4, y, playerWidth - SHIELD_DOT_WIDTH / 2, playerHeight);
+      noStroke();
+    }
+
     image(image, x, y, playerWidth, playerHeight );
     image(playerSidesImg, x, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
     image(playerSidesImg, x + playerWidth - ROCKET_SPRITE_WIDTH, y + playerHeight, ROCKET_SPRITE_WIDTH, ROCKET_SPRITE_HEIGHT);
