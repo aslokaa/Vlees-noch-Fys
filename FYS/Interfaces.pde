@@ -102,6 +102,23 @@ interface BallHit
   public final int
     GROW      =0, 
     SHRINK    =1, 
-    REGROW    =2,
+    REGROW    =2, 
     NOTHING   =3;
+}
+
+interface AchievementID
+{
+  public final int 
+    AMERICAN        =0, //achieve the maximum player size.
+    PING_PONG       =1, //defeat Ping
+    LIT             =2, //achieve a score of 420420.
+    I_CONCEDE       =3, //give up.
+    ONE_PERCENT     =4, //get over a 100 bullets
+    HAMMER_TIMER    =5, //pause the game.
+    UNALIVED        =6, //Die.
+    PEW_PEW_PEW     =7, //Shoot a bullet
+    A_LITTLE_BIT    =8, //Kill 100 enemies.
+    SOME_OF_THE     =9, //Kill 500 enemies.
+    ALL_THE_MURDER  =10, //kill 1000 enemies.
+    THE_COLLECTOR   =99; //get all achievements.
 }
