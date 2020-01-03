@@ -239,7 +239,6 @@ class Player extends Paddle
     }
     if ( immune )
     {
-      println("ya");
       strokeWeight(SHIELD_DOT_WIDTH / 2);
       stroke(255);
       noFill();
