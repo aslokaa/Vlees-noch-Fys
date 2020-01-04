@@ -7,8 +7,8 @@ interface PowerUpTypes
 { 
   public final int
     INVERTED     = 0, 
-    IMMUNE       = 1, 
-    SLOW         = 2, 
+    IMMUNE       = 2, 
+    SLOW         = 1, 
     HP_UP        = 3, 
     AMMO_UP      = 4, 
     BOOM_BALL    = 5, 
