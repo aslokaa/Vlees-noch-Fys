@@ -158,7 +158,7 @@ class EnemyDave extends Enemy
         if ( spawnChance <= player.getPowerUpChance() )
         {
 
-          int dropType = round(random(0, PowerUpTypes.SPLIT));
+          int dropType = round(random(PowerUpTypes.IMMUNE, PowerUpTypes.SPLIT));
           power.drop(x, y, dropType);
 
           return;
