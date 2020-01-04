@@ -52,16 +52,17 @@ class TextKeyboard
       currentRow++;
       currentRow = currentRow > rows.length - 1 ? 0 : currentRow;
       currentCol = currentCol > rows[currentRow].length - 1 ? rows[currentRow].length - 1 : currentCol;
-    } else if ( keyCodesPressed['x'] )
+    } else if ( keyCodesPressed[88] )
     {
+      println(rows[currentRow][currentCol]);
       enterLetter(rows[currentRow][currentCol]);
-    } else if ( keyCodesPressed['d'] )
+    } else if ( keyCodesPressed[68] )
     {
       enterLetter(' ');
-    } else if ( keyCodesPressed['w'] )
+    } else if ( keyCodesPressed[87] )
     {
       println("enter pressed");
-    } else if ( keyCodesPressed['a'] )
+    } else if ( keyCodesPressed[65] )
     {
       enterLetter(BACKSPACE);
     }

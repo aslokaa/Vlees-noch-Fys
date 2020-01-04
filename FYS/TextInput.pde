@@ -21,21 +21,14 @@ void mouseClicked() {
 
 void enterLetter(char keyTyped)
 {
-  if ( statePaused )
-  {
     final char keyToCheck = keyTyped;
-    if (keyToCheck == CODED | textBoxesIndex < 0)  return;
 
     final TextBox tbox = textboxes[textBoxesIndex];
     final int len = tbox.txt.length();
-
     if (keyToCheck == BACKSPACE)  tbox.txt = tbox.txt.substring(0, max(0, len-1));
     else if (len >= tbox.lim)  return;
-    else if (keyToCheck == ENTER | keyToCheck == RETURN)     tbox.txt += "\n";
-    else if (keyToCheck == TAB & len < tbox.lim-3)  tbox.txt += "    ";
-    else if (keyToCheck == DELETE)  tbox.txt = "";
     else if (keyToCheck >= ' ')     tbox.txt += str(keyToCheck);
-  } 
+    println(tbox.txt);
 }
 
 void instantiateBoxes() {
