@@ -36,6 +36,7 @@ SoundFile introMusic;
 BossPing ping;
 BossLester lester;
 ScreenScore screenScore;
+TextKeyboard keyboard;
 
 void setup()
 {
@@ -49,6 +50,7 @@ void setup()
   space                    = new Space();
   scores                   = new Scores();
   screenScore              = new ScreenScore();
+  keyboard                 = new TextKeyboard(300, 500);
   player                   = new Player();
   ping                     = new BossPing();
   lester                   = new BossLester(gamefield.GAMEFIELD_WIDTH / 2, -300);
@@ -62,7 +64,7 @@ void setup()
 
 
   instantiateBoxes();
-  tboxes[idx = 1].isFocused = true;
+  textboxes[textBoxesIndex = 1].isFocused = true;
 }
 
 void updateGame()
@@ -186,22 +188,15 @@ void drawGame()
 
 // Keyboard handling...
 void keyPressed() {  
-  if ( stateStart )
-  {
-    if (key != CODED | idx < 0)  return;
-    final int k = keyCode;
-
-    final TextBox tbox = tboxes[idx];
-    final int len = tbox.txt.length();
-
-    if (k == LEFT)  tbox.txt = tbox.txt.substring(0, max(0, len-1));
-    else if (k == RIGHT & len < tbox.lim-3)  tbox.txt += "    ";
-  }
-
   if (keyCode >= KEY_LIMIT) return; //safety: if keycode exceeds limit, exit methhod ('return').
   keyCodesPressed[keyCode] = true; // set its boolean to true
+  if ( statePaused )
+  {
+    keyboard.handleTextInput();
+  }
   if (key>=KEY_LIMIT) return;
   keysPressed[key] = true;
+  
   if ( keyCode == ESC ) 
   {
     if (statePlaying)
@@ -211,6 +206,7 @@ void keyPressed() {
     key=0; //now the game doesn't exit after escape is pressed.
   }
   gamefield.checkRoundSkip();
+
 }
 
 //..and with each key Released vice versa from FYS
