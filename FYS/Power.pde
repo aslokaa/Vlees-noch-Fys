@@ -42,7 +42,7 @@ class Power {
         break;
       case PowerUpTypes.SLOW :
         fill(Colors.BLUE);
-        image(snailPowerImg, x, y, hitboxDiameter * 1.3, hitboxDiameter * 1.3);
+        image(snailPowerImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
       case PowerUpTypes.HP_UP :
         fill(Colors.GREEN);
