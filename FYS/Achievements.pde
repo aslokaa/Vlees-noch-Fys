@@ -20,8 +20,10 @@ class Achievements
     enemiesTriggered, 
     achievementTimer;
   private boolean databaseReady;
+  private boolean[] achievementGotten;
 
   Achievements() {
+    achievementGotten= new boolean[AchievementID.THE_COLLECTOR];
     lastGottenAchievement="404";
   }
 
@@ -33,18 +35,21 @@ class Achievements
     if (!databaseReady) {
       givePlayerEmptyAchievements();
     }
-    checkDeadEnemies();
+    if (totalEnemiesKilled>1) {
+      checkDeadEnemies();
+    }
   }
 
   public void  checkDeadEnemies() {
     if (totalEnemiesKilled%DEAD_ENEMIES_TRIGGER==0) {
+      println(totalEnemiesKilled);
       enemiesTriggered+=DEAD_ENEMIES_TRIGGER;
-      increaseProgress(AchievementID.A_LITTLE_BIT,DEAD_ENEMIES_TRIGGER);
+      increaseProgress(AchievementID.A_LITTLE_BIT, DEAD_ENEMIES_TRIGGER);
     }
   }
-  
-  public int getEnemiesTriggered(){
-   return enemiesTriggered;
+
+  public int getEnemiesTriggered() {
+    return enemiesTriggered;
   }
   public void display() {
     if (achievementTimer>0) {
@@ -53,7 +58,9 @@ class Achievements
       fill(Colors.RED);
       rect(TEXT_X, TEXT_Y, width, height);
       fill(Colors.WHITE);
+      rectMode(CENTER);
       text(lastGottenAchievement, TEXT_X, TEXT_Y);
+      rectMode(CORNER);
     }
   }
 
@@ -98,7 +105,7 @@ class Achievements
     achievement.databaseReady=true;
   }
   public void increaseProgress(int id) {
-        switch (id) {
+    switch (id) {
     case AchievementID.A_LITTLE_BIT :
       increaseProgress(AchievementID.SOME_OF_THE);
       break;
@@ -121,12 +128,12 @@ class Achievements
     }
   }
   public void increaseProgress(int id, int enemiesKilled) {
-        switch (id) {
+    switch (id) {
     case AchievementID.A_LITTLE_BIT :
-      increaseProgress(AchievementID.SOME_OF_THE,enemiesKilled);
+      increaseProgress(AchievementID.SOME_OF_THE, enemiesKilled);
       break;
     case AchievementID.SOME_OF_THE :
-      increaseProgress(AchievementID.ALL_THE_MURDER,enemiesKilled);
+      increaseProgress(AchievementID.ALL_THE_MURDER, enemiesKilled);
       break;
     }
     if (!isComplete(id)) {
@@ -163,7 +170,10 @@ class Achievements
   }
 
   public boolean isComplete(int id) {
-    return getProgress(id)>=getCompletion(id);
+    if (!achievementGotten[id]){
+     achievementGotten[id]=getProgress(id)>=getCompletion(id);
+    }
+    return achievementGotten[id];
   }
 }
 
