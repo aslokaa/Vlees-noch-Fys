@@ -1,4 +1,4 @@
-//Galaxy Defence Force
+ //Galaxy Defence Force
 //IG101-2, Vlees noch FYS
 //Niklas Leeuwin, Brent Sijm, Olger Klok , Mika Spoelstra, Eele Roet, 
 
@@ -121,7 +121,7 @@ void updateGame()
   {
     endscreen.update();
   }
-
+  achievement.update();
   space.update();
 }
 
@@ -196,7 +196,7 @@ void keyPressed() {
   }
   if (key>=KEY_LIMIT) return;
   keysPressed[key] = true;
-  
+
   if ( keyCode == ESC ) 
   {
     if (statePlaying)
@@ -206,7 +206,6 @@ void keyPressed() {
     key=0; //now the game doesn't exit after escape is pressed.
   }
   gamefield.checkRoundSkip();
-
 }
 
 //..and with each key Released vice versa from FYS

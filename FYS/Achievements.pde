@@ -5,6 +5,8 @@
 //handles the achievements. the non capital ints indicate it is acquired progress and the capitalized indicate it is required.
 class Achievements
 {
+  public int tempPlayerID=420;
+  public boolean tempB=false;
   private Achievement
     american, 
     pingPong, 
@@ -37,7 +39,7 @@ class Achievements
     AMERICAN_NAME       ="The American", 
     PING_PONG_NAME      ="Pong", 
     LIT_NAME            ="Lit!", 
-    I_CONCEDE_NAME      ="Intresting moves, You concede", 
+    I_CONCEDE_NAME      ="Intresting moves, I concede", 
     ONE_PERCENT_NAME    ="You are the 1%", 
     HAMMER_TIMER_NAME   ="STOP. It's Hammer Time", 
     UNALIVED_NAME       ="They unalived you.", 
@@ -45,7 +47,7 @@ class Achievements
     A_LITTLE_BIT_NAME   ="A little bit of murder?", 
     SOME_OF_THE_NAME    ="Some of the murder.", 
     ALL_THE_MURDER_NAME ="ALL OF THE MURDER!", 
-    THE_COLLECTOR_NAME  ="The collecter";
+    THE_COLLECTOR_NAME  ="The Collecter";
 
   Achievements() {
     american    = new Achievement(AchievementID.AMERICAN, AMERICAN, AMERICAN_NAME);
@@ -60,11 +62,6 @@ class Achievements
     someOfThe   = new Achievement(AchievementID.SOME_OF_THE, SOME_OF_THE, SOME_OF_THE_NAME); 
     allTheMurder= new Achievement(AchievementID.ALL_THE_MURDER, ALL_THE_MURDER, ALL_THE_MURDER_NAME); 
     theCollector= new Achievement(AchievementID.THE_COLLECTOR, THE_COLLECTOR, THE_COLLECTOR_NAME);
-  }
-  public void retrieveSQL() {
-  }
-
-  public void updateSQL() {
   }
 
   //gets called on by another class to increase the progress an achievemnt has.
@@ -112,6 +109,10 @@ class Achievements
 
   public void update() {
     countDown();
+    if (!tempB) {
+      givePlayerEmptyAchievements();
+      increaseProgress(10);
+    }
   }
 
   public void display() {
@@ -146,7 +147,8 @@ class Achievement
 
   public void increaseProgress() {
     if (!isComplete()) {
-      progress++;
+      String t="UPDATE `player_has_achievement` SET `progress`="+ ++progress+" WHERE player_idplayer = "+achievement.tempPlayerID+" AND achievement_idachievement="+id;
+      sql.query(t);
       if (isComplete()) {
       }
     }
@@ -186,3 +188,13 @@ class Achievement
  SOME_OF_THE     =9, //Kill 500 enemies.
  ALL_THE_MURDER  =10, //kill 1000 enemies.
  THE_COLLECTOR   =11; //get all achievements.
+ */
+
+public void givePlayerEmptyAchievements() {
+  for (int i=0; i>= AchievementID.THE_COLLECTOR; i++) {
+    String t="INSERT INTO `player_has_achievement` (`player_idplayer`, `achievement_idachievement`, `progress`) VALUES ('"+achievement.tempPlayerID+"', '"+i+"', '0')";
+    sql.query(t);
+    println(i);
+  }
+  achievement.tempB=true;
+}

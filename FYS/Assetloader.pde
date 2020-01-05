@@ -1,7 +1,7 @@
-MySQL conn;
+MySQL sql;
 PImage 
-  bulletImg,
-  spikeBallImg,
+  bulletImg, 
+  spikeBallImg, 
   shieldPowerImg, 
   invertedPowerImg, 
   bombPowerImg, 
@@ -33,14 +33,14 @@ PImage
   bulletPlaceholder, 
   aButtonImg, 
   bButtonImg, 
-  shieldPlaceholder,
-  ballBomImg1,
-  ballBomImg2,
-  ballBomImg3,
-  earth,
-  arrowImg,
+  shieldPlaceholder, 
+  ballBomImg1, 
+  ballBomImg2, 
+  ballBomImg3, 
+  earth, 
+  arrowImg, 
   star;
- 
+
 
 PImage[] explosionAnimation = new PImage[5];
 PImage[] ballAnimation = new PImage[3];
@@ -53,7 +53,8 @@ String connUser = "roete";
 String connPass = "KWVvztAFWytWOG";
 
 public void loadAssets() {
-  conn = new MySQL(this, connServer, connDB, connUser, connPass);
+  sql = new MySQL(this, connServer, connDB, connUser, connPass);
+  sql.connect();
   bulletImg = loadImage("./sprites/BulletFysGame.png");
   spikeBallImg = loadImage("./sprites/SpikeSpriteFysGame.png");
   bulletPowerImg = loadImage("./sprites/BulletFysGamePower.png");
@@ -106,8 +107,8 @@ public void loadAssets() {
     fileName = "./sprites/lesterBullet" + i + ".png";
     enemyBulletAnimation[i] = loadImage(fileName);
   }
-  
-   for ( int i = 0; i < 3; i++ )
+
+  for ( int i = 0; i < 3; i++ )
   {
     fileName = "./sprites/BallBomb" + i + ".png";
     ballBombAnimation[i] = loadImage(fileName);
