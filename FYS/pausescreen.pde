@@ -58,6 +58,7 @@ class Pausescreen
         menuSounds.play(Sounds.UNPAUSE);
       } else
       {
+        achievement.increaseProgress(AchievementID.HAMMER_TIME);
         menuSounds.play(Sounds.PAUSE);
       }
       statePaused=!statePaused;
@@ -72,6 +73,7 @@ class Pausescreen
     {
       if (keysPressed['z'])
       {
+        achievement.increaseProgress(AchievementID.I_CONCEDE);
         endscreen.loseGame();
       }
       if (keysPressed['x']) {

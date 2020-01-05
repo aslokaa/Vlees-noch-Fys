@@ -34,9 +34,11 @@ class Achievements
 
   public void display() {
     if (achievementTimer>0) {
-      fill(Colors.WHITE);
       textSize(TEXTSIZE);
       textMode(CENTER);
+      fill(Colors.RED);
+      rect(TEXT_X, TEXT_Y, width, height);
+      fill(Colors.WHITE);
       text(lastGottenAchievement, TEXT_X, TEXT_Y);
     }
   }

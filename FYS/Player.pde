@@ -590,6 +590,7 @@ class Player extends Paddle
       playerWidth -= damage;
       if ( playerWidth < PLAYER_MIN_WIDTH )
       {
+        achievement.increaseProgress(AchievementID.UNALIVED);
         endscreen.loseGame();
       }
     }
@@ -615,6 +616,8 @@ class Player extends Paddle
     {
       playerWidth += healing;
       x-=healing*0.5;
+    } else { 
+      achievement.increaseProgress(AchievementID.AMERICAN);
     }
   }
 
@@ -718,6 +721,7 @@ class Player extends Paddle
       playerSounds.play(Sounds.NO_AMMO);
       return;
     } 
+    achievement.increaseProgress(AchievementID.PEW_PEW_PEW);
     shootTimer=SHOOT_STARTING_TIMER;
     playerSounds.play(Sounds.SHOOT);
     ammo--;
@@ -734,6 +738,9 @@ class Player extends Paddle
   //adds aditional ammo.
   public void gainAmmo( int newAmmo )
   {
+    for (int i=0; i<newAmmo; i++) {
+    achievement.increaseProgress(AchievementID.ONE_PERCENT);
+    }
     ammo += newAmmo;
   }
 

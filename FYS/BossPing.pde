@@ -242,6 +242,7 @@ class BossPing extends Paddle
   {
     stateBossPing=false;
     score = score + 1000;
+    achievement.increaseProgress(AchievementID.PING_PONG);
   }
 
   public void display()

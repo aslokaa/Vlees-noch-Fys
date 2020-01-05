@@ -114,7 +114,7 @@ interface AchievementID
     LIT             =2, //achieve a score of 420420.
     I_CONCEDE       =3, //give up.
     ONE_PERCENT     =4, //get over a 100 bullets
-    HAMMER_TIMER    =5, //pause the game.
+    HAMMER_TIME     =5, //pause the game.
     UNALIVED        =6, //Die.
     PEW_PEW_PEW     =7, //Shoot a bullet
     A_LITTLE_BIT    =8, //Kill 100 enemies.

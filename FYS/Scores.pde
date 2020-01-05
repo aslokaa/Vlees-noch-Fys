@@ -3,7 +3,7 @@
 int score = 0;
 
 class Scores {
-
+  final int LIT_SCORE= 420420;
 
   int textSize = 30;
   int time = 0;
@@ -16,13 +16,19 @@ class Scores {
     if (score <= 0) {// score can't go lower than 0
       score = 0;
     }
-
+    checkScoreAchievement();
     time+=1;
     totalTime++;
 
     if (time/60 == 60) {//every 60 seconds counts as one minute and resets seconds to 0
       time = 0;
       min = min + 1;
+    }
+  }
+
+  void checkScoreAchievement() {
+    if (score >= LIT_SCORE) {
+      achievement.increaseProgress(AchievementID.LIT);
     }
   }
 
