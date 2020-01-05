@@ -67,5 +67,12 @@ class Endscreen
     statePlaying=false;
     stateEnd=true;
     sql.query("UPDATE Game SET `score` ="+ score+",`wave` = "+ gamefield.waveCounter+",`time` = "+ scores.totalTime/secondsPerMinute+",`enemieskilled` = "+ totalEnemiesKilled+" WHERE idgame = "+idCurrentGame);
+    //Unused powerups in array therefor no for loop used
+    sql.query("INSERT INTO `Game_has_Power` (`uses`, `pickups`, `spawned`, `Game_idgame`, `Powers_name`) VALUES ("+uses[PowerUpTypes.IMMUNE]+", "+pickUps[PowerUpTypes.IMMUNE]+", "+spawned[PowerUpTypes.IMMUNE]+", "+idCurrentGame+", 'Immune')" );
+    sql.query("INSERT INTO `Game_has_Power` (`uses`, `pickups`, `spawned`, `Game_idgame`, `Powers_name`) VALUES ("+uses[PowerUpTypes.SPLIT]+", "+pickUps[PowerUpTypes.SPLIT]+", "+spawned[PowerUpTypes.SPLIT]+", "+idCurrentGame+", 'Split')" );
+    sql.query("INSERT INTO `Game_has_Power` (`uses`, `pickups`, `spawned`, `Game_idgame`, `Powers_name`) VALUES ("+uses[PowerUpTypes.HP_UP]+", "+pickUps[PowerUpTypes.HP_UP]+", "+spawned[PowerUpTypes.HP_UP]+", "+idCurrentGame+", 'Hp_Up')" );
+    sql.query("INSERT INTO `Game_has_Power` (`uses`, `pickups`, `spawned`, `Game_idgame`, `Powers_name`) VALUES ("+uses[PowerUpTypes.AMMO_UP]+", "+pickUps[PowerUpTypes.AMMO_UP]+", "+spawned[PowerUpTypes.AMMO_UP]+", "+idCurrentGame+", 'Ammo_Up')" );
+    sql.query("INSERT INTO `Game_has_Power` (`uses`, `pickups`, `spawned`, `Game_idgame`, `Powers_name`) VALUES ("+uses[PowerUpTypes.BOOM_BALL]+", "+pickUps[PowerUpTypes.BOOM_BALL]+", "+spawned[PowerUpTypes.BOOM_BALL]+", "+idCurrentGame+", 'Boom_Ball')" );
+    
   }
 }

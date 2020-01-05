@@ -25,6 +25,10 @@ String playerPassword;
 int idPlayer, idCurrentGame;
 int secondsPerMinute = 60;
 int totalEnemiesKilled = 0;
+int amountPowers = 7;
+int[] pickUps = new int[amountPowers];
+int[] uses = new int[amountPowers];
+int[] spawned = new int[amountPowers];
 
 
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;

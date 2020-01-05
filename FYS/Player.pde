@@ -494,6 +494,7 @@ class Player extends Paddle
       hasImmune=false; 
       immune=true;
       immuneTimer=IMMUNE_STARTING_TIMER;
+      uses[PowerUpTypes.IMMUNE]++;
     }
   }
 
@@ -720,6 +721,7 @@ class Player extends Paddle
     shootTimer=SHOOT_STARTING_TIMER;
     playerSounds.play(Sounds.SHOOT);
     ammo--;
+    uses[PowerUpTypes.AMMO_UP]++;
     if (split)
     {
       spawnBullet(x+widthSplit0/2);
