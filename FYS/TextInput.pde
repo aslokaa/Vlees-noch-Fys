@@ -105,10 +105,23 @@ void cycleTboxFocus()
 
 void checkLogin(int index)
 {
+
   String query;
   if (index == 1 )
   {
     println("checking database shit");
+    query = "SELECT * FROM player";
+    sql.query(query);
+
+    while (sql.next())
+    {
+      if ( sql.getString(2).equals(textboxes[0].text) && sql.getString(3).equals(textboxes[1].text))
+      {
+        println("nice");
+        loginscreen.loggedIn = true;
+        loggedInPlayerID = sql.getInt(1);
+      }
+    }
     //find out if username exists in records, get password belonging to username,
     //check if passwords crosscheck. if it checks out, change loginscreen.loggedIn to true, 
     //change logged in playerID.
@@ -117,15 +130,41 @@ void checkLogin(int index)
   {
     println("checking database things");
     //check if username already exists.
-    query = "SELECT";
-    //check if both passwords are the same.
-    if ( textboxes[3].text == textboxes[4].text )
+
+    query = "SELECT * FROM player";
+    sql.query(query);
+
+    while (sql.next())
     {
-    //make new record.  
+      if ( sql.getString(2).equals(textboxes[2].text))
+      {
+        println("user already exists");
+        loginscreen.changeError("doubleUser");
+        return;
+      }
     }
-  }
-  if ( loginscreen.loggedIn )
-  {
-    //change states, assign logged in playerID variable.
+    //check if both passwords are the same.
+    if ( textboxes[3].text.equals(textboxes[4].text))
+    {
+      //make new record.
+      println("make new record");
+      try
+      {
+      query = "INSERT INTO player ( name, password) VALUES ( '" 
+              + textboxes[2].text + "', '" + textboxes[3].text + "')";
+      sql.query(query);
+      
+      query = "SELECT 'idplayer' FROM player WHERE name = '" + textboxes[2].text + "' AND password = '" + textboxes[3].text + "'";
+      sql.query(query);
+      sql.next();
+      
+      loginscreen.loggedIn = true;
+      loggedInPlayerID = sql.getInt(1);
+      }
+      finally
+      {
+        
+      }
+    }
   }
 }

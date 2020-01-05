@@ -1,16 +1,21 @@
 class Loginscreen
 {
+  private String 
+    errorMsg = "";
+  
   private boolean
     pickingOption = true, 
-    loggingIn;
+    loggingIn,
+    loggedIn               = false;
 
   private final PVector
-    USER_TBOX_POS                  = new PVector(350, 150), 
-    USER_TBOX_DIMENSION           = new PVector(500, 100), 
-    PASSWORD_TBOX_POS                    = new PVector(350, 300), 
-    PASSWORD_TBOX_DIMENSION        = new PVector(500, 100), 
+    USER_TBOX_POS             = new PVector(350, 150), 
+    USER_TBOX_DIMENSION       = new PVector(500, 100), 
+    PASSWORD_TBOX_POS         = new PVector(350, 300), 
+    PASSWORD_TBOX_DIMENSION   = new PVector(500, 100), 
     KEYBOARD                  = new PVector(400, 570), 
-    LEGENDA                    = new PVector(900, 150);
+    LEGENDA                   = new PVector(900, 150),
+    ERROR_POS                 = new PVector(600, 50);
 
   private final int
     TBOX_LIMIT             = 14, 
@@ -23,9 +28,6 @@ class Loginscreen
 
   private final color
     TBOX_SELECTED_COLOR    = color(#00ff00);
-
-  private boolean 
-    loggedIn               = false;
 
   Loginscreen() 
   {
@@ -76,7 +78,7 @@ class Loginscreen
     buttons[0].selected = true;
   }
 
-  Text[] option = new Text[Arrays.OPTION_COUNT];
+  
 
   public void display()
   {
@@ -100,32 +102,24 @@ class Loginscreen
         textboxes[4].display();
         keyboard.display();
       }
+      displayError();
     }
   }
 
   public void update()
   {
-    changePausedState();
+    checkChangeState();
   }
 
-  // pauses or unpauses the game.
-  private void changePausedState()
+  private void checkChangeState()
   {
     if (loggedIn)
     {
-      if (statePaused)
-      {
-        menuSounds.play(Sounds.UNPAUSE);
-      } else
-      {
-        menuSounds.play(Sounds.PAUSE);
-      }
-      statePaused=!statePaused;
+      stateLogin = false;
+      statePlaying = true;
     }
   }
 
-
-  //displays text
   private void displayLegenda()
   {
     textFont(font, LEGENDA_TEXT_SIZE * 0.7);
@@ -139,17 +133,19 @@ class Loginscreen
     text("Press 'w' for ENTER", LEGENDA.x, LEGENDA.y + LEGENDA_TEXT_OFFSET * 4);
     textAlign(CENTER);
   }
-
-  //handles the text for the pausescreen
-  class Text
+  
+  private void displayError()
   {
-    float   x, y;
-    String  text;
-    Text(float xT, float yT, String textT)
-    {
-      x    = xT;
-      y    = yT;
-      text = textT;
-    }
+    fill(Colors.RED);
+    text(errorMsg, ERROR_POS.x, ERROR_POS.y); 
+  }
+  
+  public void changeError(String error)
+  {
+   switch( error)
+   {
+    case "doubleUser":
+      errorMsg = "this user already exists.";
+   }
   }
 }
