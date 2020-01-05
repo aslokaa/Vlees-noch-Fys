@@ -738,9 +738,7 @@ class Player extends Paddle
   //adds aditional ammo.
   public void gainAmmo( int newAmmo )
   {
-    for (int i=0; i<newAmmo; i++) {
     achievement.increaseProgress(AchievementID.ONE_PERCENT,newAmmo);
-    }
     ammo += newAmmo;
   }
 
