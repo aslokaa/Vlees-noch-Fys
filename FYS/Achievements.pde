@@ -18,7 +18,7 @@ class Achievements
   private int 
     enemiesTriggered, 
     achievementTimer;
-  private boolean databaseReady;
+  private boolean databaseReady = false;
   private boolean[] achievementGotten;
 
   Achievements() {
