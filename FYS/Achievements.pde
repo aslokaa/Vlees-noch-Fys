@@ -5,7 +5,6 @@
 //handles the achievements. the non capital ints indicate it is acquired progress and the capitalized indicate it is required.
 class Achievements
 {
-
   private final float
     TEXT_X    =gamefield.GAMEFIELD_WIDTH*0.9, 
     TEXT_Y    =height*0.9, 
@@ -73,7 +72,7 @@ class Achievements
         println(sql.getString("Aname")+" has been achieved by "+sql.getInt("percentage")+"% of players.");
       }
     } else {
-      String t = "SELECT achievement.name as AName, player.name as PName, achievement.requiredProgress as ReqProg, player_has_achievement.progress as Progress FROM player_has_achievement INNER JOIN player ON player_has_achievement.player_idplayer = player.idplayer INNER JOIN achievement ON player_has_achievement.achievement_idachievement = achievement.idachievement Where player_has_achievement.progress <> 0 AND player.idplayer ="+idPlayer;
+      String t = "SELECT achievement.name as AName, player.name as PName, achievement.requiredProgress as ReqProg, player_has_achievement.progress as Progress FROM player_has_achievement INNER JOIN player ON player_has_achievement.player_idplayer = player.idplayer INNER JOIN achievement ON player_has_achievement.achievement_idachievement = achievement.idachievement Where player_has_achievement.progress <> 0 AND player.idplayer ="+loggedInPlayerID;
       sql.query(t);
       while (sql.next())
       {
@@ -99,7 +98,7 @@ class Achievements
   }
   public void givePlayerEmptyAchievements() {
     for (int i=0; i< AchievementID.THE_COLLECTOR; i++) {
-      String t="INSERT INTO `player_has_achievement` (`player_idplayer`, `achievement_idachievement`, `progress`) VALUES ('"+idPlayer+"', '"+i+"', '0')";
+      String t="INSERT INTO `player_has_achievement` (`player_idplayer`, `achievement_idachievement`, `progress`) VALUES ('"+loggedInPlayerID+"', '"+i+"', '0')";
       sql.query(t);
     }
     achievement.databaseReady=true;
@@ -114,7 +113,7 @@ class Achievements
       break;
     }
     if (!isComplete(id)) {
-      String t0="UPDATE `player_has_achievement` SET `progress`= progress+1 WHERE player_idplayer = "+idPlayer+" AND achievement_idachievement="+id;
+      String t0="UPDATE `player_has_achievement` SET `progress`= progress+1 WHERE player_idplayer = "+loggedInPlayerID+" AND achievement_idachievement="+id;
       sql.query(t0);
       if (isComplete(id)) {
         String t1 = "SELECT name FROM `achievement` WHERE idAchievement="+id ;
@@ -137,7 +136,7 @@ class Achievements
       break;
     }
     if (!isComplete(id)) {
-      String t0="UPDATE `player_has_achievement` SET `progress`= progress+"+enemiesKilled+" WHERE player_idplayer = "+idPlayer+" AND achievement_idachievement="+id;
+      String t0="UPDATE `player_has_achievement` SET `progress`= progress+"+enemiesKilled+" WHERE player_idplayer = "+loggedInPlayerID+" AND achievement_idachievement="+id;
       sql.query(t0);
       if (isComplete(id)) {
         String t1 = "SELECT name FROM `achievement` WHERE idAchievement="+id ;
@@ -151,7 +150,7 @@ class Achievements
     }
   }
   public int getProgress(int id) {
-    String t="SELECT progress FROM `player_has_achievement` WHERE achievement_idAchievement="+id+" AND player_idplayer="+idPlayer;
+    String t="SELECT progress FROM `player_has_achievement` WHERE achievement_idAchievement="+id+" AND player_idplayer="+loggedInPlayerID;
     sql.query(t);
     while (sql.next())
     {
