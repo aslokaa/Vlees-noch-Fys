@@ -22,8 +22,7 @@ ArrayList<Ball> balls                  = new ArrayList<Ball>();
 WaveFormat[] waveFormats               = new WaveFormat[Arrays.WAVE_FORMATS];
 Button[] buttons                       = new Button[2];
 
-String playerName;
-String playerPassword;
+
 int idPlayer, idCurrentGame;
 int secondsPerMinute = 60;
 int totalEnemiesKilled = 0;
@@ -82,15 +81,6 @@ void setup()
   //instantiateBoxes();
   //textboxes[textBoxesIndex = 1].isFocused = true;
 
-  //Inloggen speler simuleren
-  playerName = "***";
-  playerPassword = "test";
-  String t="SELECT `idplayer` FROM player WHERE name ='" + playerName +"' and password='"+ playerPassword +"';";
-  sql.query(t);
-  if ( sql.next()) {
-    idPlayer = sql.getInt("idplayer");
-  }
-  println(idPlayer);
 }
 
 void updateGame()
