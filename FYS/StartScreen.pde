@@ -236,7 +236,7 @@ class Startscreen
       introMusic.stop();
       menuSounds.play(Sounds.START_GAME);
       stateStart=false;
-      statePlaying=true;
+      stateLogin=true;
     }
   }
   //checks if the user enters any key.

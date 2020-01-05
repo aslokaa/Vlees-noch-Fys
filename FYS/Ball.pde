@@ -4,9 +4,6 @@
  
  */
 
-
-//wanneer de bal gecharged is moet er een suggestie cirkel om de bal komen om te zien hoe groot de ontploffing word,
-//deze suggestie cirkel is dezelfde radius als de hitbox van de exploderende bal.
 class Ball {
   float x, y, speedX, speedY;
   float radius, diameter;
