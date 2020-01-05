@@ -78,6 +78,7 @@ class Pausescreen
       }
       if (keysPressed['x']) {
         achievementPercentage=!achievementPercentage;
+        keysPressed['x']=false;
       }
     }
   }
