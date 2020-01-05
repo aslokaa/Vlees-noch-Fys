@@ -66,5 +66,6 @@ class Endscreen
   {
     statePlaying=false;
     stateEnd=true;
+    sql.query("UPDATE Game SET `score` ="+ score+",`wave` = "+ gamefield.waveCounter+",`time` = "+ scores.totalTime);
   }
 }

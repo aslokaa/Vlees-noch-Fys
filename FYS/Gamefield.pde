@@ -1,4 +1,4 @@
-/* //<>// //<>// //<>//
+/* //<>// //<>// //<>// //<>// //<>//
  //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves?
  this class keeps track of where elements are spawned and the boundries they are allowed to be in.
  contains list of finals for outlining:
@@ -35,17 +35,16 @@ class Gamefield
     CHAD_COUNTER_START              = 0, 
     DAVE_COUNTER_START              = 10, 
     DAVE_SPEED_START                = 3, 
-    DAVE_SPEED_MAX                  = 6,
+    DAVE_SPEED_MAX                  = 6, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>//
+    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>//
     WAVES_UNTILL_DAVE               = 1, 
     WAVE3_CHADS                     = 1, 
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>//
+    DAVE_MAX                        = 50; //<>// //<>// //<>//
 
-  private int 
-    waveCounter, 
+  private int  
     daveCounter, 
     chadCounter, 
     chadSpawnDelay = 180, 
@@ -54,6 +53,9 @@ class Gamefield
     roundLengthCounter, 
     waveBumpDelay;
 
+  public int //Used for database
+    waveCounter;
+    
   public float 
     daveSpeed;
 
@@ -105,7 +107,7 @@ class Gamefield
     }
     if ( waveCounter == 1 && player.hasMoved())
     {
-       nextWave(); 
+      nextWave();
     }
   }
 
@@ -200,7 +202,7 @@ class Gamefield
       }
     }
   }
-  
+
   private boolean checkDaveSpawnCollision()
   {
     for (Enemy enemy : enemies)
@@ -215,16 +217,16 @@ class Gamefield
     }
     return true;
   }
-  
+
   public void setDaveMoveSpeed()
   {
     daveSpeed += abs((DAVE_SPEED_MAX - daveSpeed) / daveCounter);
     for ( Enemy enemy : enemies )
     {
-     if ( enemy.active && enemy instanceof EnemyDave )
-     {
-       enemy.setMoveSpeed(daveSpeed);
-     }
+      if ( enemy.active && enemy instanceof EnemyDave )
+      {
+        enemy.setMoveSpeed(daveSpeed);
+      }
     }
   }
 
@@ -475,10 +477,10 @@ class Gamefield
     }
     //tweening easing/ squishy walls ofzo.
   }
-  
+
   public void checkRoundSkip()
   {
-    if( keysPressed['s'] )
+    if ( keysPressed['s'] )
     {
       if ( currentWave.roundSkippable )
       { 
@@ -486,5 +488,4 @@ class Gamefield
       }
     }
   }
-  
 }

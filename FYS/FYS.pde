@@ -22,7 +22,8 @@ ArrayList<Ball> balls = new ArrayList<Ball>();
 WaveFormat[] waveFormats = new WaveFormat[Arrays.WAVE_FORMATS];
 String playerName;
 String playerPassword;
-int idplayer;
+int idPlayer, idCurrentGame;
+
 
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
 Gamefield gamefield;
@@ -75,9 +76,9 @@ void setup()
   String t="SELECT `idplayer` FROM player WHERE name ='" + playerName +"' and password='"+ playerPassword +"';";
   sql.query(t);
   if ( sql.next()) {
-    idplayer = sql.getInt("idplayer");
+    idPlayer = sql.getInt("idplayer");
   }
-  println(idplayer);
+  println(idPlayer);
 }
 
 void updateGame()
