@@ -114,6 +114,7 @@ class EnemyDave extends Enemy
   {
     spawnPowerup();
     explode();
+    totalEnemiesKilled++;
     active = false;
     screenScore.updateScore(x, y);
     score = score + 100;

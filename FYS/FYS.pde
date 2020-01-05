@@ -24,6 +24,7 @@ String playerName;
 String playerPassword;
 int idPlayer, idCurrentGame;
 int secondsPerMinute = 60;
+int totalEnemiesKilled = 0;
 
 
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
@@ -83,7 +84,7 @@ void setup()
 }
 
 void updateGame()
-{
+{ 
   if (stateStart)
   {
     startscreen.update();
@@ -141,7 +142,7 @@ void updateGame()
 }
 
 void drawGame()
-{
+{ 
   if (stateStart)
   {
     startscreen.display();
