@@ -29,8 +29,6 @@ class Particle {
     active = false;
     drawAngle = 0;
     spinSpeed = 0;
-
-   
   }
 
   void update() {
@@ -44,45 +42,46 @@ class Particle {
 
   void display() {
     if (active) {
-     /*
+      /*
       //fill(drawColor);
-      // ellipse(x, y, diameter, diameter);
-
-      switch(particleNumber) { // this is for the enemies to have diferent particles
-      case 0:
-        fill(Colors.DARK_GREEN);
-        ellipse(x, y, diameter, diameter);
-        break;
-      case 1:
-       /* fill(Colors.WHITE);
-        ellipse(x, y, diameter, diameter);
-        */
+       // ellipse(x, y, diameter, diameter);
+       
+       switch(particleNumber) { // this is for the enemies to have diferent particles
+       case 0:
+       fill(Colors.DARK_GREEN);
+       ellipse(x, y, diameter, diameter);
+       break;
+       case 1:
+                   /* fill(Colors.WHITE);
+       ellipse(x, y, diameter, diameter);
+       */
+      if (!statePaused) { //prevents nullpointer
         translate( x, y );
         rotate(drawAngle);
-        if (!statePaused) //prevents nullpointer
         particleAnimation.display(0, 0);
         rotate( -drawAngle );
         translate( -x, -y );
-        /*
+      }
+      /*
         break;
-      case 2:
-        //fill(Colors.BLUE);
-        //ellipse(x, y, diameter, diameter);
-        translate( x, y );
-        rotate(drawAngle);
-        image( smokeImg2, 0, 0, diameter, diameter);
-        rotate( -drawAngle );
-        translate( -x, -y );
-        break;
-      case 3:
-        fill(Colors.GREEN);
-        ellipse(x, y, diameter, diameter);
-        break;
-      case 4:
-        fill(Colors.YELLOW);
-        ellipse(x, y, diameter, diameter);
-        break;
-      }*/
+       case 2:
+       //fill(Colors.BLUE);
+       //ellipse(x, y, diameter, diameter);
+       translate( x, y );
+       rotate(drawAngle);
+       image( smokeImg2, 0, 0, diameter, diameter);
+       rotate( -drawAngle );
+       translate( -x, -y );
+       break;
+       case 3:
+       fill(Colors.GREEN);
+       ellipse(x, y, diameter, diameter);
+       break;
+       case 4:
+       fill(Colors.YELLOW);
+       ellipse(x, y, diameter, diameter);
+       break;
+       }*/
     }
   }
   void move() {
@@ -96,16 +95,16 @@ class Particle {
       particleAnimation.active = false;
     }
   }
-  
+
   void updateAngle()
   {
     drawAngle += spinSpeed;
     if ( drawAngle < 0 && drawAngle < 2 * -PI )
     {
-       drawAngle %= (2 * -PI); 
-    }else if ( drawAngle > 0 && drawAngle > 2 * PI)
+      drawAngle %= (2 * -PI);
+    } else if ( drawAngle > 0 && drawAngle > 2 * PI)
     {
-       drawAngle %= (2 * -PI);
+      drawAngle %= (2 * -PI);
     }
   }
 
@@ -121,7 +120,7 @@ class Particle {
     spinSpeed = random( -0.2, 0.2);
     setAnimation();
   }
-  
+
   void setAnimation()
   {
     for ( Animation animation : animations )

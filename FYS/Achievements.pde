@@ -7,8 +7,8 @@ class Achievements
 {
   private final float
     TEXT_X    =gamefield.GAMEFIELD_WIDTH*0.9, 
-    TEXT_Y    =height*0.9, 
-    TEXTSIZE  =width * 0.04;
+    TEXT_Y    =height*0.75, 
+    TEXTSIZE  =width * 0.03;
 
   private final int 
     DEAD_ENEMIES_TRIGGER       = 50, 
@@ -18,17 +18,17 @@ class Achievements
   private int 
     enemiesTriggered, 
     achievementTimer;
-  private boolean databaseReady;
+  public boolean databaseReady;
   private boolean[] achievementGotten;
 
   Achievements() {
-    achievementGotten= new boolean[AchievementID.THE_COLLECTOR];
+    achievementGotten= new boolean[AchievementID.THE_COLLECTOR+1];
     lastGottenAchievement="404";
+    databaseReady=true;
   }
 
   public void update() {
     countDown();
-    println(loggedInPlayerID);
     if (!databaseReady) {
       givePlayerEmptyAchievements();
     }
@@ -53,9 +53,9 @@ class Achievements
       textSize(TEXTSIZE);
       textMode(CENTER);
       fill(Colors.RED);
-      rect(TEXT_X, TEXT_Y, width, height);
+      rectMode(CORNERS);
+      rect(TEXT_X*0.6, TEXT_Y*0.6, width, height);
       fill(Colors.WHITE);
-      rectMode(CENTER);
       text(lastGottenAchievement, TEXT_X, TEXT_Y);
       rectMode(CORNER);
     }
@@ -167,8 +167,8 @@ class Achievements
   }
 
   public boolean isComplete(int id) {
-    if (!achievementGotten[id]){
-     achievementGotten[id]=getProgress(id)>=getCompletion(id);
+    if (!achievementGotten[id]) {
+      achievementGotten[id]=getProgress(id)>=getCompletion(id);
     }
     return achievementGotten[id];
   }

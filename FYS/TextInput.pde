@@ -121,6 +121,7 @@ void checkLogin(int index)
         loginscreen.loggedIn = true;
         int id = sql.getInt(1);
         loggedInPlayerID = id;
+        achievement.databaseReady=false;
       }
     }
     //find out if username exists in records, get password belonging to username,
@@ -155,12 +156,13 @@ void checkLogin(int index)
               + textboxes[2].text + "', '" + textboxes[3].text + "')";
       sql.query(query);
       
-      query = "SELECT 'idplayer' FROM player WHERE name = '" + textboxes[2].text + "' AND password = '" + textboxes[3].text + "'";
+      query = "SELECT idplayer FROM player WHERE name = '" + textboxes[2].text + "' AND password = '" + textboxes[3].text + "'";
       sql.query(query);
       sql.next();
       
       loginscreen.loggedIn = true;
       loggedInPlayerID = sql.getInt(1);
+      achievement.databaseReady=false;
       }
       finally
       {
