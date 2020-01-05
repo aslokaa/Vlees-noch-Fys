@@ -1,4 +1,4 @@
-/* //<>// //<>// //<>// //<>// //<>// //<>//
+/* //<>// //<>// //<>// //<>// //<>// //<>// //<>//
  //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves?
  this class keeps track of where elements are spawned and the boundries they are allowed to be in.
  contains list of finals for outlining:
@@ -37,12 +37,12 @@ class Gamefield
     DAVE_SPEED_START                = 3, 
     DAVE_SPEED_MAX                  = 6, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>//
+    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>// //<>//
     WAVES_UNTILL_DAVE               = 1, 
     WAVE3_CHADS                     = 1, 
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>//
+    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>//
 
   private int  
     daveCounter, 

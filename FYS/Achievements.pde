@@ -26,9 +26,6 @@ class Achievements
     lastGottenAchievement="404";
   }
 
-  //gets called on by another class to increase the progress an achievemnt has.
-
-
   public void update() {
     countDown();
     if (!databaseReady) {
@@ -126,17 +123,17 @@ class Achievements
       }
     }
   }
-  public void increaseProgress(int id, int enemiesKilled) {
+  public void increaseProgress(int id, int amoutOfIncrease) {
     switch (id) {
     case AchievementID.A_LITTLE_BIT :
-      increaseProgress(AchievementID.SOME_OF_THE, enemiesKilled);
+      increaseProgress(AchievementID.SOME_OF_THE, amoutOfIncrease);
       break;
     case AchievementID.SOME_OF_THE :
-      increaseProgress(AchievementID.ALL_THE_MURDER, enemiesKilled);
+      increaseProgress(AchievementID.ALL_THE_MURDER, amoutOfIncrease);
       break;
     }
     if (!isComplete(id)) {
-      String t0="UPDATE `player_has_achievement` SET `progress`= progress+"+enemiesKilled+" WHERE player_idplayer = "+loggedInPlayerID+" AND achievement_idachievement="+id;
+      String t0="UPDATE `player_has_achievement` SET `progress`= progress+"+amoutOfIncrease+" WHERE player_idplayer = "+loggedInPlayerID+" AND achievement_idachievement="+id;
       sql.query(t0);
       if (isComplete(id)) {
         String t1 = "SELECT name FROM `achievement` WHERE idAchievement="+id ;
