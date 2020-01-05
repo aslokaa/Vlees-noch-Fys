@@ -9,6 +9,7 @@ class Power {
   float hitboxRadius;
   boolean powerActive;
   int powerNumber;
+  
 
   Power(float x, float y, float velocityX) { //Constructor
     this.x = x;
@@ -65,8 +66,8 @@ class Power {
         ellipse(x, y, hitboxDiameter, hitboxDiameter);
         break;
       case PowerUpTypes.SPIKE_BALL :
-         image(spikeBallImg, x, y, hitboxDiameter, hitboxDiameter);
-         break;
+        image(spikeBallImg, x, y, hitboxDiameter, hitboxDiameter);
+        break;
       default:
       }
     }
@@ -77,6 +78,7 @@ class Power {
     y = spawnY;
     powerNumber = powerNumberNew;
     powerActive = true;
+    spawned[powerNumberNew]++;
   }
 
   void checkOffscreen() {  //Checks if the power fell off the screen and deactivates it if it is
@@ -93,6 +95,7 @@ class Power {
 
       if (( x + hitboxRadius > hitboxes.rectangle0.x)&&(x - hitboxRadius < hitboxes.rectangle0.x + hitboxes.rectangle0.rectangleWidth)&&  //collision with player check.
         (y + hitboxRadius > hitboxes.rectangle0.y)&&(y - hitboxRadius < hitboxes.rectangle0.y + hitboxes.rectangle0.rectangleHeight)) {
+        pickUps[powerNumber]++;
         player.modifyPower(powerNumber);
         powerActive= false;
       }
@@ -103,6 +106,7 @@ class Power {
 
       if (( x + hitboxRadius > hitboxes.rectangle1.x)&&(x - hitboxRadius < hitboxes.rectangle1.x + hitboxes.rectangle1.rectangleWidth)&&  //collision with player 2 check.
         (y + hitboxRadius > hitboxes.rectangle1.y)&&(y - hitboxRadius < hitboxes.rectangle1.y + hitboxes.rectangle1.rectangleHeight)) {
+        pickUps[powerNumber]++;
         player.modifyPower(powerNumber);
         powerActive= false;
       }

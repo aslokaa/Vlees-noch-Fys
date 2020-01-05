@@ -20,7 +20,8 @@ class Pausescreen
   /*   2    */    //"Press S to decrease the volume", 
   /*   3    */    //"press Z to mute"
   };
-  private boolean 
+  private boolean
+    achievementPercentage, 
     escapePressed;
 
   Pausescreen() {
@@ -31,12 +32,18 @@ class Pausescreen
   public void display()
   {
     displayText();
+
+    achievement.displayMenu(achievementPercentage);
   }
 
   public void update()
   {
     changePausedState();
     detectInput();
+    if (keysPressed['_']) {
+      achievement.clean();
+      exit();
+    }
   }
 
   // pauses or unpauses the game.
@@ -49,6 +56,7 @@ class Pausescreen
         menuSounds.play(Sounds.UNPAUSE);
       } else
       {
+        achievement.increaseProgress(AchievementID.HAMMER_TIME);
         menuSounds.play(Sounds.PAUSE);
       }
       statePaused=!statePaused;
@@ -63,7 +71,11 @@ class Pausescreen
     {
       if (keysPressed['z'])
       {
+        achievement.increaseProgress(AchievementID.I_CONCEDE);
         endscreen.loseGame();
+      }
+      if (keysPressed['x']) {
+        achievementPercentage=!achievementPercentage;
       }
     }
   }
@@ -81,7 +93,7 @@ class Pausescreen
     }
   }
 
-//handles the text for the pausescreen
+  //handles the text for the pausescreen
   class Text
   {
     float   x, y;

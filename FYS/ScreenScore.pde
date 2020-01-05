@@ -26,7 +26,7 @@ class ScreenScore { //shows your + points on the screen
     comboScoreY = enemyY;
     comboScore += 100;
     scoreTimer = 60;
-    textSize = comboScore / textSizeChanger+1;
+    textSize = comboScore / textSizeChanger +1;
   }
 
 
@@ -40,7 +40,7 @@ class ScreenScore { //shows your + points on the screen
     if (textSize == 1) {
       textSize = 1;
     } else {
-      textSize = textSize - textSizeChanger;
+      textSize = textSize - constantTextSizeChanger;
     }
 
     if (comboScore > 1) {

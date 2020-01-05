@@ -22,13 +22,25 @@ ArrayList<Ball> balls                  = new ArrayList<Ball>();
 WaveFormat[] waveFormats               = new WaveFormat[Arrays.WAVE_FORMATS];
 Button[] buttons                       = new Button[2];
 
+String playerName;
+String playerPassword;
+int idPlayer, idCurrentGame;
+int secondsPerMinute = 60;
+int totalEnemiesKilled = 0;
+int amountPowers = 7;
+int[] pickUps = new int[amountPowers];
+int[] uses = new int[amountPowers];
+int[] spawned = new int[amountPowers];
+
 boolean stateStart=true, stateLogin = false, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
+
 Gamefield gamefield;
 Space space;
 Scores scores;
 Startscreen startscreen;
 Loginscreen loginscreen;
 Pausescreen pausescreen;
+Achievements achievement;
 Endscreen endscreen;
 PlayerSounds playerSounds;
 MenuSounds menuSounds;
@@ -38,6 +50,7 @@ BossPing ping;
 BossLester lester;
 ScreenScore screenScore;
 TextKeyboard keyboard;
+int loggedInPlayerID;
 
 
 
@@ -65,10 +78,23 @@ void setup()
   font                     = loadFont("ComicSansMS-BoldItalic-40.vlw");
   loadAssets();
   imageMode(CENTER);
+
+  //instantiateBoxes();
+  //textboxes[textBoxesIndex = 1].isFocused = true;
+
+  //Inloggen speler simuleren
+  playerName = "***";
+  playerPassword = "test";
+  String t="SELECT `idplayer` FROM player WHERE name ='" + playerName +"' and password='"+ playerPassword +"';";
+  sql.query(t);
+  if ( sql.next()) {
+    idPlayer = sql.getInt("idplayer");
+  }
+  println(idPlayer);
 }
 
 void updateGame()
-{
+{ 
   if (stateStart)
   {
     startscreen.update();
@@ -124,12 +150,12 @@ void updateGame()
   {
     endscreen.update();
   }
-
+  achievement.update();
   space.update();
 }
 
 void drawGame()
-{
+{ 
   if (stateStart)
   {
     startscreen.display();
@@ -191,6 +217,7 @@ void drawGame()
   {
     endscreen.display();
   }
+  achievement.display();
 }
 
 // Keyboard handling...
@@ -217,7 +244,6 @@ void keyPressed() {
     }
     key=0; //now the game doesn't exit after escape is pressed.
   }
-
   gamefield.checkRoundSkip();
 }
 

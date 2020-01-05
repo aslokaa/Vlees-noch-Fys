@@ -141,11 +141,13 @@ class EnemyChad extends Enemy
   @Override void destroy()
   {
     explode();
+    totalEnemiesKilled++;
     active = false;
     screenScore.updateScore(x,y);
     score = score + 100;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
+    achievement.increaseProgress(AchievementID.A_LITTLE_BIT);
   }
 
  

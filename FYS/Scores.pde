@@ -3,11 +3,12 @@
 int score = 0;
 
 class Scores {
-
+  final int LIT_SCORE= 420420;
 
   int textSize = 30;
   int time = 0;
   int min = 0;
+  int totalTime = 0;
 
 
   void update() {
@@ -15,12 +16,19 @@ class Scores {
     if (score <= 0) {// score can't go lower than 0
       score = 0;
     }
-
+    checkScoreAchievement();
     time+=1;
+    totalTime++;
 
     if (time/60 == 60) {//every 60 seconds counts as one minute and resets seconds to 0
       time = 0;
       min = min + 1;
+    }
+  }
+
+  void checkScoreAchievement() {
+    if (score >= LIT_SCORE) {
+      achievement.increaseProgress(AchievementID.LIT);
     }
   }
 
@@ -42,10 +50,10 @@ class Scores {
       text(min+":"+time/60, width*0.95, height*0.15);
     }
     image( player.getHasImmune() ? shieldPowerImg : shieldPlaceholder, width*0.91, height*0.70, 80, 80 );
-    image( aButtonImg, width*0.97, height*0.7, width*0.03,width*0.03);
-    
+    image( aButtonImg, width*0.97, height*0.7, width*0.03, width*0.03);
+
     image( bulletPlaceholder, width*0.91, height*0.79, 80, 60);
-    image( bButtonImg, width*0.97, height*0.79, width*0.03,width*0.03);
+    image( bButtonImg, width*0.97, height*0.79, width*0.03, width*0.03);
     fill(Colors.RED);
     textSize(textSize*1.5);
     text( player.getAmmo(), width*0.94, height*0.81);
