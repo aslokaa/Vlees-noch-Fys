@@ -201,13 +201,14 @@ void drawGame()
     {
       pausescreen.display();
     }
+    achievement.display();
     scores.display();
     gamefield.displayWallFX();
   } else if (stateEnd)
   {
     endscreen.display();
   }
-  achievement.display();
+  
 }
 
 // Keyboard handling...

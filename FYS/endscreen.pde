@@ -67,6 +67,7 @@ class Endscreen
     statePlaying=false;
     stateEnd=true;
     //updates the score, wave, time and amount of enemies killed and saves the amount of powers uses, pickups, spawned for each game and each power
+    achievement.increaseProgress(AchievementID.A_LITTLE_BIT,totalEnemiesKilled-achievement.getEnemiesTriggered());
     sql.query("UPDATE Game SET `score` ="+ score+",`wave` = "+ gamefield.waveCounter+",`time` = "+ scores.totalTime/secondsPerMinute+",`enemieskilled` = "+ totalEnemiesKilled+" WHERE idgame = "+idCurrentGame);
     //Unused powerups in array therefor no for loop used
     sql.query("INSERT INTO `Game_has_Power` (`uses`, `pickups`, `spawned`, `Game_idgame`, `Powers_name`) VALUES ("+uses[PowerUpTypes.IMMUNE]+", "+pickUps[PowerUpTypes.IMMUNE]+", "+spawned[PowerUpTypes.IMMUNE]+", "+idCurrentGame+", 'Immune')" );

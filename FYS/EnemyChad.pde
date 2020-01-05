@@ -147,7 +147,6 @@ class EnemyChad extends Enemy
     score = score + 100;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
-    achievement.increaseProgress(AchievementID.A_LITTLE_BIT);
   }
 
  
