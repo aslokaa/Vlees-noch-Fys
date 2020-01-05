@@ -38,7 +38,7 @@ class Endscreen
       scores            = new Scores();
       for ( Enemy enemy : enemies )
       {
-        enemy.destroy();
+        enemy.active=false;
       }
       for (int i = 0; i < powers.length; i++)
       {
