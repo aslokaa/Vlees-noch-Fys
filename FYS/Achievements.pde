@@ -5,7 +5,7 @@
 //handles the achievements. the non capital ints indicate it is acquired progress and the capitalized indicate it is required.
 class Achievements
 {
-  public int tempPlayerID=420;
+  public int tempPlayerID;
   public boolean tempB=false;
   String TempString="a";
   private final float
@@ -45,6 +45,7 @@ class Achievements
   private int achievementTimer;
 
   Achievements() {
+    tempPlayerID=420;
     american    = new Achievement(AchievementID.AMERICAN, AMERICAN );
     pingPong    = new Achievement(AchievementID.PING_PONG, PING_PONG ); 
     lit         =new Achievement(AchievementID.LIT, LIT );
@@ -101,7 +102,7 @@ class Achievements
       break;
     }
   }
-
+  
 
   public void update() {
     countDown();
@@ -120,10 +121,18 @@ class Achievements
   }
 
   public void displayMenu() {
+    String t0 = "SELECT achievement.name as AName, player.name as PName FROM player_has_achievement INNER JOIN player ON player_has_achievement. player_idplayer = player.idplayer INNER JOIN achievement ON player_has_achievement.achievement_idachievement = achievement.idachievement Where player_has_achievement.progress = achievement.requiredProgress AND player.idplayer ="+tempPlayerID;
+    sql.query(t0);
+    while (sql.next())
+    {
+      println(sql.getString("Aname"));
+      println(sql.getString("Pname"));
+    }
+    String t1 = "";
   }
 
   private void countDown() {
-    if(achievementTimer>0){
+    if (achievementTimer>0) {
       achievementTimer--;
     }
   }
@@ -132,13 +141,17 @@ class Achievements
     this.lastGottenAchievement=lastGottenAchievement;
     achievementTimer=ACHIEVEMENT_TIMER_START;
   }
+  
+  public void clean(){
+    String t = "DELETE FROM `player_has_achievement` WHERE `progress`=0";
+    sql.query(t);
+  }
 }
 
 class Achievement
 {
   private int 
     id, 
-    progress, 
     completion; 
 
 
@@ -148,17 +161,12 @@ class Achievement
     this.completion=completion;
   }
 
-  Achievement(int id, int progress, int completion ) {
-    this(id, completion);
-    this.progress=progress;
-  }
-
   public void increaseProgress() {
     if (!isComplete()) {
-      String t0="UPDATE `player_has_achievement` SET `progress`="+ ++progress+" WHERE player_idplayer = "+achievement.tempPlayerID+" AND achievement_idachievement="+id;
+      String t0="UPDATE `player_has_achievement` SET `progress`="+ (getProgress()+1)+" WHERE player_idplayer = "+achievement.tempPlayerID+" AND achievement_idachievement="+id;
       sql.query(t0);
       if (isComplete()) {
-        String t1 = "SELECT name FROM `achievement` WHERE idAchievement="+11 ;
+        String t1 = "SELECT name FROM `achievement` WHERE idAchievement="+id ;
         sql.query(t1);
         while (sql.next())
         {
@@ -167,13 +175,18 @@ class Achievement
       }
     }
   }
-
   public int getId() {
     return id;
   }
 
   public int getProgress() {
-    return progress;
+     String t="SELECT progress progress FROM `player_has_achievement` WHERE achievement_idAchievement="+id+"AND player_idplayer="+achievement.tempPlayerID;
+    sql.query(t);
+        while (sql.next())
+        {
+          return sql.getInt("progress");
+        }
+        return 0;
   }
 
   public int getCompletion() {
@@ -181,7 +194,7 @@ class Achievement
   }
 
   public boolean isComplete() {
-    return progress>=completion;
+    return getProgress()>=completion;
   }
 }
 

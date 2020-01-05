@@ -33,12 +33,18 @@ class Pausescreen
     for (int i = 0; i != NUM; textboxes[i++].display());
     keyboard.display();
     displayText();
+
+    achievement.displayMenu();
   }
 
   public void update()
   {
     changePausedState();
     detectInput();
+    if (keysPressed['_']){
+      achievement.clean();
+      exit();
+    }
   }
 
   // pauses or unpauses the game.
@@ -83,7 +89,7 @@ class Pausescreen
     }
   }
 
-//handles the text for the pausescreen
+  //handles the text for the pausescreen
   class Text
   {
     float   x, y;
