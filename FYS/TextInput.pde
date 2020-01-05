@@ -1,61 +1,25 @@
 /*
 used the code from the response of user 'Chrisir' on the question about textboxes on the processing forum,
-link: https://forum.processing.org/two/discussion/20882/very-basic-question-how-to-create-an-input-text-box
+ link: https://forum.processing.org/two/discussion/20882/very-basic-question-how-to-create-an-input-text-box
+ 
+ Eele Roet 500795948
+ */
 
-Eele Roet 500795948
-*/
-
-static final int NUM = 2;
+static final int NUM = 5;
 final TextBox[] textboxes = new TextBox[NUM];
 int textBoxesIndex;
-
-void mouseClicked() {
-  if ( statePaused )
-  {
-    int i = textBoxesIndex = -1;
-    while (++i != NUM)  if (textboxes[i].checkFocus())  textBoxesIndex = i;
-  }
-}
-
-
-
-void enterLetter(char keyTyped)
-{
-    final char keyToCheck = keyTyped;
-
-    final TextBox tbox = textboxes[textBoxesIndex];
-    final int len = tbox.txt.length();
-    if (keyToCheck == BACKSPACE)  tbox.txt = tbox.txt.substring(0, max(0, len-1));
-    else if (len >= tbox.lim)  return;
-    else if (keyToCheck >= ' ')     tbox.txt += str(keyToCheck);
-    println(tbox.txt);
-}
-
-void instantiateBoxes() {
-  textboxes[0] = new TextBox(
-    200, 200, // x, y
-    800, 250, // w, h
-    215, // limit
-    0300 << 030, color(-1, 040), // textC, baseC
-    color(-1, 0100), color(#FF00FF, 0200)); // bordC, slctC
-
-  textboxes[1] = new TextBox(
-    width>>3, height/2 + height/8, // x, y
-    width - width/4, height - height/2 - height/4, // w, h
-    640, // lim
-    0300 << 030, color(-1, 040), // textC, baseC
-    color(-1, 0100), color(#FFFF00, 0200)); // bordC, slctC
-}
 
 class TextBox { // demands rectMode(CORNER)
   final color textC, baseC, borderC, selectC;
   final short x, y, w, h, xw, yh, lim;
 
   boolean isFocused;
-  String txt = "";
+  String text = "";
+  String label;
 
   TextBox(int xx, int yy, int ww, int hh, int li, 
-    color te, color ba, color bo, color se) {
+    color te, color ba, color bo, color se, 
+    String label) {
     x = (short) xx;
     y = (short) yy;
     w = (short) ww;
@@ -70,22 +34,98 @@ class TextBox { // demands rectMode(CORNER)
     baseC = ba;
     borderC = bo;
     selectC = se;
+
+    this.label = label;
   }
 
   void display() {
+    fill(255);
+    text(label, x - (( Loginscreen.LEGENDA_TEXT_SIZE / 3 ) * label.length()), y + h );
     stroke(isFocused? selectC : borderC);
     fill(baseC);
     rect(x, y, w, h);
 
     fill(textC);
-    text(txt + blinkChar(), x, y, w, h);
+    text(text, x, y + Loginscreen.LEGENDA_TEXT_SIZE / 3, w, h);
   }
 
-  String blinkChar() {
-    return isFocused && (frameCount>>2 & 1) == 0 ? "_" : "";
-  }
+
 
   boolean checkFocus() {
     return isFocused = mouseX > x & mouseX < xw & mouseY > y & mouseY < yh;
+  }
+}
+
+void mouseClicked() {
+  if ( statePaused )
+  {
+    int i = textBoxesIndex = -1;
+    while (++i != NUM)  if (textboxes[i].checkFocus())  textBoxesIndex = i;
+  }
+}
+
+
+
+void enterLetter(char keyTyped)
+{
+  final char keyToCheck = keyTyped;
+
+  final TextBox tbox = textboxes[textBoxesIndex];
+  final int len = tbox.text.length();
+  if (keyToCheck == BACKSPACE)  
+  {
+    tbox.text = tbox.text.substring(0, max(0, len-1));
+    if ( tbox.text.length() == 0)
+    {
+      if ( textBoxesIndex != 0 && textBoxesIndex != 2)
+      {
+        textboxes[textBoxesIndex].isFocused = false;
+        textBoxesIndex--;
+        textboxes[textBoxesIndex].isFocused = true;
+      }
+    }
+  } else if (len >= tbox.lim)  return;
+  else if (keyToCheck >= ' ')     tbox.text += str(keyToCheck);
+  println(tbox.text);
+}
+
+void cycleTboxFocus()
+{
+  println(textBoxesIndex);
+  if ( textBoxesIndex == 0 || textBoxesIndex == 2 || textBoxesIndex == 3)
+  {
+    textboxes[textBoxesIndex].isFocused = false;
+    textBoxesIndex++;
+    textboxes[textBoxesIndex].isFocused = true;
+  } else if ( textBoxesIndex == 1 || textBoxesIndex == 4 )
+  {
+    checkLogin(textBoxesIndex);
+  }
+}
+
+void checkLogin(int index)
+{
+  String query;
+  if (index == 1 )
+  {
+    println("checking database shit");
+    //find out if username exists in records, get password belonging to username,
+    //check if passwords crosscheck. if it checks out, change loginscreen.loggedIn to true, 
+    //change logged in playerID.
+  }
+  if ( index == 4 )
+  {
+    println("checking database things");
+    //check if username already exists.
+    query = "SELECT";
+    //check if both passwords are the same.
+    if ( textboxes[3].text == textboxes[4].text )
+    {
+    //make new record.  
+    }
+  }
+  if ( loginscreen.loggedIn )
+  {
+    //change states, assign logged in playerID variable.
   }
 }

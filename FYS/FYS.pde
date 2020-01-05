@@ -10,22 +10,24 @@ Player player;
 Test test;
 // Arrays of booleans for Keyboard handling. One boolean for each keyCode from FYS
 final int KEY_LIMIT = 1024;
-boolean[] keyCodesPressed = new boolean[KEY_LIMIT];
-boolean[] keysPressed = new boolean[KEY_LIMIT];
-ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-ArrayList<EnemyBullet> enemyBullets = new ArrayList<EnemyBullet>();
-ArrayList<PlayerBullet> playerBullets = new ArrayList<PlayerBullet>();
-Power[] powers = new Power[Arrays.POWER_COUNT];
-Particle[] particles = new Particle[Arrays.PARTICLE_COUNT];
-Animation[] animations = new Animation[Arrays.ANIMATION_COUNT];
-ArrayList<Ball> balls = new ArrayList<Ball>();
-WaveFormat[] waveFormats = new WaveFormat[Arrays.WAVE_FORMATS];
+boolean[] keyCodesPressed              = new boolean[KEY_LIMIT];
+boolean[] keysPressed                  = new boolean[KEY_LIMIT];
+ArrayList<Enemy> enemies               = new ArrayList<Enemy>();
+ArrayList<EnemyBullet> enemyBullets    = new ArrayList<EnemyBullet>();
+ArrayList<PlayerBullet> playerBullets  = new ArrayList<PlayerBullet>();
+Power[] powers                         = new Power[Arrays.POWER_COUNT];
+Particle[] particles                   = new Particle[Arrays.PARTICLE_COUNT];
+Animation[] animations                 = new Animation[Arrays.ANIMATION_COUNT];
+ArrayList<Ball> balls                  = new ArrayList<Ball>();
+WaveFormat[] waveFormats               = new WaveFormat[Arrays.WAVE_FORMATS];
+Button[] buttons                       = new Button[2];
 
-boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
+boolean stateStart=true, stateLogin = false, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
 Gamefield gamefield;
 Space space;
 Scores scores;
 Startscreen startscreen;
+Loginscreen loginscreen;
 Pausescreen pausescreen;
 Endscreen endscreen;
 PlayerSounds playerSounds;
@@ -36,6 +38,9 @@ BossPing ping;
 BossLester lester;
 ScreenScore screenScore;
 TextKeyboard keyboard;
+
+
+
 
 void setup()
 {
@@ -49,21 +54,17 @@ void setup()
   space                    = new Space();
   scores                   = new Scores();
   screenScore              = new ScreenScore();
-  keyboard                 = new TextKeyboard(300, 500);
   player                   = new Player();
   ping                     = new BossPing();
   lester                   = new BossLester(gamefield.GAMEFIELD_WIDTH / 2, -300);
   test                     = new Test();
   startscreen              = new Startscreen();
+  loginscreen              = new Loginscreen();
   pausescreen              = new Pausescreen();
   endscreen                = new Endscreen();
   font                     = loadFont("ComicSansMS-BoldItalic-40.vlw");
   loadAssets();
   imageMode(CENTER);
-
-
-  instantiateBoxes();
-  textboxes[textBoxesIndex = 1].isFocused = true;
 }
 
 void updateGame()
@@ -71,6 +72,9 @@ void updateGame()
   if (stateStart)
   {
     startscreen.update();
+  } else if ( stateLogin )
+  {
+    loginscreen.update();
   } else if (statePlaying)
   {
     pausescreen.update();
@@ -129,6 +133,10 @@ void drawGame()
   if (stateStart)
   {
     startscreen.display();
+  } else if ( stateLogin )
+  {
+    background(0);
+    loginscreen.display();
   } else if (statePlaying)
   {
     background(player.giveBackgroundColor());
@@ -189,13 +197,18 @@ void drawGame()
 void keyPressed() {  
   if (keyCode >= KEY_LIMIT) return; //safety: if keycode exceeds limit, exit methhod ('return').
   keyCodesPressed[keyCode] = true; // set its boolean to true
-  if ( statePaused )
+  if ( stateLogin )
   {
-    keyboard.handleTextInput();
+    if ( loginscreen.pickingOption )
+    {
+      handleButtonNav();
+    } else {
+      keyboard.handleTextInput();
+    }
   }
   if (key>=KEY_LIMIT) return;
   keysPressed[key] = true;
-  
+
   if ( keyCode == ESC ) 
   {
     if (statePlaying)
@@ -204,8 +217,8 @@ void keyPressed() {
     }
     key=0; //now the game doesn't exit after escape is pressed.
   }
-   
-   gamefield.checkRoundSkip();
+
+  gamefield.checkRoundSkip();
 }
 
 //..and with each key Released vice versa from FYS

@@ -6,7 +6,7 @@ on display keyboard data and navigation
 class TextKeyboard 
 {
   int currentRow = 1;
-  int currentCol = 1;
+  int currentCol = 4;
   char[][] rows = new char[3][];
 
   float x;
@@ -62,12 +62,11 @@ class TextKeyboard
     } else if ( keyCodesPressed[87] )
     {
       println("enter pressed");
+      cycleTboxFocus();
     } else if ( keyCodesPressed[65] )
     {
       enterLetter(BACKSPACE);
     }
-
-    println(currentRow, currentCol);
   }
 
   void display()

@@ -30,8 +30,6 @@ class Pausescreen
 
   public void display()
   {
-    for (int i = 0; i != NUM; textboxes[i++].display());
-    keyboard.display();
     displayText();
   }
 
