@@ -28,6 +28,7 @@ class Achievements
 
   public void update() {
     countDown();
+    println(loggedInPlayerID);
     if (!databaseReady) {
       givePlayerEmptyAchievements();
     }

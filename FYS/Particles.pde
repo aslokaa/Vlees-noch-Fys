@@ -59,6 +59,7 @@ class Particle {
         */
         translate( x, y );
         rotate(drawAngle);
+        if (!statePaused) //prevents nullpointer
         particleAnimation.display(0, 0);
         rotate( -drawAngle );
         translate( -x, -y );
