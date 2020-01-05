@@ -23,6 +23,7 @@ WaveFormat[] waveFormats = new WaveFormat[Arrays.WAVE_FORMATS];
 String playerName;
 String playerPassword;
 int idPlayer, idCurrentGame;
+int secondsPerMinute = 60;
 
 
 boolean stateStart=true, statePlaying=false, statePaused=false, stateEnd=false, stateBossPing=false, stateBossLester=false;
