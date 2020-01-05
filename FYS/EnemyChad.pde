@@ -141,6 +141,7 @@ class EnemyChad extends Enemy
   @Override void destroy()
   {
     explode();
+    totalEnemiesKilled++;
     active = false;
     screenScore.updateScore(x,y);
     score = score + 100;
