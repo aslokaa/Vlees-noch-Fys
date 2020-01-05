@@ -119,7 +119,8 @@ void checkLogin(int index)
       {
         println("nice");
         loginscreen.loggedIn = true;
-        loggedInPlayerID = sql.getInt(1);
+        int id = sql.getInt(1);
+        loggedInPlayerID = id;
       }
     }
     //find out if username exists in records, get password belonging to username,
