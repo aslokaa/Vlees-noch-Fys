@@ -7,6 +7,11 @@ class Achievements
 {
   public int tempPlayerID=420;
   public boolean tempB=false;
+  String TempString="a";
+  private final float
+    TEXT_X    =gamefield.GAMEFIELD_WIDTH*0.9, 
+    TEXT_Y    =height*0.9, 
+    TEXTSIZE  =width * 0.04;
   private Achievement
     american, 
     pingPong, 
@@ -22,6 +27,7 @@ class Achievements
     theCollector;
 
   private final int //required progress to get the achievment
+    ACHIEVEMENT_TIMER_START    = 4*(int)player.SECOND, 
     AMERICAN       =1, 
     PING_PONG      =1, 
     LIT            =1, 
@@ -35,33 +41,23 @@ class Achievements
     ALL_THE_MURDER =1000, 
     THE_COLLECTOR  =11;
 
-  private final String //the displayed name of achievements
-    AMERICAN_NAME       ="The American", 
-    PING_PONG_NAME      ="Pong", 
-    LIT_NAME            ="Lit!", 
-    I_CONCEDE_NAME      ="Intresting moves, I concede", 
-    ONE_PERCENT_NAME    ="You are the 1%", 
-    HAMMER_TIMER_NAME   ="STOP. It's Hammer Time", 
-    UNALIVED_NAME       ="They unalived you.", 
-    PEW_PEW_PEW_NAME    ="PEW!PEW!PEW!", 
-    A_LITTLE_BIT_NAME   ="A little bit of murder?", 
-    SOME_OF_THE_NAME    ="Some of the murder.", 
-    ALL_THE_MURDER_NAME ="ALL OF THE MURDER!", 
-    THE_COLLECTOR_NAME  ="The Collecter";
+  private String lastGottenAchievement;
+  private int achievementTimer;
 
   Achievements() {
-    american    = new Achievement(AchievementID.AMERICAN, AMERICAN, AMERICAN_NAME);
-    pingPong    = new Achievement(AchievementID.PING_PONG, PING_PONG, PING_PONG_NAME); 
-    lit         =new Achievement(AchievementID.LIT, LIT, LIT_NAME);
-    iConcede    = new Achievement(AchievementID.I_CONCEDE, I_CONCEDE, I_CONCEDE_NAME); 
-    onePercent  = new Achievement(AchievementID.ONE_PERCENT, ONE_PERCENT, ONE_PERCENT_NAME); 
-    hammerTime  = new Achievement(AchievementID.HAMMER_TIMER, HAMMER_TIMER, HAMMER_TIMER_NAME);
-    unalived    = new Achievement(AchievementID.UNALIVED, UNALIVED, UNALIVED_NAME);  
-    pewPewPew   = new Achievement(AchievementID.PEW_PEW_PEW, PEW_PEW_PEW, PEW_PEW_PEW_NAME); 
-    aLittleBit  = new Achievement(AchievementID.A_LITTLE_BIT, A_LITTLE_BIT, A_LITTLE_BIT_NAME); 
-    someOfThe   = new Achievement(AchievementID.SOME_OF_THE, SOME_OF_THE, SOME_OF_THE_NAME); 
-    allTheMurder= new Achievement(AchievementID.ALL_THE_MURDER, ALL_THE_MURDER, ALL_THE_MURDER_NAME); 
-    theCollector= new Achievement(AchievementID.THE_COLLECTOR, THE_COLLECTOR, THE_COLLECTOR_NAME);
+    american    = new Achievement(AchievementID.AMERICAN, AMERICAN );
+    pingPong    = new Achievement(AchievementID.PING_PONG, PING_PONG ); 
+    lit         =new Achievement(AchievementID.LIT, LIT );
+    iConcede    = new Achievement(AchievementID.I_CONCEDE, I_CONCEDE ); 
+    onePercent  = new Achievement(AchievementID.ONE_PERCENT, ONE_PERCENT ); 
+    hammerTime  = new Achievement(AchievementID.HAMMER_TIMER, HAMMER_TIMER );
+    unalived    = new Achievement(AchievementID.UNALIVED, UNALIVED);  
+    pewPewPew   = new Achievement(AchievementID.PEW_PEW_PEW, PEW_PEW_PEW ); 
+    aLittleBit  = new Achievement(AchievementID.A_LITTLE_BIT, A_LITTLE_BIT ); 
+    someOfThe   = new Achievement(AchievementID.SOME_OF_THE, SOME_OF_THE); 
+    allTheMurder= new Achievement(AchievementID.ALL_THE_MURDER, ALL_THE_MURDER ); 
+    theCollector= new Achievement(AchievementID.THE_COLLECTOR, THE_COLLECTOR);
+    lastGottenAchievement="404";
   }
 
   //gets called on by another class to increase the progress an achievemnt has.
@@ -111,17 +107,30 @@ class Achievements
     countDown();
     if (!tempB) {
       givePlayerEmptyAchievements();
-      increaseProgress(10);
     }
   }
 
   public void display() {
+    if (achievementTimer>0) {
+      fill(Colors.WHITE);
+      textSize(TEXTSIZE);
+      textMode(CENTER);
+      text(lastGottenAchievement, TEXT_X, TEXT_Y);
+    }
   }
 
-  public void displayPaused() {
+  public void displayMenu() {
   }
 
   private void countDown() {
+    if(achievementTimer>0){
+      achievementTimer--;
+    }
+  }
+
+  public void setLastGottenAchievement(String lastGottenAchievement) {
+    this.lastGottenAchievement=lastGottenAchievement;
+    achievementTimer=ACHIEVEMENT_TIMER_START;
   }
 }
 
@@ -131,25 +140,30 @@ class Achievement
     id, 
     progress, 
     completion; 
-  private String name; 
 
 
 
-  Achievement(int id, int completion, String name) {
+  Achievement(int id, int completion ) {
     this.id=id; 
-    this.completion=completion; 
-    this.name=name;
+    this.completion=completion;
   }
-  Achievement(int id, int progress, int completion, String name) {
-    this(id, completion, name);
+
+  Achievement(int id, int progress, int completion ) {
+    this(id, completion);
     this.progress=progress;
   }
 
   public void increaseProgress() {
     if (!isComplete()) {
-      String t="UPDATE `player_has_achievement` SET `progress`="+ ++progress+" WHERE player_idplayer = "+achievement.tempPlayerID+" AND achievement_idachievement="+id;
-      sql.query(t);
+      String t0="UPDATE `player_has_achievement` SET `progress`="+ ++progress+" WHERE player_idplayer = "+achievement.tempPlayerID+" AND achievement_idachievement="+id;
+      sql.query(t0);
       if (isComplete()) {
+        String t1 = "SELECT name FROM `achievement` WHERE idAchievement="+11 ;
+        sql.query(t1);
+        while (sql.next())
+        {
+          println(sql.getString("name"));
+        }
       }
     }
   }
@@ -164,10 +178,6 @@ class Achievement
 
   public int getCompletion() {
     return completion;
-  }
-
-  public String getName() {
-    return name;
   }
 
   public boolean isComplete() {
