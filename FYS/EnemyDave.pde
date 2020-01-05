@@ -121,7 +121,6 @@ class EnemyDave extends Enemy
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
     gamefield.setDaveMoveSpeed();
-    achievement.increaseProgress(AchievementID.A_LITTLE_BIT);
   }
 
   @Override void activate(float posX, float posY)

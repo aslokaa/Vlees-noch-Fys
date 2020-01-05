@@ -12,10 +12,13 @@ class Achievements
     TEXTSIZE  =width * 0.04;
 
   private final int 
+    DEAD_ENEMIES_TRIGGER       = 50, 
     ACHIEVEMENT_TIMER_START    = 4*(int)player.SECOND;
 
   private String lastGottenAchievement;
-  private int achievementTimer;
+  private int 
+    enemiesTriggered, 
+    achievementTimer;
   private boolean databaseReady;
 
   Achievements() {
@@ -30,8 +33,19 @@ class Achievements
     if (!databaseReady) {
       givePlayerEmptyAchievements();
     }
+    checkDeadEnemies();
   }
 
+  public void  checkDeadEnemies() {
+    if (totalEnemiesKilled%DEAD_ENEMIES_TRIGGER==0) {
+      enemiesTriggered+=DEAD_ENEMIES_TRIGGER;
+      increaseProgress(AchievementID.A_LITTLE_BIT,DEAD_ENEMIES_TRIGGER);
+    }
+  }
+  
+  public int getEnemiesTriggered(){
+   return enemiesTriggered;
+  }
   public void display() {
     if (achievementTimer>0) {
       textSize(TEXTSIZE);
@@ -84,7 +98,7 @@ class Achievements
     achievement.databaseReady=true;
   }
   public void increaseProgress(int id) {
-    switch (id) {
+        switch (id) {
     case AchievementID.A_LITTLE_BIT :
       increaseProgress(AchievementID.SOME_OF_THE);
       break;
@@ -94,6 +108,29 @@ class Achievements
     }
     if (!isComplete(id)) {
       String t0="UPDATE `player_has_achievement` SET `progress`= progress+1 WHERE player_idplayer = "+idPlayer+" AND achievement_idachievement="+id;
+      sql.query(t0);
+      if (isComplete(id)) {
+        String t1 = "SELECT name FROM `achievement` WHERE idAchievement="+id ;
+        sql.query(t1);
+        while (sql.next())
+        {
+          achievement.setLastGottenAchievement(sql.getString("name"));
+          achievement.increaseProgress(AchievementID.THE_COLLECTOR);
+        }
+      }
+    }
+  }
+  public void increaseProgress(int id, int enemiesKilled) {
+        switch (id) {
+    case AchievementID.A_LITTLE_BIT :
+      increaseProgress(AchievementID.SOME_OF_THE,enemiesKilled);
+      break;
+    case AchievementID.SOME_OF_THE :
+      increaseProgress(AchievementID.ALL_THE_MURDER,enemiesKilled);
+      break;
+    }
+    if (!isComplete(id)) {
+      String t0="UPDATE `player_has_achievement` SET `progress`= progress+"+enemiesKilled+" WHERE player_idplayer = "+idPlayer+" AND achievement_idachievement="+id;
       sql.query(t0);
       if (isComplete(id)) {
         String t1 = "SELECT name FROM `achievement` WHERE idAchievement="+id ;
