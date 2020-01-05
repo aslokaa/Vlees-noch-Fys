@@ -20,7 +20,8 @@ class Pausescreen
   /*   2    */    //"Press S to decrease the volume", 
   /*   3    */    //"press Z to mute"
   };
-  private boolean 
+  private boolean
+    achievementPercentage, 
     escapePressed;
 
   Pausescreen() {
@@ -34,14 +35,14 @@ class Pausescreen
     keyboard.display();
     displayText();
 
-    achievement.displayMenu();
+    achievement.displayMenu(achievementPercentage);
   }
 
   public void update()
   {
     changePausedState();
     detectInput();
-    if (keysPressed['_']){
+    if (keysPressed['_']) {
       achievement.clean();
       exit();
     }
@@ -72,6 +73,9 @@ class Pausescreen
       if (keysPressed['z'])
       {
         endscreen.loseGame();
+      }
+      if (keysPressed['x']) {
+        achievementPercentage=!achievementPercentage;
       }
     }
   }

@@ -11,20 +11,8 @@ class Achievements
     TEXT_Y    =height*0.9, 
     TEXTSIZE  =width * 0.04;
 
-  private final int //required progress to get the achievment
-    ACHIEVEMENT_TIMER_START    = 4*(int)player.SECOND, 
-    AMERICAN       =1, 
-    PING_PONG      =1, 
-    LIT            =1, 
-    I_CONCEDE      =1, 
-    ONE_PERCENT    =101, 
-    HAMMER_TIMER   =1, 
-    UNALIVED       =1, 
-    PEW_PEW_PEW    =1, 
-    A_LITTLE_BIT   =100, 
-    SOME_OF_THE    =500, 
-    ALL_THE_MURDER =1000, 
-    THE_COLLECTOR  =11;
+  private final int 
+    ACHIEVEMENT_TIMER_START    = 4*(int)player.SECOND;
 
   private String lastGottenAchievement;
   private int achievementTimer;
@@ -53,15 +41,22 @@ class Achievements
     }
   }
 
-  public void displayMenu() {
-    String t0 = "SELECT achievement.name as AName, player.name as PName,achievement.requiredProgress  FROM player_has_achievement INNER JOIN player ON player_has_achievement. player_idplayer = player.idplayer INNER JOIN achievement ON player_has_achievement.achievement_idachievement = achievement.idachievement Where player_has_achievement.progress = achievement.requiredProgress AND player.idplayer ="+idPlayer;
-    sql.query(t0);
-    while (sql.next())
-    {
-      println(sql.getString("Aname"));
-      println(sql.getString("Pname"));
+  public void displayMenu(boolean showPercentage) {
+    if (showPercentage) {
+      String t = "SELECT achievement.name as AName, COUNT(achievement.name)/(SELECT COUNT(player.idplayer)from `player`)*100  AS Percentage FROM player_has_achievement INNER JOIN achievement ON player_has_achievement.achievement_idachievement = achievement.idachievement Where player_has_achievement.progress >= achievement.requiredProgress group by achievement.name";
+      sql.query(t);
+      while (sql.next())
+      {
+        println(sql.getString("Aname")+" has been achieved by "+sql.getInt("percentage")+"% of players.");
+      }
+    } else {
+      String t = "SELECT achievement.name as AName, player.name as PName, achievement.requiredProgress as ReqProg, player_has_achievement.progress as Progress FROM player_has_achievement INNER JOIN player ON player_has_achievement.player_idplayer = player.idplayer INNER JOIN achievement ON player_has_achievement.achievement_idachievement = achievement.idachievement Where player_has_achievement.progress <> 0 AND player.idplayer ="+idPlayer;
+      sql.query(t);
+      while (sql.next())
+      {
+        println(sql.getString("Aname")+" "+sql.getString("Pname")+" "+sql.getInt("Progress")+"/"+sql.getInt("ReqProg"));
+      }
     }
-    String t1 = "";
   }
 
   private void countDown() {
@@ -109,41 +104,41 @@ class Achievements
       }
     }
   }
-   public int getProgress(int id) {
-      String t="SELECT progress FROM `player_has_achievement` WHERE achievement_idAchievement="+id+" AND player_idplayer="+idPlayer;
-      sql.query(t);
-      while (sql.next())
-      {
-        return sql.getInt("progress");
-      }
-      return 0;
+  public int getProgress(int id) {
+    String t="SELECT progress FROM `player_has_achievement` WHERE achievement_idAchievement="+id+" AND player_idplayer="+idPlayer;
+    sql.query(t);
+    while (sql.next())
+    {
+      return sql.getInt("progress");
     }
-    public int getCompletion(int id) {
-      String t="SELECT requiredprogress FROM `achievement` WHERE idAchievement="+id;
-      sql.query(t);
-      while (sql.next())
-      {
-        return sql.getInt("requiredprogress");
-      }
-      return 0;
+    return 0;
+  }
+  public int getCompletion(int id) {
+    String t="SELECT requiredprogress FROM `achievement` WHERE idAchievement="+id;
+    sql.query(t);
+    while (sql.next())
+    {
+      return sql.getInt("requiredprogress");
     }
-
-    public boolean isComplete(int id) {
-      return getProgress(id)>=getCompletion(id);
-    }
+    return 0;
   }
 
-  /*
+  public boolean isComplete(int id) {
+    return getProgress(id)>=getCompletion(id);
+  }
+}
+
+/*
  AMERICAN        =0, //achieve the maximum player size.
-   PING_PONG       =1, //defeat Ping
-   LIT             =2, //achieve a score of 420420.
-   I_CONCEDE       =3, //give up.
-   ONE_PERCENT     =4, //get over a 100 bullets
-   HAMMER_TIMER    =5, //pause the game.
-   UNALIVED        =6, //Die.
-   PEW_PEW_PEW     =7, //Shoot a bullet
-   A_LITTLE_BIT    =8, //Kill 100 enemies.
-   SOME_OF_THE     =9, //Kill 500 enemies.
-   ALL_THE_MURDER  =10, //kill 1000 enemies.
-   THE_COLLECTOR   =11; //get all achievements.
-   */
+ PING_PONG       =1, //defeat Ping
+ LIT             =2, //achieve a score of 420420.
+ I_CONCEDE       =3, //give up.
+ ONE_PERCENT     =4, //get over a 100 bullets
+ HAMMER_TIMER    =5, //pause the game.
+ UNALIVED        =6, //Die.
+ PEW_PEW_PEW     =7, //Shoot a bullet
+ A_LITTLE_BIT    =8, //Kill 100 enemies.
+ SOME_OF_THE     =9, //Kill 500 enemies.
+ ALL_THE_MURDER  =10, //kill 1000 enemies.
+ THE_COLLECTOR   =11; //get all achievements.
+ */
