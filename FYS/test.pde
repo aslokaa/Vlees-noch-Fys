@@ -74,5 +74,15 @@ class Test
       }
       keysPressed['n']=false;
     }
+    if (keysPressed['s'])
+    {
+      sql.query("SELECT Powers_name, AVG(pickups) as AvargePickups, AVG(uses) as AvargeUses, AVG(spawned) as AvargeSpawned from Game_has_Power group by Powers_name");
+      println( "Table \t Powers_name \t AvargePickups \t AvargeUses \t AvargeSpawned");
+      println("===============================================================================================");
+      while (sql.next()) {
+        println ( "\t" + sql.getString("Powers_name") + "\t\t" + sql.getFloat("AvargePickups") + "\t\t" + sql.getFloat("AvargeUses") + "\t\t" + sql.getFloat("AvargeSpawned") + "\t\t" );
+      }
+      keysPressed['s']=false;
+    }
   }
 }
