@@ -61,6 +61,7 @@ class Test
     }
     if (keysPressed['n'])
     {
+      achievement.increaseProgress(AchievementID.THE_COLLECTOR);
       if (stateBossLester)
       {
         println("n Boss Lester leaving the game");
