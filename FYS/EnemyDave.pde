@@ -20,6 +20,7 @@ class EnemyDave extends Enemy
   //powerUp info
   float spawnRate;
   float spawnChance;
+  Power powerToSpawn;
   //particle info
 
 
@@ -151,21 +152,24 @@ class EnemyDave extends Enemy
 
   @Override void spawnPowerup()
   {
+    //only one powerup at the time, no bullets if bullet count is over 10, less chance for hp if playerWidth is big, no bullets before round 4.
+    int dropType = 0;
     spawnChance = random(0, 1);
     for ( Power power : powers )
     {
-      if ( !power.powerActive )
+      if ( power.powerActive )
+      {
+        return;
+      }else
       {
         if ( spawnChance <= player.getPowerUpChance() )
         {
-
-          int dropType = round(random(PowerUpTypes.IMMUNE, PowerUpTypes.SPLIT));
-          power.drop(x, y, dropType);
-
-          return;
+          powerToSpawn = power;
+          dropType = round(random(PowerUpTypes.IMMUNE, PowerUpTypes.SPLIT));
         }
       }
     }
+     powerToSpawn.drop(x, y, dropType);
   }
   @Override void display()
   {

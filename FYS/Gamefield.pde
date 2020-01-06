@@ -79,8 +79,6 @@ class Gamefield
 
   public void update()
   {
-    // checkBossRotation();
-    //spawnWave(checkWave());
     bumpWave();
     handleWave();
   }
