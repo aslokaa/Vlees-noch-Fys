@@ -163,6 +163,7 @@ class EnemyDave extends Enemy
         {
           dropType = round(random(PowerUpTypes.IMMUNE, PowerUpTypes.SPLIT));
           power.drop(x, y, dropType);
+          return;
         }
        
       }
