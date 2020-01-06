@@ -68,16 +68,7 @@ class Enemy
     spawnPowerup();
     explode();
   }
-
-  void activate(float posX, float posY)
-  {
-    this.x = posX;
-    this.y = posY;
-    this.active = true;
-    this.speedX = 0;
-    this.speedY = 0;
-  }
-
+  
   void spawnPowerup()
   {
     println("define the spawnPowerup method before using it");
@@ -103,6 +94,17 @@ class Enemy
       }
     }
   }
+
+  void activate(float posX, float posY)
+  {
+    this.x = posX;
+    this.y = posY;
+    this.active = true;
+    this.speedX = 0;
+    this.speedY = 0;
+  }
+
+  
   
   void setMoveSpeed(float speed)
   {

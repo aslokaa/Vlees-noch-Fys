@@ -74,6 +74,7 @@ class Player extends Paddle
     ballHitHeight, 
     widthSplit0, 
     widthSplit1;
+    
   private boolean 
     inverted, //The direction the paddle moves in.
     immune, // immunes the paddle into 2.

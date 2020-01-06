@@ -87,7 +87,6 @@ class BossLester
   {
     move();
     moveHitboxes();
-    println(hitboxBottom.y);
     restrictPlayerMovement();
   }
 
@@ -97,12 +96,10 @@ class BossLester
     if ( y < FINAL_Y )
     {
       y += INTRODUCTION_Y_SPEED;
-    }
-    else
+    } else
     {
-     introducing = false; 
-     println(1);
-     //shake screen even more, start next wave.
+      introducing = false; 
+      //shake screen even more, start next wave.
     }
   }
 
@@ -121,7 +118,7 @@ class BossLester
     //set player pos to wanted pos and set playerspeeds to 0,
     //needs to happen after movement update in player.
     //gebruik player.setPosition(x,y);
-    println("pls don't move cunt");
+    player.setPosition( gamefield.GAMEFIELD_WIDTH / 2 - player.playerWidth / 2, height -100);
   }
 
   void executeBehavior()
@@ -141,10 +138,10 @@ class BossLester
       score = score + 1000;
       for ( Enemy enemy : enemies )
       {
-       if ( enemy instanceof EnemyChad ) 
-       {
-        enemy.destroy(); 
-       }
+        if ( enemy instanceof EnemyChad ) 
+        {
+          enemy.destroy();
+        }
       }
     }
   }
@@ -255,7 +252,10 @@ class BossLester
     {
       for ( Enemy enemy : enemies)
       {
-        if ( !enemy.active && enemy instanceof EnemyChad )
+        if ( enemy.active && enemy instanceof EnemyChad )
+        {
+          return;
+        } else
         {
           chadToSpawn = enemy;
         }
