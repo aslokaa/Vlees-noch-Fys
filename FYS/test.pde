@@ -76,11 +76,11 @@ class Test
     }
     if (keysPressed['s'])
     {
-      sql.query("SELECT Powers_name, AVG(pickups) as AvargePickups, AVG(uses) as AvargeUses, AVG(spawned) as AvargeSpawned from Game_has_Power group by Powers_name");
-      println( "Table \t Powers_name \t AvargePickups \t AvargeUses \t AvargeSpawned");
-      println("===============================================================================================");
+      sql.query("SELECT Powers_name, AVG(pickups) as AvaragePickups, AVG(uses) as AvarageUses, AVG(spawned) as AvarageSpawned, ROUND(AVG(pickups)/AVG(spawned)*100) as PercentagePickups from Game_has_Power group by Powers_name;");
+      println( "Table \tPowers_name \tAvaragePickups \tAvarageUses \tAvarageSpawned \tPercentagePickups");
+      println("==========================================================================================================================");
       while (sql.next()) {
-        println ( "\t" + sql.getString("Powers_name") + "\t\t" + sql.getFloat("AvargePickups") + "\t\t" + sql.getFloat("AvargeUses") + "\t\t" + sql.getFloat("AvargeSpawned") + "\t\t" );
+        println ( "\t" + sql.getString("Powers_name") + "\t|\t" + sql.getFloat("AvaragePickups") + "\t|\t" + sql.getFloat("AvarageUses") + "\t|\t" + sql.getFloat("AvarageSpawned") + "\t|\t" + sql.getInt("PercentagePickups") );
       }
       keysPressed['s']=false;
     }
