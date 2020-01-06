@@ -5,6 +5,7 @@
 //this class handles the endscreen.
 class Endscreen
 {
+  double highscore;
   public void display()
   {
     background(Colors.WHITE);
@@ -12,6 +13,7 @@ class Endscreen
     textSize(40);
     text("Press Select to restart.", width/2,height*0.3);
     text("Your score was " + score + " which you achieved in " + gamefield.getWaveCounter() + " waves.", width/2, height/2);
+    text("Your highscore is "+ highscore,width/2, height*0.40);
     menuSounds.play(Sounds.END_MUSIC);
   }
   public void update()
@@ -76,6 +78,10 @@ class Endscreen
     sql.query("INSERT INTO `Game_has_Power` (`uses`, `pickups`, `spawned`, `Game_idgame`, `Powers_name`) VALUES ("+uses[PowerUpTypes.HP_UP]+", "+pickUps[PowerUpTypes.HP_UP]+", "+spawned[PowerUpTypes.HP_UP]+", "+idCurrentGame+", 'Hp_Up')" );
     sql.query("INSERT INTO `Game_has_Power` (`uses`, `pickups`, `spawned`, `Game_idgame`, `Powers_name`) VALUES ("+uses[PowerUpTypes.AMMO_UP]+", "+pickUps[PowerUpTypes.AMMO_UP]+", "+spawned[PowerUpTypes.AMMO_UP]+", "+idCurrentGame+", 'Ammo_Up')" );
     sql.query("INSERT INTO `Game_has_Power` (`uses`, `pickups`, `spawned`, `Game_idgame`, `Powers_name`) VALUES ("+uses[PowerUpTypes.BOOM_BALL]+", "+pickUps[PowerUpTypes.BOOM_BALL]+", "+spawned[PowerUpTypes.BOOM_BALL]+", "+idCurrentGame+", 'Boom_Ball')" );
+   // sql.query("INSERT INTO `Game` (`score`) VALUES("+score+")");
+    sql.query("SELECT MAX(`score`) FROM Game WHERE player_idplayer = '" + loggedInPlayerID + "'");
+    sql.next();
+    highscore= sql.getDouble("score");
     
   }
 }
