@@ -187,7 +187,7 @@ class Startscreen
     waveFormats[3] =  new WaveFormat( 0, 0, 0, 300, 600, false, false, false, false, false );
     waveFormats[4] =  new WaveFormat( 35, 2, 0, 300, 2000, false, false, true, false, true );
     waveFormats[5] =  new WaveFormat( 40, 4, 0, 300, 2000, false, false, true, false, false );
-    waveFormats[6] =  new WaveFormat( 0, 0, 0, 300, 6000, false, true, true, false, false );
+    waveFormats[6] =  new WaveFormat( 0, 0, 0, 300, 6000, false, true, false, false, false );
     waveFormats[7] =  new WaveFormat( 0, 0, 0, 300, 6000, true, false, true, false, false );
 
 

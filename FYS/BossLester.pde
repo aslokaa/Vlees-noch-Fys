@@ -99,6 +99,7 @@ class BossLester
     } else
     {
       introducing = false; 
+      balls.get(0).activate( gamefield.GAMEFIELD_WIDTH / 2, height / 2 );
       //shake screen even more, start next wave.
     }
   }

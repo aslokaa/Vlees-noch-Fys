@@ -1,4 +1,4 @@
-/* //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+/* //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
  //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves?
  this class keeps track of where elements are spawned and the boundries they are allowed to be in.
  contains list of finals for outlining:
@@ -37,15 +37,15 @@ class Gamefield
     DAVE_SPEED_START                = 3, 
     DAVE_SPEED_MAX                  = 6, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>// //<>//
+    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>// //<>// //<>//
     WAVES_UNTILL_DAVE               = 1, 
     WAVE3_CHADS                     = 1, 
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>//
+    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>// //<>//
 
   private int  
-    daveCounter, 
+    //daveCounter, 
     chadCounter, 
     chadSpawnDelay = 180, 
     dullChadCounter = 0, 
@@ -216,9 +216,11 @@ class Gamefield
     return true;
   }
 
+
   public void setDaveMoveSpeed()
   {
-    daveSpeed += abs((DAVE_SPEED_MAX - daveSpeed) / daveCounter);
+    println(abs((DAVE_SPEED_MAX - daveSpeed) / currentWave.daveCounter));
+    daveSpeed += abs((DAVE_SPEED_MAX - daveSpeed) / currentWave.daveCounter);
     for ( Enemy enemy : enemies )
     {
       if ( enemy.active && enemy instanceof EnemyDave )
@@ -257,10 +259,10 @@ class Gamefield
         updateWaves();
         return;
       }
-      for ( int i=0; i<daveCounter; i++)
-      {
-        spawnDaves();
-      }
+     // for ( int i=0; i<daveCounter; i++)
+      //{
+       // spawnDaves();
+      //}
       for ( int i=0; i<chadCounter; i++)
       {
         spawnChads();
@@ -278,7 +280,7 @@ class Gamefield
         if (!enemy.active)
         {
           enemy.activate(gamefield.GAMEFIELD_WIDTH / 2, - 100);
-          daveCounter--;
+          //daveCounter--;
           return;
         }
       }
@@ -295,7 +297,7 @@ class Gamefield
         if (!enemy.active)
         {
           enemy.activate(ENEMY_START_X, ENEMY_START_Y);
-          daveCounter--;
+         // daveCounter--;
           return;
         }
       }
@@ -381,11 +383,11 @@ class Gamefield
   //modifies the makeup of waves.
   private void updateWaves()
   {
-    if ( daveCounter < DAVE_MAX )
-    {
-      if ( waveCounter % WAVES_UNTILL_DAVE == 0)
-        daveCounter+=1;
-    }
+   // if ( daveCounter < DAVE_MAX )
+    //{
+     // if ( waveCounter % WAVES_UNTILL_DAVE == 0)
+      //  daveCounter+=1;
+    //}
     if ( chadCounter < CHAD_MAX )
     {
       if ( waveCounter % WAVES_UNTILL_CHAD == 0 )

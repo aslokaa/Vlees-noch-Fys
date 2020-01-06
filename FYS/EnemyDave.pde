@@ -118,7 +118,7 @@ class EnemyDave extends Enemy
     totalEnemiesKilled++;
     active = false;
     screenScore.updateScore(x, y);
-    score = score + 100;
+    score += 100;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
     gamefield.setDaveMoveSpeed();
