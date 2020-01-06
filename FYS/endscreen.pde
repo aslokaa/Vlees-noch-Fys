@@ -79,7 +79,7 @@ class Endscreen
     sql.query("INSERT INTO `Game_has_Power` (`uses`, `pickups`, `spawned`, `Game_idgame`, `Powers_name`) VALUES ("+uses[PowerUpTypes.AMMO_UP]+", "+pickUps[PowerUpTypes.AMMO_UP]+", "+spawned[PowerUpTypes.AMMO_UP]+", "+idCurrentGame+", 'Ammo_Up')" );
     sql.query("INSERT INTO `Game_has_Power` (`uses`, `pickups`, `spawned`, `Game_idgame`, `Powers_name`) VALUES ("+uses[PowerUpTypes.BOOM_BALL]+", "+pickUps[PowerUpTypes.BOOM_BALL]+", "+spawned[PowerUpTypes.BOOM_BALL]+", "+idCurrentGame+", 'Boom_Ball')" );
    // sql.query("INSERT INTO `Game` (`score`) VALUES("+score+")");
-    sql.query("SELECT MAX(`score`) FROM Game WHERE player_idplayer = '" + loggedInPlayerID + "'");
+    sql.query("SELECT MAX(score) FROM Game WHERE player_idplayer = '" + loggedInPlayerID + "'");
     sql.next();
     highscore= sql.getDouble("score");
     
