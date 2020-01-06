@@ -157,19 +157,20 @@ class EnemyDave extends Enemy
     spawnChance = random(0, 1);
     for ( Power power : powers )
     {
-      if ( power.powerActive )
-      {
-        return;
-      }else
+      if ( !power.powerActive )
       {
         if ( spawnChance <= player.getPowerUpChance() )
         {
-          powerToSpawn = power;
           dropType = round(random(PowerUpTypes.IMMUNE, PowerUpTypes.SPLIT));
+          power.drop(x, y, dropType);
         }
+       
       }
+      
+        
+      
     }
-     powerToSpawn.drop(x, y, dropType);
+     
   }
   @Override void display()
   {

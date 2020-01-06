@@ -226,13 +226,6 @@ class Startscreen
   {
     if (checkInput())
     {
-      //create new game in database
-      sql.query("INSERT INTO `Game` (`player_idplayer`, `score`, `wave`, `time`, `enemieskilled`) VALUES("+loggedInPlayerID+", 0,0,0,0)");
-      sql.query("SELECT MAX(idgame) as idgame FROM Game ");
-      if ( sql.next()) {
-        idCurrentGame = sql.getInt("idgame");
-        println(idCurrentGame);
-      }    
       introMusic.stop();
       menuSounds.play(Sounds.START_GAME);
       stateStart=false;
