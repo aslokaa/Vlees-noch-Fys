@@ -84,9 +84,7 @@ class EnemyChad extends Enemy
       gamefield.scoreDamage = 200;
     //gamefield.scoreDamageColor = Colors.RED;
    // gamefield.damageTimer = 60;
-    {
-      y = gamefield.GAMEFIELD_HEIGHT;
-    }
+
   }
 
   @Override void handlePlayerCollision(Rectangles rectangles)

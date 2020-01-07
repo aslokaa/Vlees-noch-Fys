@@ -1,4 +1,4 @@
-/* //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+/* //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
  //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves?
  this class keeps track of where elements are spawned and the boundries they are allowed to be in.
  contains list of finals for outlining:
@@ -253,8 +253,8 @@ class Gamefield
     if (spawnWave && !stateBossLester && !stateBossPing)
     {
       waveCounter+=1;
-      davesAlive = daveCounter;
-      chadsAlive = chadCounter;
+      davesAlive = gamefield.currentWave.daveCounter;
+      chadsAlive = gamefield.currentWave.chadCounter;
       if (waveCounter > 1) {
         scorePlus = 300;
         scoreCounter = scoreCounter + scorePlus;
@@ -332,7 +332,7 @@ class Gamefield
         if (!enemy.active)
         {
           enemy.activate(random( 0, 600), random(-500, -100));
-          break;
+          return;
         }
       }
     }

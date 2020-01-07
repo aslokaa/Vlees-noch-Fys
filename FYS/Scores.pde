@@ -56,6 +56,8 @@ class Scores {
       achievement.increaseProgress(AchievementID.LIT);
     }
   }
+  
+  
 
   void display() {
 
@@ -68,8 +70,8 @@ class Scores {
     image(enemyDaveImg, width*0.04, height*0.10, width*0.03, width*0.03);
     image(enemyChadImg, width*0.04, height*0.15, width*0.03, width*0.03);
 
-    text("x"+-gamefield.daveCounter, width*0.07, height*0.10);
-    text("x"+-gamefield.chadCounter, width*0.07, height*0.15);
+    text("x"+gamefield.currentWave.daveCounter, width*0.07, height*0.10);
+    text("x"+gamefield.currentWave.chadCounter, width*0.07, height*0.15);
 
     text("TIME", width*0.03, height*0.98);
 
