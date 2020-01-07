@@ -1,4 +1,4 @@
-/* //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+/* //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
  //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves?
  this class keeps track of where elements are spawned and the boundries they are allowed to be in.
  contains list of finals for outlining:
@@ -24,7 +24,8 @@
 class Gamefield
 {
   public final float 
-    GAMEFIELD_WIDTH                 = width * 0.87, 
+    GAMEFIELD_WIDTH                 = width, 
+    GAMEFIELD_HEIGHT                = height * 0.90, 
     PLAYER_MIN_Y                    = height / 2, 
     ENEMY_MAX_Y                     = height, 
     ENEMY_START_Y                   = height * -0.13, 
@@ -37,26 +38,40 @@ class Gamefield
     DAVE_SPEED_START                = 3, 
     DAVE_SPEED_MAX                  = 6, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>// //<>//
+    AMOUNT_OF_BOSSES                = 2, //<>// //<>//
     WAVES_UNTILL_DAVE               = 1, 
     WAVE3_CHADS                     = 1, 
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>//
+    DAVE_MAX                        = 50; //<>// //<>//
 
   private int  
-    daveCounter, 
-    chadCounter, 
+
     chadSpawnDelay = 180, 
     dullChadCounter = 0, 
     roundStartCounter = 0, 
     roundLengthCounter, 
+    scorePlus, 
+    scoreDamage, 
+    scoreDamageColor, 
+    powerUpSize, 
+    damageTimer, 
+    colorTimer, 
+    textPowerUp, 
+    davesAlive, 
+    chadsAlive, 
+    comboScore, 
+    daveCounter, 
+    chadCounter, 
     waveBumpDelay;
 
   public int //Used for database
-    waveCounter;
-    
+    waveCounter, 
+    scoreCounter;
+
   public float 
+
+    powerTimer, 
     daveSpeed;
 
   private boolean
@@ -133,6 +148,8 @@ class Gamefield
     if ( waveCounter - 1 == 3 )
     {
       spawnDullChad();
+      chadCounter = -1;
+      daveCounter = 0;
       for ( Power power : powers )
       {
         if ( !power.powerActive )
@@ -236,8 +253,11 @@ class Gamefield
     if (spawnWave && !stateBossLester && !stateBossPing)
     {
       waveCounter+=1;
+      davesAlive = daveCounter;
+      chadsAlive = chadCounter;
       if (waveCounter > 1) {
-        score = score + 500;
+        scorePlus = 300;
+        scoreCounter = scoreCounter + scorePlus;
       }
 
       if (waveCounter==3)
@@ -277,7 +297,7 @@ class Gamefield
       {
         if (!enemy.active)
         {
-          enemy.activate(gamefield.GAMEFIELD_WIDTH / 2, - 100);
+          enemy.activate(GAMEFIELD_WIDTH / 2, - 100);
           daveCounter--;
           return;
         }
@@ -471,7 +491,7 @@ class Gamefield
     if ( currentWave.safetyFloorActive )
     {
       fill( 255 );
-      rect(0, height - 10, gamefield.GAMEFIELD_WIDTH, 10);
+      rect(0, GAMEFIELD_HEIGHT-5, GAMEFIELD_WIDTH, 10);
     }
     //tweening easing/ squishy walls ofzo.
   }

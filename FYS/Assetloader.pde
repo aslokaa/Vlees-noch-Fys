@@ -37,9 +37,18 @@ PImage
   ballBomImg1, 
   ballBomImg2, 
   ballBomImg3, 
-  earth, 
+  black, 
   arrowImg, 
-  star;
+  star, 
+
+  mercury, 
+  venus, 
+  earth, 
+  mars, 
+  jupiter, 
+  saturn, 
+  uranus, 
+  neptune;
 
 
 PImage[] explosionAnimation = new PImage[5];
@@ -88,8 +97,19 @@ public void loadAssets() {
   smokeImg2 = loadImage("./sprites/smokeParticle2.png");
   earth = loadImage("./sprites/earth.png");//http://planetpixelemporium.com/earth.html
   star = loadImage("./sprites/star.png");
+  black = loadImage("./sprites/black.png");
   powerHpUpImg = loadImage("./sprites/HpUpFysGame.png");
   arrowImg = loadImage("./sprites/arrowImg.png");
+
+  //https://clipartpng.com/?planets-png,97
+  mercury = loadImage("./sprites/mercury.png");
+  venus = loadImage("./sprites/venus.png");
+  earth = loadImage("./sprites/earth.png");
+  mars = loadImage("./sprites/mars.png");
+  jupiter = loadImage("./sprites/jupiter.png");
+  saturn = loadImage("./sprites/saturn.png");
+  uranus = loadImage("./sprites/uranus.png");
+  neptune = loadImage("./sprites/neptune.png");
 
   for ( int i = 0; i < 5; i++ )
   {

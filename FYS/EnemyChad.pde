@@ -80,12 +80,15 @@ class EnemyChad extends Enemy
     {
       x = gamefield.GAMEFIELD_WIDTH - hitboxRadius;
     }
-    if ( y > height ) 
+    if ( y > gamefield.GAMEFIELD_HEIGHT ) 
+      gamefield.scoreDamage = 200;
+    gamefield.scoreDamageColor = Colors.RED;
+    gamefield.damageTimer = 60;
     {
-      y = height;
+      y = gamefield.GAMEFIELD_HEIGHT;
     }
   }
-  
+
   @Override void handlePlayerCollision(Rectangles rectangles)
   {
     if ( !player.shake && checkPlayerCollision(rectangles.rectangle0)) 
@@ -98,7 +101,7 @@ class EnemyChad extends Enemy
     if ( !player.shake && checkPlayerCollision(rectangles.rectangle1) && rectangles.rectangle1.exists) 
     {
       player.dealDamage(damageToDeal, true);
-      
+
       speedY *= -1.3;
       speedY += ( y < rectangles.rectangle1.y ? -abs(player.velocityY) : abs(player.velocityY));
       y = rectangles.rectangle1.y + rectangles.rectangle1.rectangleHeight / 2 + ( y < rectangles.rectangle1.y + rectangles.rectangle1.rectangleHeight / 2 ? -rectangles.rectangle0.rectangleHeight : rectangles.rectangle0.rectangleHeight );
@@ -108,7 +111,7 @@ class EnemyChad extends Enemy
   void setAccelTowardsPlayer()
   {
     Rectangles hitboxesToCheck = player.getHitboxes();
-    
+
     if ( hitboxesToCheck.rectangle1.exists )
     {
       if ( dist( x, y, hitboxesToCheck.rectangle0.x, hitboxesToCheck.rectangle0.y) < dist( x, y, hitboxesToCheck.rectangle1.x, hitboxesToCheck.rectangle1.y) )
@@ -143,13 +146,15 @@ class EnemyChad extends Enemy
     explode();
     totalEnemiesKilled++;
     active = false;
-    screenScore.updateScore(x,y);
-    score = score + 100;
+    screenScore.updateScore(x, y);
+    gamefield.scorePlus = 100;
+    gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
+    gamefield.chadCounter = gamefield.chadCounter + 1;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
   }
 
- 
+
 
   @Override void spawnPowerup()
   {
@@ -169,17 +174,16 @@ class EnemyChad extends Enemy
       }
     }
   }
-  
+
   @Override void display()
   {
     if ( active )
     {
       displayThruster();
       image(enemyChadImg, x, y, hitboxDiameter, hitboxDiameter);
-      
     }
   }
-  
+
   void displayThruster()
   {
     translate(x, y);

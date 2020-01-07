@@ -117,9 +117,9 @@ class Ball {
   void bounceWall() {
     if ( safetyWallActive )
     {
-      if ( y + radius > height )
+      if ( y + radius > gamefield.GAMEFIELD_HEIGHT )
       {
-        y = height - radius;
+        y = gamefield.GAMEFIELD_HEIGHT - radius;
         speedY *= -1;
       }
     }
@@ -129,16 +129,19 @@ class Ball {
     if (x < radius) {
       speedX *= -1;
     }
-    if (y > height && !ballRespawn) { // damage to player end start respawn
+    if (y > gamefield.GAMEFIELD_HEIGHT && !ballRespawn) { // damage to player end start respawn
 
       ballRespawn = true ;
       ballRespawnTimer = timerCount;
       player.dealDamage(20, true);
       player.dealDamage(20, false);
       x= gamefield.GAMEFIELD_WIDTH/2;
-      y = height /2;
+      y = gamefield.GAMEFIELD_HEIGHT /2;
       speedX = 0;
-      score = score - 300;
+      gamefield.scoreCounter = gamefield.scoreCounter - 200;
+      gamefield.scoreCounter -= gamefield.scoreDamage;
+      //gamefield.scoreDamageColor = Colors.RED;
+      gamefield.damageTimer = 60;
     }
     if (y < radius) {
       if (!stateBossPing) {
@@ -149,7 +152,7 @@ class Ball {
         ballRespawnTimer = timerCount;
 
         x= gamefield.GAMEFIELD_WIDTH/2;
-        y = height /2;
+        y = gamefield.GAMEFIELD_HEIGHT /2;
         ping.recieveDamage(1);
       }
     }

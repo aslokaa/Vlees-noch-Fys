@@ -74,7 +74,7 @@ class Player extends Paddle
     ballHitHeight, 
     widthSplit0, 
     widthSplit1;
-    
+
   private boolean 
     inverted, //The direction the paddle moves in.
     immune, // immunes the paddle into 2.
@@ -512,9 +512,9 @@ class Player extends Paddle
       y = getMinY();
       velocityY *= BOUNCE_MODIFIER;
     }
-    if ( y + playerHeight > height  )
+    if ( y + playerHeight > gamefield.GAMEFIELD_HEIGHT  )
     {
-      y = height - playerHeight;
+      y = gamefield.GAMEFIELD_HEIGHT - playerHeight;
       velocityY *= BOUNCE_MODIFIER;
     }
     //Unsplit X
@@ -635,14 +635,22 @@ class Player extends Paddle
     if (inverted)
     {
       invertedTimer--;
+      black = invertedPowerImg;
+      gamefield.powerUpSize = 80;
+      gamefield.textPowerUp = 30;
+      gamefield.colorTimer = 255;
+      gamefield.powerTimer = invertedTimer/100;
       if ( invertedTimer <= 0 )
       {
         inverted=false;
+        gamefield.powerUpSize = 0;
+        gamefield.colorTimer = 0;
       }
     }
     if (immune)
     {
       immuneTimer--;
+      gamefield.powerTimer = immuneTimer/100;
       if ( immuneTimer <= 0 )
       {
         immune=false;
@@ -651,9 +659,16 @@ class Player extends Paddle
     if (slow)
     {
       slowTimer--;
+      black = snailPowerImg;
+      gamefield.powerUpSize = 80;
+      gamefield.textPowerUp = 30;
+      gamefield.colorTimer = 255;
+      gamefield.powerTimer = slowTimer/100;
       if ( slowTimer <= 0 )
       {
         slow=false;
+        gamefield.powerUpSize = 0;
+        gamefield.colorTimer = 0;
       }
     }
     if (shake)
@@ -669,9 +684,16 @@ class Player extends Paddle
     if (split)
     {
       splitTimer--;
+      black = splitPowerImg;
+      gamefield.powerUpSize = 80;
+      gamefield.textPowerUp = 30;
+      gamefield.colorTimer = 255;
+      gamefield.powerTimer = splitTimer/100;
       if ( splitTimer <= 0 )
       {
         endSplit();
+        gamefield.powerUpSize = 0;
+        gamefield.colorTimer = 0;
       }
     }
     if (shootTimer>0)
@@ -739,7 +761,7 @@ class Player extends Paddle
   //adds aditional ammo.
   public void gainAmmo( int newAmmo )
   {
-    achievement.increaseProgress(AchievementID.ONE_PERCENT,newAmmo);
+    achievement.increaseProgress(AchievementID.ONE_PERCENT, newAmmo);
     ammo += newAmmo;
   }
 

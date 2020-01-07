@@ -118,7 +118,11 @@ class EnemyDave extends Enemy
     totalEnemiesKilled++;
     active = false;
     screenScore.updateScore(x, y);
-    score = score + 100;
+    gamefield.scorePlus = 100;
+    gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
+    gamefield.scorePlus = 100;
+    gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
+    gamefield.daveCounter = gamefield.daveCounter + 1;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
     gamefield.setDaveMoveSpeed();
@@ -164,13 +168,8 @@ class EnemyDave extends Enemy
           dropType = round(random(PowerUpTypes.IMMUNE, PowerUpTypes.SPLIT));
           power.drop(x, y, dropType);
         }
-       
       }
-      
-        
-      
     }
-     
   }
   @Override void display()
   {

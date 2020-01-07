@@ -135,7 +135,8 @@ class BossLester
     {
       active = false;
       stateBossLester=false;
-      score = score + 1000;
+      gamefield.scorePlus = 1000;
+      gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
       for ( Enemy enemy : enemies )
       {
         if ( enemy instanceof EnemyChad ) 
