@@ -99,6 +99,7 @@ class BossLester
     } else
     {
       introducing = false; 
+      balls.get(0).activate( gamefield.GAMEFIELD_WIDTH / 2, height / 2 );
       //shake screen even more, start next wave.
     }
   }
@@ -256,11 +257,13 @@ class BossLester
         if ( enemy.active && enemy instanceof EnemyChad )
         {
           return;
-        } else
+        }else if ( enemy instanceof EnemyChad )
         {
-          chadToSpawn = enemy;
+         chadToSpawn = enemy; 
         }
-      }
+        
+        }
+      
 
       randomNumber = round(random(0, 2));
       switch ( randomNumber ) {

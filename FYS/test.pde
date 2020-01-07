@@ -74,5 +74,15 @@ class Test
       }
       keysPressed['n']=false;
     }
+    if (keysPressed['s'])
+    {
+      sql.query("SELECT Powers_name, AVG(pickups) as AvaragePickups, AVG(uses) as AvarageUses, AVG(spawned) as AvarageSpawned, ROUND(AVG(pickups)/AVG(spawned)*100) as PercentagePickups from Game_has_Power group by Powers_name;");
+      println( "Table \tPowers_name \tAvaragePickups \tAvarageUses \tAvarageSpawned \tPercentagePickups");
+      println("==========================================================================================================================");
+      while (sql.next()) {
+        println ( "\t" + sql.getString("Powers_name") + "\t|\t" + sql.getFloat("AvaragePickups") + "\t|\t" + sql.getFloat("AvarageUses") + "\t|\t" + sql.getFloat("AvarageSpawned") + "\t|\t" + sql.getInt("PercentagePickups") );
+      }
+      keysPressed['s']=false;
+    }
   }
 }

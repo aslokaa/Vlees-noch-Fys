@@ -110,19 +110,17 @@ void checkLogin(int index)
   if (index == 1 )
   {
     println("checking database shit");
-    query = "SELECT * FROM player";
+    query = "SELECT * FROM player WHERE name = '" + textboxes[0].text + "' AND password = '" + textboxes[1].text + "'";
     sql.query(query);
 
-    while (sql.next())
+    if (sql.next())
     {
-      if ( sql.getString(2).equals(textboxes[0].text) && sql.getString(3).equals(textboxes[1].text))
-      {
         println("nice");
         loginscreen.loggedIn = true;
         int id = sql.getInt(1);
         loggedInPlayerID = id;
         achievement.databaseReady=false;
-      }
+      
     }
     //find out if username exists in records, get password belonging to username,
     //check if passwords crosscheck. if it checks out, change loginscreen.loggedIn to true, 
@@ -133,25 +131,22 @@ void checkLogin(int index)
     println("checking database things");
     //check if username already exists.
 
-    query = "SELECT * FROM player";
+    query = "SELECT * FROM player WHERE name = '" + textboxes[2].text + "'";
     sql.query(query);
 
-    while (sql.next())
+    if (sql.next())
     {
-      if ( sql.getString(2).equals(textboxes[2].text))
-      {
+      
         println("user already exists");
         loginscreen.changeError("doubleUser");
         return;
-      }
     }
     //check if both passwords are the same.
     if ( textboxes[3].text.equals(textboxes[4].text))
     {
       //make new record.
       println("make new record");
-      try
-      {
+      
       query = "INSERT INTO player ( name, password) VALUES ( '" 
               + textboxes[2].text + "', '" + textboxes[3].text + "')";
       sql.query(query);
@@ -163,11 +158,7 @@ void checkLogin(int index)
       loginscreen.loggedIn = true;
       loggedInPlayerID = sql.getInt(1);
       achievement.databaseReady=false;
-      }
-      finally
-      {
-        
-      }
+    
     }
   }
 }
