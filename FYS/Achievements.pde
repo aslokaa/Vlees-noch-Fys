@@ -18,7 +18,9 @@ class Achievements
   private int 
     enemiesTriggered, 
     achievementTimer;
-  public boolean databaseReady;
+  private boolean 
+  hasUpdatedDeadEnemies,
+  databaseReady;
   private boolean[] achievementGotten;
 
   Achievements() {
@@ -38,10 +40,13 @@ class Achievements
   }
 
   public void  checkDeadEnemies() {
-    if (totalEnemiesKilled%DEAD_ENEMIES_TRIGGER==0) {
-      println(totalEnemiesKilled);
-      enemiesTriggered+=DEAD_ENEMIES_TRIGGER;
+    if (totalEnemiesKilled%DEAD_ENEMIES_TRIGGER==0&&!hasUpdatedDeadEnemies) {
+      enemiesTriggered+=totalEnemiesKilled-enemiesTriggered;
       increaseProgress(AchievementID.A_LITTLE_BIT, DEAD_ENEMIES_TRIGGER);
+      hasUpdatedDeadEnemies=true;
+    }
+    if (enemiesTriggered!=totalEnemiesKilled){
+      hasUpdatedDeadEnemies=false;
     }
   }
 
