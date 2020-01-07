@@ -45,7 +45,7 @@ class Gamefield
     DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>// //<>//
 
   private int  
-    //daveCounter, 
+    daveCounter, 
     chadCounter, 
     chadSpawnDelay = 180, 
     dullChadCounter = 0, 
@@ -280,7 +280,7 @@ class Gamefield
         if (!enemy.active)
         {
           enemy.activate(gamefield.GAMEFIELD_WIDTH / 2, - 100);
-          //daveCounter--;
+          daveCounter--;
           return;
         }
       }
@@ -297,7 +297,7 @@ class Gamefield
         if (!enemy.active)
         {
           enemy.activate(ENEMY_START_X, ENEMY_START_Y);
-         // daveCounter--;
+          daveCounter--;
           return;
         }
       }
@@ -314,6 +314,7 @@ class Gamefield
         if (!enemy.active)
         {
           enemy.activate(random( 0, 600), random(-500, -100));
+          daveCounter--;
           break;
         }
       }
