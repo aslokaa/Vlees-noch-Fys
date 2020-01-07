@@ -127,6 +127,7 @@ class EnemyDullChad extends Enemy
     active = false;
     gamefield.scorePlus = 100;
     gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
+    gamefield.chadCounter = gamefield.chadCounter + 1;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
   }

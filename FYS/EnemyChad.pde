@@ -82,8 +82,8 @@ class EnemyChad extends Enemy
     }
     if ( y > gamefield.GAMEFIELD_HEIGHT ) 
       gamefield.scoreDamage = 200;
-    gamefield.scoreDamageColor = Colors.RED;
-    gamefield.damageTimer = 60;
+    //gamefield.scoreDamageColor = Colors.RED;
+   // gamefield.damageTimer = 60;
     {
       y = gamefield.GAMEFIELD_HEIGHT;
     }
