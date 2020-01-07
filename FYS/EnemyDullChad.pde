@@ -165,11 +165,13 @@ class EnemyDullChad extends Enemy
 
   void displayThruster()
   {
+    pushMatrix();
     translate(x, y);
     angleToPlayer = atan2(pointToFollow.y - y, pointToFollow.x  - x) - PI / 2;
     rotate(angleToPlayer);
     image(enemyChadThrusterImg, 0, -hitboxRadius * 1.6, 75, 75);
     rotate(-angleToPlayer);
     translate(-x, -y);
+    popMatrix();
   }
 }
