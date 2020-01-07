@@ -113,6 +113,7 @@ class EnemyDave extends Enemy
 
   @Override void destroy()
   {
+    
     spawnPowerup();
     explode();
     totalEnemiesKilled++;
@@ -121,7 +122,8 @@ class EnemyDave extends Enemy
     score += 100;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
-    gamefield.setDaveMoveSpeed();
+   // gamefield.setDaveMoveSpeed();
+    
   }
 
   @Override void activate(float posX, float posY)
