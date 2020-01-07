@@ -147,7 +147,7 @@ class EnemyChad extends Enemy
     screenScore.updateScore(x, y);
     gamefield.scorePlus = 100;
     gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
-    gamefield.chadCounter = gamefield.chadCounter + 1;
+    gamefield.chadCounter = gamefield.chadCounter - 1;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
   }

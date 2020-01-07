@@ -10,7 +10,8 @@ class Scores {
   int min = 0;
   int totalTime = 0;
 
-  boolean dash = true;
+  boolean splitEnded, 
+    dash = true;
 
   float scoreY = height * 0.95;
   float scoreX = width * 0.06;
@@ -42,13 +43,13 @@ class Scores {
       scoreX = width * 0.06;
     }
     /*if (gamefield.scoreDamageColor == Colors.RED) {//displays damage text in red until timer ends 
-      gamefield.damageTimer--;
-    }
-
-    if (gamefield.damageTimer == 0) {//reset timer to 0 when ends and returns damage text to black 
-      gamefield.damageTimer = 0;
-      gamefield.scoreDamageColor = 0;
-    }*/
+     gamefield.damageTimer--;
+     }
+     
+     if (gamefield.damageTimer == 0) {//reset timer to 0 when ends and returns damage text to black 
+     gamefield.damageTimer = 0;
+     gamefield.scoreDamageColor = 0;
+     }*/
   }
 
   void checkScoreAchievement() {
@@ -56,8 +57,8 @@ class Scores {
       achievement.increaseProgress(AchievementID.LIT);
     }
   }
-  
-  
+
+
 
   void display() {
 
@@ -70,8 +71,8 @@ class Scores {
     image(enemyDaveImg, width*0.04, height*0.10, width*0.03, width*0.03);
     image(enemyChadImg, width*0.04, height*0.15, width*0.03, width*0.03);
 
-    text("x"+gamefield.currentWave.daveCounter, width*0.07, height*0.10);
-    text("x"+gamefield.currentWave.chadCounter, width*0.07, height*0.15);
+    text("x"+-gamefield.daveCounter, width*0.07, height*0.10);
+    text("x"+gamefield.chadCounter, width*0.07, height*0.15);
 
     text("TIME", width*0.03, height*0.98);
 
@@ -103,14 +104,13 @@ class Scores {
     textSize(textSize*1.5);
     text( player.getAmmo(), width*0.95, scoreY);
 
-   /* if (gamefield.damageTimer >= 1) {
-      fill(gamefield.scoreDamageColor);
-      gamefield.scoreDamageColor = 30;
-      textSize(gamefield.scoreDamageColor);
-      text("-" + gamefield.scoreDamage, width*0.15, height*0.94);
-    }*/
-
-
+    /* if (gamefield.damageTimer >= 1) {
+     fill(gamefield.scoreDamageColor);
+     gamefield.scoreDamageColor = 30;
+     textSize(gamefield.scoreDamageColor);
+     text("-" + gamefield.scoreDamage, width*0.15, height*0.94);
+     }*/
+    if (!splitEnded) {
       fill(gamefield.colorTimer);
       gamefield.textPowerUp = 30;
       textSize(gamefield.textPowerUp);
@@ -118,3 +118,4 @@ class Scores {
       image(black, width*0.73, scoreY, gamefield.powerUpSize, gamefield.powerUpSize);
     }
   }
+}

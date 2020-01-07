@@ -204,6 +204,7 @@ class Gamefield
       {
         spawnChads();
         currentWave.chadCounter--;
+        gamefield.chadCounter++;
       }
       if ( currentWave.spawnLester  && !lester.active)
       {
@@ -395,6 +396,7 @@ class Gamefield
   {
     for (int i =0; i<WAVE3_CHADS; i++) {
       spawnChads();
+      gamefield.chadCounter = -1;
     }
   }
 

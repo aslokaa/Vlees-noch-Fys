@@ -800,6 +800,8 @@ class Player extends Paddle
   private void endSplit()
   {
     split=false;
+    scores.splitEnded=true;
+    splitPowerImg = black;
     playerWidth=widthSplit0+widthSplit1;
     if (playerWidth>PLAYER_MAX_WIDTH) {
       playerWidth=PLAYER_MAX_WIDTH;
