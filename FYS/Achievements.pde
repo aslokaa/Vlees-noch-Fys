@@ -8,7 +8,7 @@ class Achievements
   private final float
     TEXT_X    =gamefield.GAMEFIELD_WIDTH*0.9, 
     TEXT_Y    =height*0.75, 
-    TEXTSIZE  =width * 0.03;
+    TEXTSIZE  =width * 0.01;
 
   private final int 
     DEAD_ENEMIES_TRIGGER       = 50, 
@@ -34,7 +34,7 @@ class Achievements
     if (!databaseReady) {
       givePlayerEmptyAchievements();
     }
-    if (totalEnemiesKilled>1) {
+    if (totalEnemiesKilled!=0) {
       checkDeadEnemies();
     }
   }
@@ -59,7 +59,7 @@ class Achievements
       textMode(CENTER);
       fill(Colors.RED);
       rectMode(CORNERS);
-      rect(TEXT_X*0.6, TEXT_Y*0.6, width, height);
+      rect(TEXT_X*0.9,TEXT_Y*0.9, width, height);
       fill(Colors.WHITE);
       text(lastGottenAchievement, TEXT_X, TEXT_Y);
       rectMode(CORNER);
