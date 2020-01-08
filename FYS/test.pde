@@ -80,7 +80,7 @@ class Test
       println( "Table \tPowers_name \tAvaragePickups \tAvarageUses \tAvarageSpawned \tPercentagePickups");
       println("==========================================================================================================================");
       while (sql.next()) {
-        println ( "\t" + sql.getString("Powers_name") + "\t|\t" + sql.getFloat("AvaragePickups") + "\t|\t" + sql.getFloat("AvarageUses") + "\t|\t" + sql.getFloat("AvarageSpawned") + "\t|\t" + sql.getInt("PercentagePickups") );
+        println ( "\t" + sql.getString("Powers_name") + "\t\t"+ sql.getFloat("AvaragePickups") + "\t|\t" + sql.getFloat("AvarageUses") + "\t|\t" + sql.getFloat("AvarageSpawned") + "\t|\t" + sql.getInt("PercentagePickups") );
       }
       keysPressed['s']=false;
     }

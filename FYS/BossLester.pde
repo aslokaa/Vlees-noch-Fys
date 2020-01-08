@@ -116,10 +116,7 @@ class BossLester
 
   void restrictPlayerMovement()
   {
-    //set player pos to wanted pos and set playerspeeds to 0,
-    //needs to happen after movement update in player.
-    //gebruik player.setPosition(x,y);
-    player.setPosition( gamefield.GAMEFIELD_WIDTH / 2 - player.playerWidth / 2, height -100);
+    player.setPosition( gamefield.GAMEFIELD_WIDTH / 2 - player.playerWidth / 2, height -300);
   }
 
   void executeBehavior()

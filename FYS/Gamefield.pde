@@ -152,6 +152,7 @@ class Gamefield
   {
     if ( waveCounter - 1 == 3 )
     {
+      player.setPosition( gamefield.GAMEFIELD_WIDTH / 2 - player.playerWidth / 2, height -300);
       spawnDullChad();
       chadCounter = -1;
       daveCounter = 0;

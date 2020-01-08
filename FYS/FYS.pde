@@ -80,7 +80,6 @@ void setup()
 
   //instantiateBoxes();
   //textboxes[textBoxesIndex = 1].isFocused = true;
-
 }
 
 void updateGame()
@@ -208,7 +207,6 @@ void drawGame()
   {
     endscreen.display();
   }
-  
 }
 
 // Keyboard handling...

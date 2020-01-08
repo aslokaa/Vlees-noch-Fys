@@ -258,6 +258,7 @@ class Ball {
     active = true;
     this.x = x;
     this.y = y;
+    speedY = height * 0.013;
     ballRespawn = true;
     ballRespawnTimer = timerCount;
   }

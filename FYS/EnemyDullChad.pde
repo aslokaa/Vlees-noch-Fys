@@ -127,7 +127,7 @@ class EnemyDullChad extends Enemy
     active = false;
     gamefield.scorePlus = 100;
     gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
-    gamefield.chadCounter = gamefield.chadCounter + 1;
+    gamefield.chadCounter = gamefield.chadCounter - 1;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
   }
@@ -159,16 +159,19 @@ class EnemyDullChad extends Enemy
     {
       displayThruster();
       image(enemyChadImg, x, y, hitboxDiameter, hitboxDiameter);
+      gamefield.chadCounter = + 1;
     }
   }
 
   void displayThruster()
   {
+    pushMatrix();
     translate(x, y);
     angleToPlayer = atan2(pointToFollow.y - y, pointToFollow.x  - x) - PI / 2;
     rotate(angleToPlayer);
     image(enemyChadThrusterImg, 0, -hitboxRadius * 1.6, 75, 75);
     rotate(-angleToPlayer);
     translate(-x, -y);
+    popMatrix();
   }
 }
