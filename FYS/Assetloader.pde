@@ -23,7 +23,6 @@ PImage
   enemyChadImg, 
   enemyChadThrusterImg, 
   explosionImg, 
-  earth2,
   smokeImg1, 
   smokeImg2, 
   powerHpUpImg, 
@@ -97,7 +96,6 @@ public void loadAssets() {
   bButtonImg = loadImage("./sprites/bButtonImg.png");
   smokeImg1 = loadImage("./sprites/smokeParticle1.png");
   smokeImg2 = loadImage("./sprites/smokeParticle2.png");
-  earth2 = loadImage("./sprites/earth.png");//http://planetpixelemporium.com/earth.html
   star = loadImage("./sprites/star.png");
   black = loadImage("./sprites/black.png");
   powerHpUpImg = loadImage("./sprites/HpUpFysGame.png");
