@@ -130,18 +130,21 @@ class Ball {
       speedX *= -1;
     }
     if (y > gamefield.GAMEFIELD_HEIGHT && !ballRespawn) { // damage to player end start respawn
-
-      ballRespawn = true ;
-      ballRespawnTimer = timerCount;
-      player.dealDamage(20, true);
-      player.dealDamage(20, false);
-      x= gamefield.GAMEFIELD_WIDTH/2;
-      y = gamefield.GAMEFIELD_HEIGHT /2;
-      speedX = 0;
-      gamefield.scoreCounter = gamefield.scoreCounter - 200;
-      gamefield.scoreCounter -= gamefield.scoreDamage;
-      //gamefield.scoreDamageColor = Colors.RED;
-      gamefield.damageTimer = 60;
+      if (!areThereBalls()) {
+        ballRespawn = true ;
+        ballRespawnTimer = timerCount;
+        player.dealDamage(20, true);
+        player.dealDamage(20, false);
+        x= gamefield.GAMEFIELD_WIDTH/2;
+        y = gamefield.GAMEFIELD_HEIGHT /2;
+        speedX = 0;
+        gamefield.scoreCounter = gamefield.scoreCounter - 200;
+        gamefield.scoreCounter -= gamefield.scoreDamage;
+        //gamefield.scoreDamageColor = Colors.RED;
+        gamefield.damageTimer = 60;
+      } else {
+       active=false; 
+      }
     }
     if (y < radius) {
       if (!stateBossPing) {
@@ -157,6 +160,16 @@ class Ball {
       }
     }
   }
+
+  boolean areThereBalls() {
+    for (Ball ball : balls) {
+      if (ball.active) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   //timer for respawn ball
   void countdownBallRespawn() {
 
@@ -245,6 +258,7 @@ class Ball {
     active = true;
     this.x = x;
     this.y = y;
+    speedY = height * 0.013;
     ballRespawn = true;
     ballRespawnTimer = timerCount;
   }

@@ -52,15 +52,17 @@ class Particle {
        ellipse(x, y, diameter, diameter);
        break;
        case 1:
-                   /* fill(Colors.WHITE);
+       /* fill(Colors.WHITE);
        ellipse(x, y, diameter, diameter);
        */
       if (!statePaused) { //prevents nullpointer
+        pushMatrix();
         translate( x, y );
         rotate(drawAngle);
         particleAnimation.display(0, 0);
         rotate( -drawAngle );
         translate( -x, -y );
+        popMatrix();
       }
       /*
         break;

@@ -370,18 +370,7 @@ class Player extends Paddle
   private void checkMove()
   {
     checkVelocityMax();
-    //if (slow) // slows the player
-    //{
-    //  velocityX *= SLOW_MODIFIER;
-    //  velocityY *= SLOW_MODIFIER;
-    //}
-    if (inverted) // inverts the player
-    {
-      moveInverted();
-    } else if (!inverted) // moves the player normally.
-    {
-      move();
-    }
+    move();
   }
 
   //makes sure the player doesn't go to fast
@@ -420,16 +409,7 @@ class Player extends Paddle
       xSplit+=velocityXSplit;
     }
   }
-  //modifies the X and Y posistions but inverted.
-  private void moveInverted()
-  {
-    x -= velocityX;
-    y -= velocityY;
-    if (split)
-    {
-      xSplit-=velocityXSplit;
-    }
-  }
+
 
   //Gives the player a powerup or down.
   public void modifyPower( int type )
@@ -480,8 +460,7 @@ class Player extends Paddle
       }
       break;
     case PowerUpTypes.EXTRA_BALL:
-      //balls.add(new Ball(y-500));
-      restoreHealth(40);
+      balls.add(new Ball((y-height)*0.1));
       break;
     default:
       println("modifyPower default");

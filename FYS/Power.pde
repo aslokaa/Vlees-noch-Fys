@@ -62,8 +62,7 @@ class Power {
         image(splitPowerImg, x, y, hitboxDiameter, hitboxDiameter);
         break;
       case PowerUpTypes.EXTRA_BALL :
-        fill(Colors.BLUE);
-        ellipse(x, y, hitboxDiameter, hitboxDiameter);
+        image(BallFys1Img,x,y,hitboxDiameter,hitboxDiameter);
         break;
       case PowerUpTypes.SPIKE_BALL :
         image(spikeBallImg, x, y, hitboxDiameter, hitboxDiameter);

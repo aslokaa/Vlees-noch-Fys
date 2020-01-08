@@ -8,7 +8,7 @@ class Achievements
   private final float
     TEXT_X    =gamefield.GAMEFIELD_WIDTH*0.9, 
     TEXT_Y    =height*0.75, 
-    TEXTSIZE  =width * 0.03;
+    TEXTSIZE  =width * 0.01;
 
   private final int 
     DEAD_ENEMIES_TRIGGER       = 50, 
@@ -19,8 +19,8 @@ class Achievements
     enemiesTriggered, 
     achievementTimer;
   private boolean 
-  hasUpdatedDeadEnemies,
-  databaseReady;
+    hasUpdatedDeadEnemies, 
+    databaseReady;
   private boolean[] achievementGotten;
 
   Achievements() {
@@ -34,7 +34,7 @@ class Achievements
     if (!databaseReady) {
       givePlayerEmptyAchievements();
     }
-    if (totalEnemiesKilled>1) {
+    if (totalEnemiesKilled!=0) {
       checkDeadEnemies();
     }
   }
@@ -45,7 +45,7 @@ class Achievements
       increaseProgress(AchievementID.A_LITTLE_BIT, DEAD_ENEMIES_TRIGGER);
       hasUpdatedDeadEnemies=true;
     }
-    if (enemiesTriggered!=totalEnemiesKilled){
+    if (enemiesTriggered!=totalEnemiesKilled) {
       hasUpdatedDeadEnemies=false;
     }
   }
@@ -59,7 +59,7 @@ class Achievements
       textMode(CENTER);
       fill(Colors.RED);
       rectMode(CORNERS);
-      rect(TEXT_X*0.6, TEXT_Y*0.6, width, height);
+      rect(TEXT_X*0.9, TEXT_Y*0.9, width, height);
       fill(Colors.WHITE);
       text(lastGottenAchievement, TEXT_X, TEXT_Y);
       rectMode(CORNER);
@@ -101,8 +101,16 @@ class Achievements
   }
   public void givePlayerEmptyAchievements() {
     for (int i=0; i< AchievementID.THE_COLLECTOR; i++) {
-      String t="INSERT INTO `player_has_achievement` (`player_idplayer`, `achievement_idachievement`, `progress`) VALUES ('"+loggedInPlayerID+"', '"+i+"', '0')";
-      sql.query(t);
+      String t0="SELECT count(achievement_idachievement) as has from `player_has_achievement` WHERE `player_idplayer` = "+loggedInPlayerID+" AND achievement_idachievement = "+i;
+      sql.query(t0);
+      boolean hasAchievement=false;
+      while (sql.next()) {
+        hasAchievement=(sql.getInt("has")>0);
+      }
+      if (!hasAchievement) {
+        String t1="INSERT INTO `player_has_achievement` (`player_idplayer`, `achievement_idachievement`, `progress`) VALUES ('"+loggedInPlayerID+"', '"+i+"', '0')";
+        sql.query(t1);
+      }
     }
     achievement.databaseReady=true;
   }
