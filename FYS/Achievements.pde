@@ -101,8 +101,14 @@ class Achievements
   }
   public void givePlayerEmptyAchievements() {
     for (int i=0; i< AchievementID.THE_COLLECTOR; i++) {
-      String t="INSERT INTO `player_has_achievement` (`player_idplayer`, `achievement_idachievement`, `progress`) VALUES ('"+loggedInPlayerID+"', '"+i+"', '0')";
-      sql.query(t);
+      String t0="SELECT count(achievement_idachievement) as has from `player_has_achievement` WHERE `player_idplayer` = "+loggedInPlayerID+" AND achievement_idachievement = "+i;
+      sql.query(t0);
+      boolean hasAchievement;
+      while(sql.next()){
+        hasAchievement=(sql.getInt("has")>0);
+      }
+      String t1="INSERT INTO `player_has_achievement` (`player_idplayer`, `achievement_idachievement`, `progress`) VALUES ('"+loggedInPlayerID+"', '"+i+"', '0')";
+      sql.query(t1);
     }
     achievement.databaseReady=true;
   }

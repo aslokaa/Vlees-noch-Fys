@@ -113,17 +113,19 @@ class EnemyDave extends Enemy
 
   @Override void destroy()
   {
-    
     spawnPowerup();
     explode();
     totalEnemiesKilled++;
     active = false;
     screenScore.updateScore(x, y);
-    score += 100;
+    gamefield.scorePlus = 100;
+    gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
+    gamefield.scorePlus = 100;
+    gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
+    gamefield.daveCounter = gamefield.daveCounter + 1;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
-   // gamefield.setDaveMoveSpeed();
-    
+    gamefield.setDaveMoveSpeed();
   }
 
   @Override void activate(float posX, float posY)
@@ -167,13 +169,8 @@ class EnemyDave extends Enemy
           power.drop(x, y, dropType);
           return;
         }
-       
       }
-      
-        
-      
     }
-     
   }
   @Override void display()
   {

@@ -1,5 +1,3 @@
-/* //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
- //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves?
  this class keeps track of where elements are spawned and the boundries they are allowed to be in.
  contains list of finals for outlining:
  where the player is allowed to move to,
@@ -37,27 +35,43 @@ class Gamefield
     DAVE_SPEED_START                = 2, 
     DAVE_SPEED_MAX                  = 10, 
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2, //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+    AMOUNT_OF_BOSSES                = 2,  //<>//
     WAVES_UNTILL_DAVE               = 1, 
     WAVE3_CHADS                     = 1, 
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_COUNTER_WAVE9              = 30, //<>//
-    DAVE_MAX                        = 50; //<>// //<>// //<>// //<>// //<>// //<>//
+    DAVE_COUNTER_WAVE9              = 30,  //<>//
+    DAVE_MAX                        = 50;  //<>//
 
   private int  
-    daveCounter, 
-    chadCounter, 
+
     chadSpawnDelay = 180, 
     dullChadCounter = 0, 
     roundStartCounter = 0, 
     roundLengthCounter, 
+    scorePlus, 
+    scoreDamage, 
+    scoreDamageColor, 
+    powerUpSize, 
+    damageTimer, 
+    colorTimer, 
+    textPowerUp, 
+    davesAlive, 
+    chadsAlive, 
+    comboScore, 
+    daveCounter, 
+    chadCounter, 
     waveBumpDelay;
 
   public int //Used for database
-    waveCounter;
+    waveCounter, 
+    scoreCounter;
   private final float DAVE_SPEED_INCREASE = 0.5;
+
+
   public float 
+
+    powerTimer, 
     daveSpeed;
 
   private boolean
@@ -137,6 +151,8 @@ class Gamefield
     if ( waveCounter - 1 == 3 )
     {
       spawnDullChad();
+      chadCounter = -1;
+      daveCounter = 0;
       for ( Power power : powers )
       {
         if ( !power.powerActive )
@@ -191,6 +207,7 @@ class Gamefield
       {
         spawnChads();
         currentWave.chadCounter--;
+        gamefield.chadCounter++;
       }
       if ( currentWave.spawnLester  && !lester.active)
       {
@@ -220,11 +237,9 @@ class Gamefield
     return true;
   }
 
-
   public void setDaveMoveSpeed()
   {
-    println(abs((DAVE_SPEED_MAX - daveSpeed) / currentWave.daveCounter));
-    daveSpeed += abs((DAVE_SPEED_MAX - daveSpeed) / currentWave.daveCounter);
+    daveSpeed += abs((DAVE_SPEED_MAX - daveSpeed) / daveCounter);
     for ( Enemy enemy : enemies )
     {
       if ( enemy.active && enemy instanceof EnemyDave )
@@ -234,27 +249,31 @@ class Gamefield
     }
   }
 
-private void increaseDaveSpeed(){
+  private void increaseDaveSpeed() {
     if (daveSpeed< DAVE_SPEED_MAX) {
       daveSpeed +=DAVE_SPEED_INCREASE;
-    } else{
-     daveSpeed=DAVE_SPEED_MAX;
+    } else {
+      daveSpeed=DAVE_SPEED_MAX;
     }
-}
+  }
 
   //activates the spawn functions.
   private void spawnWave(boolean spawnWave)
   {
-    if (waveCounter==9){
-     daveCounter=DAVE_COUNTER_WAVE9;
-     chadCounter=5;
+    if (waveCounter==9) {
+      daveCounter=DAVE_COUNTER_WAVE9;
+      chadCounter=5;
     }
     if (spawnWave && !stateBossLester && !stateBossPing)
     {
       waveCounter++;
       increaseDaveSpeed();
+      waveCounter+=1;
+      davesAlive = gamefield.currentWave.daveCounter;
+      chadsAlive = gamefield.currentWave.chadCounter;
       if (waveCounter > 1) {
-        score = score + 500;
+        scorePlus = 300;
+        scoreCounter = scoreCounter + scorePlus;
       }
       if (spawnPing)
       {
@@ -288,7 +307,7 @@ private void increaseDaveSpeed(){
       {
         if (!enemy.active)
         {
-          enemy.activate(gamefield.GAMEFIELD_WIDTH / 2, - 100);
+          enemy.activate(GAMEFIELD_WIDTH / 2, - 100);
           daveCounter--;
           return;
         }
@@ -311,7 +330,7 @@ private void increaseDaveSpeed(){
       }
     }
   }
-  
+
   //spawns daves
   private void spawnDaves(int index)
   {
@@ -338,7 +357,7 @@ private void increaseDaveSpeed(){
         if (!enemy.active)
         {
           enemy.activate(random( 0, 600), random(-500, -100));
-          break;
+          return;
         }
       }
     }
@@ -401,16 +420,18 @@ private void increaseDaveSpeed(){
   {
     for (int i =0; i<WAVE3_CHADS; i++) {
       spawnChads();
+      gamefield.chadCounter = -1;
     }
   }
 
   //modifies the makeup of waves.
   private void updateWaves()
   {
-     if ( daveCounter < DAVE_MAX )
+      if ( daveCounter < DAVE_MAX )
     {
-     if ( waveCounter % WAVES_UNTILL_DAVE == 0)
-      daveCounter+=1;
+      if ( waveCounter % WAVES_UNTILL_DAVE == 0) {
+        daveCounter+=1;
+      }
     }
     if ( chadCounter < CHAD_MAX )
     {
@@ -421,7 +442,7 @@ private void increaseDaveSpeed(){
     }
     if ( waveCounter % WAVES_UNTILL_BOSS == 0 )
     {
-        //chooseBoss();
+      //chooseBoss();
     }
   }
 
@@ -493,7 +514,7 @@ private void increaseDaveSpeed(){
     if ( currentWave.safetyFloorActive )
     {
       fill( 255 );
-      rect(0, height - 10, gamefield.GAMEFIELD_WIDTH, 10);
+      rect(0, GAMEFIELD_HEIGHT-5, GAMEFIELD_WIDTH, 10);
     }
     //tweening easing/ squishy walls ofzo.
   }

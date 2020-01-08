@@ -32,7 +32,7 @@ class BossPing extends Paddle
     VELOCITY_Y_MAX                = height * 0.012, 
     MAX_Y                         = height *0.3, 
     BALL_IS_CLOSE                 = START_WIDTH*0.3, 
-     TEXT_SIZE                     = height*0.1, 
+    TEXT_SIZE                     = height*0.1, 
     BACKGROUND_LINE_SIZE          = gamefield.GAMEFIELD_WIDTH*0.01, 
     HEALTH_TEXT_X                 = gamefield.GAMEFIELD_WIDTH*0.94, 
     HEALTH_TEXT_Y                 = height * 0.4, 
@@ -241,7 +241,8 @@ class BossPing extends Paddle
   public void killPing()
   {
     stateBossPing=false;
-    score = score + 1000;
+    gamefield.scorePlus = 1000;
+    gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
     achievement.increaseProgress(AchievementID.PING_PONG);
   }
 
@@ -269,10 +270,10 @@ class BossPing extends Paddle
     fill(Colors.DARK_GREEN);
     rect(x, y, paddleWidth, paddleHeight);
   }
-  
+
   @Override
-  //counts insert
-  void countdown() {
+    //counts insert
+    void countdown() {
     if (damageTimer>=0) {
       damageTimer--;
     }
@@ -289,7 +290,7 @@ class BossPing extends Paddle
   public float getHeight() {
     return paddleHeight;
   }
-  public boolean checkCollision(float xT,float yT,float diameterT){
-   return y>yT+diameterT && dist(xT, yT, x, y) < (paddleWidth +(diameterT/2)) ;
+  public boolean checkCollision(float xT, float yT, float diameterT) {
+    return y>yT+diameterT && dist(xT, yT, x, y) < (paddleWidth +(diameterT/2)) ;
   }
 }

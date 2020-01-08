@@ -89,13 +89,13 @@ class EnemyDullChad extends Enemy
       y = height;
     }
   }
-  
- 
-  
+
+
+
 
   void setAccelTowardsPlayer()
   {
-   checkPointToFollow();
+    checkPointToFollow();
 
     accelX = dist( x, y, pointToFollow.x, y ) / 
       (dist( x, y, pointToFollow.x, y ) + dist( x, y, x, pointToFollow.y )) ;
@@ -110,14 +110,14 @@ class EnemyDullChad extends Enemy
       accelY *= -1;
     }
   }
-  
+
   void checkPointToFollow()
   {
-   if ( frameCount % switchFollow == 0 )
-   {
-     pointToFollow.x = random(0, gamefield.GAMEFIELD_WIDTH);
-     pointToFollow.y = random(0, gamefield.PLAYER_MIN_Y / 2);
-   }
+    if ( frameCount % switchFollow == 0 )
+    {
+      pointToFollow.x = random(0, gamefield.GAMEFIELD_WIDTH);
+      pointToFollow.y = random(0, gamefield.PLAYER_MIN_Y / 2);
+    }
   }
 
 
@@ -125,12 +125,14 @@ class EnemyDullChad extends Enemy
   {
     explode();
     active = false;
-    score = score + 100;
+    gamefield.scorePlus = 100;
+    gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
+    gamefield.chadCounter = gamefield.chadCounter + 1;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
   }
 
- 
+
 
   @Override void spawnPowerup()
   {
@@ -150,17 +152,16 @@ class EnemyDullChad extends Enemy
       }
     }
   }
-  
+
   @Override void display()
   {
     if ( active )
     {
       displayThruster();
       image(enemyChadImg, x, y, hitboxDiameter, hitboxDiameter);
-      
     }
   }
-  
+
   void displayThruster()
   {
     translate(x, y);
