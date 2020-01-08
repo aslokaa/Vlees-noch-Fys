@@ -1,3 +1,4 @@
+/* //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves? //<>//
  this class keeps track of where elements are spawned and the boundries they are allowed to be in.
  contains list of finals for outlining:
  where the player is allowed to move to,
@@ -22,7 +23,8 @@
 class Gamefield
 {
   public final float 
-    GAMEFIELD_WIDTH                 = width * 0.87, 
+    GAMEFIELD_WIDTH                 = width, 
+    GAMEFIELD_HEIGHT                = height * 0.90, 
     PLAYER_MIN_Y                    = height / 2, 
     ENEMY_MAX_Y                     = height, 
     ENEMY_START_Y                   = height * -0.13, 
