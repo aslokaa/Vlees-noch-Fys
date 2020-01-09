@@ -9,6 +9,7 @@ class Scores {
   int time = 0;
   int min = 0;
   int totalTime = 0;
+  int damageTimer = 1000;
 
   boolean splitEnded, 
     dash = true;
@@ -42,14 +43,6 @@ class Scores {
     if (gamefield.scoreCounter > 0) {//re-positions the text from score to allign with the text from time below when score digits change
       scoreX = width * 0.06;
     }
-    /*if (gamefield.scoreDamageColor == Colors.RED) {//displays damage text in red until timer ends 
-     gamefield.damageTimer--;
-     }
-     
-     if (gamefield.damageTimer == 0) {//reset timer to 0 when ends and returns damage text to black 
-     gamefield.damageTimer = 0;
-     gamefield.scoreDamageColor = 0;
-     }*/
   }
 
   void checkScoreAchievement() {
@@ -98,18 +91,17 @@ class Scores {
       line(i, height*0.90, i+10, height*0.90);
       dash = !dash;
     }         
-
     noStroke();
     fill(Colors.RED);
     textSize(textSize*1.5);
     text( player.getAmmo(), width*0.95, scoreY);
 
-    /* if (gamefield.damageTimer >= 1) {
-     fill(gamefield.scoreDamageColor);
-     gamefield.scoreDamageColor = 30;
-     textSize(gamefield.scoreDamageColor);
-     text("-" + gamefield.scoreDamage, width*0.15, height*0.94);
-     }*/
+if (millis() < gamefield.damageTime + damageTimer){
+  textSize(textSize);
+  gamefield.scoreDamage = 200;
+  text("-" + gamefield.scoreDamage, width*0.15, height*0.94);
+}
+   
     if (!splitEnded) {
       fill(gamefield.colorTimer);
       gamefield.textPowerUp = 30;

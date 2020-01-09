@@ -20,8 +20,8 @@ class Space {
   Space () { 
 
     for (int i = 0; i < Arrays.STAR_COUNT; i++) {
-      x[i] = random(0, gamefield.GAMEFIELD_WIDTH);
-      y[i] = random(0, gamefield.GAMEFIELD_HEIGHT);
+      x[i] = random(gamefield.GAMEFIELD_WIDTH);
+      y[i] = random(gamefield.GAMEFIELD_HEIGHT);
       speed[i] = random(0.5, 0.75);
       diameter[i] = random(12, 10);
     }
@@ -38,7 +38,7 @@ class Space {
       //planetY = planetY + planetSpeed;
     }
     if (planetY - planetD > gamefield.GAMEFIELD_HEIGHT) {
-      planetY = 0 - planetD;
+      planetY =  -planetD;
       planetX = random(width*0.30, width*0.70);
       planetNum++;
     }

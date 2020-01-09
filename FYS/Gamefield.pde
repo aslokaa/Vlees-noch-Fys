@@ -74,6 +74,7 @@ class Gamefield
   public float 
 
     powerTimer, 
+    damageTime,
     daveSpeed;
 
   private boolean
