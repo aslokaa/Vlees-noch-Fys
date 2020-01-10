@@ -1,4 +1,4 @@
-/* //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves? //<>//
+  /* //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves? //<>//
  this class keeps track of where elements are spawned and the boundries they are allowed to be in.
  contains list of finals for outlining:
  where the player is allowed to move to,

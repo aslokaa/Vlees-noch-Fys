@@ -3,11 +3,12 @@
  bal kan bewegen en interacteren met enemies en de player.
  
  */
+static int ballID;
 
 class Ball {
   float x, y, speedX, speedY;
   float radius, diameter;
-  int colorBall;
+  int colorBall ,id;
   boolean active;
   boolean ballRespawn;
   boolean isChargedBom;
@@ -24,7 +25,7 @@ class Ball {
   Ball() {
     x= gamefield.GAMEFIELD_WIDTH/2;
     y = height/2;
-    speedX = 0;
+    id=ballID++;
     speedY = height * 0.013;
     radius = 25;
     colorBall = Colors.BLUE;
@@ -37,7 +38,7 @@ class Ball {
     isChargedBom = false;
     bomRadius = 600;
     setAnimation();
-
+    
     history = new ArrayList<PVector>();
   }
 
@@ -45,6 +46,7 @@ class Ball {
   {
     this();
     this.x=x;
+    this.active=true;
   }
 
   void setAnimation()
@@ -65,7 +67,7 @@ class Ball {
   void updateBall() {
     if ( active )
     {
-
+println(id);
       if (!ballRespawn) {
         moveBall();
         interactPlayer();
@@ -130,7 +132,7 @@ class Ball {
       speedX *= -1;
     }
     if (y > gamefield.GAMEFIELD_HEIGHT && !ballRespawn) { // damage to player end start respawn
-      if (!areThereBalls()) {
+      if (!areThereOtherBalls()) {
         ballRespawn = true ;
         ballRespawnTimer = timerCount;
         player.dealDamage(20, true);
@@ -161,10 +163,14 @@ class Ball {
     }
   }
 
-  boolean areThereBalls() {
+  boolean areThereOtherBalls() {
+    int activeBalls=0;
     for (Ball ball : balls) {
       if (ball.active) {
-        return true;
+        activeBalls++;
+        if (activeBalls>=2){
+          return true;
+        }
       }
     }
     return false;

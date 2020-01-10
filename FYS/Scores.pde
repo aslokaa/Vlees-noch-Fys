@@ -118,4 +118,17 @@ class Scores {
       image(black, width*0.73, scoreY, gamefield.powerUpSize, gamefield.powerUpSize);
     }
   }
+
+  public void splitIsActive(float splitTimer) {
+    black = splitPowerImg;
+    gamefield.powerUpSize = 80;
+    gamefield.textPowerUp = 30;
+    gamefield.colorTimer = 255;
+    gamefield.powerTimer = splitTimer/100;
+  }
+  public void splitIsNotActive() {
+    gamefield.powerUpSize = 0;
+    gamefield.colorTimer = 0;
+    splitPowerImg = black;
+  }
 }

@@ -22,11 +22,10 @@ ArrayList<Ball> balls                  = new ArrayList<Ball>();
 WaveFormat[] waveFormats               = new WaveFormat[Arrays.WAVE_FORMATS];
 Button[] buttons                       = new Button[2];
 
-
 int idPlayer, idCurrentGame;
 int secondsPerMinute = 60;
 int totalEnemiesKilled = 0;
-int amountPowers = 7;
+int amountPowers = 8;
 int[] pickUps = new int[amountPowers];
 int[] uses = new int[amountPowers];
 int[] spawned = new int[amountPowers];

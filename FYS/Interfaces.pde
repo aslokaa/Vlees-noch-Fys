@@ -56,7 +56,8 @@ interface Arrays
 {
   public final int
     STAR_COUNT    = 300, 
-    BULLET_COUNT  = 150, 
+    BULLET_COUNT  = 150,
+    BALL_COUNT    = 4,
     OPTION_COUNT  = 3, 
     DAVE_COUNT    = 10, 
     POWER_COUNT   = 5, 

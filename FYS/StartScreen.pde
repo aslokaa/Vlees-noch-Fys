@@ -115,7 +115,9 @@ class Startscreen
   }
 
   private void loadBalls() {
-    balls.add(new Ball());
+    for (int i=0; i<Arrays.BALL_COUNT; i++) {
+      balls.add(new Ball());
+    }
     ballsInitialized=true;
   }
 

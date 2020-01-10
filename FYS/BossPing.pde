@@ -49,8 +49,8 @@ class BossPing extends Paddle
     accelerationY       = START_ACCELERATION_Y;
     decelerateX         = START_DECELERATE_X;
     decelerateY         = START_DECELERATE_Y;
-    paddleWidth           = START_WIDTH;
-    paddleHeight          = START_HEIGHT;
+    paddleWidth         = START_WIDTH;
+    paddleHeight        = START_HEIGHT;
     health              = START_HEALTH;
   }
 

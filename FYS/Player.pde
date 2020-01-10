@@ -76,22 +76,16 @@ class Player extends Paddle
     widthSplit1;
 
   private boolean 
-    inverted, //The direction the paddle moves in.
     immune, // immunes the paddle into 2.
-    slow, //slows the paddle
     shake, //shakes the paddle
     hasImmune, //if the player is holding an immunity buff
-    ballHit, //enlarges the paddle after hitting the ball.
-
     split;       //splits the paddle
 
 
   private boolean[]
     moved;
   private float //Duration of effects.
-    invertedTimer, 
     immuneTimer, 
-    slowTimer, 
     shakeTimer, 
     splitTimer, 
     ballHitTimer, 
@@ -416,21 +410,9 @@ class Player extends Paddle
   {
     switch(type)
     {
-    case PowerUpTypes.INVERTED:
-      //playerSounds.play(Sounds.INVERTED);
-      //inverted = true;
-      //invertedTimer = INVERTED_STARTING_TIMER;
-      modifyPower(PowerUpTypes.HP_UP);
-      break;
     case PowerUpTypes.IMMUNE:
       playerSounds.play(Sounds.IMMUNE);
       hasImmune = true;
-      break;
-    case PowerUpTypes.SLOW:
-      //playerSounds.play(Sounds.SLOW);
-      //slow = true;
-      //slowTimer = SLOW_STARTING_TIMER;
-      modifyPower(PowerUpTypes.HP_UP);
       break;
     case PowerUpTypes.SPLIT:
       playerSounds.play(Sounds.SPLIT);
@@ -460,7 +442,11 @@ class Player extends Paddle
       }
       break;
     case PowerUpTypes.EXTRA_BALL:
-      balls.add(new Ball((y-height)*0.1));
+      for (Ball ball : balls){
+        if (!ball.active){
+         ball.activate(x,gamefield.GAMEFIELD_HEIGHT/2); 
+        }
+      }
       break;
     default:
       println("modifyPower default");
@@ -538,7 +524,7 @@ class Player extends Paddle
   //decelerates the player
   private void decelerate()
   {
-    if (!(keysPressed[LEFT] || keysPressed[RIGHT]))
+    if (!(keyCodesPressed[LEFT] || keyCodesPressed[RIGHT]))
     {
       velocityX *= decelerateX;
       if (split)
@@ -546,7 +532,7 @@ class Player extends Paddle
         velocityXSplit *= decelerateX;
       }
     }
-    if (!(keysPressed[UP] || keysPressed[DOWN]))
+    if (!(keyCodesPressed[UP] || keyCodesPressed[DOWN]))
     {
       velocityY *= decelerateY;
     }
@@ -611,21 +597,6 @@ class Player extends Paddle
         ballHitState=BallHit.SHRINK;
       }
     }
-    if (inverted)
-    {
-      invertedTimer--;
-      black = invertedPowerImg;
-      gamefield.powerUpSize = 80;
-      gamefield.textPowerUp = 30;
-      gamefield.colorTimer = 255;
-      gamefield.powerTimer = invertedTimer/100;
-      if ( invertedTimer <= 0 )
-      {
-        inverted=false;
-        gamefield.powerUpSize = 0;
-        gamefield.colorTimer = 0;
-      }
-    }
     if (immune)
     {
       immuneTimer--;
@@ -635,26 +606,9 @@ class Player extends Paddle
         immune=false;
       }
     }
-    if (slow)
-    {
-      slowTimer--;
-      black = snailPowerImg;
-      gamefield.powerUpSize = 80;
-      gamefield.textPowerUp = 30;
-      gamefield.colorTimer = 255;
-      gamefield.powerTimer = slowTimer/100;
-      if ( slowTimer <= 0 )
-      {
-        slow=false;
-        gamefield.powerUpSize = 0;
-        gamefield.colorTimer = 0;
-      }
-    }
     if (shake)
     {
       shakeTimer--;
-      slowTimer=0;
-      invertedTimer=0;
       if ( shakeTimer <=0 )
       {
         shake=false;
@@ -663,21 +617,15 @@ class Player extends Paddle
     if (split)
     {
       splitTimer--;
-      black = splitPowerImg;
-      gamefield.powerUpSize = 80;
-      gamefield.textPowerUp = 30;
-      gamefield.colorTimer = 255;
-      gamefield.powerTimer = splitTimer/100;
+      scores.splitIsActive(splitTimer);
       if ( splitTimer <= 0 )
       {
         endSplit();
-        gamefield.powerUpSize = 0;
-        gamefield.colorTimer = 0;
       }
-    }
-    if (shootTimer>0)
-    {
-      shootTimer--;
+      if (shootTimer>0)
+      {
+        shootTimer--;
+      }
     }
   }
 
@@ -696,10 +644,6 @@ class Player extends Paddle
     if (shake)
     {
       return playerDmgImg;
-    }
-    if ( inverted )
-    {
-      return playerReverseImg;
     } else if (immune)
     {
       if ( immuneTimer < SECOND * 2 )
@@ -707,9 +651,6 @@ class Player extends Paddle
         return blinkPower(playerShieldImg);
       }
       return playerShieldImg;
-    } else if (slow)
-    {
-      return playerSlowImg;
     } else
     {
       return playerForcefieldImg;
@@ -780,7 +721,7 @@ class Player extends Paddle
   {
     split=false;
     scores.splitEnded=true;
-    splitPowerImg = black;
+    scores.splitIsNotActive();
     playerWidth=widthSplit0+widthSplit1;
     if (playerWidth>PLAYER_MAX_WIDTH) {
       playerWidth=PLAYER_MAX_WIDTH;

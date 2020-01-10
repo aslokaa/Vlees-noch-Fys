@@ -14,8 +14,9 @@ class Test
     }
     if (keysPressed['l'])
     {
-      println("l inverted");
-      //powers[1].drop(width/2,0,PowerUpTypes.SPIKE_BALL);
+      println("l ball");
+      player.modifyPower(PowerUpTypes.EXTRA_BALL);
+      keysPressed['l']=false;
     }
     if (keysPressed['o'])
     {
@@ -26,7 +27,7 @@ class Test
     if (keysPressed['i'])
     {
       println("i slow");
-      player.modifyPower(PowerUpTypes.SLOW);
+      //player.modifyPower(PowerUpTypes.SLOW);
     }
     if (keysPressed['u'])
     {
