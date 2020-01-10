@@ -3,13 +3,19 @@
 class Space {
 
 
-
+  //stars
   float[] x = new float[Arrays.STAR_COUNT]; 
   float[] y = new float[Arrays.STAR_COUNT];
   float[] speed = new float[Arrays.STAR_COUNT]; 
   float[] diameter = new float[Arrays.STAR_COUNT]; 
 
-  float planetX = width/2;
+  float randomSpeed = random(0.5, 0.75);
+  float randomDiameter = random(12, 10);
+
+  //planets
+  float minPlanetX = width*0.30;
+  float maxPlanetX = width*0.70;
+  float planetX = random(minPlanetX, maxPlanetX);
   int planetD = 250;
   int planetY = 0;
   int planetSpeed = 1;
@@ -22,8 +28,8 @@ class Space {
     for (int i = 0; i < Arrays.STAR_COUNT; i++) {
       x[i] = random(gamefield.GAMEFIELD_WIDTH);
       y[i] = random(gamefield.GAMEFIELD_HEIGHT);
-      speed[i] = random(0.5, 0.75);
-      diameter[i] = random(12, 10);
+      speed[i] = randomSpeed;
+      diameter[i] = randomDiameter;
     }
   }
 
@@ -35,11 +41,11 @@ class Space {
       if (y[i]-diameter[i] > gamefield.GAMEFIELD_HEIGHT) {
         y[i] = 0;
       }
-      //planetY = planetY + planetSpeed;
     }
+
     if (planetY - planetD > gamefield.GAMEFIELD_HEIGHT) {
       planetY =  -planetD;
-      planetX = random(width*0.30, width*0.70);
+      planetX = random(minPlanetX, maxPlanetX);;
       planetNum++;
     }
   }

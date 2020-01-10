@@ -140,8 +140,6 @@ class Ball {
         speedX = 0;
         gamefield.scoreCounter = gamefield.scoreCounter - 200;
         gamefield.scoreCounter -= gamefield.scoreDamage;
-        //gamefield.scoreDamageColor = Colors.RED;
-        gamefield.damageTimer = 60;
       } else {
        active=false; 
       }
