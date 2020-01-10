@@ -41,20 +41,21 @@ PImage
   arrowImg, 
   star, 
 
-  mercury, 
-  venus, 
-  earth, 
-  mars, 
-  jupiter, 
-  saturn, 
-  uranus, 
-  neptune;
-
+  p0, 
+  p1, 
+  p2, 
+  p3, 
+  p4, 
+  p5, 
+  p6, 
+  p7;
 
 PImage[] explosionAnimation = new PImage[5];
 PImage[] ballAnimation = new PImage[3];
 PImage[] enemyBulletAnimation = new PImage[3];
 PImage[] ballBombAnimation = new PImage[3];
+PImage[] planets = new PImage[8];
+
 String  fileName;
 String connServer = "oege.ie.hva.nl";
 String connDB = "zroete";
@@ -95,21 +96,28 @@ public void loadAssets() {
   bButtonImg = loadImage("./sprites/bButtonImg.png");
   smokeImg1 = loadImage("./sprites/smokeParticle1.png");
   smokeImg2 = loadImage("./sprites/smokeParticle2.png");
-  earth = loadImage("./sprites/earth.png");//http://planetpixelemporium.com/earth.html
   star = loadImage("./sprites/star.png");
   black = loadImage("./sprites/black.png");
   powerHpUpImg = loadImage("./sprites/HpUpFysGame.png");
   arrowImg = loadImage("./sprites/arrowImg.png");
 
   //https://clipartpng.com/?planets-png,97
-  mercury = loadImage("./sprites/mercury.png");
-  venus = loadImage("./sprites/venus.png");
-  earth = loadImage("./sprites/earth.png");
-  mars = loadImage("./sprites/mars.png");
-  jupiter = loadImage("./sprites/jupiter.png");
-  saturn = loadImage("./sprites/saturn.png");
-  uranus = loadImage("./sprites/uranus.png");
-  neptune = loadImage("./sprites/neptune.png");
+  p0 = loadImage("./sprites/p0.png");
+  p1 = loadImage("./sprites/p1.png");
+  p2 = loadImage("./sprites/p2.png");
+  p3 = loadImage("./sprites/p3.png");
+  p4 = loadImage("./sprites/p4.png");
+  p5 = loadImage("./sprites/p5.png");
+  p6 = loadImage("./sprites/p6.png");
+  p7 = loadImage("./sprites/p7.png");
+  planets[0] = p0;
+  planets[1] = p1;
+  planets[2] = p2;
+  planets[3] = p3;
+  planets[4] = p4;
+  planets[5] = p5;
+  planets[6] = p6;
+  planets[7] = p7;
 
   for ( int i = 0; i < 5; i++ )
   {
@@ -133,5 +141,5 @@ public void loadAssets() {
   {
     fileName = "./sprites/BallBomb" + i + ".png";
     ballBombAnimation[i] = loadImage(fileName);
-  }
+  }   
 }

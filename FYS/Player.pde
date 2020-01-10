@@ -548,6 +548,7 @@ class Player extends Paddle
     playerSounds.play(Sounds.RECIEVE_DAMAGE);
     shake = true;
     shakeTimer = SHAKE_STARTING_TIMER;
+    gamefield.damageTime = millis();
     if (split)//<- als ie shaked moet ie geen dmg nemen, handig voor balancing en betere feel.
     {
       endSplit();

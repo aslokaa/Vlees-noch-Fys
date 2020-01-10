@@ -81,7 +81,7 @@ class Power {
   }
 
   void checkOffscreen() {  //Checks if the power fell off the screen and deactivates it if it is
-    if ( y - hitboxRadius > height) {
+    if ( y - hitboxRadius > gamefield.GAMEFIELD_HEIGHT) {
       powerActive = false;
     }
   }

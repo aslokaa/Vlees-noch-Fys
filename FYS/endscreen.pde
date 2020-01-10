@@ -87,12 +87,16 @@ class Endscreen
     highscoreName= sql.getString("name");
 
     int counter = 0;
+    float textX = width/2;
+    float textY = height*0.60;
+    float textSpacing = 25;
+    
     sql.query("SELECT P.name as name, MAX(G.score) as score FROM Game as G INNER JOIN player as P WHERE player_idplayer = P.idplayer GROUP by P.idplayer ORDER BY score DESC LIMIT 10;");
     while (sql.next()) {
       fill(0);
       textSize(40);
-      text((int)sql.getDouble("score"), 600, 100 + 25 * counter);
-      text(sql.getString("name"), 600, 100 + 25 * counter);
+      text((int)sql.getDouble("score"), textX, textY + textSpacing * counter);
+      text(sql.getString("name"), textX, textY + textSpacing * counter);
       counter++;
       println(sql.getString("name")+"\t"+sql.getDouble("score"));
     }

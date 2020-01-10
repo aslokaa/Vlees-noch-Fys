@@ -53,13 +53,9 @@ class Gamefield
     roundLengthCounter, 
     scorePlus, 
     scoreDamage, 
-    scoreDamageColor, 
-    powerUpSize, 
-    damageTimer, 
+    powerUpSize,  
     colorTimer, 
     textPowerUp, 
-    davesAlive, 
-    chadsAlive, 
     comboScore, 
     daveCounter, 
     chadCounter, 
@@ -74,6 +70,7 @@ class Gamefield
   public float 
 
     powerTimer, 
+    damageTime,
     daveSpeed;
 
   private boolean
@@ -272,8 +269,8 @@ class Gamefield
       waveCounter++;
       increaseDaveSpeed();
       waveCounter+=1;
-      davesAlive = gamefield.currentWave.daveCounter;
-      chadsAlive = gamefield.currentWave.chadCounter;
+     // davesAlive = gamefield.currentWave.daveCounter;
+      //chadsAlive = gamefield.currentWave.chadCounter;
       if (waveCounter > 1) {
         scorePlus = 300;
         scoreCounter = scoreCounter + scorePlus;
