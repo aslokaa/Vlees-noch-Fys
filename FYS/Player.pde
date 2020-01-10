@@ -438,13 +438,17 @@ class Player extends Paddle
     case PowerUpTypes.BOOM_BALL:
       for (Ball ball : balls) 
       {
-        ball.isChargedBom=true;
+        if (ball.active) {
+          ball.isChargedBom=true;
+          return;
+        }
       }
       break;
     case PowerUpTypes.EXTRA_BALL:
-      for (Ball ball : balls){
-        if (!ball.active){
-         ball.activate(x,gamefield.GAMEFIELD_HEIGHT/2); 
+      for (Ball ball : balls) {
+        if (!ball.active) {
+          ball.activate(x, gamefield.GAMEFIELD_HEIGHT/2);
+          return;
         }
       }
       break;
@@ -623,12 +627,13 @@ class Player extends Paddle
       {
         endSplit();
       }
-      if (shootTimer>0)
-      {
-        shootTimer--;
-      }
+    }
+    if (shootTimer>0)
+    {
+      shootTimer--;
     }
   }
+
 
   PImage blinkPower(PImage powerImg)
   {
@@ -660,6 +665,7 @@ class Player extends Paddle
   //checks if you can shoot a bullet.
   private void shoot()
   {
+    println(x);
     if ( ammo<1 )
     {
       playerSounds.play(Sounds.NO_AMMO);

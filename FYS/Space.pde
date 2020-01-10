@@ -56,6 +56,10 @@ class Space {
       image(star, x[i], y[i], diameter[i], diameter[i]);
     }
     planetY = planetY + planetSpeed;
-    image(planets[int(planetNum)], planetX, planetY, planetD, planetD);
+    try{
+    image(planets[planetNum], planetX, planetY, planetD, planetD);
+    } catch (IndexOutOfBoundsException e){
+      planetNum=0;
+    }
   }
 }

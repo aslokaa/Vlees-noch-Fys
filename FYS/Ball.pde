@@ -8,7 +8,7 @@ static int ballID;
 class Ball {
   float x, y, speedX, speedY;
   float radius, diameter;
-  int colorBall ,id;
+  int colorBall, id;
   boolean active;
   boolean ballRespawn;
   boolean isChargedBom;
@@ -38,7 +38,7 @@ class Ball {
     isChargedBom = false;
     bomRadius = 600;
     setAnimation();
-    
+
     history = new ArrayList<PVector>();
   }
 
@@ -67,7 +67,6 @@ class Ball {
   void updateBall() {
     if ( active )
     {
-println(id);
       if (!ballRespawn) {
         moveBall();
         interactPlayer();
@@ -143,7 +142,7 @@ println(id);
         gamefield.scoreCounter = gamefield.scoreCounter - 200;
         gamefield.scoreCounter -= gamefield.scoreDamage;
       } else {
-       active=false; 
+        active=false;
       }
     }
     if (y < radius) {
@@ -166,7 +165,7 @@ println(id);
     for (Ball ball : balls) {
       if (ball.active) {
         activeBalls++;
-        if (activeBalls>=2){
+        if (activeBalls>=2) {
           return true;
         }
       }
