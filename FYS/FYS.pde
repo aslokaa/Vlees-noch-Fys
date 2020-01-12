@@ -138,7 +138,7 @@ void updateGame()
   {
     endscreen.update();
   }
-  achievement.update();
+  //achievement.update();
   space.update();
 }
 
