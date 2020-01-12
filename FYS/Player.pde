@@ -398,10 +398,7 @@ class Player extends Paddle
   {
     x+=velocityX;
     y+=velocityY;
-    if (split)
-    {
-      xSplit+=velocityXSplit;
-    }
+    xSplit=map(x,0,gamefield.GAMEFIELD_WIDTH/2-widthSplit0,gamefield.GAMEFIELD_WIDTH-widthSplit1,gamefield.GAMEFIELD_WIDTH/2);
   }
 
 
