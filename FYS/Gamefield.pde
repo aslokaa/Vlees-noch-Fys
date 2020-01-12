@@ -1,4 +1,4 @@
-  /* //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves? //<>//
+/* //waves hardcoden, randomisen met parameters, of nieuwe format maken voor waves? //<>// //<>// //<>// //<>//
  this class keeps track of where elements are spawned and the boundries they are allowed to be in.
  contains list of finals for outlining:
  where the player is allowed to move to,
@@ -33,17 +33,15 @@ class Gamefield
 
   private final int 
     CHAD_COUNTER_START              = 0, 
-    DAVE_COUNTER_START              = 10, 
-    DAVE_SPEED_START                = 2, 
-    DAVE_SPEED_MAX                  = 10, 
+    DAVE_COUNTER_START              = 10,  
     CHAD_MAX                        = 10, 
-    AMOUNT_OF_BOSSES                = 2,  //<>//
+    AMOUNT_OF_BOSSES                = 2, 
     WAVES_UNTILL_DAVE               = 1, 
     WAVE3_CHADS                     = 1, 
     WAVES_UNTILL_CHAD               = 3, 
     WAVES_UNTILL_BOSS               = 5, 
-    DAVE_COUNTER_WAVE9              = 30,  //<>//
-    DAVE_MAX                        = 50;  //<>//
+    DAVE_COUNTER_WAVE9              = 30, 
+    DAVE_MAX                        = 50; 
 
   private int  
 
@@ -53,24 +51,28 @@ class Gamefield
     roundLengthCounter, 
     scorePlus, 
     scoreDamage, 
-    powerUpSize,  
+    powerUpSize, 
     colorTimer, 
     textPowerUp, 
     comboScore, 
     daveCounter, 
     chadCounter, 
+    davesKilled, 
     waveBumpDelay;
 
   public int //Used for database
     waveCounter, 
     scoreCounter;
-  private final float DAVE_SPEED_INCREASE = 0.5;
+  private final float
+    DAVE_SPEED_MAX                  = 7.5,
+    DAVE_SPEED_START                = 2.5,
+    DAVE_SPEED_INCREASE             = 0.4;
 
 
   public float 
 
     powerTimer, 
-    damageTime,
+    damageTime, 
     daveSpeed;
 
   private boolean
@@ -130,8 +132,10 @@ class Gamefield
   {
     currentWave = waveFormats[waveCounter];
     waveBumpDelay = int(currentWave.minRoundLength);
+    daveCounter=currentWave.daveCounter;
     waveCounter++;
     increaseDaveSpeed();
+    davesKilled=0;
     setConditions();
   }
 
@@ -152,7 +156,6 @@ class Gamefield
       player.setPosition( gamefield.GAMEFIELD_WIDTH / 2 - player.playerWidth / 2, height -300);
       spawnDullChad();
       chadCounter = -1;
-      daveCounter = 0;
       for ( Power power : powers )
       {
         if ( !power.powerActive )
@@ -166,29 +169,47 @@ class Gamefield
     if ( currentWave.ballActive )
     {
       //activate ball 
-      if ( !balls.get(0).active )
+      if ( !areBallsActive() )
       {
-        balls.get(0).activate(GAMEFIELD_WIDTH / 2, height / 2);
+        for (Ball ball : balls) {
+          ball.activate(GAMEFIELD_WIDTH / 2, height / 2);
+          break;
+        }
         println("this round has a ball");
       }
     } else
     {
       //deactivate ball
-      balls.get(0).active = false;
+      for (Ball ball : balls) {
+        ball.active = false;
+      }
       println("this round has no ball");
     }
 
     if ( currentWave.safetyFloorActive )
     {
       //activate safetyfloor 
-      balls.get(0).safetyWallActive = true;
+      for (Ball ball : balls) {
+        ball.safetyWallActive = true;
+      }
       println("this round has a safety floor");
     } else
     {
       //deactivate safetyfloor
-      balls.get(0).safetyWallActive = false;
+      for (Ball ball : balls) {
+        ball.safetyWallActive = false;
+      }
       println("this round doesn't have a safety floor");
     }
+  }
+
+  public boolean areBallsActive() {
+    for (Ball ball : balls) {
+      if (ball.active==true) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private void handleWave()
@@ -239,12 +260,12 @@ class Gamefield
 
   public void setDaveMoveSpeed()
   {
-    daveSpeed += abs((DAVE_SPEED_MAX - daveSpeed) / daveCounter);
+    //daveSpeed=abs((DAVE_SPEED_MAX - daveSpeed) / davesKilled+1);
     for ( Enemy enemy : enemies )
     {
       if ( enemy.active && enemy instanceof EnemyDave )
       {
-        enemy.setMoveSpeed(daveSpeed);
+        enemy.setMoveSpeed(map(davesKilled, 0, daveCounter, daveSpeed, DAVE_SPEED_MAX));
       }
     }
   }
@@ -267,9 +288,9 @@ class Gamefield
     if (spawnWave && !stateBossLester && !stateBossPing)
     {
       waveCounter++;
+      davesKilled=0;
       increaseDaveSpeed();
-      waveCounter+=1;
-     // davesAlive = gamefield.currentWave.daveCounter;
+      // davesAlive = gamefield.currentWave.daveCounter;
       //chadsAlive = gamefield.currentWave.chadCounter;
       if (waveCounter > 1) {
         scorePlus = 300;
@@ -308,7 +329,6 @@ class Gamefield
         if (!enemy.active)
         {
           enemy.activate(GAMEFIELD_WIDTH / 2, - 100);
-          daveCounter--;
           return;
         }
       }
@@ -414,20 +434,10 @@ class Gamefield
   }
 
 
-
-  //a special wave that only spawns chads
-  private void spawnWave3()
-  {
-    for (int i =0; i<WAVE3_CHADS; i++) {
-      spawnChads();
-      gamefield.chadCounter = -1;
-    }
-  }
-
   //modifies the makeup of waves.
   private void updateWaves()
   {
-      if ( daveCounter < DAVE_MAX )
+    if ( daveCounter < DAVE_MAX )
     {
       if ( waveCounter % WAVES_UNTILL_DAVE == 0) {
         daveCounter+=1;
@@ -446,33 +456,6 @@ class Gamefield
     }
   }
 
-  //selects a random boss
-  private void chooseBoss()
-  {
-    switch ((int)random(0, AMOUNT_OF_BOSSES))
-    {
-    case BossID.PING:
-      if (pingActivated)
-      {
-        chooseBoss();
-      } else
-      {
-        spawnPing=true;
-      }
-      break;
-    case BossID.LESTER:
-      if (lesterActivated)
-      {
-        chooseBoss();
-      } else
-      {
-        spawnLester=true;
-      }
-      break;
-    default:
-      chooseBoss();
-    }
-  }
 
   //starts the ping boss fight
   private void activatePing()
@@ -493,15 +476,6 @@ class Gamefield
     spawnLester      = false;
   }
 
-  //checks if all bosses have been activated
-  private void checkBossRotation()
-  {
-    if ( pingActivated && lesterActivated )
-    {
-      pingActivated=false;
-      lesterActivated=false;
-    }
-  }
 
   public int getWaveCounter() {
     return waveCounter;

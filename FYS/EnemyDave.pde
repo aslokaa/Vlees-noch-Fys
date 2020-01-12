@@ -122,7 +122,7 @@ class EnemyDave extends Enemy
     gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
     gamefield.scorePlus = 100;
     gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
-    gamefield.daveCounter = gamefield.daveCounter + 1;
+    gamefield.davesKilled = gamefield.davesKilled + 1;
     x = EnemyFinals.ENEMY_GRAVEYARD_X;
     y = EnemyFinals.ENEMY_GRAVEYARD_Y;
     gamefield.setDaveMoveSpeed();
