@@ -56,7 +56,7 @@ class PlayerBullet
   void bulletEnemyCollision() { //Checks colision tussesn enemy en bullet
 
     for ( Enemy enemy : enemies ) {
-      if ( enemy.active && dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxRadius + (bulletDiameter/2))) {    
+      if ( !enemy.destroyed && dist(bulletX, bulletY, enemy.x, enemy.y) < (enemy.hitboxRadius + (bulletDiameter/2))) {    
         shootBullet = false;
         enemy.destroy();
       }

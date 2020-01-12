@@ -7,7 +7,8 @@ this class is a base-class for all enemies, all methods and fields are contained
  */
 class Enemy
 {
-  boolean active;//checks if enemy should be updated and drawn.
+  boolean active;//checks if enemy should have collision.
+  boolean destroyed;
   float hitboxRadius;
   float hitboxDiameter;
   float damageToDeal;//amount of damage enemy does to the player.
@@ -22,6 +23,11 @@ class Enemy
   int particleLifespan;
   float particleSpeedX;
   float particleSpeedY;
+  int destroyCounter;
+  float fallSpeed;
+  float fallRotation;
+  float fallRotationAngle;
+  final int DESTROY_COUNTER = 100;
 
   Enemy(boolean active, float x, float y, float hitboxRadius)
   {

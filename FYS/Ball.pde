@@ -232,12 +232,12 @@ class Ball {
 
   void interactEnemy() {
     for (Enemy enemy : enemies) {
-      if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius) {  //collision with enemie check.
+      if (dist(x, y, enemy.x, enemy.y)< radius + enemy.hitboxRadius && !enemy.destroyed ) {  //collision with enemie check.
         if (isChargedBom) {
           radius = 300;
 
           for (Enemy enemyBomb : enemies) {
-            if (dist(x, y, enemyBomb.x, enemyBomb.y)< radius + enemyBomb.hitboxRadius) { 
+            if (dist(x, y, enemyBomb.x, enemyBomb.y)< radius + enemyBomb.hitboxRadius && !enemy.destroyed ) { 
               enemyBomb.destroy();  //enemie destroyd
               speedY *= -1;  // enemie bounce off
               isChargedBom = false;

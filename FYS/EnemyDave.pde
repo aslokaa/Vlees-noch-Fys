@@ -36,16 +36,25 @@ class EnemyDave extends Enemy
     rowToMoveTo = 1;
     spawnRate = 0.2;
     EXPLOSION_PARTICLES = 50;
+    destroyed = false;
+    destroyCounter = 0;
   }
 
   @Override void executeBehavior()
   {
     if ( active )
     {
-      move();//kijkt naar move booleans, zet snelheden, telt snelheid op bij positie.
-      checkWallCollision();//als dave een muur raakt beweegt hij een row naar beneden
-      handlePlayerCollision( player.getHitboxes() );
-      checkRow();//als dave bij de volgende row komt gaat hij op de x bewegen.
+      if ( !destroyed )
+      {
+        move();//kijkt naar move booleans, zet snelheden, telt snelheid op bij positie.
+        checkWallCollision();//als dave een muur raakt beweegt hij een row naar beneden
+        handlePlayerCollision( player.getHitboxes() );
+        checkRow();//als dave bij de volgende row komt gaat hij op de x bewegen.
+      } else
+      {
+        fall();
+        updateCounters();
+      }
     }
   }
 
@@ -111,21 +120,42 @@ class EnemyDave extends Enemy
     }
   }
 
+  void fall()
+  {
+   speedX += random(-0.5, 0.5);
+   speedY += fallSpeed;
+   fallRotationAngle += fallRotation;
+   x += speedX;
+   y += speedY;
+  }
+
+  void updateCounters()
+  {
+    destroyCounter--;
+    if ( destroyCounter < 0)
+    {
+      active = false;
+      x = EnemyFinals.ENEMY_GRAVEYARD_X;
+      y = EnemyFinals.ENEMY_GRAVEYARD_Y;
+    }
+  }
+
   @Override void destroy()
   {
     spawnPowerup();
     explode();
     totalEnemiesKilled++;
-    active = false;
+    destroyed = true;
     screenScore.updateScore(x, y);
     gamefield.scorePlus = 100;
     gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
     gamefield.scorePlus = 100;
     gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
     gamefield.davesKilled = gamefield.davesKilled + 1;
-    x = EnemyFinals.ENEMY_GRAVEYARD_X;
-    y = EnemyFinals.ENEMY_GRAVEYARD_Y;
     gamefield.setDaveMoveSpeed();
+    destroyCounter = DESTROY_COUNTER;
+    fallSpeed = random(0.05, 0.2);
+    fallRotation = random ( -0.2, 0.2);
   }
 
   @Override void activate(float posX, float posY)
@@ -176,7 +206,24 @@ class EnemyDave extends Enemy
   {
     if ( active )
     {
-      image(enemyDaveImg, x, y, hitboxDiameter, hitboxDiameter);
+      if ( !destroyed )
+      {
+        image(enemyDaveImg, x, y, hitboxDiameter, hitboxDiameter);
+      } else
+      {
+        pushMatrix();
+        translate( x, y );
+        rotate(fallRotationAngle);
+        image(enemyDaveImg, 0, 0, hitboxDiameter, hitboxDiameter);
+        noStroke();
+        fill(0,0,0,map((DESTROY_COUNTER - destroyCounter), 0, 150, 30, 255));
+        ellipse(0,0,hitboxDiameter * 1.1, hitboxDiameter * 1.1);
+        rotate( -fallRotationAngle );
+        translate( -x, -y );
+        popMatrix();
+        
+        
+      }
     }
   }
 }
