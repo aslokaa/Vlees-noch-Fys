@@ -33,7 +33,7 @@ class Gamefield
 
   private final int 
     CHAD_COUNTER_START              = 0, 
-    DAVE_COUNTER_START              = 10,  
+    DAVE_COUNTER_START              = 10, 
     CHAD_MAX                        = 10, 
     AMOUNT_OF_BOSSES                = 2, 
     WAVES_UNTILL_DAVE               = 1, 
@@ -64,8 +64,8 @@ class Gamefield
     waveCounter, 
     scoreCounter;
   private final float
-    DAVE_SPEED_MAX                  = 7.5,
-    DAVE_SPEED_START                = 2.5,
+    DAVE_SPEED_MAX                  = 7.5, 
+    DAVE_SPEED_START                = 2.5, 
     DAVE_SPEED_INCREASE             = 0.4;
 
 
@@ -174,12 +174,14 @@ class Gamefield
         for (Ball ball : balls) {
           ball.activate(GAMEFIELD_WIDTH / 2, height / 2);
           break;
+        }
       }
     } else
     {
       //deactivate ball
       for (Ball ball : balls) {
         ball.active = false;
+        println("oi");
       }
     }
 
@@ -196,7 +198,6 @@ class Gamefield
         ball.safetyWallActive = false;
       }
     }
-  }
   }
 
   public boolean areBallsActive() {
