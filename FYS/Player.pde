@@ -444,6 +444,7 @@ class Player extends Paddle
     case PowerUpTypes.EXTRA_BALL:
       for (Ball ball : balls) {
         if (!ball.active) {
+          ball.isChargedBom=false;
           ball.activate(x, gamefield.GAMEFIELD_HEIGHT/2);
           return;
         }
