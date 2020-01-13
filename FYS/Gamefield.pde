@@ -174,8 +174,6 @@ class Gamefield
         for (Ball ball : balls) {
           ball.activate(GAMEFIELD_WIDTH / 2, height / 2);
           break;
-        }
-        println("this round has a ball");
       }
     } else
     {
@@ -183,7 +181,6 @@ class Gamefield
       for (Ball ball : balls) {
         ball.active = false;
       }
-      println("this round has no ball");
     }
 
     if ( currentWave.safetyFloorActive )
@@ -192,14 +189,12 @@ class Gamefield
       for (Ball ball : balls) {
         ball.safetyWallActive = true;
       }
-      println("this round has a safety floor");
     } else
     {
       //deactivate safetyfloor
       for (Ball ball : balls) {
         ball.safetyWallActive = false;
       }
-      println("this round doesn't have a safety floor");
     }
   }
 
