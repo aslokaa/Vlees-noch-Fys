@@ -33,6 +33,7 @@ class Endscreen
     if (checkInput())
     {
       player            = new Player();
+      startscreen.loadWaveFormats();
       gamefield         = new Gamefield();
       stateStart        = true; 
       statePlaying      = false;
@@ -41,6 +42,7 @@ class Endscreen
       stateBossPing     = false;
       stateBossLester   = false;
       scores            = new Scores();
+      
       for ( Enemy enemy : enemies )
       {
         enemy.active=false;
