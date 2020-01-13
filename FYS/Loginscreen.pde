@@ -134,9 +134,9 @@ class Loginscreen
     textAlign(LEFT);
     text("Use the D-pad to navigate the keyboard", LEGENDA.x, LEGENDA.y);
     textFont(font, LEGENDA_TEXT_SIZE);
-    text("Press 'y' for BACKSPACE", LEGENDA.x, LEGENDA.y + LEGENDA_TEXT_OFFSET);
+    text("Press 'a' for BACKSPACE", LEGENDA.x, LEGENDA.y + LEGENDA_TEXT_OFFSET);
     text("Press 'b' to type", LEGENDA.x, LEGENDA.y + LEGENDA_TEXT_OFFSET * 2);
-    text("Press 'a' for SPACEBAR", LEGENDA.x, LEGENDA.y + LEGENDA_TEXT_OFFSET * 3);
+    text("Press 'y' for SPACEBAR", LEGENDA.x, LEGENDA.y + LEGENDA_TEXT_OFFSET * 3);
     text("Press 'x' for ENTER", LEGENDA.x, LEGENDA.y + LEGENDA_TEXT_OFFSET * 4);
     textAlign(CENTER);
   }
