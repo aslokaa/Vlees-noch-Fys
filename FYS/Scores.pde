@@ -117,9 +117,12 @@ class Scores {
 
     image(enemyDaveImg, daveImgX, daveImgY, daveImgSize, daveImgSize);//dave image
     image(enemyChadImg, chadImgX, chadImgY, chadImgSize, chadImgSize);//chad image
-
-    text("x"+(gamefield.daveCounter-gamefield.davesKilled), daveCounterX, daveCounterY);//daves alive counter
-    text("x"+gamefield.chadCounter, chadCounterX, chadCounterY);//chads alive counter
+    if (gamefield.daveCounter-gamefield.davesKilled>=0) {
+      text("x"+(gamefield.daveCounter-gamefield.davesKilled), daveCounterX, daveCounterY);//daves alive counter
+    }
+    if (gamefield.chadCounter>=0) {
+      text("x"+gamefield.chadCounter, chadCounterX, chadCounterY);//chads alive counter
+    }
   }
 
   float timeX = width*0.03;
