@@ -197,6 +197,7 @@ class Gamefield
       }
     }
   }
+  }
 
   public boolean areBallsActive() {
     for (Ball ball : balls) {
