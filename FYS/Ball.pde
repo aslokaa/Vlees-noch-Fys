@@ -240,13 +240,10 @@ class Ball {
             if (dist(x, y, enemyBomb.x, enemyBomb.y)< radius + enemyBomb.hitboxRadius && !enemy.destroyed ) { 
               enemyBomb.destroy();  //enemie destroyd
               speedY *= -1;  // enemie bounce off
-              isChargedBom = false;
-
-
-
               // spawn particles vanaf de ball.
             }
           }
+          isChargedBom = false;
           radius = 25;
         } else {
           enemy.destroy();  //enemie destroyd
