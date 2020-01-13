@@ -134,6 +134,7 @@ class EnemyDave extends Enemy
     destroyCounter--;
     if ( destroyCounter < 0)
     {
+      println("iii");
       active = false;
       x = EnemyFinals.ENEMY_GRAVEYARD_X;
       y = EnemyFinals.ENEMY_GRAVEYARD_Y;
@@ -166,6 +167,7 @@ class EnemyDave extends Enemy
     currentRow = 0;
     rowToMoveTo = 1;
     moveSpeed = gamefield.daveSpeed;
+    destroyed = false;
   }
 
   void setXSpeed()
