@@ -32,8 +32,8 @@ class Player extends Paddle
     MOVEMENT_ARROW_OFFSET           = gamefield.GAMEFIELD_WIDTH*0.2, 
     SPLIT_WIDTH_MODIFIER            = 0.75, 
     BALL_HIT_Y_MODIFIER             = 0.35, 
-    BALL_HIT_HEIGHT_MAX_MODIFIER    = 0.5, 
-    BALL_HIT_HEIGHT_MIN_MODIFIER    = 0.3, 
+    BALL_HIT_HEIGHT_MAX_MODIFIER    = 1.5, 
+    BALL_HIT_HEIGHT_MIN_MODIFIER    = 1.1, 
     BALL_HIT_SMALLER_HEIGHT_MODIFIER= 0.8, 
     BOUNCE_MODIFIER                 = -0.3, 
     SECOND                          = 60, //one second
@@ -45,6 +45,8 @@ class Player extends Paddle
     SHOOT_STARTING_TIMER            = SECOND*0.75, 
     BALL_HIT_STARTING_TIMER         = SECOND*0.4, 
     SPLIT_STARTING_TIMER            = SECOND*15, 
+    POWERCHANCE_HIGH                = 0.7, 
+    POWERCHANCE_LOW                 = 0.3, 
     SHRINK_MARGIN                   = 5, 
     SHIELD_DOT_WIDTH                = 15, 
     SHIELD_DOT_MARGIN               = 30, 
@@ -53,11 +55,12 @@ class Player extends Paddle
   public final int
     ROCKET_PARTICLES                = 20, 
     BULLET_PARTICLES                = 100, 
-    DAMAGE_FRAMES                   = 6, 
+    DAMAGE_FRAMES                   = 6,
+    AMMO_UP_AMOUNT                  =5,
+    RESTORE_HEALTH_AMOUNT           =30,
     STARTING_BULLETS                = 5;
   PImage 
     currentImg;
-
   private float 
     xSplit, 
     y, 
@@ -127,7 +130,7 @@ class Player extends Paddle
   }
 
   //checks how to player should be drawn.
-  public void checkDisplay()
+  public void display()
   {
     noStroke();
     image=changeImage();
@@ -145,16 +148,18 @@ class Player extends Paddle
     imageMode(CENTER);
   }
 
+
+//checks what behavior the paddle should do after having hit a ball.
   private void checkBallHitState() {
     switch (ballHitState) {
     case BallHit.GROW:
-      growBallHit();
+      growBallHit(); //grows
       break;
     case BallHit.SHRINK:
-      shrinkPaddleBallHit();
+      shrinkPaddleBallHit(); //shrinks from the grown state to something smaller than the original
       break;
     case BallHit.REGROW:
-      regrowPaddleBallHit();
+      regrowPaddleBallHit(); //regrows to original size.
       break;
     }
   }
@@ -214,9 +219,9 @@ class Player extends Paddle
     }
   }
   //draws the standard player.
-  private void display()
+  private void displayPaddle()
   {  
-    if ( hasImmune )
+    if ( hasImmune ) //Not made by Niklas
     {
       for ( int j = 0; j < 2; j++ )
       {
@@ -257,7 +262,7 @@ class Player extends Paddle
       displaySplit();
     } else
     {
-      display();
+      displayPaddle();
     }
   }
 
@@ -337,7 +342,7 @@ class Player extends Paddle
   }
 
 
-  //copied from enemies. emits smoke.
+  //copied from enemies. emits smoke. lots of magic numbers because of that.
   private void emitParticles(float xSmoke, float ySmoke, int amountOfParticles, boolean rocket) {
     for ( int i = 0; i < amountOfParticles; i++ )
     {
@@ -398,7 +403,7 @@ class Player extends Paddle
   {
     x+=velocityX;
     y+=velocityY;
-    xSplit=map(x,0,gamefield.GAMEFIELD_WIDTH/2-widthSplit0,gamefield.GAMEFIELD_WIDTH-widthSplit1,gamefield.GAMEFIELD_WIDTH/2);
+    xSplit=map(x, 0, gamefield.GAMEFIELD_WIDTH/2-widthSplit0, gamefield.GAMEFIELD_WIDTH-widthSplit1, gamefield.GAMEFIELD_WIDTH/2);
   }
 
 
@@ -427,10 +432,10 @@ class Player extends Paddle
       splitTimer=SPLIT_STARTING_TIMER;
       break;
     case PowerUpTypes.HP_UP:
-      restoreHealth( 30 );
+      restoreHealth( RESTORE_HEALTH_AMOUNT );
       break;
     case PowerUpTypes.AMMO_UP:
-      gainAmmo(5);
+      gainAmmo(AMMO_UP_AMOUNT);
       break;
     case PowerUpTypes.BOOM_BALL:
       for (Ball ball : balls) 
@@ -455,8 +460,9 @@ class Player extends Paddle
     }
   }
 
+//makes the player immune
   private void activateImmune() {
-    if (!hasImmune) {
+    if (!hasImmune) { //makes sure the player doesn't wase the immune
       return;
     } else {
       hasImmune=false; 
@@ -466,7 +472,7 @@ class Player extends Paddle
     }
   }
 
-  private float getMinY() {
+  private float getMinY() { //Lets the player move over the whole screen if the player
     return  hasMoved() ? gamefield.PLAYER_MIN_Y : 0 ;
   }
 
@@ -526,38 +532,38 @@ class Player extends Paddle
   //decelerates the player
   private void decelerate()
   {
-    if (!(keyCodesPressed[LEFT] || keyCodesPressed[RIGHT]))
+    if (!(keyCodesPressed[LEFT] || keyCodesPressed[RIGHT])) //only decelarates the player if they are not pressing the associated keys
     {
-      velocityX *= decelerateX;
+      super.decelerate(velocityX, decelerateX);
       if (split)
       {
         velocityXSplit *= decelerateX;
       }
     }
-    if (!(keyCodesPressed[UP] || keyCodesPressed[DOWN]))
+    if (!(keyCodesPressed[UP] || keyCodesPressed[DOWN])) //only decelarates the player if they are not pressing the associated keys
     {
-      velocityY *= decelerateY;
+      super.decelerate(velocityY, decelerateY);
     }
   }
 
-  //shrinks the paddle
-  public void dealDamage( float damage, boolean isRight)
+  //checks if the player should take damage and deals with all behavior associated with that.
+  public void dealDamage( float damage, boolean isRight) //is right is a holdover from old code
   {
-    if (shake || immune)
+    if (shake || immune) //checks if you should take damage and returns you if you shouldn't
     {
       return;
     } 
-    playerSounds.play(Sounds.RECIEVE_DAMAGE);
+    playerSounds.play(Sounds.RECIEVE_DAMAGE); 
     shake = true;
     shakeTimer = SHAKE_STARTING_TIMER;
-    gamefield.damageTime = millis();
-    if (split)//<- als ie shaked moet ie geen dmg nemen, handig voor balancing en betere feel.
+    gamefield.damageTime = millis(); //this does something in gamefield for someone else.
+    if (split) //ends split instead of taking damage
     {
       endSplit();
-    } else if (!split)
+    } else
     {
       playerWidth -= damage;
-      if ( playerWidth < PLAYER_MIN_WIDTH )
+      if ( playerWidth < PLAYER_MIN_WIDTH ) //makes you lose the game if you have less than the mininum amount of health
       {
         achievement.increaseProgress(AchievementID.UNALIVED);
         endscreen.loseGame();
@@ -574,17 +580,17 @@ class Player extends Paddle
     if ( widthSplit1 < PLAYER_MAX_WIDTH / 2 ) 
     {
       widthSplit1 += healing;
-      x-=healing*0.5;
+      x-=healing/2; //these 
     }
     if ( widthSplit0 < PLAYER_MAX_WIDTH / 2 )
     {
       widthSplit0 += healing;
-      x-=healing*0.5;
+      x-=healing/2;
     } 
     if ( playerWidth < PLAYER_MAX_WIDTH )
     {
       playerWidth += healing;
-      x-=healing*0.5;
+      x-=healing/2;
     } else { 
       achievement.increaseProgress(AchievementID.AMERICAN);
     }
@@ -663,7 +669,6 @@ class Player extends Paddle
   //checks if you can shoot a bullet.
   private void shoot()
   {
-    println(x);
     if ( ammo<1 )
     {
       playerSounds.play(Sounds.NO_AMMO);
@@ -766,7 +771,7 @@ class Player extends Paddle
   public void collideBall(float ballVY) {
     ballHitTimer=BALL_HIT_STARTING_TIMER;
     ballHitState=BallHit.GROW;
-    ballHitHeight=random(PLAYER_START_HEIGHT*1.1, PLAYER_START_HEIGHT*1.5);
+    ballHitHeight=random(PLAYER_START_HEIGHT*BALL_HIT_HEIGHT_MIN_MODIFIER, PLAYER_START_HEIGHT*BALL_HIT_HEIGHT_MAX_MODIFIER);
     velocityY+=(velocityY+ballVY)*BALL_HIT_Y_MODIFIER;
   }
 
@@ -777,7 +782,7 @@ class Player extends Paddle
 
   //increases powerup spawnchance if the player is damaged
   public float getPowerUpChance() {
-    return map (playerWidth, PLAYER_MIN_WIDTH, PLAYER_START_WIDTH, 0.7, 0.3);
+    return map (playerWidth, PLAYER_MIN_WIDTH, PLAYER_START_WIDTH, POWERCHANCE_HIGH, POWERCHANCE_LOW);
   }
 }
 

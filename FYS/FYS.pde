@@ -192,7 +192,7 @@ void drawGame()
     for (Ball ball : balls) {
       ball.drawBall();
     }
-    player.checkDisplay();
+    player.display();
     gamefield.displayWallFX();
     screenScore.drawScore();
     if (statePaused)

@@ -68,27 +68,29 @@ class BossPing extends Paddle
   //locates the nearest ball.
   private void detectNearestBall()
   {
-    float closestBallXT = gamefield.GAMEFIELD_WIDTH/2;
+    float closestBallXT = gamefield.GAMEFIELD_WIDTH/2; //placeholder to be overwritten by another ball
     float closestBallYT = height; //Futher away than a ball can possibly be.
-    for (Ball ball : balls) 
+    for (Ball ball : balls) //checks all balls
     {
-      float xT = ball.x;
-      float yT = ball.y;
-      if (ball.speedY<0)
-      {
-        if (dist(x + paddleWidth/2, y + paddleHeight/2, xT, yT)<dist(x + paddleWidth/2, y + paddleHeight/2, closestBallXT, closestBallYT))
+      if (ball.active) { //checks if ball is active
+        float xT = ball.x;
+        float yT = ball.y;
+        if (ball.speedY<0) //checks if the ball is moving towards the paddle.
         {
-          closestBallXT = xT;
-          closestBallYT = yT;
+          if (dist(x + paddleWidth/2, y + paddleHeight/2, xT, yT)<dist(x + paddleWidth/2, y + paddleHeight/2, closestBallXT, closestBallYT)) //checks if ball is closer than previous closest ball
+          {
+            closestBallXT = xT; 
+            closestBallYT = yT;
+          }
         }
-      }
-      closestBallX = closestBallXT;
-      if (closestBallYT==height)
-      {
-        closestBallY=0;
-      } else
-      {
-        closestBallY = closestBallYT;
+        closestBallX = closestBallXT;
+        if (closestBallYT==height) //only possible if no  balls have been found that move towards the boss 
+        {
+          closestBallY=0;// makes the boss move to top the screen.
+        } else
+        {
+          closestBallY = closestBallYT;
+        }
       }
     }
   }
@@ -156,8 +158,8 @@ class BossPing extends Paddle
       velocityY=0;
     }
     if (shouldDecelerate()) {
-      velocityX *= decelerateX;
-      velocityY *= decelerateY;
+      super.decelerate(velocityX, decelerateX);
+      super.decelerate(velocityY, decelerateY);
     }
   }
 
@@ -241,7 +243,7 @@ class BossPing extends Paddle
   public void killPing()
   {
     stateBossPing=false;
-    gamefield.scorePlus = 1000;
+    gamefield.scorePlus = 1000; //mika's werk
     gamefield.scoreCounter = gamefield.scoreCounter + gamefield.scorePlus;
     achievement.increaseProgress(AchievementID.PING_PONG);
   }

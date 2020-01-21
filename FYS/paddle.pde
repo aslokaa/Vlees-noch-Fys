@@ -1,4 +1,4 @@
-public abstract class Paddle {
+public abstract class Paddle { 
   protected float 
     x, 
     y, 
@@ -11,7 +11,8 @@ public abstract class Paddle {
     decelerateX, 
     decelerateY;
 
-  public abstract void update();
+  public abstract void update(); //the update cycle
+  public abstract void display();//the display cycle
   protected float decelerate(float velocity, float decelerate){ 
      return velocity * decelerate;
   }
