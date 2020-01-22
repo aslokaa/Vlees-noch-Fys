@@ -38,22 +38,22 @@ class Scores {
   float scoreZero = width * 0.048;
   float scorePlusZero = width * 0.06;
 
-  void scoreUpdates() {
+  void scoreUpdates() { //adjusts score position when the score changes in digits
 
-    if (gamefield.scoreCounter <= 0) {// score can't go lower than 0
+    if (gamefield.scoreCounter <= 0) {
       gamefield.scoreCounter = 0;
     }
 
-    if (gamefield.scoreCounter >= 10000) {//re-positions the text from score to allign with the text from time below when score digits change
+    if (gamefield.scoreCounter >= 10000) {
       scoreX = scoreTenThousand;
     }
 
-    if (gamefield.scoreCounter == 0) {//re-positions the text from score to allign with the text from time below when score digits change
+    if (gamefield.scoreCounter == 0) {
       scoreX = scoreZero;
       gamefield.scoreDamage = 0;
     }
 
-    if (gamefield.scoreCounter > 0) {//re-positions the text from score to allign with the text from time below when score digits change
+    if (gamefield.scoreCounter > 0) {
       scoreX = scorePlusZero ;
     }
   }
@@ -117,6 +117,7 @@ class Scores {
 
     image(enemyDaveImg, daveImgX, daveImgY, daveImgSize, daveImgSize);//dave image
     image(enemyChadImg, chadImgX, chadImgY, chadImgSize, chadImgSize);//chad image
+
     if (gamefield.daveCounter-gamefield.davesKilled>=0) {
       text("x"+(gamefield.daveCounter-gamefield.davesKilled), daveCounterX, daveCounterY);//daves alive counter
     }
@@ -133,10 +134,10 @@ class Scores {
 
     text("TIME", timeX, timeY);
 
-    if ( time/60 < 10) {//the first 9 seconds have  dubbel digits.
+    if ( time/60 < 10) {//the first 9 seconds are displayed as 01,02,03...
       text(min+":"+"0"+time/60, updatedTimeX, timeY);
     }
-    if ( time/60 > 9) {//10 to 60 seconds are the same.
+    if ( time/60 > 9) {
       text(min+":"+time/60, updatedTimeX, timeY);
     }
   }
@@ -203,7 +204,7 @@ class Scores {
   int scoreDamage = 200;
   int damageTimer = 1000;
 
-  void displayDamageScore() {//score goes -200 when taking damage
+  void displayDamageScore() {//score goes -200 when damage is taken
 
     if (millis() < gamefield.damageTime + damageTimer) {
       textSize(textSize);

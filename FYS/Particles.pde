@@ -1,10 +1,5 @@
 // Mika Spoelstra & Brent Sijm
 
-//float[] x = new float[Arrays.PARTICLE_COUNT]; 
-//float[] y = new float[Arrays.PARTICLE_COUNT];
-//float[] velocityX = new float[Arrays.PARTICLE_COUNT]; 
-//float[] velocityY = new float[Arrays.PARTICLE_COUNT]; 
-//float[] diameter = new float[Arrays.PARTICLE_COUNT]; 
 
 class Particle {
 
@@ -13,14 +8,13 @@ class Particle {
   float diameter;
   boolean active;
   int lifeTime;
-  //int particleNumber;
   color drawColor = color(255, 255, 255);
   float spinSpeed;
   float drawAngle;
   Animation particleAnimation;
 
   Particle(float x, float y, float diameter, float velocityX, float velocityY) {
-    //Particle() {
+    
     this.x = x;
     this.y = y;
     this.diameter = diameter;
@@ -42,19 +36,7 @@ class Particle {
 
   void display() {
     if (active) {
-      /*
-      //fill(drawColor);
-       // ellipse(x, y, diameter, diameter);
-       
-       switch(particleNumber) { // this is for the enemies to have diferent particles
-       case 0:
-       fill(Colors.DARK_GREEN);
-       ellipse(x, y, diameter, diameter);
-       break;
-       case 1:
-       /* fill(Colors.WHITE);
-       ellipse(x, y, diameter, diameter);
-       */
+      
       if (!statePaused) { //prevents nullpointer
         pushMatrix();
         translate( x, y );
@@ -64,32 +46,14 @@ class Particle {
         translate( -x, -y );
         popMatrix();
       }
-      /*
-        break;
-       case 2:
-       //fill(Colors.BLUE);
-       //ellipse(x, y, diameter, diameter);
-       translate( x, y );
-       rotate(drawAngle);
-       image( smokeImg2, 0, 0, diameter, diameter);
-       rotate( -drawAngle );
-       translate( -x, -y );
-       break;
-       case 3:
-       fill(Colors.GREEN);
-       ellipse(x, y, diameter, diameter);
-       break;
-       case 4:
-       fill(Colors.YELLOW);
-       ellipse(x, y, diameter, diameter);
-       break;
-       }*/
     }
   }
+  
   void move() {
     x += velocityX;
     y += velocityY;
   }
+  
   void checkFrames() { // here you say when the particles have to disapear
     lifeTime --;
     if (lifeTime < 0) {
@@ -98,8 +62,7 @@ class Particle {
     }
   }
 
-  void updateAngle()
-  {
+  void updateAngle() {
     drawAngle += spinSpeed;
     if ( drawAngle < 0 && drawAngle < 2 * -PI )
     {
@@ -110,21 +73,20 @@ class Particle {
     }
   }
 
-  void activateParticle(float x, float y, float diameter, float velocityX, float velocityY, /*int particleNumber,*/ int lifeTime) { //here you activate the particles
+  void activateParticle(float x, float y, float diameter, float velocityX, float velocityY, int lifeTime) { //here you activate the particles
     this.x = x;
     this.y = y;
     this.diameter = diameter;
     this.velocityX = velocityX;
     this.velocityY = velocityY;
-    //this.particleNumber = particleNumber;
     this.lifeTime = lifeTime;
     active = true;
     spinSpeed = random( -0.2, 0.2);
     setAnimation();
   }
 
-  void setAnimation()
-  {
+  void setAnimation() {
+    
     for ( Animation animation : animations )
     {
       if ( !animation.active )

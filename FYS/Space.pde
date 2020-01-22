@@ -3,7 +3,7 @@
 class Space {
 
 
-  //stars
+  //background stars
   float[] x = new float[Arrays.STAR_COUNT]; 
   float[] y = new float[Arrays.STAR_COUNT];
   float[] speed = new float[Arrays.STAR_COUNT]; 
@@ -12,7 +12,7 @@ class Space {
   float randomSpeed = random(0.5, 0.75);
   float randomDiameter = random(12, 10);
 
-  //planets
+  //background planets
   float minPlanetX = width*0.30;
   float maxPlanetX = width*0.70;
   float planetX = random(minPlanetX, maxPlanetX);
@@ -55,6 +55,8 @@ class Space {
     for ( int i = 0; i < Arrays.STAR_COUNT; i++) {
       image(star, x[i], y[i], diameter[i], diameter[i]);
     }
+    
+    //resets planetNum to 0 when planetNum is max
     planetY = planetY + planetSpeed;
     try{
     image(planets[planetNum], planetX, planetY, planetD, planetD);

@@ -41,6 +41,7 @@ PImage
   arrowImg, 
   star, 
 
+//planets
   p0, 
   p1, 
   p2, 
@@ -110,6 +111,7 @@ public void loadAssets() {
   p5 = loadImage("./sprites/p5.png");
   p6 = loadImage("./sprites/p6.png");
   p7 = loadImage("./sprites/p7.png");
+  
   planets[0] = p0;
   planets[1] = p1;
   planets[2] = p2;
