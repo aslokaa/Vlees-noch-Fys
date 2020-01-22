@@ -534,7 +534,7 @@ class Player extends Paddle
   {
     if (!(keyCodesPressed[LEFT] || keyCodesPressed[RIGHT])) //only decelarates the player if they are not pressing the associated keys
     {
-      super.decelerate(velocityX, decelerateX);
+      velocityX=super.decelerate(velocityX, decelerateX);
       if (split)
       {
         velocityXSplit *= decelerateX;
@@ -542,7 +542,7 @@ class Player extends Paddle
     }
     if (!(keyCodesPressed[UP] || keyCodesPressed[DOWN])) //only decelarates the player if they are not pressing the associated keys
     {
-      super.decelerate(velocityY, decelerateY);
+      velocityY=super.decelerate(velocityY, decelerateY);
     }
   }
 

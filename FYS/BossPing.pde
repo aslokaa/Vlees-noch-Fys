@@ -158,8 +158,8 @@ class BossPing extends Paddle
       velocityY=0;
     }
     if (shouldDecelerate()) {
-      super.decelerate(velocityX, decelerateX);
-      super.decelerate(velocityY, decelerateY);
+      velocityX=super.decelerate(velocityX, decelerateX);
+      velocityY=super.decelerate(velocityY, decelerateY);
     }
   }
 
